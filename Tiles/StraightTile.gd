@@ -5,8 +5,10 @@ class_name StraightTile
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	links.append(Vector2i(0, -1))
-	links.append(Vector2i(0, 1))
+	links.append(Direction.UP)
+	links.append(Direction.DOWN)
+
+	texture = preload("res://images/tile_24x24_I.png")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

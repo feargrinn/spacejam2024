@@ -2,22 +2,37 @@ extends Sprite2D
 
 class_name Tile
 
-const TileRotation = {
+const Direction = {
 	UP = 0,
 	RIGHT = 1,
 	DOWN = 2,
 	LEFT = 3
 }
 
-var links: Array[Vector2i] = []
-var rot:int
+func right(direction: Direction):
+	if direction == Direction.UP:
+		return Direction.RIGHT
+	if direction == Direction.RIGHT:
+		return Direction.DOWN
+	if direction == Direction.DOWN:
+		return Direction.LEFT
+	if direction == Direction.LEFT:
+		return Direction.UP
+
+var links: Array[Direction] = []
 var texture_to_set : Texture
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	rot = TileRotation.UP
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+func rotate_right():
+ var new_links = []
+	for link in links:
+		new_links.append(right(link))
+	links = new_links
