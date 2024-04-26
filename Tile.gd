@@ -21,6 +21,19 @@ func right(direction: int):
 	if direction == Direction.LEFT:
 		return Direction.UP
 
+func opposite(direction: int):
+	right(right(direction))
+
+func to_vector(direction: int):
+	if direction == Direction.UP:
+		return Vector2i(0, -1)
+	if direction == Direction.RIGHT:
+		return Vector2i(1, 0)
+	if direction == Direction.DOWN:
+		return Vector2i(0, 1)
+	if direction == Direction.LEFT:
+		return Vector2i(-1, 0)
+
 var links: Array[int] = []
 var texture_to_set : Texture
 var is_painted: bool
@@ -48,3 +61,10 @@ func set_color(_color: Colour):
 
 func get_paint() -> Paint:
 	return paint_script.new(color, pipe_size)
+
+# Check if the other tile is connected to this one, assuming this one has a connection in that direction.
+func connected(other: Tile, direction: int):
+	for link in other.links:
+		if link == opposite(direction):
+			return true
+	return false
