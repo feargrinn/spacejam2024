@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpm0fxhkm5i0s"
-path="res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex"
+uid="uid://cr34yxd7u1h6d"
+path="res://.godot/imported/tile_24x24_cross.png-f9803f91b3165e8505b2a1c46a1c2c06.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icon.svg"
-dest_files=["res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex"]
+source_file="res://images/tile_24x24_cross.png"
+dest_files=["res://.godot/imported/tile_24x24_cross.png-f9803f91b3165e8505b2a1c46a1c2c06.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=0.188
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

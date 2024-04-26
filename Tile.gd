@@ -21,10 +21,13 @@ func right(direction: Direction):
 
 var links: Array[Direction] = []
 var texture_to_set : Texture
+var is_painted: bool
+var paint: Paint
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	rot = TileRotation.UP
+	is_painted = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
