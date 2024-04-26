@@ -1,6 +1,9 @@
-[gd_scene format=3 uid="uid://b6ldch5v2bfc3"]
+[gd_scene load_steps=2 format=3 uid="uid://b6ldch5v2bfc3"]
+
+[ext_resource type="Script" path="res://Navigation.gd" id="1_motdp"]
 
 [node name="Node" type="Node"]
+script = ExtResource("1_motdp")
 
 [node name="MenuScreen" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -20,6 +23,7 @@ layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MenuScreen/VBoxContainer2"]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="Title" type="Label" parent="MenuScreen/VBoxContainer2/MarginContainer"]
 layout_mode = 2
@@ -28,15 +32,277 @@ horizontal_alignment = 1
 
 [node name="MenuButtons" type="VBoxContainer" parent="MenuScreen/VBoxContainer2"]
 layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.15
 
-[node name="NewGame" type="Button" parent="MenuScreen/VBoxContainer2/MenuButtons"]
+[node name="Play" type="Button" parent="MenuScreen/VBoxContainer2/MenuButtons"]
 layout_mode = 2
-text = "New game"
+size_flags_vertical = 6
+text = "Play"
 
 [node name="Settings" type="Button" parent="MenuScreen/VBoxContainer2/MenuButtons"]
 layout_mode = 2
+size_flags_vertical = 6
 text = "Settings"
 
 [node name="Quit" type="Button" parent="MenuScreen/VBoxContainer2/MenuButtons"]
 layout_mode = 2
+size_flags_vertical = 6
 text = "Quit"
+
+[node name="LeverPicker" type="MarginContainer" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 20
+
+[node name="Rows" type="VBoxContainer" parent="LeverPicker"]
+layout_mode = 2
+
+[node name="Columns" type="HBoxContainer" parent="LeverPicker/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+
+[node name="Level2" type="Button" parent="LeverPicker/Rows/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2"
+
+[node name="Level3" type="Button" parent="LeverPicker/Rows/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "3"
+
+[node name="Level4" type="Button" parent="LeverPicker/Rows/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "4"
+
+[node name="Level5" type="Button" parent="LeverPicker/Rows/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "5"
+
+[node name="Columns2" type="HBoxContainer" parent="LeverPicker/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns2"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+
+[node name="Level2" type="Button" parent="LeverPicker/Rows/Columns2"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2"
+
+[node name="Level3" type="Button" parent="LeverPicker/Rows/Columns2"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "3"
+
+[node name="Level4" type="Button" parent="LeverPicker/Rows/Columns2"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "4"
+
+[node name="Level5" type="Button" parent="LeverPicker/Rows/Columns2"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "5"
+
+[node name="Columns3" type="HBoxContainer" parent="LeverPicker/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns3"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+
+[node name="Level2" type="Button" parent="LeverPicker/Rows/Columns3"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2"
+
+[node name="Level3" type="Button" parent="LeverPicker/Rows/Columns3"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "3"
+
+[node name="Level4" type="Button" parent="LeverPicker/Rows/Columns3"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "4"
+
+[node name="Level5" type="Button" parent="LeverPicker/Rows/Columns3"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "5"
+
+[node name="Columns4" type="HBoxContainer" parent="LeverPicker/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns4"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+
+[node name="Level2" type="Button" parent="LeverPicker/Rows/Columns4"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2"
+
+[node name="Level3" type="Button" parent="LeverPicker/Rows/Columns4"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "3"
+
+[node name="Level4" type="Button" parent="LeverPicker/Rows/Columns4"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "4"
+
+[node name="Level5" type="Button" parent="LeverPicker/Rows/Columns4"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "5"
+
+[node name="Columns5" type="HBoxContainer" parent="LeverPicker/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns5"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+
+[node name="Level2" type="Button" parent="LeverPicker/Rows/Columns5"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2"
+
+[node name="Level3" type="Button" parent="LeverPicker/Rows/Columns5"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "3"
+
+[node name="Level4" type="Button" parent="LeverPicker/Rows/Columns5"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "4"
+
+[node name="Level5" type="Button" parent="LeverPicker/Rows/Columns5"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "5"
+
+[node name="GameScreen" type="MarginContainer" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameScreen"]
+layout_mode = 2
+
+[node name="PipeMenu" type="Label" parent="GameScreen/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Pipe menu"
+horizontal_alignment = 1
+
+[node name="Board" type="Label" parent="GameScreen/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.32
+text = "Board"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="PanelContainer" parent="GameScreen"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameScreen/MarginContainer"]
+layout_mode = 2
+
+[node name="MainMenu" type="Button" parent="GameScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "Main menu"
+
+[node name="Quit" type="Button" parent="GameScreen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+text = "Quit"
+
+[connection signal="pressed" from="MenuScreen/VBoxContainer2/MenuButtons/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MenuScreen/VBoxContainer2/MenuButtons/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="LeverPicker/Rows/Columns/Level" to="." method="_on_level_pressed" binds= [1]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns/Level2" to="." method="_on_level_pressed" binds= [2]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns/Level3" to="." method="_on_level_pressed" binds= [3]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns/Level4" to="." method="_on_level_pressed" binds= [4]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns/Level5" to="." method="_on_level_pressed" binds= [5]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns2/Level" to="." method="_on_level_pressed" binds= [1]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns2/Level2" to="." method="_on_level_pressed" binds= [2]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns2/Level3" to="." method="_on_level_pressed" binds= [3]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns2/Level4" to="." method="_on_level_pressed" binds= [4]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns2/Level5" to="." method="_on_level_pressed" binds= [5]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns3/Level" to="." method="_on_level_pressed" binds= [1]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns3/Level2" to="." method="_on_level_pressed" binds= [2]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns3/Level3" to="." method="_on_level_pressed" binds= [3]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns3/Level4" to="." method="_on_level_pressed" binds= [4]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns3/Level5" to="." method="_on_level_pressed" binds= [5]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns4/Level" to="." method="_on_level_pressed" binds= [1]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns4/Level2" to="." method="_on_level_pressed" binds= [2]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns4/Level3" to="." method="_on_level_pressed" binds= [3]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns4/Level4" to="." method="_on_level_pressed" binds= [4]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns4/Level5" to="." method="_on_level_pressed" binds= [5]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns5/Level" to="." method="_on_level_pressed" binds= [1]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns5/Level2" to="." method="_on_level_pressed" binds= [2]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns5/Level3" to="." method="_on_level_pressed" binds= [3]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns5/Level4" to="." method="_on_level_pressed" binds= [4]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns5/Level5" to="." method="_on_level_pressed" binds= [5]]
+[connection signal="pressed" from="GameScreen/MarginContainer/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]
+[connection signal="pressed" from="GameScreen/MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
