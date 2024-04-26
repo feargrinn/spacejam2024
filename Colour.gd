@@ -1,9 +1,14 @@
+extends Sprite2D
+
 class_name Colour
 
 var r: float
 var y: float
 var b: float
 var anti: bool
+
+func __ready():
+	
 
 func _init(r: float, y: float, b: float):
 	self.r = r
