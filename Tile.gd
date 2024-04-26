@@ -11,7 +11,7 @@ const Direction = {
 	LEFT = 3
 }
 
-func right(direction: int):
+static func right(direction: int):
 	if direction == Direction.UP:
 		return Direction.RIGHT
 	if direction == Direction.RIGHT:
@@ -21,10 +21,10 @@ func right(direction: int):
 	if direction == Direction.LEFT:
 		return Direction.UP
 
-func opposite(direction: int):
+static func opposite(direction: int):
 	right(right(direction))
 
-func to_vector(direction: int):
+static func to_vector(direction: int):
 	if direction == Direction.UP:
 		return Vector2i(0, -1)
 	if direction == Direction.RIGHT:
@@ -50,10 +50,11 @@ func _process(delta):
 	pass
 
 func rotate_right():
-	var new_links = []
+	var new_links: Array[int] = []
 	for link in links:
 		new_links.append(right(link))
 	links = new_links
+	rotate(PI / 2)
 	
 func set_color(_color: Colour):
 	if is_painted:
@@ -68,7 +69,7 @@ func get_paint() -> Paint:
 	return paint_script.new(color, pipe_size)
 
 # Check if the other tile is connected to this one, assuming this one has a connection in that direction.
-func connected(other: Tile, direction: int):
+static func connected(other: Tile, direction: int):
 	for link in other.links:
 		if link == opposite(direction):
 			return true

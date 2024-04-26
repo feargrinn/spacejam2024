@@ -21,8 +21,12 @@ func _ready():
 		for j in range(20):
 			init_tile_at(tiles[i][j], i, j)
 
+	#for i in range(20):
+		#edge = 
+		#tiles[i][0].add_child()
+
 	var tile = t_tile_script.new()
-	set_tile_at(tile, 3, 1)
+	set_tile_at(tile, 3, 1, 1)
 	#tile.set_color(colour_script.new(1, 1, 1))
 	
 func init_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
@@ -50,17 +54,17 @@ func update_at(x: int, y: int):
 	var full_neighbours = []
 	var tile = tiles[x][y]
 	for link in tile.links:
-		var offset = to_vector(link)
+		var offset = Tile.to_vector(link)
 		var other_x = x+offset.x
 		var other_y = y+offset.y
 		var other = tiles[other_x][other_y]
-		if connected(other, link):
+		if Tile.connected(other, link):
 			if other.is_painted:
 				full_neighbours.append(other.get_paint())
 			else:
 				empty_neighbours.append(Vector2i(other_x, other_y))
 	if full_neighbours.lenght() > 0:
-		var colour = mix(full_neighbours)
+		var colour = Paint.mix(full_neighbours)
 		tile.set_color(colour)
 		for neighbour in empty_neighbours:
 			fill_pipes(neighbour, colour)
@@ -71,5 +75,5 @@ func fill_pipes(coords: Vector2i, colour: Colour):
 	var tile = tiles[x][y]
 	tile.set_color(colour)
 	for link in tile.links:
-		var offset = to_vector(link)
+		var offset = Tile.to_vector(link)
 		fill_pipes(tiles[x+offset.x][y+offset.y], colour)
