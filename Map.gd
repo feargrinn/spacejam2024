@@ -17,14 +17,18 @@ func _ready():
 			tilesRow.append(empty_tile_script.new())
 
 		tiles.append(tilesRow)
-		
+
+	for i in range(18):
+		for j in range(18):
+			set_tile_at(tiles[i][j], i, j)
+
 	set_tile_at(t_tile_script.new(), 3, 1)
 	
-func set_tile_at(tile:Tile, ix:int, iy:int):
+func set_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
 	tiles[ix][iy] = tile
 	add_child(tile)
-	tile.position = position + Vector2(ix * TILE_SIZE, iy * TILE_SIZE)
-	print(tile.position)
+	tile.position = position + Vector2((ix + 0.5) * TILE_SIZE, (iy + 0.5) * TILE_SIZE)
+	tile.rot = rot
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

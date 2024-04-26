@@ -34,17 +34,14 @@ func _on_quit_pressed():
 func _on_play_pressed():
 	$MenuScreen.hide();
 	$LeverPicker.show();
-	pass # Replace with function body.
 
 
 func _on_level_pressed(extra_arg_0):
 	$LeverPicker.hide();
-	$GameScreen.show();
-	pass # Replace with function body.
+	get_tree().change_scene_to_file("res://game.tscn")
 
 
 func _on_main_menu_pressed():
 	$GameScreen/MarginContainer.hide();
 	$GameScreen.hide()
 	$MenuScreen.show();
-	pass # Replace with function body.
