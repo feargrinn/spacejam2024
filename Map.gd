@@ -43,19 +43,24 @@ func update_at(x: int, y: int):
 	var tile = tiles[x][y]
 	for link in tile.links:
 		var offset = to_vector(link)
-		var other = tiles[x+offset.x][y+offset.y]
+		var other_x = x+offset.x
+		var other_y = y+offset.y
+		var other = tiles[other_x][other_y]
 		if connected(other, link):
 			if other.is_painted:
 				full_neighbours.append(other.get_paint())
 			else:
-				empty_neighbours.append(other)
+				empty_neighbours.append(Vector2i(other_x, other_y))
 	if full_neighbours.lenght() > 0:
 		var colour = mix(full_neighbours)
 		tile.set_color(colour)
 		for neighbour in empty_neighbours:
 			fill_pipes(neighbour, colour)
 
-func fill_pipes(tile: Tile, colour: Colour):
+func fill_pipes(coords: Vector2i, colour: Colour):
+	var x = coords.x
+	var y = coords.y
+	var tile = tiles[x][y]
 	tile.set_color(colour)
 	for link in tile.links:
 		var offset = to_vector(link)
