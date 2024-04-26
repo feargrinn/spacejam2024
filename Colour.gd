@@ -2,18 +2,24 @@ extends Sprite2D
 
 class_name Colour
 
+var globals
+
 var r: float
 var y: float
 var b: float
 var anti: bool
 
-func __ready():
-	
-
 func _init(r: float, y: float, b: float):
 	self.r = r
 	self.y = y
 	self.b = b
+	#position -= 0.5 * Vector2(Globals.TILE_SIZE, Globals.TILE_SIZE)
+	texture = preload("res://images/paint_texture.tres")
+	modulate = Color(r, y, b)
+	z_index = -1
+
+func __ready():
+	ColorRect.color = color()
 
 func color():
 	var revr = 1 - self.r

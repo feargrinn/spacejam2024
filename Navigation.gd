@@ -27,8 +27,7 @@ func _input(event):
 		esc_pressed = false
 
 func _on_quit_pressed():
-	get_tree().quit();
-	pass # Replace with function body.
+	get_tree().quit()
 
 
 func _on_play_pressed():

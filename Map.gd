@@ -4,8 +4,7 @@ const empty_tile_script = preload("res://Tiles/EmptyTile.gd")
 const t_tile_script = preload("res://Tiles/TTile.gd")
 const straight_tile_script = preload("res://Tiles/StraightTile.gd")
 const bend_tile_script = preload("res://Tiles/LTile.gd")
-
-const TILE_SIZE = 24
+const colour_script = preload("res://Colour.gd")
 
 var tiles = []
 
@@ -20,16 +19,25 @@ func _ready():
 
 	for i in range(20):
 		for j in range(20):
-			set_tile_at(tiles[i][j], i, j)
+			init_tile_at(tiles[i][j], i, j)
 
-	set_tile_at(t_tile_script.new(), 3, 1)
+	var tile = t_tile_script.new()
+	set_tile_at(tile, 3, 1)
+	#tile.set_color(colour_script.new(1, 1, 1))
 	
-func set_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
+func init_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
 	tiles[ix][iy] = tile
 	add_child(tile)
-	tile.position = position + Vector2((ix + 0.5) * TILE_SIZE, (iy + 0.5) * TILE_SIZE)
+	tile.position = position + Vector2(
+		(ix + 0.5) * Globals.TILE_SIZE,
+		(iy + 0.5) * Globals.TILE_SIZE
+	)
 	for i in range(rot):
 		tile.rotate_right()
+	
+func set_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
+	remove_child(tiles[ix][iy])
+	init_tile_at(tile, ix, iy, rot)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

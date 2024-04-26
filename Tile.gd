@@ -56,8 +56,13 @@ func rotate_right():
 	links = new_links
 	
 func set_color(_color: Colour):
-	is_painted = true
+	if is_painted:
+		remove_child(color)
+	else:
+		is_painted = true
+
 	color = _color
+	add_child(color)
 
 func get_paint() -> Paint:
 	return paint_script.new(color, pipe_size)
