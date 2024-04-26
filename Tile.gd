@@ -9,7 +9,7 @@ const Direction = {
 	LEFT = 3
 }
 
-func right(direction: Direction):
+func right(direction: int):
 	if direction == Direction.UP:
 		return Direction.RIGHT
 	if direction == Direction.RIGHT:
@@ -19,23 +19,21 @@ func right(direction: Direction):
 	if direction == Direction.LEFT:
 		return Direction.UP
 
-var links: Array[Direction] = []
+var links: Array[int] = []
 var texture_to_set : Texture
 var is_painted: bool
 var paint: Paint
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	rot = TileRotation.UP
 	is_painted = false
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
 
 func rotate_right():
- var new_links = []
+	var new_links = []
 	for link in links:
 		new_links.append(right(link))
 	links = new_links

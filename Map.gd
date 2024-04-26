@@ -28,7 +28,8 @@ func set_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
 	tiles[ix][iy] = tile
 	add_child(tile)
 	tile.position = position + Vector2((ix + 0.5) * TILE_SIZE, (iy + 0.5) * TILE_SIZE)
-	tile.rot = rot
+	for i in range(rot):
+		tile.rotate_right()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
