@@ -113,12 +113,34 @@ func _on_exit_level_picker_pressed():
 	$LeverPicker.hide()
 	get_tree().change_scene_to_file("res://node_2d.tscn")
 
+func play_credits():
+	var delay = 500.
+	$Credits.show();
+	$Credits.set_color("84A98C33")
+	await get_tree().create_timer(delay/1000).timeout
+	$Credits.set_color("84A98C66")
+	await get_tree().create_timer(delay/1000).timeout
+	$Credits.set_color("52796F99")
+	await get_tree().create_timer(delay/1000).timeout
+	$Credits.set_color("354F52CC")
+	await get_tree().create_timer(delay/1000).timeout
+	$Credits.set_color("2F3E46FF")
+	await get_tree().create_timer(delay/1000).timeout
+	while $RichTextLabel.position.y>-300:
+		$RichTextLabel.position.y -= 10
+		await get_tree().create_timer(delay/5000).timeout
+		OS.delay_msec(delay/5);
+		print($RichTextLabel.position.y )
+	pass
 
 func _on_animation_player_winning_animation_finished(anim_name):
 	_sprite_winning.visible = false
 	_sprite_winning.scale = Vector2(1.0 ,1.0)
-	unload_level()
-	$VictoryScreen.show()
+	if current_level != 1:
+		unload_level()
+		$VictoryScreen.show()
+	else:
+		play_credits();
 
 
 func _on_animation_player_losing_animation_finished(anim_name):
