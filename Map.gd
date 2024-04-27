@@ -72,7 +72,6 @@ func _ready():
 	prepare_map()
 	fill_map()
 	level_definition()
-	add_edges()
 	for i in 3:
 		placing_sounds.append(AudioStreamPlayer.new())
 	placing_sounds[0].stream = preload("res://sfx/sfx_pop_down_tile_1.wav")
