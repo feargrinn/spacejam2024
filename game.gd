@@ -11,10 +11,12 @@ func _process(_delta):
 	pass
 
 func _on_exit_level_pressed():
+	current_map.current_tile = null
 	remove_child(current_map)
 	current_map.hide()
 	$ExitLevel.hide()
 	$LeverPicker.show()
+	$TilePicker.hide()
 
 
 func _on_level_pressed(level: int):

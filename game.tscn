@@ -11,22 +11,24 @@
 [ext_resource type="Texture2D" uid="uid://brvo77uobf1cx" path="res://images/tile_24x24_cross.png" id="6_5nono"]
 
 [node name="Game" type="Node2D"]
+texture_filter = 1
 script = ExtResource("1_f0dd8")
 
 [node name="LeverPicker" type="MarginContainer" parent="."]
+texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 206.0
-offset_bottom = 87.0
+offset_right = 640.0
+offset_bottom = 480.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
 
 [node name="Rows" type="VBoxContainer" parent="LeverPicker"]
 layout_mode = 2
@@ -35,166 +37,336 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Level" type="Button" parent="LeverPicker/Rows/Columns"]
+[node name="MarginContainer" type="MarginContainer" parent="LeverPicker/Rows/Columns"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns/MarginContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_rssi8")
+theme_override_font_sizes/font_size = 64
 text = "1"
+icon = ExtResource("3_eonvc")
+flat = true
+icon_alignment = 1
 
-[node name="Level2" type="Button" parent="LeverPicker/Rows/Columns"]
+[node name="MarginContainer2" type="MarginContainer" parent="LeverPicker/Rows/Columns"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns/MarginContainer2"]
+visible = false
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_rssi8")
+theme_override_font_sizes/font_size = 64
 text = "2"
+icon = ExtResource("3_eonvc")
+flat = true
+icon_alignment = 1
 
-[node name="Level3" type="Button" parent="LeverPicker/Rows/Columns"]
+[node name="MarginContainer3" type="MarginContainer" parent="LeverPicker/Rows/Columns"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns/MarginContainer3"]
+visible = false
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_rssi8")
+theme_override_font_sizes/font_size = 64
 text = "3"
+icon = ExtResource("3_eonvc")
+flat = true
+icon_alignment = 1
 
-[node name="Level4" type="Button" parent="LeverPicker/Rows/Columns"]
+[node name="MarginContainer4" type="MarginContainer" parent="LeverPicker/Rows/Columns"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns/MarginContainer4"]
+visible = false
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_rssi8")
+theme_override_font_sizes/font_size = 64
 text = "4"
+icon = ExtResource("3_eonvc")
+flat = true
+icon_alignment = 1
 
-[node name="Level5" type="Button" parent="LeverPicker/Rows/Columns"]
+[node name="MarginContainer5" type="MarginContainer" parent="LeverPicker/Rows/Columns"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns/MarginContainer5"]
+visible = false
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_rssi8")
+theme_override_font_sizes/font_size = 64
 text = "5"
+icon = ExtResource("3_eonvc")
+flat = true
+icon_alignment = 1
 
 [node name="Columns2" type="HBoxContainer" parent="LeverPicker/Rows"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Level" type="Button" parent="LeverPicker/Rows/Columns2"]
-visible = false
+[node name="MarginContainer" type="MarginContainer" parent="LeverPicker/Rows/Columns2"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns2/MarginContainer"]
+visible = false
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_rssi8")
+theme_override_font_sizes/font_size = 64
 text = "1"
+icon = ExtResource("3_eonvc")
+flat = true
+icon_alignment = 1
 
-[node name="Level2" type="Button" parent="LeverPicker/Rows/Columns2"]
-visible = false
+[node name="MarginContainer2" type="MarginContainer" parent="LeverPicker/Rows/Columns2"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns2/MarginContainer2"]
+visible = false
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_rssi8")
+theme_override_font_sizes/font_size = 64
 text = "2"
+icon = ExtResource("3_eonvc")
+flat = true
+icon_alignment = 1
 
-[node name="Level3" type="Button" parent="LeverPicker/Rows/Columns2"]
-visible = false
+[node name="MarginContainer3" type="MarginContainer" parent="LeverPicker/Rows/Columns2"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns2/MarginContainer3"]
+visible = false
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_rssi8")
+theme_override_font_sizes/font_size = 64
 text = "3"
+icon = ExtResource("3_eonvc")
+flat = true
+icon_alignment = 1
 
-[node name="Level4" type="Button" parent="LeverPicker/Rows/Columns2"]
-visible = false
+[node name="MarginContainer4" type="MarginContainer" parent="LeverPicker/Rows/Columns2"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns2/MarginContainer4"]
+visible = false
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_rssi8")
+theme_override_font_sizes/font_size = 64
 text = "4"
+icon = ExtResource("3_eonvc")
+flat = true
+icon_alignment = 1
 
-[node name="Level5" type="Button" parent="LeverPicker/Rows/Columns2"]
-visible = false
+[node name="MarginContainer5" type="MarginContainer" parent="LeverPicker/Rows/Columns2"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns2/MarginContainer5"]
+visible = false
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_rssi8")
+theme_override_font_sizes/font_size = 64
 text = "5"
+icon = ExtResource("3_eonvc")
+flat = true
+icon_alignment = 1
 
 [node name="Columns3" type="HBoxContainer" parent="LeverPicker/Rows"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Level" type="Button" parent="LeverPicker/Rows/Columns3"]
-visible = false
+[node name="MarginContainer" type="MarginContainer" parent="LeverPicker/Rows/Columns3"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns3/MarginContainer"]
+visible = false
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_rssi8")
+theme_override_font_sizes/font_size = 64
 text = "1"
+icon = ExtResource("3_eonvc")
+flat = true
+icon_alignment = 1
 
-[node name="Level2" type="Button" parent="LeverPicker/Rows/Columns3"]
-visible = false
+[node name="MarginContainer2" type="MarginContainer" parent="LeverPicker/Rows/Columns3"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns3/MarginContainer2"]
+visible = false
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_rssi8")
+theme_override_font_sizes/font_size = 64
 text = "2"
+icon = ExtResource("3_eonvc")
+flat = true
+icon_alignment = 1
 
-[node name="Level3" type="Button" parent="LeverPicker/Rows/Columns3"]
-visible = false
+[node name="MarginContainer3" type="MarginContainer" parent="LeverPicker/Rows/Columns3"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns3/MarginContainer3"]
+visible = false
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_rssi8")
+theme_override_font_sizes/font_size = 64
 text = "3"
+icon = ExtResource("3_eonvc")
+flat = true
+icon_alignment = 1
 
-[node name="Level4" type="Button" parent="LeverPicker/Rows/Columns3"]
-visible = false
+[node name="MarginContainer4" type="MarginContainer" parent="LeverPicker/Rows/Columns3"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns3/MarginContainer4"]
+visible = false
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_rssi8")
+theme_override_font_sizes/font_size = 64
 text = "4"
+icon = ExtResource("3_eonvc")
+flat = true
+icon_alignment = 1
 
-[node name="Level5" type="Button" parent="LeverPicker/Rows/Columns3"]
-visible = false
+[node name="MarginContainer5" type="MarginContainer" parent="LeverPicker/Rows/Columns3"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns3/MarginContainer5"]
+visible = false
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_rssi8")
+theme_override_font_sizes/font_size = 64
 text = "5"
+icon = ExtResource("3_eonvc")
+flat = true
+icon_alignment = 1
 
 [node name="Columns4" type="HBoxContainer" parent="LeverPicker/Rows"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Level" type="Button" parent="LeverPicker/Rows/Columns4"]
-visible = false
+[node name="MarginContainer" type="MarginContainer" parent="LeverPicker/Rows/Columns4"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns4/MarginContainer"]
+visible = false
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_rssi8")
+theme_override_font_sizes/font_size = 64
 text = "1"
+icon = ExtResource("3_eonvc")
+flat = true
+icon_alignment = 1
 
-[node name="Level2" type="Button" parent="LeverPicker/Rows/Columns4"]
-visible = false
+[node name="MarginContainer2" type="MarginContainer" parent="LeverPicker/Rows/Columns4"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns4/MarginContainer2"]
+visible = false
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_rssi8")
+theme_override_font_sizes/font_size = 64
 text = "2"
+icon = ExtResource("3_eonvc")
+flat = true
+icon_alignment = 1
 
-[node name="Level3" type="Button" parent="LeverPicker/Rows/Columns4"]
-visible = false
+[node name="MarginContainer3" type="MarginContainer" parent="LeverPicker/Rows/Columns4"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns4/MarginContainer3"]
+visible = false
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_rssi8")
+theme_override_font_sizes/font_size = 64
 text = "3"
+icon = ExtResource("3_eonvc")
+flat = true
+icon_alignment = 1
 
-[node name="Level4" type="Button" parent="LeverPicker/Rows/Columns4"]
-visible = false
+[node name="MarginContainer4" type="MarginContainer" parent="LeverPicker/Rows/Columns4"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns4/MarginContainer4"]
+visible = false
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_rssi8")
+theme_override_font_sizes/font_size = 64
 text = "4"
+icon = ExtResource("3_eonvc")
+flat = true
+icon_alignment = 1
 
-[node name="Level5" type="Button" parent="LeverPicker/Rows/Columns4"]
-visible = false
+[node name="MarginContainer5" type="MarginContainer" parent="LeverPicker/Rows/Columns4"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns4/MarginContainer5"]
+visible = false
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_rssi8")
+theme_override_font_sizes/font_size = 64
 text = "5"
-
-[node name="Columns5" type="HBoxContainer" parent="LeverPicker/Rows"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Level" type="Button" parent="LeverPicker/Rows/Columns5"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-text = "1"
-
-[node name="Level2" type="Button" parent="LeverPicker/Rows/Columns5"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-text = "2"
-
-[node name="Level3" type="Button" parent="LeverPicker/Rows/Columns5"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-text = "3"
-
-[node name="Level4" type="Button" parent="LeverPicker/Rows/Columns5"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-text = "4"
-
-[node name="Level5" type="Button" parent="LeverPicker/Rows/Columns5"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 3
-text = "5"
+icon = ExtResource("3_eonvc")
+flat = true
+icon_alignment = 1
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -208,7 +380,7 @@ visible = false
 offset_right = 8.0
 offset_bottom = 8.0
 theme_override_fonts/font = ExtResource("2_rssi8")
-theme_override_font_sizes/font_size = 60
+theme_override_font_sizes/font_size = 64
 text = "Iks"
 icon = ExtResource("3_eonvc")
 flat = true
@@ -255,11 +427,26 @@ size_flags_vertical = 3
 texture = ExtResource("6_5nono")
 stretch_mode = 3
 
-[connection signal="pressed" from="LeverPicker/Rows/Columns/Level" to="." method="_on_level_pressed" binds= [1]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns/Level2" to="." method="_on_level_pressed" binds= [2]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns/Level3" to="." method="_on_level_pressed" binds= [3]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns/Level4" to="." method="_on_level_pressed" binds= [4]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns/Level5" to="." method="_on_level_pressed" binds= [5]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns/MarginContainer/Level" to="." method="_on_level_pressed" binds= [1]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns/MarginContainer2/Level" to="." method="_on_level_pressed" binds= [2]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns/MarginContainer3/Level" to="." method="_on_level_pressed" binds= [3]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns/MarginContainer4/Level" to="." method="_on_level_pressed" binds= [4]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns/MarginContainer5/Level" to="." method="_on_level_pressed" binds= [5]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns2/MarginContainer/Level" to="." method="_on_level_pressed" binds= [1]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns2/MarginContainer2/Level" to="." method="_on_level_pressed" binds= [2]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns2/MarginContainer3/Level" to="." method="_on_level_pressed" binds= [3]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns2/MarginContainer4/Level" to="." method="_on_level_pressed" binds= [4]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns2/MarginContainer5/Level" to="." method="_on_level_pressed" binds= [5]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns3/MarginContainer/Level" to="." method="_on_level_pressed" binds= [1]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns3/MarginContainer2/Level" to="." method="_on_level_pressed" binds= [2]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns3/MarginContainer3/Level" to="." method="_on_level_pressed" binds= [3]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns3/MarginContainer4/Level" to="." method="_on_level_pressed" binds= [4]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns3/MarginContainer5/Level" to="." method="_on_level_pressed" binds= [5]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns4/MarginContainer/Level" to="." method="_on_level_pressed" binds= [1]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns4/MarginContainer2/Level" to="." method="_on_level_pressed" binds= [2]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns4/MarginContainer3/Level" to="." method="_on_level_pressed" binds= [3]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns4/MarginContainer4/Level" to="." method="_on_level_pressed" binds= [4]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns4/MarginContainer5/Level" to="." method="_on_level_pressed" binds= [5]]
 [connection signal="pressed" from="ExitLevel" to="." method="_on_exit_level_pressed"]
 [connection signal="mouse_entered" from="TilePicker/VBoxContainer/TextureRect" to="TilePicker" method="_on_mouse_entered_tile" binds= [1]]
 [connection signal="mouse_exited" from="TilePicker/VBoxContainer/TextureRect" to="TilePicker" method="_on_i_mouse_exited"]
