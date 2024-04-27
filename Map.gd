@@ -44,10 +44,12 @@ func set_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
 	init_tile_at(tile, ix, iy, rot)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	if Input.is_action_pressed("lmb"):
-		if (get_global_mouse_position() - position).length() < 32:
-			position = get_global_mouse_position()
+func _process(_delta):
+	#if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		#position = get_global_mouse_position();
+		#if (get_global_mouse_position() - position).length() < 32:
+		#	position = get_global_mouse_position()
+	pass
 	
 func update_at(x: int, y: int):
 	var empty_neighbours = []
