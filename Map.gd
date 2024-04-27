@@ -24,7 +24,7 @@ var tile = null;
 var is_running: bool
 
 var placing_sounds = []
-var rotation_sound;
+var rotation_sound
 
 func set_dimensions():
 	pass
@@ -224,7 +224,7 @@ func check_for_game_status():
 	for output_tile in all_outputs:
 		if output_tile.is_output_filled && !output_tile.color.isEqual(output_tile.target_color):
 			is_running = false
-			get_parent().loser_screen(scale, all_outputs)
+			get_parent().loser_screen(scale, output_tile)
 			return
 
 	for output_tile in all_outputs:

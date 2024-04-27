@@ -3,6 +3,9 @@ extends Node
 var current_map
 var current_level
 
+var winning_sound
+var losing_sound
+
 @onready var _sprite_winning = $Sprite2DWinning
 @onready var _sprite_losing = $Sprite2DLosing
 @onready var _animation_winning = $Sprite2DWinning/AnimationPlayerWinning
@@ -10,7 +13,12 @@ var current_level
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	winning_sound = AudioStreamPlayer.new()
+	winning_sound.stream = preload("res://sfx/sfx_winning_animation.wav")
+	add_child(winning_sound)
+	losing_sound = AudioStreamPlayer.new()
+	losing_sound.stream = preload("res://sfx/sfx_losing_animation.wav")
+	add_child(losing_sound)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -87,26 +95,27 @@ func _on_next_level_pressed():
 func victory_screen(scale: Vector2, all_outputs: Array[OutputTile]):
 	_sprite_winning.scale *= scale
 	_sprite_winning.rotation_degrees = 0
-	for i in all_outputs.size():
-		for n in all_outputs[i].links[0]:
-			_sprite_winning.rotation_degrees += 90
-		_sprite_winning.position = all_outputs[i].global_position
-		_sprite_winning.visible = true
-		_animation_winning.play("winning")
+	var output = all_outputs[RandomNumberGenerator.new().randi_range(0, all_outputs.size()-1)]
+	for n in output.links[0]:
+		_sprite_winning.rotation_degrees += 90
+	_sprite_winning.position = output.global_position
+	_sprite_winning.visible = true
+	_animation_winning.play("winning")
+	winning_sound.play()
 
 func _on_retry_pressed():
 	$LoserScreen.hide()
 	_on_level_pressed(current_level)
 
-func loser_screen(scale: Vector2, all_outputs: Array[OutputTile]):
+func loser_screen(scale: Vector2, losing_output: OutputTile):
 	_sprite_losing.scale *= scale
 	_sprite_losing.rotation_degrees = 0
-	for i in all_outputs.size():
-		for n in all_outputs[i].links[0]:
-			_sprite_losing.rotation_degrees += 90
-		_sprite_losing.position = all_outputs[i].global_position
-		_sprite_losing.visible = true
-		_animation_losing.play("losing")
+	for n in losing_output.links[0]:
+		_sprite_losing.rotation_degrees += 90
+	_sprite_losing.position = losing_output.global_position
+	_sprite_losing.visible = true
+	_animation_losing.play("losing")
+	losing_sound.play()
 
 
 func _on_exit_level_picker_pressed():
