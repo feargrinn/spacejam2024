@@ -12,10 +12,10 @@ func _process(_delta):
 
 
 func _on_mouse_entered_tile(extra_arg_0):
-	get_parent().get_child(2).current_tile = extra_arg_0
+	get_parent().get_child(4).current_tile = extra_arg_0
 
 
 func _on_i_mouse_exited():
-	get_parent().get_child(2).current_tile = null
+	get_parent().get_child(4).current_tile = null
 
 

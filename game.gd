@@ -32,5 +32,6 @@ func _on_level_pressed(level: int):
 	add_child(new_map)
 	current_map = new_map
 	$LeverPicker.hide()
+	$TilePicker.show()
 	$ExitLevel.show()
 	current_map.show()
