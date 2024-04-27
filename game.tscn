@@ -132,7 +132,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("2_rssi8")
 theme_override_font_sizes/font_size = 64
-text = "1"
+text = "6"
 icon = ExtResource("3_eonvc")
 flat = true
 icon_alignment = 1
@@ -399,34 +399,37 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_bottom = 40
 script = ExtResource("2_l2akx")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TilePicker"]
 layout_mode = 2
+theme_override_constants/separation = 30
 
 [node name="TextureRect" type="TextureRect" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 texture = ExtResource("6_psk2b")
-stretch_mode = 3
+stretch_mode = 5
 
 [node name="TextureRect2" type="TextureRect" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 texture = ExtResource("7_ujjlr")
-stretch_mode = 3
+stretch_mode = 5
 
 [node name="TextureRect3" type="TextureRect" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 texture = ExtResource("8_l0vv8")
-stretch_mode = 3
+stretch_mode = 5
 
 [node name="TextureRect4" type="TextureRect" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 texture = ExtResource("9_yodhl")
-stretch_mode = 3
+stretch_mode = 5
 
 [node name="VictoryScreen" type="ColorRect" parent="."]
 visible = false
@@ -517,7 +520,7 @@ icon_alignment = 1
 [connection signal="pressed" from="LeverPicker/Rows/Columns/MarginContainer3/Level" to="." method="_on_level_pressed" binds= [3]]
 [connection signal="pressed" from="LeverPicker/Rows/Columns/MarginContainer4/Level" to="." method="_on_level_pressed" binds= [4]]
 [connection signal="pressed" from="LeverPicker/Rows/Columns/MarginContainer5/Level" to="." method="_on_level_pressed" binds= [5]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns2/MarginContainer/Level" to="." method="_on_level_pressed" binds= [1]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns2/MarginContainer/Level" to="." method="_on_level_pressed" binds= [6]]
 [connection signal="pressed" from="LeverPicker/Rows/Columns2/MarginContainer2/Level" to="." method="_on_level_pressed" binds= [2]]
 [connection signal="pressed" from="LeverPicker/Rows/Columns2/MarginContainer3/Level" to="." method="_on_level_pressed" binds= [3]]
 [connection signal="pressed" from="LeverPicker/Rows/Columns2/MarginContainer4/Level" to="." method="_on_level_pressed" binds= [4]]

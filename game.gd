@@ -36,6 +36,8 @@ func _on_level_pressed(level: int):
 		new_map.set_script(preload("res://Levels/LevelFour.gd"))
 	elif level == 5:
 		new_map.set_script(preload("res://Levels/LevelFive.gd"))
+	elif level == 6:
+		new_map.set_script(preload("res://Levels/LevelSix.gd"))
 	add_child(new_map)
 	current_map = new_map
 	$LeverPicker.hide()
