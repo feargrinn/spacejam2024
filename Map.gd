@@ -1,5 +1,7 @@
 extends Sprite2D
 
+class_name Map
+
 const empty_tile_script = preload("res://Tiles/EmptyTile.gd")
 const no_tile_script = preload("res://Tiles/NoTile.gd")
 const t_tile_script = preload("res://Tiles/TTile.gd")
