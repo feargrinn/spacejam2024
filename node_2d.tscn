@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://b6ldch5v2bfc3"]
+[gd_scene load_steps=7 format=3 uid="uid://b6ldch5v2bfc3"]
 
 [ext_resource type="Script" path="res://Navigation.gd" id="1_motdp"]
-[ext_resource type="Texture2D" uid="uid://hixfioprefle" path="res://images/menu_button_play.png" id="2_yxybc"]
-[ext_resource type="Texture2D" uid="uid://cck4nmo2vxkh8" path="res://images/menu_button_settings.png" id="3_pripr"]
-[ext_resource type="Texture2D" uid="uid://duqko5eqnbob3" path="res://images/menu_button_quit.png" id="4_13pl1"]
-[ext_resource type="Texture2D" uid="uid://bvwcjmibviftm" path="res://images/bg_640x480.png" id="5_yynow"]
+[ext_resource type="Texture2D" uid="uid://b6y06h2qilehi" path="res://images/title_banner.png" id="2_1n7gv"]
+[ext_resource type="Texture2D" uid="uid://lijymylkpj6r" path="res://images/menu_button_play.png" id="2_yxybc"]
+[ext_resource type="Texture2D" uid="uid://ixy8mrfmko3r" path="res://images/menu_button_settings.png" id="3_pripr"]
+[ext_resource type="Texture2D" uid="uid://dx1f0ybknw5qb" path="res://images/menu_button_quit.png" id="4_13pl1"]
+[ext_resource type="Texture2D" uid="uid://oogt24347qv7" path="res://images/bg_640x480.png" id="5_yynow"]
 
 [node name="Node" type="Node"]
 script = ExtResource("1_motdp")
@@ -30,9 +31,16 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Title" type="Label" parent="MenuScreen/VBoxContainer2/MarginContainer"]
+visible = false
 layout_mode = 2
 text = "Game"
 horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MenuScreen/VBoxContainer2/MarginContainer"]
+z_index = 1
+layout_mode = 2
+texture = ExtResource("2_1n7gv")
+stretch_mode = 5
 
 [node name="MenuButtons" type="VBoxContainer" parent="MenuScreen/VBoxContainer2"]
 layout_mode = 2
