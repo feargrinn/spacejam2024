@@ -87,19 +87,25 @@ func set_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
 	update_at(ix, iy)
 	
 func _mouse_position_to_coordinates():
-	#tile.position = position + Vector2(
-	#	(ix + 0.5) * Globals.TILE_SIZE,
-	#	(iy + 0.5) * Globals.TILE_SIZE
-	#)
-	var vec = get_global_mouse_position() - position
-	var x = vec[0]/Globals.TILE_SIZE;
-	var y = vec[1]/Globals.TILE_SIZE;
+	var game_position = Globals.WINDOW_SIZE / 2 - Vector2(
+		number_of_tiles_x * scale.x * Globals.TILE_SIZE / 2,
+		number_of_tiles_y * scale.y * Globals.TILE_SIZE / 2)
+	var vec = get_global_mouse_position() - game_position
+	vec /= scale[0]
+	var x = (vec[0] )/Globals.TILE_SIZE;
+	var y = (vec[1] )/Globals.TILE_SIZE;
 	return [x,y]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+	var game_position = Globals.WINDOW_SIZE / 2 - Vector2(
+		number_of_tiles_x * scale.x * Globals.TILE_SIZE / 2,
+		number_of_tiles_y * scale.y * Globals.TILE_SIZE / 2)
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and left_mouse_was_pressed and tile != null:
-		tile.position = get_global_mouse_position()
+		if scale[0] != 1:
+			tile.position = (get_global_mouse_position() - game_position)/2
+		else:
+			tile.position = get_global_mouse_position() - position
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and right_mouse_was_pressed == false and tile != null:
 		right_mouse_was_pressed = true;
 		tile.rotate_right()
@@ -107,7 +113,6 @@ func _process(_delta):
 		right_mouse_was_pressed = false
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and left_mouse_was_pressed == false:
 		left_mouse_was_pressed = true
-		print(current_tile)
 		match current_tile:
 			null:
 				pass
@@ -123,7 +128,7 @@ func _process(_delta):
 				tile = BendTile.new()
 				tile.position = get_global_mouse_position()
 				add_child(tile)
-			3:
+			4:
 				tile = BendTile.new()
 				tile.position = get_global_mouse_position()
 				add_child(tile)
@@ -133,7 +138,7 @@ func _process(_delta):
 		if tile != null:
 			var position = _mouse_position_to_coordinates()
 			remove_child(tile)
-			if position[0] >= 0 and position[0] < 20 and position[1] >= 0 and position[1] < 20:
+			if position[0] >= 0 and position[0] < number_of_tiles_x and position[1] >= 0 and position[1] < number_of_tiles_y:
 				set_tile_at(tile, position[0], position[1], 0);
 			tile = null;
 	pass
