@@ -130,7 +130,6 @@ func handle_left_mouse_button():
 
 		tile.position = get_global_mouse_position()
 		add_child(tile)
-		tile.is_replaceable = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):

@@ -57,25 +57,25 @@ func _on_next_level_pressed():
 	$VictoryScreen.hide()
 	match current_level:
 		1:
-			$LeverPicker/Rows/Columns/MarginContainer2/Level.show()
+			$LeverPicker/VBoxContainer/Rows/Columns/MarginContainer2/Level.show()
 		2:
-			$LeverPicker/Rows/Columns/MarginContainer3/Level.show()
+			$LeverPicker/VBoxContainer/Rows/Columns/MarginContainer3/Level.show()
 		3:
-			$LeverPicker/Rows/Columns/MarginContainer4/Level.show()
+			$LeverPicker/VBoxContainer/Rows/Columns/MarginContainer4/Level.show()
 		4:
-			$LeverPicker/Rows/Columns/MarginContainer5/Level.show()
+			$LeverPicker/VBoxContainer/Rows/Columns/MarginContainer5/Level.show()
 		5:
-			$LeverPicker/Rows/Columns2/MarginContainer/Level.show()
+			$LeverPicker/VBoxContainer/Rows/Columns2/MarginContainer/Level.show()
 		6:
-			$LeverPicker/Rows/Columns2/MarginContainer2/Level.show()
+			$LeverPicker/VBoxContainer/Rows/Columns2/MarginContainer2/Level.show()
 		7:
-			$LeverPicker/Rows/Columns2/MarginContainer3/Level.show()
+			$LeverPicker/VBoxContainer/Rows/Columns2/MarginContainer3/Level.show()
 		8:
-			$LeverPicker/Rows/Columns2/MarginContainer4/Level.show()
+			$LeverPicker/VBoxContainer/Rows/Columns2/MarginContainer4/Level.show()
 		9:
-			$LeverPicker/Rows/Columns2/MarginContainer5/Level.show()
+			$LeverPicker/VBoxContainer/Rows/Columns2/MarginContainer5/Level.show()
 		10:
-			$LeverPicker/Rows/Columns3/MarginContainer/Level.show()
+			$LeverPicker/VBoxContainer/Rows/Columns3/MarginContainer/Level.show()
 	_on_level_pressed(current_level + 1)
 
 func victory_screen():
@@ -89,3 +89,8 @@ func _on_retry_pressed():
 func loser_screen():
 	unload_level()
 	$LoserScreen.show()
+
+
+func _on_exit_level_picker_pressed():
+	$LeverPicker.hide()
+	get_tree().change_scene_to_file("res://node_2d.tscn")
