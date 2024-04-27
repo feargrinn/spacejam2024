@@ -1,9 +1,188 @@
 [gd_scene load_steps=2 format=3 uid="uid://fhmwenm3h7c7"]
 
-[ext_resource type="Script" path="res://Map.gd" id="2_l2u33"]
+[ext_resource type="Script" path="res://game.gd" id="1_f0dd8"]
 
 [node name="Game" type="Node2D"]
 scale = Vector2(1.08821, 1.0947)
+script = ExtResource("1_f0dd8")
 
-[node name="Map" type="Sprite2D" parent="."]
-script = ExtResource("2_l2u33")
+[node name="LeverPicker" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 20
+
+[node name="Rows" type="VBoxContainer" parent="LeverPicker"]
+layout_mode = 2
+
+[node name="Columns" type="HBoxContainer" parent="LeverPicker/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+
+[node name="Level2" type="Button" parent="LeverPicker/Rows/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2"
+
+[node name="Level3" type="Button" parent="LeverPicker/Rows/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "3"
+
+[node name="Level4" type="Button" parent="LeverPicker/Rows/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "4"
+
+[node name="Level5" type="Button" parent="LeverPicker/Rows/Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "5"
+
+[node name="Columns2" type="HBoxContainer" parent="LeverPicker/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns2"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+
+[node name="Level2" type="Button" parent="LeverPicker/Rows/Columns2"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2"
+
+[node name="Level3" type="Button" parent="LeverPicker/Rows/Columns2"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "3"
+
+[node name="Level4" type="Button" parent="LeverPicker/Rows/Columns2"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "4"
+
+[node name="Level5" type="Button" parent="LeverPicker/Rows/Columns2"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "5"
+
+[node name="Columns3" type="HBoxContainer" parent="LeverPicker/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns3"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+
+[node name="Level2" type="Button" parent="LeverPicker/Rows/Columns3"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2"
+
+[node name="Level3" type="Button" parent="LeverPicker/Rows/Columns3"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "3"
+
+[node name="Level4" type="Button" parent="LeverPicker/Rows/Columns3"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "4"
+
+[node name="Level5" type="Button" parent="LeverPicker/Rows/Columns3"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "5"
+
+[node name="Columns4" type="HBoxContainer" parent="LeverPicker/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns4"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+
+[node name="Level2" type="Button" parent="LeverPicker/Rows/Columns4"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2"
+
+[node name="Level3" type="Button" parent="LeverPicker/Rows/Columns4"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "3"
+
+[node name="Level4" type="Button" parent="LeverPicker/Rows/Columns4"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "4"
+
+[node name="Level5" type="Button" parent="LeverPicker/Rows/Columns4"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "5"
+
+[node name="Columns5" type="HBoxContainer" parent="LeverPicker/Rows"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Level" type="Button" parent="LeverPicker/Rows/Columns5"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+
+[node name="Level2" type="Button" parent="LeverPicker/Rows/Columns5"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2"
+
+[node name="Level3" type="Button" parent="LeverPicker/Rows/Columns5"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "3"
+
+[node name="Level4" type="Button" parent="LeverPicker/Rows/Columns5"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "4"
+
+[node name="Level5" type="Button" parent="LeverPicker/Rows/Columns5"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+text = "5"

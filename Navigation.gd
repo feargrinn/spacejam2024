@@ -14,15 +14,11 @@ func _process(_delta):
 func _input(event):
 	if Input.is_key_pressed(KEY_ESCAPE) and esc_pressed == false:
 		esc_pressed = true
-		if $LeverPicker.is_visible():
-			$LeverPicker.hide()
-			$MenuScreen.show()
-		else:
-			if $GameScreen.is_visible():
-				if $GameScreen/MarginContainer.is_visible():
-					$GameScreen/MarginContainer.hide();
-				else:
-					$GameScreen/MarginContainer.show();
+		if $GameScreen.is_visible():
+			if $GameScreen/MarginContainer.is_visible():
+				$GameScreen/MarginContainer.hide();
+			else:
+				$GameScreen/MarginContainer.show();
 	if Input.is_action_just_released("ESC_PRESSED"):
 		esc_pressed = false
 
@@ -32,13 +28,7 @@ func _on_quit_pressed():
 
 func _on_play_pressed():
 	$MenuScreen.hide();
-	$LeverPicker.show();
-
-
-func _on_level_pressed(extra_arg_0):
-	$LeverPicker.hide();
 	get_tree().change_scene_to_file("res://game.tscn")
-
 
 func _on_main_menu_pressed():
 	$GameScreen/MarginContainer.hide();
