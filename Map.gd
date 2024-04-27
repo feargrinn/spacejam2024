@@ -14,6 +14,7 @@ const output_script = preload("res://Tiles/OutputTile.gd")
 var tiles = []
 var number_of_tiles_x: int
 var number_of_tiles_y: int
+var all_outputs: Array[OutputTile] = []
 
 func set_dimensions():
 	pass
@@ -78,6 +79,7 @@ func set_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
 	tile.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	remove_child(tiles[ix][iy])
 	init_tile_at(tile, ix, iy, rot)
+	update_at(ix, iy)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -99,7 +101,7 @@ func update_at(x: int, y: int):
 				full_neighbours.append(other.get_paint())
 			else:
 				empty_neighbours.append(Vector2i(other_x, other_y))
-	if full_neighbours.lenght() > 0:
+	if !full_neighbours.is_empty():
 		var colour = Paint.mix(full_neighbours)
 		tile.set_color(colour)
 		for neighbour in empty_neighbours:
