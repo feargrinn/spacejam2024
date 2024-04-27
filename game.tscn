@@ -370,6 +370,15 @@ icon = ExtResource("3_eonvc")
 flat = true
 icon_alignment = 1
 
+[node name="ExitLevelPicker" type="Button" parent="LeverPicker"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_rssi8")
+theme_override_font_sizes/font_size = 64
+text = "Iks"
+icon = ExtResource("3_eonvc")
+flat = true
+icon_alignment = 1
+
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxBackground"]
@@ -542,6 +551,7 @@ icon_alignment = 1
 [connection signal="pressed" from="LeverPicker/Rows/Columns4/MarginContainer3/Level" to="." method="_on_level_pressed" binds= [3]]
 [connection signal="pressed" from="LeverPicker/Rows/Columns4/MarginContainer4/Level" to="." method="_on_level_pressed" binds= [4]]
 [connection signal="pressed" from="LeverPicker/Rows/Columns4/MarginContainer5/Level" to="." method="_on_level_pressed" binds= [5]]
+[connection signal="pressed" from="LeverPicker/ExitLevelPicker" to="." method="_on_exit_level_picker_pressed"]
 [connection signal="pressed" from="ExitLevel" to="." method="_on_exit_level_pressed"]
 [connection signal="mouse_entered" from="TilePicker/VBoxContainer/TextureRect" to="TilePicker" method="_on_mouse_entered_tile" binds= [1]]
 [connection signal="mouse_entered" from="TilePicker/VBoxContainer/TextureRect2" to="TilePicker" method="_on_mouse_entered_tile" binds= [2]]

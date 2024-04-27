@@ -69,3 +69,8 @@ func _on_retry_pressed():
 func loser_screen():
 	unload_level()
 	$LoserScreen.show()
+
+
+func _on_exit_level_picker_pressed():
+	$LeverPicker.hide()
+	get_tree().change_scene_to_file("res://node_2d.tscn")
