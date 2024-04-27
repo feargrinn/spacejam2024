@@ -16,6 +16,7 @@
 
 [sub_resource type="Animation" id="Animation_3pn8e"]
 length = 0.001
+step = 0.0416667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -54,6 +55,7 @@ _data = {
 
 [sub_resource type="Animation" id="Animation_ujscq"]
 length = 0.001
+step = 0.0416667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true

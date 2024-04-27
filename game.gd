@@ -3,6 +3,9 @@ extends Node
 var current_map
 var current_level
 
+var winning_sound
+var losing_sound
+
 @onready var _sprite_winning = $Sprite2DWinning
 @onready var _sprite_losing = $Sprite2DLosing
 @onready var _animation_winning = $Sprite2DWinning/AnimationPlayerWinning
@@ -10,7 +13,12 @@ var current_level
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	winning_sound = AudioStreamPlayer.new()
+	winning_sound.stream = preload("res://sfx/sfx_winning_animation.wav")
+	add_child(winning_sound)
+	losing_sound = AudioStreamPlayer.new()
+	losing_sound.stream = preload("res://sfx/sfx_losing_animation.wav")
+	add_child(losing_sound)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -93,6 +101,7 @@ func victory_screen(scale: Vector2, all_outputs: Array[OutputTile]):
 	_sprite_winning.position = output.global_position
 	_sprite_winning.visible = true
 	_animation_winning.play("winning")
+	winning_sound.play()
 
 func _on_retry_pressed():
 	$LoserScreen.hide()
@@ -106,6 +115,7 @@ func loser_screen(scale: Vector2, losing_output: OutputTile):
 	_sprite_losing.position = losing_output.global_position
 	_sprite_losing.visible = true
 	_animation_losing.play("losing")
+	losing_sound.play()
 
 
 func _on_exit_level_picker_pressed():

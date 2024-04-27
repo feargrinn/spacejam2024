@@ -24,7 +24,7 @@ var tile = null;
 var is_running: bool
 
 var placing_sounds = []
-var rotation_sound;
+var rotation_sound
 
 func set_dimensions():
 	pass
