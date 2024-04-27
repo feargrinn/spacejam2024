@@ -22,7 +22,3 @@ func _on_mouse_entered_tile(extra_arg_0):
 	map.current_tile = extra_arg_0
 
 
-func _on_mouse_exited():
-	map.current_tile = null
-
-
