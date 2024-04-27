@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://3labjwhf3p4x" path="res://images/tile_24x24_T_opaque.png" id="7_ujjlr"]
 [ext_resource type="Texture2D" uid="uid://b1bv5ft6prg6e" path="res://images/tile_24x24_L_opaque.png" id="8_l0vv8"]
 [ext_resource type="Texture2D" uid="uid://c206w8ik4oobi" path="res://images/tile_24x24_cross_opaque.png" id="9_yodhl"]
-[ext_resource type="Texture2D" uid="uid://b4ovm4fbbjh10" path="res://images/tile_24x24_anti.png" id="10_mn7g2"]
+[ext_resource type="Texture2D" uid="uid://c6klyd06qogb" path="res://images/tile_24x24_anti_opaque.png" id="10_wju1l"]
 
 [node name="Game" type="Node2D"]
 texture_filter = 1
@@ -449,7 +449,7 @@ stretch_mode = 5
 [node name="TextureRect5" type="TextureRect" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-texture = ExtResource("10_mn7g2")
+texture = ExtResource("10_wju1l")
 stretch_mode = 5
 
 [node name="VictoryScreen" type="ColorRect" parent="."]

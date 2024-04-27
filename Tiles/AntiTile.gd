@@ -8,7 +8,7 @@ func _ready():
 	links.append(Direction.UP)
 	links.append(Direction.DOWN)
 	
-	opaque_texture = preload("res://images/tile_24x24_I_opaque.png")
+	opaque_texture = preload("res://images/tile_24x24_anti_opaque.png")
 	transparent_texture = preload("res://images/tile_24x24_anti.png")
 	
 	super._ready()
