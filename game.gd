@@ -26,26 +26,27 @@ func _on_level_pressed(level: int):
 	current_level = level
 	var new_map = Sprite2D.new()
 	new_map.name = "map"
-	if level == 1:
-		new_map.set_script(preload("res://Levels/LevelOne.gd"))
-	elif level == 2:
-		new_map.set_script(preload("res://Levels/LevelTwo.gd"))
-	elif level == 3:
-		new_map.set_script(preload("res://Levels/LevelThree.gd"))
-	elif level == 4:
-		new_map.set_script(preload("res://Levels/LevelFour.gd"))
-	elif level == 5:
-		new_map.set_script(preload("res://Levels/LevelFive.gd"))
-	elif level == 6:
-		new_map.set_script(preload("res://Levels/LevelSix.gd"))
-	elif level == 7:
-		new_map.set_script(preload("res://Levels/LevelSeven.gd"))
-	elif level == 8:
-		new_map.set_script(preload("res://Levels/LevelEight.gd"))
-	elif level == 9:
-		new_map.set_script(preload("res://Levels/LevelNine.gd"))
-	elif level == 10:
-		new_map.set_script(preload("res://Levels/LevelTen.gd"))
+	match level:
+		1:
+			new_map.set_script(preload("res://Levels/LevelOne.gd"))
+		2:
+			new_map.set_script(preload("res://Levels/LevelTwo.gd"))
+		3:
+			new_map.set_script(preload("res://Levels/LevelThree.gd"))
+		4:
+			new_map.set_script(preload("res://Levels/LevelFour.gd"))
+		5:
+			new_map.set_script(preload("res://Levels/LevelFive.gd"))
+		6:
+			new_map.set_script(preload("res://Levels/LevelSix.gd"))
+		7:
+			new_map.set_script(preload("res://Levels/LevelSeven.gd"))
+		8:
+			new_map.set_script(preload("res://Levels/LevelEight.gd"))
+		9:
+			new_map.set_script(preload("res://Levels/LevelNine.gd"))
+		10:
+			new_map.set_script(preload("res://Levels/LevelTen.gd"))
 	add_child(new_map)
 	current_map = new_map
 	$LeverPicker.hide()

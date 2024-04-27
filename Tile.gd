@@ -16,27 +16,29 @@ const Direction = {
 }
 
 static func right(direction: int):
-	if direction == Direction.UP:
-		return Direction.RIGHT
-	if direction == Direction.RIGHT:
-		return Direction.DOWN
-	if direction == Direction.DOWN:
-		return Direction.LEFT
-	if direction == Direction.LEFT:
-		return Direction.UP
+	match direction:
+		Direction.UP:
+			return Direction.RIGHT
+		Direction.RIGHT:
+			return Direction.DOWN
+		Direction.DOWN:
+			return Direction.LEFT
+		Direction.LEFT:
+			return Direction.UP
 
 static func opposite(direction: int) -> int:
 	return right(right(direction))
 
 static func to_vector(direction: int):
-	if direction == Direction.UP:
-		return Vector2i(0, -1)
-	if direction == Direction.RIGHT:
-		return Vector2i(1, 0)
-	if direction == Direction.DOWN:
-		return Vector2i(0, 1)
-	if direction == Direction.LEFT:
-		return Vector2i(-1, 0)
+	match direction:
+		Direction.UP:
+			return Vector2i(0, -1)
+		Direction.RIGHT:
+			return Vector2i(1, 0)
+		Direction.DOWN:
+			return Vector2i(0, 1)
+		Direction.LEFT:
+			return Vector2i(-1, 0)
 
 var links: Array[int] = []
 var texture_to_set : Texture
@@ -78,7 +80,4 @@ func get_paint() -> Paint:
 
 # Check if the other tile is connected to this one, assuming this one has a connection in that direction.
 static func connected(other: Tile, direction: int):
-	for link in other.links:
-		if link == opposite(direction):
-			return true
-	return false
+	return other.links.any(func(link): return link == opposite(direction))
