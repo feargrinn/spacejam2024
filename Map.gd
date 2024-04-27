@@ -20,6 +20,7 @@ var current_tile = null;
 var left_mouse_was_pressed = false;
 var right_mouse_was_pressed = false;
 var tile = null;
+var is_running: bool
 
 func set_dimensions():
 	pass
@@ -64,6 +65,7 @@ func prepare_map():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	is_running = true
 	prepare_map()
 	fill_map()
 	level_definition()
@@ -99,6 +101,9 @@ func _mouse_position_to_coordinates():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+	if !is_running:
+		return
+		
 	var game_position = Globals.WINDOW_SIZE / 2 - Vector2(
 		number_of_tiles_x * scale.x * Globals.TILE_SIZE / 2,
 		number_of_tiles_y * scale.y * Globals.TILE_SIZE / 2)
@@ -119,27 +124,28 @@ func _process(_delta):
 				pass
 			1:
 				tile = ITile.new()
-				tile.position = get_global_mouse_position()
-				add_child(tile)
 			2:
 				tile = TTile.new()
-				tile.position = get_global_mouse_position()
-				add_child(tile)
 			3:
 				tile = BendTile.new()
-				tile.position = get_global_mouse_position()
-				add_child(tile)
 			4:
 				tile = CrossTile.new()
-				tile.position = get_global_mouse_position()
-				add_child(tile)
+
+		tile.position = get_global_mouse_position()
+		add_child(tile)
+		tile.is_replaceable = true
 	
 	if Input.is_action_just_released("LMB"):
 		left_mouse_was_pressed = false
 		if tile != null:
-			var position = _mouse_position_to_coordinates()
 			remove_child(tile)
-			if position[0] >= 0 and position[0] < number_of_tiles_x and position[1] >= 0 and position[1] < number_of_tiles_y:
+			var position = _mouse_position_to_coordinates()
+			if (position[0] >= 0 
+				and position[0] < number_of_tiles_x 
+				and position[1] >= 0
+				and position[1] < number_of_tiles_y
+				and tiles[position[0]][position[1]].is_replaceable
+			):
 				set_tile_at(tile, position[0], position[1], 0);
 			tile = null;
 	pass
@@ -230,10 +236,12 @@ func check_for_game_status():
 
 	for output_tile in all_outputs:
 		if output_tile.is_output_filled && !output_tile.color.isEqual(output_tile.target_color):
+			is_running = false
 			get_parent().loser_screen()
 
 	for output_tile in all_outputs:
 		if !output_tile.is_output_filled:
 			return
 			
+	is_running = false
 	get_parent().victory_screen()

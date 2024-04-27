@@ -6,6 +6,7 @@ var paint_script = preload("res://Paint.gd")
 var colour_script = preload("res://Colour.gd")
 var transparent_texture: Texture2D
 var opaque_texture: Texture2D
+var is_replaceable: bool
 
 const Direction = {
 	UP = 0,
@@ -49,6 +50,7 @@ func _ready():
 	pipe_size = 1.
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	texture = opaque_texture
+	is_replaceable = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

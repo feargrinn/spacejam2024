@@ -9,6 +9,7 @@ func _ready():
 	transparent_texture = preload("res://images/tile_24x24_empty.png")
 	
 	super._ready()
+	is_replaceable = true
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
