@@ -2,11 +2,7 @@
 
 importer="texture"
 type="CompressedTexture2D"
-<<<<<<< HEAD
-uid="uid://cc77jl7qc23r7"
-=======
-uid="uid://calai3mlg3g58"
->>>>>>> d03faa8 (sfx - added pops, changed pipe turning volume)
+uid="uid://oogt24347qv7"
 path="res://.godot/imported/bg_640x480.png-035dfe2020535f73c6f4eef567793f86.ctex"
 metadata={
 "vram_texture": false

@@ -13,7 +13,7 @@ config_version=5
 config/name="Spacejam 2024"
 run/main_scene="res://node_2d.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
-config/icon="res://images/tile_24x24_output_opaque.png"
+config/icon="res://images/sprite_24x24_game_icon_scaled_10x.png"
 
 [display]
 
