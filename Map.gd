@@ -9,28 +9,52 @@ const straight_tile_script = preload("res://Tiles/StraightTile.gd")
 const bend_tile_script = preload("res://Tiles/LTile.gd")
 const colour_script = preload("res://Colour.gd")
 const input_script = preload("res://Tiles/InputTile.gd")
+const output_script = preload("res://Tiles/OutputTile.gd")
 
 var tiles = []
-var number_of_tiles: int
-
-func fill_map():
-	number_of_tiles = 20
-	for i in range(number_of_tiles):
-		var tilesRow = []
-		for j in range(number_of_tiles):
-			tilesRow.append(empty_tile_script.new())
-
-		tiles.append(tilesRow)
-
-	for i in range(number_of_tiles):
-		for j in range(number_of_tiles):
-			init_tile_at(tiles[i][j], i, j)
+var number_of_tiles_x: int
+var number_of_tiles_y: int
 
 func level_definition():
 	pass
 
+func fill_map():
+	for i in range(number_of_tiles_x):
+		var tilesRow = []
+		for j in range(number_of_tiles_y):
+			tilesRow.append(empty_tile_script.new())
+
+		tiles.append(tilesRow)
+
+	for i in range(number_of_tiles_x):
+		for j in range(number_of_tiles_y):
+			init_tile_at(tiles[i][j], i, j)
+			
+	for i in range(1, number_of_tiles_x - 1):
+		set_tile_at(no_tile_script.new(), i, 0)
+		set_tile_at(no_tile_script.new(), i, number_of_tiles_y-1)
+
+	for i in range(1, number_of_tiles_y - 1):
+		set_tile_at(no_tile_script.new(), 0, i)
+		set_tile_at(no_tile_script.new(), number_of_tiles_x-1, i)
+	
+	set_tile_at(no_tile_script.new(), 0, 0)
+	set_tile_at(no_tile_script.new(), number_of_tiles_x-1, 0)
+	set_tile_at(no_tile_script.new(), number_of_tiles_x-1, number_of_tiles_y-1)
+	set_tile_at(no_tile_script.new(), 0, number_of_tiles_y-1)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	number_of_tiles_x = 7
+	number_of_tiles_y = 3
+	if max(number_of_tiles_x, number_of_tiles_y) <= 10:
+		scale = Vector2(2, 2)
+	
+	position += Globals.WINDOW_SIZE / 2 - Vector2(
+		number_of_tiles_x * scale.x * Globals.TILE_SIZE / 2,
+		number_of_tiles_y * scale.y * Globals.TILE_SIZE / 2
+	)
+	print(position)
 	fill_map()
 	level_definition()
 	add_edges()
@@ -38,14 +62,16 @@ func _ready():
 func init_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
 	tiles[ix][iy] = tile
 	add_child(tile)
-	tile.position = position + Vector2(
-		(ix + 0.5) * Globals.TILE_SIZE,
-		(iy + 0.5) * Globals.TILE_SIZE
+	tile.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	tile.position = Vector2(
+		ix * Globals.TILE_SIZE + Globals.TILE_SIZE / 2,
+		iy * Globals.TILE_SIZE + Globals.TILE_SIZE / 2 
 	)
 	for i in range(rot):
 		tile.rotate_right()
 	
 func set_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
+	tile.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	remove_child(tiles[ix][iy])
 	init_tile_at(tile, ix, iy, rot)
 
@@ -86,7 +112,7 @@ func fill_pipes(coords: Vector2i, colour: Colour):
 
 func add_edges():
 	var edge: Sprite2D
-	for i in range(1, number_of_tiles - 1):
+	for i in range(1, number_of_tiles_y - 1):
 		
 		edge = Sprite2D.new()
 		edge.texture = preload("res://images/tile_24x24_frame_right.png")
@@ -94,15 +120,16 @@ func add_edges():
 		
 		edge = Sprite2D.new()
 		edge.texture = preload("res://images/tile_24x24_frame_left.png")
-		tiles[number_of_tiles-1][i].add_child(edge)
+		tiles[number_of_tiles_x-1][i].add_child(edge)
 		
+	for i in range(1, number_of_tiles_x - 1):
 		edge = Sprite2D.new()
 		edge.texture = preload("res://images/tile_24x24_frame_bottom.png")
 		tiles[i][0].add_child(edge)
 		
 		edge = Sprite2D.new()
 		edge.texture = preload("res://images/tile_24x24_frame_top.png")
-		tiles[i][number_of_tiles-1].add_child(edge)
+		tiles[i][number_of_tiles_y-1].add_child(edge)
 	
 	edge = Sprite2D.new()
 	edge.z_index = 1
@@ -112,14 +139,14 @@ func add_edges():
 	edge = Sprite2D.new()
 	edge.z_index = 1
 	edge.texture = preload("res://images/tile_24x24_frame_corner_bottom_left.png")
-	tiles[number_of_tiles-1][0].add_child(edge)
+	tiles[number_of_tiles_x-1][0].add_child(edge)
 
 	edge = Sprite2D.new()
 	edge.z_index = 1
 	edge.texture = preload("res://images/tile_24x24_frame_corner_top_left.png")
-	tiles[number_of_tiles-1][number_of_tiles-1].add_child(edge)
+	tiles[number_of_tiles_x-1][number_of_tiles_y-1].add_child(edge)
 
 	edge = Sprite2D.new()
 	edge.z_index = 1
 	edge.texture = preload("res://images/tile_24x24_frame_corner_top_right.png")
-	tiles[0][number_of_tiles-1].add_child(edge)
+	tiles[0][number_of_tiles_y-1].add_child(edge)

@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://game.gd" id="1_f0dd8"]
 
 [node name="Game" type="Node2D"]
-<<<<<<< HEAD
 scale = Vector2(1.08821, 1.0947)
 script = ExtResource("1_f0dd8")
 
@@ -195,9 +194,3 @@ text = "5"
 [connection signal="pressed" from="LeverPicker/Rows/Columns/Level3" to="." method="_on_level_pressed" binds= [3]]
 [connection signal="pressed" from="LeverPicker/Rows/Columns/Level4" to="." method="_on_level_pressed" binds= [4]]
 [connection signal="pressed" from="LeverPicker/Rows/Columns/Level5" to="." method="_on_level_pressed" binds= [5]]
-=======
-
-[node name="Map" type="Sprite2D" parent="."]
-texture_filter = 1
-script = ExtResource("2_l2u33")
->>>>>>> d03faa8 (sfx - added pops, changed pipe turning volume)

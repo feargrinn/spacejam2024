@@ -2,11 +2,7 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-<<<<<<< HEAD
 uid="uid://vpxsj0e6x6lk"
-=======
-uid="uid://bvopcfj2vq4f4"
->>>>>>> d03faa8 (sfx - added pops, changed pipe turning volume)
 path="res://.godot/imported/menu_font.ttf-abc1b87a236b80ea033fbf2d4cfa3a9a.fontdata"
 
 [deps]

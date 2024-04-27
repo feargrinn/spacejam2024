@@ -6,6 +6,7 @@ func _init(color: Colour):
 	self.color = color
 
 func _ready():
+	super._ready()
 	links.append(Direction.DOWN)
 	set_color(color)
 
