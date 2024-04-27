@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://game.gd" id="1_f0dd8"]
 
 [node name="Game" type="Node2D"]
-scale = Vector2(1.08821, 1.0947)
 script = ExtResource("1_f0dd8")
 
 [node name="LeverPicker" type="MarginContainer" parent="."]
