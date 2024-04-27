@@ -129,7 +129,7 @@ func _process(_delta):
 				tile.position = get_global_mouse_position()
 				add_child(tile)
 			4:
-				tile = BendTile.new()
+				tile = CrossTile.new()
 				tile.position = get_global_mouse_position()
 				add_child(tile)
 	
