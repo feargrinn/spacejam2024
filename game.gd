@@ -5,20 +5,22 @@ var current_level
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$ColorRect.hide()
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	pass
 
-func _on_exit_level_pressed():
+func unload_level():
 	current_map.current_tile = null
 	remove_child(current_map)
 	current_map.hide()
 	$ExitLevel.hide()
-	$LeverPicker.show()
 	$TilePicker.hide()
 
+func _on_exit_level_pressed():
+	unload_level()
+	$LeverPicker.show()
 
 func _on_level_pressed(level: int):
 	current_level = level
@@ -41,7 +43,10 @@ func _on_level_pressed(level: int):
 	$ExitLevel.show()
 	current_map.show()
 
-
 func _on_next_level_pressed():
-	$ColorRect.hide()
+	$VictoryScreen.hide()
 	_on_level_pressed(current_level + 1)
+
+func victory_screen():
+	unload_level()
+	$VictoryScreen.show()

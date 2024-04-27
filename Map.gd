@@ -236,4 +236,4 @@ func check_for_game_status():
 		if !output_tile.is_output_filled:
 			return
 			
-	get_parent().get_node("ColorRect").show()
+	get_parent().victory_screen()
