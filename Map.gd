@@ -44,17 +44,17 @@ func fill_map():
 			init_tile_at(tiles[i][j], i, j)
 			
 	for i in range(1, number_of_tiles_x - 1):
-		set_tile_at(no_tile_script.new(), i, 0)
-		set_tile_at(no_tile_script.new(), i, number_of_tiles_y-1)
+		set_tile_at(no_tile_script.new(preload("res://images/tile_24x24_frame_bottom.png")), i, 0)
+		set_tile_at(no_tile_script.new(preload("res://images/tile_24x24_frame_top.png")), i, number_of_tiles_y-1)
 
 	for i in range(1, number_of_tiles_y - 1):
-		set_tile_at(no_tile_script.new(), 0, i)
-		set_tile_at(no_tile_script.new(), number_of_tiles_x-1, i)
+		set_tile_at(no_tile_script.new(preload("res://images/tile_24x24_frame_right.png")), 0, i)
+		set_tile_at(no_tile_script.new(preload("res://images/tile_24x24_frame_left.png")), number_of_tiles_x-1, i)
 	
-	set_tile_at(no_tile_script.new(), 0, 0)
-	set_tile_at(no_tile_script.new(), number_of_tiles_x-1, 0)
-	set_tile_at(no_tile_script.new(), number_of_tiles_x-1, number_of_tiles_y-1)
-	set_tile_at(no_tile_script.new(), 0, number_of_tiles_y-1)
+	set_tile_at(no_tile_script.new(preload("res://images/tile_24x24_frame_corner_bottom_right.png")), 0, 0)
+	set_tile_at(no_tile_script.new(preload("res://images/tile_24x24_frame_corner_bottom_left.png")), number_of_tiles_x-1, 0)
+	set_tile_at(no_tile_script.new(preload("res://images/tile_24x24_frame_corner_top_left.png")), number_of_tiles_x-1, number_of_tiles_y-1)
+	set_tile_at(no_tile_script.new(preload("res://images/tile_24x24_frame_corner_top_right.png")), 0, number_of_tiles_y-1)
 
 func prepare_map():
 	set_dimensions()
@@ -206,47 +206,6 @@ func fill_pipes(coords: Vector2i, colour: Colour):
 	for link in tile.links:
 		var offset = Tile.to_vector(link)
 		fill_pipes(Vector2i(x+offset.x, y+offset.y), colour)
-
-func add_edges():
-	var edge: Sprite2D
-	for i in range(1, number_of_tiles_y - 1):
-		
-		edge = Sprite2D.new()
-		edge.texture = preload("res://images/tile_24x24_frame_right.png")
-		tiles[0][i].add_child(edge)
-		
-		edge = Sprite2D.new()
-		edge.texture = preload("res://images/tile_24x24_frame_left.png")
-		tiles[number_of_tiles_x-1][i].add_child(edge)
-		
-	for i in range(1, number_of_tiles_x - 1):
-		edge = Sprite2D.new()
-		edge.texture = preload("res://images/tile_24x24_frame_bottom.png")
-		tiles[i][0].add_child(edge)
-		
-		edge = Sprite2D.new()
-		edge.texture = preload("res://images/tile_24x24_frame_top.png")
-		tiles[i][number_of_tiles_y-1].add_child(edge)
-	
-	edge = Sprite2D.new()
-	edge.z_index = 1
-	edge.texture = preload("res://images/tile_24x24_frame_corner_bottom_right.png")
-	tiles[0][0].add_child(edge)
-
-	edge = Sprite2D.new()
-	edge.z_index = 1
-	edge.texture = preload("res://images/tile_24x24_frame_corner_bottom_left.png")
-	tiles[number_of_tiles_x-1][0].add_child(edge)
-
-	edge = Sprite2D.new()
-	edge.z_index = 1
-	edge.texture = preload("res://images/tile_24x24_frame_corner_top_left.png")
-	tiles[number_of_tiles_x-1][number_of_tiles_y-1].add_child(edge)
-
-	edge = Sprite2D.new()
-	edge.z_index = 1
-	edge.texture = preload("res://images/tile_24x24_frame_corner_top_right.png")
-	tiles[0][number_of_tiles_y-1].add_child(edge)
 
 func check_for_game_status():
 	if all_outputs.is_empty():
