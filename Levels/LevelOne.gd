@@ -11,4 +11,3 @@ func level_definition():
 	set_tile_at(tile, 0, 1, 3)
 	tile = output_script.new(colour_script.new(1, 0, 0))
 	set_tile_at(tile, 2, 1, 3)
-	all_outputs.append(tile)

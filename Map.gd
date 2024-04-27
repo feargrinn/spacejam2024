@@ -101,6 +101,8 @@ func set_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
 	init_tile_at(tile, ix, iy, rot)
 	update_at(ix, iy)
 	check_for_game_status()
+	if tile is OutputTile:
+		register_output(tile, ix, iy)
 	
 func _mouse_position_to_coordinates():
 	var game_position = Globals.WINDOW_SIZE / 2 - Vector2(
@@ -111,6 +113,9 @@ func _mouse_position_to_coordinates():
 	var x = (vec[0] )/Globals.TILE_SIZE;
 	var y = (vec[1] )/Globals.TILE_SIZE;
 	return [x,y]
+
+func register_output(output: OutputTile, x: int, y: int):
+	all_outputs.append(output)
 
 func handle_left_mouse_button():
 		left_mouse_was_pressed = true
