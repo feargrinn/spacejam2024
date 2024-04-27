@@ -112,6 +112,24 @@ func _mouse_position_to_coordinates():
 	var y = (vec[1] )/Globals.TILE_SIZE;
 	return [x,y]
 
+func handle_left_mouse_button():
+		left_mouse_was_pressed = true
+		match current_tile:
+			null:
+				return
+			1:
+				tile = ITile.new()
+			2:
+				tile = TTile.new()
+			3:
+				tile = BendTile.new()
+			4:
+				tile = CrossTile.new()
+
+		tile.position = get_global_mouse_position()
+		add_child(tile)
+		tile.is_replaceable = true
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	if !is_running:
@@ -132,22 +150,7 @@ func _process(_delta):
 	if Input.is_action_just_released("RMB"):
 		right_mouse_was_pressed = false
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and left_mouse_was_pressed == false:
-		left_mouse_was_pressed = true
-		match current_tile:
-			null:
-				pass
-			1:
-				tile = ITile.new()
-			2:
-				tile = TTile.new()
-			3:
-				tile = BendTile.new()
-			4:
-				tile = CrossTile.new()
-
-		tile.position = get_global_mouse_position()
-		add_child(tile)
-		tile.is_replaceable = true
+		handle_left_mouse_button()
 	
 	if Input.is_action_just_released("LMB"):
 		left_mouse_was_pressed = false
