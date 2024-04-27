@@ -3,21 +3,12 @@ extends Map
 class_name LevelOne
 
 func set_dimensions():
-	number_of_tiles_x = 7
+	number_of_tiles_x = 3
 	number_of_tiles_y = 3
 
 func level_definition():
 	var tile = input_script.new(colour_script.new(1, 0, 0))
-	set_tile_at(tile, 1, 0)
-	tile = input_script.new(colour_script.new(0, 0, 1))
-	set_tile_at(tile, 3, 0)
-	tile = input_script.new(colour_script.new(0, 1, 0))
-	set_tile_at(tile, 5, 0)
-	tile = t_tile_script.new()
-	set_tile_at(tile, 3, 1, 2)
-	tile = output_script.new(colour_script.new(1, 0, 1))
-	set_tile_at(tile, 2, 2)
-	all_outputs.append(tile)
-	tile = output_script.new(colour_script.new(0, 1, 1))
-	set_tile_at(tile, 4, 2)
+	set_tile_at(tile, 0, 1, 3)
+	tile = output_script.new(colour_script.new(1, 0, 0))
+	set_tile_at(tile, 2, 1, 3)
 	all_outputs.append(tile)
