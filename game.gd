@@ -79,6 +79,7 @@ func _on_next_level_pressed():
 	_on_level_pressed(current_level + 1)
 
 func victory_screen():
+	# winning anim # sprite sheet animation
 	unload_level()
 	$VictoryScreen.show()
 
@@ -87,6 +88,7 @@ func _on_retry_pressed():
 	_on_level_pressed(current_level)
 
 func loser_screen():
+	# losing anim
 	unload_level()
 	$LoserScreen.show()
 
