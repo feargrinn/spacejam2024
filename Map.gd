@@ -13,6 +13,11 @@ const input_script = preload("res://Tiles/InputTile.gd")
 var tiles = []
 var number_of_tiles: int
 
+var current_tile = null;
+var left_mouse_was_pressed = false;
+var right_mouse_was_pressed = false;
+var tile = null;
+
 func fill_map():
 	number_of_tiles = 20
 	for i in range(number_of_tiles):
@@ -48,13 +53,57 @@ func init_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
 func set_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
 	remove_child(tiles[ix][iy])
 	init_tile_at(tile, ix, iy, rot)
+	
+func _mouse_position_to_coordinates():
+	#tile.position = position + Vector2(
+	#	(ix + 0.5) * Globals.TILE_SIZE,
+	#	(iy + 0.5) * Globals.TILE_SIZE
+	#)
+	var vec = get_global_mouse_position() - position
+	var x = vec[0]/Globals.TILE_SIZE;
+	var y = vec[1]/Globals.TILE_SIZE;
+	return [x,y]
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	#if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		#position = get_global_mouse_position();
-		#if (get_global_mouse_position() - position).length() < 32:
-		#	position = get_global_mouse_position()
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and left_mouse_was_pressed and tile != null:
+		tile.position = get_global_mouse_position()
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and right_mouse_was_pressed == false and tile != null:
+		right_mouse_was_pressed = true;
+		tile.rotate_right()
+	if Input.is_action_just_released("RMB"):
+		right_mouse_was_pressed = false
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and left_mouse_was_pressed == false:
+		left_mouse_was_pressed = true
+		print(current_tile)
+		match current_tile:
+			null:
+				pass
+			1:
+				tile = StraightTile.new()
+				tile.position = get_global_mouse_position()
+				add_child(tile)
+			2:
+				tile = TTile.new()
+				tile.position = get_global_mouse_position()
+				add_child(tile)
+			3:
+				tile = BendTile.new()
+				tile.position = get_global_mouse_position()
+				add_child(tile)
+			3:
+				tile = BendTile.new()
+				tile.position = get_global_mouse_position()
+				add_child(tile)
+	
+	if Input.is_action_just_released("LMB"):
+		left_mouse_was_pressed = false
+		if tile != null:
+			var position = _mouse_position_to_coordinates()
+			remove_child(tile)
+			if position[0] >= 0 and position[0] < 20 and position[1] >= 0 and position[1] < 20:
+				set_tile_at(tile, position[0], position[1], 0);
+			tile = null;
 	pass
 	
 func update_at(x: int, y: int):
