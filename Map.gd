@@ -160,8 +160,8 @@ func _process(_delta):
 				and position[1] < number_of_tiles_y
 				and tiles[position[0]][position[1]].is_replaceable
 			):
-				set_tile_at(tile, position[0], position[1], 0);
 				placing_sounds[RandomNumberGenerator.new().randi_range(0, 2)].play()
+				set_tile_at(tile, position[0], position[1], 0);
 			tile = null;
 	pass
 	
