@@ -2,6 +2,9 @@ extends Tile
 
 class_name NoTile
 
+func _init(_texture: Texture2D):
+	z_index = -1
+	opaque_texture = _texture
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

@@ -44,17 +44,17 @@ func fill_map():
 			init_tile_at(tiles[i][j], i, j)
 			
 	for i in range(1, number_of_tiles_x - 1):
-		set_tile_at(no_tile_script.new(), i, 0)
-		set_tile_at(no_tile_script.new(), i, number_of_tiles_y-1)
+		set_tile_at(no_tile_script.new(preload("res://images/tile_24x24_frame_bottom.png")), i, 0)
+		set_tile_at(no_tile_script.new(preload("res://images/tile_24x24_frame_top.png")), i, number_of_tiles_y-1)
 
 	for i in range(1, number_of_tiles_y - 1):
-		set_tile_at(no_tile_script.new(), 0, i)
-		set_tile_at(no_tile_script.new(), number_of_tiles_x-1, i)
+		set_tile_at(no_tile_script.new(preload("res://images/tile_24x24_frame_right.png")), 0, i)
+		set_tile_at(no_tile_script.new(preload("res://images/tile_24x24_frame_left.png")), number_of_tiles_x-1, i)
 	
-	set_tile_at(no_tile_script.new(), 0, 0)
-	set_tile_at(no_tile_script.new(), number_of_tiles_x-1, 0)
-	set_tile_at(no_tile_script.new(), number_of_tiles_x-1, number_of_tiles_y-1)
-	set_tile_at(no_tile_script.new(), 0, number_of_tiles_y-1)
+	set_tile_at(no_tile_script.new(preload("res://images/tile_24x24_frame_corner_bottom_right.png")), 0, 0)
+	set_tile_at(no_tile_script.new(preload("res://images/tile_24x24_frame_corner_bottom_left.png")), number_of_tiles_x-1, 0)
+	set_tile_at(no_tile_script.new(preload("res://images/tile_24x24_frame_corner_top_left.png")), number_of_tiles_x-1, number_of_tiles_y-1)
+	set_tile_at(no_tile_script.new(preload("res://images/tile_24x24_frame_corner_top_right.png")), 0, number_of_tiles_y-1)
 
 func prepare_map():
 	set_dimensions()
@@ -72,7 +72,6 @@ func _ready():
 	prepare_map()
 	fill_map()
 	level_definition()
-	add_edges()
 	for i in 3:
 		placing_sounds.append(AudioStreamPlayer.new())
 	placing_sounds[0].stream = preload("res://sfx/sfx_pop_down_tile_1.wav")
@@ -112,6 +111,24 @@ func _mouse_position_to_coordinates():
 	var y = (vec[1] )/Globals.TILE_SIZE;
 	return [x,y]
 
+func handle_left_mouse_button():
+		left_mouse_was_pressed = true
+		match current_tile:
+			null:
+				return
+			1:
+				tile = ITile.new()
+			2:
+				tile = TTile.new()
+			3:
+				tile = BendTile.new()
+			4:
+				tile = CrossTile.new()
+
+		tile.position = get_global_mouse_position()
+		add_child(tile)
+		tile.is_replaceable = true
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	if !is_running:
@@ -132,22 +149,7 @@ func _process(_delta):
 	if Input.is_action_just_released("RMB"):
 		right_mouse_was_pressed = false
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and left_mouse_was_pressed == false:
-		left_mouse_was_pressed = true
-		match current_tile:
-			null:
-				pass
-			1:
-				tile = ITile.new()
-			2:
-				tile = TTile.new()
-			3:
-				tile = BendTile.new()
-			4:
-				tile = CrossTile.new()
-
-		tile.position = get_global_mouse_position()
-		add_child(tile)
-		tile.is_replaceable = true
+		handle_left_mouse_button()
 	
 	if Input.is_action_just_released("LMB"):
 		left_mouse_was_pressed = false
@@ -204,47 +206,6 @@ func fill_pipes(coords: Vector2i, colour: Colour):
 		var offset = Tile.to_vector(link)
 		fill_pipes(Vector2i(x+offset.x, y+offset.y), colour)
 
-func add_edges():
-	var edge: Sprite2D
-	for i in range(1, number_of_tiles_y - 1):
-		
-		edge = Sprite2D.new()
-		edge.texture = preload("res://images/tile_24x24_frame_right.png")
-		tiles[0][i].add_child(edge)
-		
-		edge = Sprite2D.new()
-		edge.texture = preload("res://images/tile_24x24_frame_left.png")
-		tiles[number_of_tiles_x-1][i].add_child(edge)
-		
-	for i in range(1, number_of_tiles_x - 1):
-		edge = Sprite2D.new()
-		edge.texture = preload("res://images/tile_24x24_frame_bottom.png")
-		tiles[i][0].add_child(edge)
-		
-		edge = Sprite2D.new()
-		edge.texture = preload("res://images/tile_24x24_frame_top.png")
-		tiles[i][number_of_tiles_y-1].add_child(edge)
-	
-	edge = Sprite2D.new()
-	edge.z_index = 1
-	edge.texture = preload("res://images/tile_24x24_frame_corner_bottom_right.png")
-	tiles[0][0].add_child(edge)
-
-	edge = Sprite2D.new()
-	edge.z_index = 1
-	edge.texture = preload("res://images/tile_24x24_frame_corner_bottom_left.png")
-	tiles[number_of_tiles_x-1][0].add_child(edge)
-
-	edge = Sprite2D.new()
-	edge.z_index = 1
-	edge.texture = preload("res://images/tile_24x24_frame_corner_top_left.png")
-	tiles[number_of_tiles_x-1][number_of_tiles_y-1].add_child(edge)
-
-	edge = Sprite2D.new()
-	edge.z_index = 1
-	edge.texture = preload("res://images/tile_24x24_frame_corner_top_right.png")
-	tiles[0][number_of_tiles_y-1].add_child(edge)
-
 func check_for_game_status():
 	if all_outputs.is_empty():
 		return
@@ -253,6 +214,7 @@ func check_for_game_status():
 		if output_tile.is_output_filled && !output_tile.color.isEqual(output_tile.target_color):
 			is_running = false
 			get_parent().loser_screen()
+			return
 
 	for output_tile in all_outputs:
 		if !output_tile.is_output_filled:
