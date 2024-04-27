@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://b6ldch5v2bfc3"]
 
 [ext_resource type="Script" path="res://Navigation.gd" id="1_motdp"]
-[ext_resource type="Texture2D" uid="uid://11lg0kyfhv3s" path="res://images/menu_button_play.png" id="2_yxybc"]
-[ext_resource type="Texture2D" uid="uid://da4baq3eysuis" path="res://images/menu_button_settings.png" id="3_pripr"]
-[ext_resource type="Texture2D" uid="uid://cqd2m7u83bk1" path="res://images/menu_button_quit.png" id="4_13pl1"]
+[ext_resource type="Texture2D" uid="uid://lijymylkpj6r" path="res://images/menu_button_play.png" id="2_yxybc"]
+[ext_resource type="Texture2D" uid="uid://ixy8mrfmko3r" path="res://images/menu_button_settings.png" id="3_pripr"]
+[ext_resource type="Texture2D" uid="uid://dx1f0ybknw5qb" path="res://images/menu_button_quit.png" id="4_13pl1"]
 
 [node name="Node" type="Node"]
 script = ExtResource("1_motdp")

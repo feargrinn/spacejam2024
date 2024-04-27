@@ -2,6 +2,10 @@ extends Map
 
 class_name LevelOne
 
+func set_dimensions():
+	number_of_tiles_x = 7
+	number_of_tiles_y = 3
+
 func level_definition():
 	var tile = t_tile_script.new()
 	set_tile_at(tile, 3, 1, 2)

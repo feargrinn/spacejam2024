@@ -15,6 +15,9 @@ var tiles = []
 var number_of_tiles_x: int
 var number_of_tiles_y: int
 
+func set_dimensions():
+	pass
+
 func level_definition():
 	pass
 
@@ -43,10 +46,8 @@ func fill_map():
 	set_tile_at(no_tile_script.new(), number_of_tiles_x-1, number_of_tiles_y-1)
 	set_tile_at(no_tile_script.new(), 0, number_of_tiles_y-1)
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	number_of_tiles_x = 7
-	number_of_tiles_y = 3
+func prepare_map():
+	set_dimensions()
 	if max(number_of_tiles_x, number_of_tiles_y) <= 10:
 		scale = Vector2(2, 2)
 	
@@ -54,7 +55,10 @@ func _ready():
 		number_of_tiles_x * scale.x * Globals.TILE_SIZE / 2,
 		number_of_tiles_y * scale.y * Globals.TILE_SIZE / 2
 	)
-	print(position)
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	prepare_map()
 	fill_map()
 	level_definition()
 	add_edges()
