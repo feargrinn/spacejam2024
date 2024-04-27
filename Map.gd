@@ -89,7 +89,7 @@ func _process(delta):
 	
 func update_at(x: int, y: int):
 	var empty_neighbours = []
-	var full_neighbours = []
+	var full_neighbours: Array[Paint] = []
 	var tile = tiles[x][y]
 	for link in tile.links:
 		var offset = Tile.to_vector(link)

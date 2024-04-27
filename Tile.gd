@@ -23,8 +23,8 @@ static func right(direction: int):
 	if direction == Direction.LEFT:
 		return Direction.UP
 
-static func opposite(direction: int):
-	right(right(direction))
+static func opposite(direction: int) -> int:
+	return right(right(direction))
 
 static func to_vector(direction: int):
 	if direction == Direction.UP:
