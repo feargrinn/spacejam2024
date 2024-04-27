@@ -6,6 +6,8 @@ var is_output_filled: bool
 
 var target_color: Colour
 
+var coordinates: Vector2
+
 func _init(color: Colour):
 	self.color = color
 	target_color = color

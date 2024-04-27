@@ -62,7 +62,7 @@ func prepare_map():
 	if max(number_of_tiles_x, number_of_tiles_y) <= 10:
 		scale = Vector2(2, 2)
 	
-	position += Globals.WINDOW_SIZE / 2 - Vector2(
+	position = Globals.WINDOW_SIZE / 2 - Vector2(
 		number_of_tiles_x * scale.x * Globals.TILE_SIZE / 2,
 		number_of_tiles_y * scale.y * Globals.TILE_SIZE / 2
 	)
@@ -115,6 +115,8 @@ func _mouse_position_to_coordinates():
 	return [x,y]
 
 func register_output(output: OutputTile, x: int, y: int):
+	output.coordinates.x = x
+	output.coordinates.y = y
 	all_outputs.append(output)
 
 func handle_left_mouse_button():
@@ -222,7 +224,7 @@ func check_for_game_status():
 	for output_tile in all_outputs:
 		if output_tile.is_output_filled && !output_tile.color.isEqual(output_tile.target_color):
 			is_running = false
-			get_parent().loser_screen()
+			get_parent().loser_screen(scale, all_outputs)
 			return
 
 	for output_tile in all_outputs:
@@ -230,4 +232,4 @@ func check_for_game_status():
 			return
 			
 	is_running = false
-	get_parent().victory_screen()
+	get_parent().victory_screen(scale, all_outputs)

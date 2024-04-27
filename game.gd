@@ -3,6 +3,11 @@ extends Node
 var current_map
 var current_level
 
+@onready var _sprite_winning = $Sprite2DWinning
+@onready var _sprite_losing = $Sprite2DLosing
+@onready var _animation_winning = $Sprite2DWinning/AnimationPlayerWinning
+@onready var _animation_losing = $Sprite2DLosing/AnimationPlayerLosing
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -79,21 +84,45 @@ func _on_next_level_pressed():
 			$LeverPicker/VBoxContainer/Rows/Columns3/MarginContainer/Level.show()
 	_on_level_pressed(current_level + 1)
 
-func victory_screen():
-	# winning anim # sprite sheet animation
-	unload_level()
-	$VictoryScreen.show()
+func victory_screen(scale: Vector2, all_outputs: Array[OutputTile]):
+	_sprite_winning.scale *= scale
+	_sprite_winning.rotation_degrees = 0
+	for i in all_outputs.size():
+		for n in all_outputs[i].links[0]:
+			_sprite_winning.rotation_degrees += 90
+		_sprite_winning.position = all_outputs[i].global_position
+		_sprite_winning.visible = true
+		_animation_winning.play("winning")
 
 func _on_retry_pressed():
 	$LoserScreen.hide()
 	_on_level_pressed(current_level)
 
-func loser_screen():
-	# losing anim
-	unload_level()
-	$LoserScreen.show()
+func loser_screen(scale: Vector2, all_outputs: Array[OutputTile]):
+	_sprite_losing.scale *= scale
+	_sprite_losing.rotation_degrees = 0
+	for i in all_outputs.size():
+		for n in all_outputs[i].links[0]:
+			_sprite_losing.rotation_degrees += 90
+		_sprite_losing.position = all_outputs[i].global_position
+		_sprite_losing.visible = true
+		_animation_losing.play("losing")
 
 
 func _on_exit_level_picker_pressed():
 	$LeverPicker.hide()
 	get_tree().change_scene_to_file("res://node_2d.tscn")
+
+
+func _on_animation_player_winning_animation_finished(anim_name):
+	_sprite_winning.visible = false
+	_sprite_winning.scale = Vector2(1.0 ,1.0)
+	unload_level()
+	$VictoryScreen.show()
+
+
+func _on_animation_player_losing_animation_finished(anim_name):
+	_sprite_losing.visible = false
+	_sprite_losing.scale = Vector2(1.0 ,1.0)
+	unload_level()
+	$LoserScreen.show()
