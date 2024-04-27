@@ -7,6 +7,7 @@ const no_tile_script = preload("res://Tiles/NoTile.gd")
 const t_tile_script = preload("res://Tiles/TTile.gd")
 const straight_tile_script = preload("res://Tiles/StraightTile.gd")
 const bend_tile_script = preload("res://Tiles/LTile.gd")
+const anti_tile_script = preload("res://Tiles/AntiTile.gd")
 const colour_script = preload("res://Colour.gd")
 const input_script = preload("res://Tiles/InputTile.gd")
 const output_script = preload("res://Tiles/OutputTile.gd")
@@ -117,13 +118,15 @@ func handle_left_mouse_button():
 			null:
 				return
 			1:
-				tile = ITile.new()
+				tile = straight_tile_script.new()
 			2:
 				tile = TTile.new()
 			3:
 				tile = BendTile.new()
 			4:
 				tile = CrossTile.new()
+			5:
+				tile = AntiTile.new()
 
 		tile.position = get_global_mouse_position()
 		add_child(tile)
@@ -182,14 +185,15 @@ func update_at(x: int, y: int):
 				full_neighbours.append(other.get_paint())
 			else:
 				empty_neighbours.append(Vector2i(other_x, other_y))
-	if !full_neighbours.is_empty():
+	if full_neighbours.any(func(paint): return paint.amount > 0):
 		var colour = Paint.mix(full_neighbours)
 		tile.set_color(colour)
 		if tile is OutputTile:
 			tile.texture = preload("res://images/tile_24x24_output_transparent.png")
 			tile.is_output_filled = true
-		for neighbour in empty_neighbours:
-			fill_pipes(neighbour, colour)
+		if not (tile is AntiTile):
+			for neighbour in empty_neighbours:
+				fill_pipes(neighbour, colour)
 
 func fill_pipes(coords: Vector2i, colour: Colour):
 	var x = coords.x
