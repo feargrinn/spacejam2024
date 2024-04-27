@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://b6ldch5v2bfc3"]
+[gd_scene load_steps=5 format=3 uid="uid://b6ldch5v2bfc3"]
 
 [ext_resource type="Script" path="res://Navigation.gd" id="1_motdp"]
+[ext_resource type="Texture2D" uid="uid://bbmbnlsjfirt5" path="res://images/menu_button_play.png" id="2_yxybc"]
+[ext_resource type="Texture2D" uid="uid://cab715x3nhxrw" path="res://images/menu_button_settings.png" id="3_pripr"]
+[ext_resource type="Texture2D" uid="uid://b6d7g4as0xlr" path="res://images/menu_button_quit.png" id="4_13pl1"]
 
 [node name="Node" type="Node"]
 script = ExtResource("1_motdp")
@@ -38,17 +41,23 @@ size_flags_stretch_ratio = 4.15
 [node name="Play" type="Button" parent="MenuScreen/VBoxContainer2/MenuButtons"]
 layout_mode = 2
 size_flags_vertical = 6
-text = "Play"
+icon = ExtResource("2_yxybc")
+flat = true
+icon_alignment = 1
 
 [node name="Settings" type="Button" parent="MenuScreen/VBoxContainer2/MenuButtons"]
 layout_mode = 2
 size_flags_vertical = 6
-text = "Settings"
+icon = ExtResource("3_pripr")
+flat = true
+icon_alignment = 1
 
 [node name="Quit" type="Button" parent="MenuScreen/VBoxContainer2/MenuButtons"]
 layout_mode = 2
 size_flags_vertical = 6
-text = "Quit"
+icon = ExtResource("4_13pl1")
+flat = true
+icon_alignment = 1
 
 [node name="LeverPicker" type="MarginContainer" parent="."]
 visible = false
