@@ -3,6 +3,7 @@ extends Sprite2D
 class_name Tile
 
 var paint_script = preload("res://Paint.gd")
+var colour_script = preload("res://Colour.gd")
 var transparent_texture: Texture2D
 var opaque_texture: Texture2D
 
@@ -67,7 +68,7 @@ func set_color(_color: Colour):
 		is_painted = true
 		texture = transparent_texture
 
-	color = _color
+	color = colour_script.new(_color.r, _color.y, _color.b)
 	add_child(color)
 
 func get_paint() -> Paint:

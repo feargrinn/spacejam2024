@@ -154,13 +154,16 @@ func update_at(x: int, y: int):
 		var other_y = y+offset.y
 		var other = tiles[other_x][other_y]
 		if Tile.connected(other, link):
-			if other.is_painted:
+			if other.is_painted && !other is OutputTile:
 				full_neighbours.append(other.get_paint())
 			else:
 				empty_neighbours.append(Vector2i(other_x, other_y))
 	if !full_neighbours.is_empty():
 		var colour = Paint.mix(full_neighbours)
 		tile.set_color(colour)
+		if tile is OutputTile:
+			tile.texture = preload("res://images/tile_24x24_output_transparent.png")
+			tile.is_output_filled = true
 		for neighbour in empty_neighbours:
 			fill_pipes(neighbour, colour)
 
@@ -168,10 +171,17 @@ func fill_pipes(coords: Vector2i, colour: Colour):
 	var x = coords.x
 	var y = coords.y
 	var tile = tiles[x][y]
+	if tile.is_painted && !tile is OutputTile:
+		return
+
 	tile.set_color(colour)
+	if tile is OutputTile:
+		tile.texture = preload("res://images/tile_24x24_output_transparent.png")
+		tile.is_output_filled = true
+
 	for link in tile.links:
 		var offset = Tile.to_vector(link)
-		fill_pipes(tiles[x+offset.x][y+offset.y], colour)
+		fill_pipes(Vector2i(x+offset.x, y+offset.y), colour)
 
 func add_edges():
 	var edge: Sprite2D
@@ -223,7 +233,7 @@ func check_for_game_status():
 			print("LOST")
 
 	for output_tile in all_outputs:
-		if !output_tile.is_output_filled || output_tile.color.isEqual(output_tile.target_color):
+		if !output_tile.is_output_filled:
 			return
 			
 	get_parent().get_node("ColorRect").show()

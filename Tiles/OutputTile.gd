@@ -19,11 +19,6 @@ func _ready():
 	
 	super._ready()
 	set_color(color)
-	
-func set_color(color: Colour):
-	transparent_texture = preload("res://images/tile_24x24_output_partially_transparent.png")
-	is_output_filled = true
-	super.set_color(color)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

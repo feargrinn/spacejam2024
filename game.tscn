@@ -1,16 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://fhmwenm3h7c7"]
+[gd_scene load_steps=11 format=3 uid="uid://fhmwenm3h7c7"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_f0dd8"]
-[ext_resource type="Texture2D" uid="uid://d0puyi57jqicv" path="res://images/bg_640x480.png" id="2_5eohq"]
+[ext_resource type="Texture2D" uid="uid://oogt24347qv7" path="res://images/bg_640x480.png" id="2_5eohq"]
 [ext_resource type="Script" path="res://TilePlacing.gd" id="2_l2akx"]
-[ext_resource type="Texture2D" uid="uid://cfdmd88oi42as" path="res://images/tile_24x24_I.png" id="2_p8dm2"]
-[ext_resource type="FontFile" uid="uid://cwftwnqfoddyo" path="res://fonts/menu_font.ttf" id="2_rssi8"]
-[ext_resource type="Texture2D" uid="uid://bumfl8xum30i1" path="res://images/menu_button_lvl_empty.png" id="3_eonvc"]
-[ext_resource type="Texture2D" uid="uid://bmcl8la7yqftj" path="res://images/tile_24x24_T.png" id="4_ki1wh"]
+[ext_resource type="Texture2D" uid="uid://dqrfrhro2hyl3" path="res://images/tile_24x24_I.png" id="2_p8dm2"]
+[ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://fonts/menu_font.ttf" id="2_rssi8"]
+[ext_resource type="Texture2D" uid="uid://c3msrgw8yn1n4" path="res://images/menu_button_lvl_empty.png" id="3_eonvc"]
+[ext_resource type="Texture2D" uid="uid://bxgi25iajbbwe" path="res://images/tile_24x24_T.png" id="4_ki1wh"]
 [ext_resource type="Texture2D" uid="uid://c86rrp0hau4hr" path="res://images/menu_button_empty.png" id="5_8wxpr"]
-[ext_resource type="Texture2D" uid="uid://bhyu5wlj0fgaf" path="res://images/tile_24x24_L.png" id="5_clsa2"]
-[ext_resource type="Texture2D" uid="uid://brvo77uobf1cx" path="res://images/tile_24x24_cross.png" id="6_5nono"]
-[gd_scene load_steps=11 format=3 uid="uid://fhmwenm3h7c7"]
+[ext_resource type="Texture2D" uid="uid://bd60fjkdlw8lc" path="res://images/tile_24x24_L.png" id="5_clsa2"]
+[ext_resource type="Texture2D" uid="uid://cr34yxd7u1h6d" path="res://images/tile_24x24_cross.png" id="6_5nono"]
 
 [node name="Game" type="Node2D"]
 texture_filter = 1
@@ -429,13 +428,8 @@ size_flags_vertical = 3
 texture = ExtResource("6_5nono")
 stretch_mode = 3
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="."]
-offset_left = 185.0
-offset_top = 164.0
-offset_right = 452.0
-offset_bottom = 327.0
-
 [node name="ColorRect" type="ColorRect" parent="."]
+z_index = 10
 offset_left = 105.0
 offset_top = 103.0
 offset_right = 517.0
@@ -476,26 +470,17 @@ icon = ExtResource("5_8wxpr")
 flat = true
 icon_alignment = 1
 
-[connection signal="pressed" from="LeverPicker/Rows/Columns/MarginContainer/Level" to="." method="_on_level_pressed" binds= [1]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns/MarginContainer2/Level" to="." method="_on_level_pressed" binds= [2]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns/MarginContainer3/Level" to="." method="_on_level_pressed" binds= [3]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns/MarginContainer4/Level" to="." method="_on_level_pressed" binds= [4]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns/MarginContainer5/Level" to="." method="_on_level_pressed" binds= [5]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns2/MarginContainer/Level" to="." method="_on_level_pressed" binds= [1]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns2/MarginContainer2/Level" to="." method="_on_level_pressed" binds= [2]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns2/MarginContainer3/Level" to="." method="_on_level_pressed" binds= [3]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns2/MarginContainer4/Level" to="." method="_on_level_pressed" binds= [4]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns2/MarginContainer5/Level" to="." method="_on_level_pressed" binds= [5]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns3/MarginContainer/Level" to="." method="_on_level_pressed" binds= [1]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns3/MarginContainer2/Level" to="." method="_on_level_pressed" binds= [2]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns3/MarginContainer3/Level" to="." method="_on_level_pressed" binds= [3]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns3/MarginContainer4/Level" to="." method="_on_level_pressed" binds= [4]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns3/MarginContainer5/Level" to="." method="_on_level_pressed" binds= [5]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns4/MarginContainer/Level" to="." method="_on_level_pressed" binds= [1]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns4/MarginContainer2/Level" to="." method="_on_level_pressed" binds= [2]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns4/MarginContainer3/Level" to="." method="_on_level_pressed" binds= [3]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns4/MarginContainer4/Level" to="." method="_on_level_pressed" binds= [4]]
-[connection signal="pressed" from="LeverPicker/Rows/Columns4/MarginContainer5/Level" to="." method="_on_level_pressed" binds= [5]]
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+offset_left = 185.0
+offset_top = 164.0
+offset_right = 452.0
+offset_bottom = 327.0
+
+[connection signal="pressed" from="LeverPicker/Rows/Columns/Level" to="." method="_on_level_pressed" binds= [1]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns/Level2" to="." method="_on_level_pressed" binds= [2]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns/Level3" to="." method="_on_level_pressed" binds= [3]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns/Level4" to="." method="_on_level_pressed" binds= [4]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns/Level5" to="." method="_on_level_pressed" binds= [5]]
 [connection signal="pressed" from="ExitLevel" to="." method="_on_exit_level_pressed"]
 [connection signal="mouse_entered" from="TilePicker/VBoxContainer/TextureRect" to="TilePicker" method="_on_mouse_entered_tile" binds= [1]]
 [connection signal="mouse_exited" from="TilePicker/VBoxContainer/TextureRect" to="TilePicker" method="_on_i_mouse_exited"]
