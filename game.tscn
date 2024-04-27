@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bmcl8la7yqftj" path="res://images/tile_24x24_T.png" id="4_ki1wh"]
 [ext_resource type="Texture2D" uid="uid://bhyu5wlj0fgaf" path="res://images/tile_24x24_L.png" id="5_clsa2"]
 [ext_resource type="Texture2D" uid="uid://brvo77uobf1cx" path="res://images/tile_24x24_cross.png" id="6_5nono"]
+[ext_resource type="Texture2D" uid="uid://c86rrp0hau4hr" path="res://images/menu_button_empty.png" id="5_8wxpr"]
 
 [node name="Game" type="Node2D"]
 texture_filter = 1
@@ -426,6 +427,52 @@ layout_mode = 2
 size_flags_vertical = 3
 texture = ExtResource("6_5nono")
 stretch_mode = 3
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+offset_left = 185.0
+offset_top = 164.0
+offset_right = 452.0
+offset_bottom = 327.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 105.0
+offset_top = 103.0
+offset_right = 517.0
+offset_bottom = 401.0
+color = Color(0.301961, 0.301961, 0.301961, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="ColorRect"]
+layout_mode = 2
+offset_left = 75.0
+offset_top = 78.0
+offset_right = 342.0
+offset_bottom = 108.0
+size_flags_vertical = 3
+
+[node name="LevelComplete" type="Label" parent="ColorRect/MarginContainer"]
+layout_mode = 2
+text = "Level complete!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuButtons" type="VBoxContainer" parent="ColorRect"]
+layout_mode = 2
+offset_left = 86.0
+offset_top = 129.0
+offset_right = 331.0
+offset_bottom = 224.0
+size_flags_horizontal = 4
+size_flags_vertical = 6
+size_flags_stretch_ratio = 4.15
+
+[node name="NextLevel" type="Button" parent="ColorRect/MenuButtons"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_fonts/font = ExtResource("2_rssi8")
+theme_override_font_sizes/font_size = 60
+text = "Next level"
+icon = ExtResource("5_8wxpr")
+flat = true
+icon_alignment = 1
 
 [connection signal="pressed" from="LeverPicker/Rows/Columns/MarginContainer/Level" to="." method="_on_level_pressed" binds= [1]]
 [connection signal="pressed" from="LeverPicker/Rows/Columns/MarginContainer2/Level" to="." method="_on_level_pressed" binds= [2]]
@@ -456,3 +503,4 @@ stretch_mode = 3
 [connection signal="mouse_exited" from="TilePicker/VBoxContainer/TextureRect3" to="TilePicker" method="_on_i_mouse_exited"]
 [connection signal="mouse_entered" from="TilePicker/VBoxContainer/TextureRect4" to="TilePicker" method="_on_mouse_entered_tile" binds= [4]]
 [connection signal="mouse_exited" from="TilePicker/VBoxContainer/TextureRect4" to="TilePicker" method="_on_i_mouse_exited"]
+[connection signal="pressed" from="ColorRect/MenuButtons/NextLevel" to="." method="_on_next_level_pressed"]

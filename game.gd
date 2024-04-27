@@ -1,10 +1,11 @@
 extends Node
 
 var current_map
+var current_level
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	$ColorRect.hide()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -20,7 +21,9 @@ func _on_exit_level_pressed():
 
 
 func _on_level_pressed(level: int):
+	current_level = level
 	var new_map = Sprite2D.new()
+	new_map.name = "map"
 	if level == 1:
 		new_map.set_script(preload("res://Levels/LevelOne.gd"))
 	elif level == 2:
@@ -37,3 +40,8 @@ func _on_level_pressed(level: int):
 	$TilePicker.show()
 	$ExitLevel.show()
 	current_map.show()
+
+
+func _on_next_level_pressed():
+	$ColorRect.hide()
+	_on_level_pressed(current_level + 1)

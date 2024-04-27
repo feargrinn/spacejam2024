@@ -85,6 +85,7 @@ func set_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
 	remove_child(tiles[ix][iy])
 	init_tile_at(tile, ix, iy, rot)
 	update_at(ix, iy)
+	check_for_game_status()
 	
 func _mouse_position_to_coordinates():
 	var game_position = Globals.WINDOW_SIZE / 2 - Vector2(
@@ -212,3 +213,17 @@ func add_edges():
 	edge.z_index = 1
 	edge.texture = preload("res://images/tile_24x24_frame_corner_top_right.png")
 	tiles[0][number_of_tiles_y-1].add_child(edge)
+
+func check_for_game_status():
+	if all_outputs.is_empty():
+		return
+
+	for output_tile in all_outputs:
+		if output_tile.is_output_filled && !output_tile.color.isEqual(output_tile.target_color):
+			print("LOST")
+
+	for output_tile in all_outputs:
+		if !output_tile.is_output_filled || output_tile.color.isEqual(output_tile.target_color):
+			return
+			
+	get_parent().get_node("ColorRect").show()

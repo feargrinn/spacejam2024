@@ -21,6 +21,9 @@ func _init(r: float, y: float, b: float):
 func __ready():
 	ColorRect.color = color()
 
+func isEqual(colour: Colour) -> bool:
+	return r == colour.r && y == colour.y && b == colour.b
+
 func color():
 	var revr = 1 - self.r
 	var revy = 1 - self.y
