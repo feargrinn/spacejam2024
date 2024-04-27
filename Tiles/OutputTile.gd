@@ -12,9 +12,10 @@ func _init(color: Colour):
 func _ready():
 	super._ready()
 	links.append(Direction.UP)
+	transparent_texture = preload("res://images/tile_24x24_output_partially_transparent.png")
+	
+	super._ready()
 	set_color(color)
-
-	texture = preload("res://images/tile_24x24_output_partially_transparent.png")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

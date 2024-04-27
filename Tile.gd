@@ -3,6 +3,8 @@ extends Sprite2D
 class_name Tile
 
 var paint_script = preload("res://Paint.gd")
+var transparent_texture: Texture2D
+var opaque_texture: Texture2D
 
 const Direction = {
 	UP = 0,
@@ -45,6 +47,7 @@ func _ready():
 	is_painted = false
 	pipe_size = 1.
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	texture = opaque_texture
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -62,6 +65,7 @@ func set_color(_color: Colour):
 		remove_child(color)
 	else:
 		is_painted = true
+		texture = transparent_texture
 
 	color = _color
 	add_child(color)
