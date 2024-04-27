@@ -6,9 +6,12 @@ class_name BendTile
 func _ready():
 	links.append(Direction.UP)
 	links.append(Direction.RIGHT)
-
-	texture = preload("res://images/tile_24x24_L.png")
-
+	
+	opaque_texture = preload("res://images/tile_24x24_L_opaque.png")
+	transparent_texture = preload("res://images/tile_24x24_L.png")
+	
+	super._ready()
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
