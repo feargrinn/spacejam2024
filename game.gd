@@ -50,3 +50,11 @@ func _on_next_level_pressed():
 func victory_screen():
 	unload_level()
 	$VictoryScreen.show()
+
+func _on_retry_pressed():
+	$LoserScreen.hide()
+	_on_level_pressed(current_level)
+
+func loser_screen():
+	unload_level()
+	$LoserScreen.show()

@@ -230,7 +230,7 @@ func check_for_game_status():
 
 	for output_tile in all_outputs:
 		if output_tile.is_output_filled && !output_tile.color.isEqual(output_tile.target_color):
-			print("LOST")
+			get_parent().loser_screen()
 
 	for output_tile in all_outputs:
 		if !output_tile.is_output_filled:
