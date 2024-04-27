@@ -38,6 +38,14 @@ func _on_level_pressed(level: int):
 		new_map.set_script(preload("res://Levels/LevelFive.gd"))
 	elif level == 6:
 		new_map.set_script(preload("res://Levels/LevelSix.gd"))
+	elif level == 7:
+		new_map.set_script(preload("res://Levels/LevelSeven.gd"))
+	elif level == 8:
+		new_map.set_script(preload("res://Levels/LevelEight.gd"))
+	elif level == 9:
+		new_map.set_script(preload("res://Levels/LevelNine.gd"))
+	elif level == 10:
+		new_map.set_script(preload("res://Levels/LevelTen.gd"))
 	add_child(new_map)
 	current_map = new_map
 	$LeverPicker.hide()
@@ -56,6 +64,18 @@ func _on_next_level_pressed():
 			$LeverPicker/Rows/Columns/MarginContainer4/Level.show()
 		4:
 			$LeverPicker/Rows/Columns/MarginContainer5/Level.show()
+		5:
+			$LeverPicker/Rows/Columns2/MarginContainer/Level.show()
+		6:
+			$LeverPicker/Rows/Columns2/MarginContainer2/Level.show()
+		7:
+			$LeverPicker/Rows/Columns2/MarginContainer3/Level.show()
+		8:
+			$LeverPicker/Rows/Columns2/MarginContainer4/Level.show()
+		9:
+			$LeverPicker/Rows/Columns2/MarginContainer5/Level.show()
+		10:
+			$LeverPicker/Rows/Columns3/MarginContainer/Level.show()
 	_on_level_pressed(current_level + 1)
 
 func victory_screen():
