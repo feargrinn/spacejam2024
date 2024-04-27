@@ -44,6 +44,7 @@ var pipe_size: float
 func _ready():
 	is_painted = false
 	pipe_size = 1.
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
