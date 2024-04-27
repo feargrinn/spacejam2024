@@ -93,8 +93,6 @@ func init_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
 	)
 	for i in range(rot):
 		tile.rotate_right()
-		if tile is DiffractionTile:
-			tile.rotate_right_direction()
 	
 func set_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
 	tile.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -146,6 +144,8 @@ func _process(_delta):
 			tile.position = get_global_mouse_position() - position
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and right_mouse_was_pressed == false and tile != null:
 		right_mouse_was_pressed = true;
+		if tile is DiffractionTile:
+			tile.rotate_right_direction()
 		tile.rotate_right()
 		rotation_sound.play()
 	if Input.is_action_just_released("RMB"):
@@ -181,11 +181,18 @@ func update_at(x: int, y: int):
 		var other = tiles[other_x][other_y]
 		if Tile.connected(other, link):
 			if other.is_painted && !other is OutputTile:
-				full_neighbours.append(other.get_paint(Tile.opposite(link)))
+				var paint 
+				if other is DiffractionTile:
+					paint = other.get_paint_from_side(Tile.opposite(link))
+				else:
+					paint = other.get_paint()
+				full_neighbours.append(paint)
 			else:
 				empty_neighbours.append(Vector2i(other_x, other_y))
 	if !full_neighbours.is_empty():
 		var colour = Paint.mix(full_neighbours)
+		if tile is DiffractionTile:
+			tile.set_color_for_side()
 		tile.set_color(colour)
 		if tile is OutputTile:
 			tile.texture = preload("res://images/tile_24x24_output_transparent.png")
