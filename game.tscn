@@ -7,9 +7,10 @@
 [ext_resource type="FontFile" uid="uid://cwftwnqfoddyo" path="res://fonts/menu_font.ttf" id="2_rssi8"]
 [ext_resource type="Texture2D" uid="uid://bumfl8xum30i1" path="res://images/menu_button_lvl_empty.png" id="3_eonvc"]
 [ext_resource type="Texture2D" uid="uid://bmcl8la7yqftj" path="res://images/tile_24x24_T.png" id="4_ki1wh"]
+[ext_resource type="Texture2D" uid="uid://c86rrp0hau4hr" path="res://images/menu_button_empty.png" id="5_8wxpr"]
 [ext_resource type="Texture2D" uid="uid://bhyu5wlj0fgaf" path="res://images/tile_24x24_L.png" id="5_clsa2"]
 [ext_resource type="Texture2D" uid="uid://brvo77uobf1cx" path="res://images/tile_24x24_cross.png" id="6_5nono"]
-[ext_resource type="Texture2D" uid="uid://c86rrp0hau4hr" path="res://images/menu_button_empty.png" id="5_8wxpr"]
+[gd_scene load_steps=11 format=3 uid="uid://fhmwenm3h7c7"]
 
 [node name="Game" type="Node2D"]
 texture_filter = 1
@@ -427,6 +428,7 @@ layout_mode = 2
 size_flags_vertical = 3
 texture = ExtResource("6_5nono")
 stretch_mode = 3
+
 [node name="VBoxContainer2" type="VBoxContainer" parent="."]
 offset_left = 185.0
 offset_top = 164.0
