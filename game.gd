@@ -145,7 +145,7 @@ func play_credits():
 func _on_animation_player_winning_animation_finished(anim_name):
 	_sprite_winning.visible = false
 	_sprite_winning.scale = Vector2(1.0 ,1.0)
-	if current_level != 1:
+	if current_level != 10:
 		unload_level()
 		$VictoryScreen.show()
 	else:
