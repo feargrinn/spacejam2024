@@ -10,6 +10,8 @@ script = ExtResource("1_f0dd8")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 206.0
+offset_bottom = 87.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -186,3 +188,9 @@ visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 text = "5"
+
+[connection signal="pressed" from="LeverPicker/Rows/Columns/Level" to="." method="_on_level_pressed" binds= [1]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns/Level2" to="." method="_on_level_pressed" binds= [2]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns/Level3" to="." method="_on_level_pressed" binds= [3]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns/Level4" to="." method="_on_level_pressed" binds= [4]]
+[connection signal="pressed" from="LeverPicker/Rows/Columns/Level5" to="." method="_on_level_pressed" binds= [5]]

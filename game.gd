@@ -1,5 +1,12 @@
-extends Node2D
+extends Node
 
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta):
+	pass
 
 func _on_level_pressed(level: int):
 	var new_map = Sprite2D.new()
@@ -15,3 +22,4 @@ func _on_level_pressed(level: int):
 		new_map.set_script(preload("res://Levels/LevelFive.gd"))
 	add_child(new_map)
 	$LeverPicker.hide()
+	new_map.show()

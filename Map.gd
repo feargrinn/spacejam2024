@@ -13,9 +13,7 @@ const input_script = preload("res://Tiles/InputTile.gd")
 var tiles = []
 var number_of_tiles: int
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	#position.x = 40
+func fill_map():
 	number_of_tiles = 20
 	for i in range(number_of_tiles):
 		var tilesRow = []
@@ -27,27 +25,14 @@ func _ready():
 	for i in range(number_of_tiles):
 		for j in range(number_of_tiles):
 			init_tile_at(tiles[i][j], i, j)
-			
-	for i in range(1, number_of_tiles - 1):
-		set_tile_at(no_tile_script.new(), 0, i)
-		set_tile_at(no_tile_script.new(), number_of_tiles-1, i)
-		set_tile_at(no_tile_script.new(), i, 0)
-		set_tile_at(no_tile_script.new(), i, number_of_tiles-1)
-	
-	set_tile_at(no_tile_script.new(), 0, 0)
-	set_tile_at(no_tile_script.new(), number_of_tiles-1, 0)
-	set_tile_at(no_tile_script.new(), number_of_tiles-1, number_of_tiles-1)
-	set_tile_at(no_tile_script.new(), 0, number_of_tiles-1)
 
-	var tile = t_tile_script.new()
-	set_tile_at(tile, 3, 1, 2)
-	tile = input_script.new(colour_script.new(1, 0, 0))
-	set_tile_at(tile, 1, 0)
-	tile = input_script.new(colour_script.new(0, 0, 1))
-	set_tile_at(tile, 3, 0)
-	tile = input_script.new(colour_script.new(0, 1, 0))
-	set_tile_at(tile, 5, 0)
+func level_definition():
+	pass
 
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	fill_map()
+	level_definition()
 	add_edges()
 	
 func init_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
