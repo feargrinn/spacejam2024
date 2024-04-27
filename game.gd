@@ -49,13 +49,13 @@ func _on_next_level_pressed():
 	$VictoryScreen.hide()
 	match current_level:
 		1:
-			$LeverPicker/Rows/Columns/MarginContainer2/Level.show()
+			$LeverPicker/VBoxContainer/Rows/Columns/MarginContainer2/Level.show()
 		2:
-			$LeverPicker/Rows/Columns/MarginContainer3/Level.show()
+			$LeverPicker/VBoxContainer/Rows/Columns/MarginContainer3/Level.show()
 		3:
-			$LeverPicker/Rows/Columns/MarginContainer4/Level.show()
+			$LeverPicker/VBoxContainer/Rows/Columns/MarginContainer4/Level.show()
 		4:
-			$LeverPicker/Rows/Columns/MarginContainer5/Level.show()
+			$LeverPicker/VBoxContainer/Rows/Columns/MarginContainer5/Level.show()
 	_on_level_pressed(current_level + 1)
 
 func victory_screen():
