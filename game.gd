@@ -124,7 +124,8 @@ func _on_exit_level_picker_pressed():
 
 func play_credits():
 	var delay = 500.
-	$Credits.show();
+	$Credits.show()
+	$RichTextLabel.show()
 	$Credits.set_color("84A98C33")
 	await get_tree().create_timer(delay/1000).timeout
 	$Credits.set_color("84A98C66")
