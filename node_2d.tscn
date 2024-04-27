@@ -1,9 +1,15 @@
 [gd_scene load_steps=5 format=3 uid="uid://b6ldch5v2bfc3"]
 
 [ext_resource type="Script" path="res://Navigation.gd" id="1_motdp"]
+<<<<<<< HEAD
 [ext_resource type="Texture2D" uid="uid://bokmfwk3utprq" path="res://images/menu_button_play.png" id="2_yxybc"]
 [ext_resource type="Texture2D" uid="uid://dtscshhrw84ta" path="res://images/menu_button_settings.png" id="3_pripr"]
 [ext_resource type="Texture2D" uid="uid://beburbeow6xf5" path="res://images/menu_button_quit.png" id="4_13pl1"]
+=======
+[ext_resource type="Texture2D" uid="uid://65skkiu0r7uc" path="res://images/menu_button_play.png" id="2_yxybc"]
+[ext_resource type="Texture2D" uid="uid://c0acx141tb6qr" path="res://images/menu_button_settings.png" id="3_pripr"]
+[ext_resource type="Texture2D" uid="uid://b1xiiow0yedpf" path="res://images/menu_button_quit.png" id="4_13pl1"]
+>>>>>>> d03faa8 (sfx - added pops, changed pipe turning volume)
 
 [node name="Node" type="Node"]
 script = ExtResource("1_motdp")

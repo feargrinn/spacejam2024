@@ -2,7 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
+<<<<<<< HEAD
 uid="uid://dtscshhrw84ta"
+=======
+uid="uid://c0acx141tb6qr"
+>>>>>>> d03faa8 (sfx - added pops, changed pipe turning volume)
 path="res://.godot/imported/menu_button_settings.png-f34337f7f1bfe2d803519765b086d9e6.ctex"
 metadata={
 "vram_texture": false
