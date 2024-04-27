@@ -87,26 +87,25 @@ func _on_next_level_pressed():
 func victory_screen(scale: Vector2, all_outputs: Array[OutputTile]):
 	_sprite_winning.scale *= scale
 	_sprite_winning.rotation_degrees = 0
-	for i in all_outputs.size():
-		for n in all_outputs[i].links[0]:
-			_sprite_winning.rotation_degrees += 90
-		_sprite_winning.position = all_outputs[i].global_position
-		_sprite_winning.visible = true
-		_animation_winning.play("winning")
+	var output = all_outputs[RandomNumberGenerator.new().randi_range(0, all_outputs.size()-1)]
+	for n in output.links[0]:
+		_sprite_winning.rotation_degrees += 90
+	_sprite_winning.position = output.global_position
+	_sprite_winning.visible = true
+	_animation_winning.play("winning")
 
 func _on_retry_pressed():
 	$LoserScreen.hide()
 	_on_level_pressed(current_level)
 
-func loser_screen(scale: Vector2, all_outputs: Array[OutputTile]):
+func loser_screen(scale: Vector2, losing_output: OutputTile):
 	_sprite_losing.scale *= scale
 	_sprite_losing.rotation_degrees = 0
-	for i in all_outputs.size():
-		for n in all_outputs[i].links[0]:
-			_sprite_losing.rotation_degrees += 90
-		_sprite_losing.position = all_outputs[i].global_position
-		_sprite_losing.visible = true
-		_animation_losing.play("losing")
+	for n in losing_output.links[0]:
+		_sprite_losing.rotation_degrees += 90
+	_sprite_losing.position = losing_output.global_position
+	_sprite_losing.visible = true
+	_animation_losing.play("losing")
 
 
 func _on_exit_level_picker_pressed():
