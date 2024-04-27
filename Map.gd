@@ -21,6 +21,9 @@ var left_mouse_was_pressed = false;
 var right_mouse_was_pressed = false;
 var tile = null;
 
+var placing_sounds = []
+var rotation_sound;
+
 func set_dimensions():
 	pass
 
@@ -68,6 +71,16 @@ func _ready():
 	fill_map()
 	level_definition()
 	add_edges()
+	for i in 3:
+		placing_sounds.append(AudioStreamPlayer.new())
+	placing_sounds[0].stream = preload("res://sfx/sfx_pop_down_tile_1.wav")
+	placing_sounds[1].stream = preload("res://sfx/sfx_pop_down_tile_2.wav")
+	placing_sounds[2].stream = preload("res://sfx/sfx_pop_down_tile_3.wav")
+	for sound in placing_sounds:
+		add_child(sound)
+	rotation_sound = AudioStreamPlayer.new()
+	rotation_sound.stream = preload("res://sfx/sfx_pipe_turning.wav")
+	add_child(rotation_sound)
 	
 func init_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
 	tiles[ix][iy] = tile
@@ -110,6 +123,7 @@ func _process(_delta):
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and right_mouse_was_pressed == false and tile != null:
 		right_mouse_was_pressed = true;
 		tile.rotate_right()
+		rotation_sound.play()
 	if Input.is_action_just_released("RMB"):
 		right_mouse_was_pressed = false
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and left_mouse_was_pressed == false:
@@ -141,6 +155,7 @@ func _process(_delta):
 			remove_child(tile)
 			if position[0] >= 0 and position[0] < number_of_tiles_x and position[1] >= 0 and position[1] < number_of_tiles_y:
 				set_tile_at(tile, position[0], position[1], 0);
+				placing_sounds[RandomNumberGenerator.new().randi_range(0, 2)].play()
 			tile = null;
 	pass
 	
