@@ -118,7 +118,7 @@ func _process(_delta):
 			null:
 				pass
 			1:
-				tile = StraightTile.new()
+				tile = ITile.new()
 				tile.position = get_global_mouse_position()
 				add_child(tile)
 			2:

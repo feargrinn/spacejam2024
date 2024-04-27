@@ -1,6 +1,6 @@
 extends Tile
 
-class_name StraightTile
+class_name ITile
 
 
 # Called when the node enters the scene tree for the first time.
