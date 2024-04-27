@@ -6,6 +6,8 @@ class_name BendTile
 func _ready():
 	links.append(Direction.UP)
 	links.append(Direction.RIGHT)
+	links.append(Direction.DOWN)
+	links.append(Direction.LEFT)
 	
 	opaque_texture = preload("res://images/tile_24x24_L_opaque.png")
 	transparent_texture = preload("res://images/tile_24x24_L.png")

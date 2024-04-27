@@ -93,6 +93,8 @@ func init_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
 	)
 	for i in range(rot):
 		tile.rotate_right()
+		if tile is DiffractionTile:
+			tile.rotate_right_direction()
 	
 func set_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
 	tile.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -179,7 +181,7 @@ func update_at(x: int, y: int):
 		var other = tiles[other_x][other_y]
 		if Tile.connected(other, link):
 			if other.is_painted && !other is OutputTile:
-				full_neighbours.append(other.get_paint())
+				full_neighbours.append(other.get_paint(Tile.opposite(link)))
 			else:
 				empty_neighbours.append(Vector2i(other_x, other_y))
 	if !full_neighbours.is_empty():
