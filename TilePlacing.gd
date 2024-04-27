@@ -1,5 +1,7 @@
 extends MarginContainer
 
+var map;
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -12,10 +14,15 @@ func _process(_delta):
 
 
 func _on_mouse_entered_tile(extra_arg_0):
-	get_parent().get_child(4).current_tile = extra_arg_0
+	var parent = get_parent();
+	var children = parent.get_children()
+	for child in children:
+		if child is Sprite2D:
+			map = child
+	map.current_tile = extra_arg_0
 
 
-func _on_i_mouse_exited():
-	get_parent().get_child(4).current_tile = null
+func _on_mouse_exited():
+	map.current_tile = null
 
 
