@@ -28,14 +28,14 @@ $(WINDOWS_EXECUTABLE): $(PROJECT_DIR)/*
 	godot4 --headless --path $(PROJECT_DIR) --export-release "Windows Desktop"  $@
 
 $(LINUX_ZIP): $(LINUX_EXECUTABLE) $(PCK_FILE)
-	zip $(LINUX_ZIP) $(PCK_FILE) $(LINUX_EXECUTABLE)
+	zip -j $(LINUX_ZIP) $(PCK_FILE) $(LINUX_EXECUTABLE)
 
 $(WEB_ZIP): $(WEB_EXECUTABLE) $(WEB_FILES) $(PCK_FILE)
 	cp $(WEB_EXECUTABLE) $(OUTPUT_DIR)/index.html
-	zip $(WEB_ZIP) $(OUTPUT_DIR)/index.html $(WEB_FILES) $(PCK_FILE)
+	zip -j $(WEB_ZIP) $(OUTPUT_DIR)/index.html $(WEB_FILES) $(PCK_FILE)
 
 $(WINDOWS_ZIP): $(WINDOWS_EXECUTABLE) $(PCK_FILE)
-	zip $(WINDOWS_ZIP) $(PCK_FILE) $(WINDOWS_EXECUTABLE)
+	zip -j $(WINDOWS_ZIP) $(PCK_FILE) $(WINDOWS_EXECUTABLE)
 
 linux: $(LINUX_ZIP)
 
