@@ -116,8 +116,8 @@ text = "Quit"
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="TextureRect" type="TextureRect" parent="ParallaxBackground"]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 640.0
+offset_bottom = 480.0
 texture = ExtResource("5_yynow")
 
 [connection signal="pressed" from="MenuScreen/VBoxContainer2/MenuButtons/Play" to="." method="_on_play_pressed"]

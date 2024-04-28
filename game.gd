@@ -32,6 +32,14 @@ func unload_level():
 	$TilePicker.hide()
 
 func _on_exit_level_pressed():
+	_sprite_winning.visible = false
+	_sprite_winning.scale = Vector2(1.0 ,1.0)
+	_sprite_losing.visible = false
+	_sprite_losing.scale = Vector2(1.0 ,1.0)
+	_animation_winning.stop()
+	_animation_losing.stop()
+	winning_sound.stop()
+	losing_sound.stop()
 	unload_level()
 	$LeverPicker.show()
 
@@ -39,27 +47,38 @@ func _on_level_pressed(level: int):
 	current_level = level
 	var new_map = Sprite2D.new()
 	new_map.name = "map"
-	match level:
-		1:
-			new_map.set_script(preload("res://Levels/Level_01.gd"))
-		2:
-			new_map.set_script(preload("res://Levels/Level_02.gd"))
-		3:
-			new_map.set_script(preload("res://Levels/Level_03.gd"))
-		4:
-			new_map.set_script(preload("res://Levels/Level_04.gd"))
-		5:
-			new_map.set_script(preload("res://Levels/Level_05.gd"))
-		6:
-			new_map.set_script(preload("res://Levels/Level_06.gd"))
-		7:
-			new_map.set_script(preload("res://Levels/Level_07.gd"))
-		8:
-			new_map.set_script(preload("res://Levels/Level_08.gd"))
-		9:
-			new_map.set_script(preload("res://Levels/Level_09.gd"))
-		10:
-			new_map.set_script(preload("res://Levels/Level_10.gd"))
+	
+	const FILE_BEGIN = "res://Levels/Level_"
+	var level_path
+	if level < 10:
+		level_path = FILE_BEGIN + "0" + str(level) + ".gd"
+	else:
+		level_path = FILE_BEGIN + str(level) + ".gd"
+	new_map.set_script(load(level_path))
+	
+	#new_map.set_script(preload("res://Levels/Level_06.gd"))
+	
+	#match level:
+		#1:
+			#new_map.set_script(preload("res://Levels/Level_01.gd"))
+		#2:
+			#new_map.set_script(preload("res://Levels/Level_02.gd"))
+		#3:
+			#new_map.set_script(preload("res://Levels/Level_03.gd"))
+		#4:
+			#new_map.set_script(preload("res://Levels/Level_04.gd"))
+		#5:
+			#new_map.set_script(preload("res://Levels/Level_05.gd"))
+		#6:
+			#new_map.set_script(preload("res://Levels/Level_06.gd"))
+		#7:
+			#new_map.set_script(preload("res://Levels/Level_07.gd"))
+		#8:
+			#new_map.set_script(preload("res://Levels/Level_08.gd"))
+		#9:
+			#new_map.set_script(preload("res://Levels/Level_09.gd"))
+		#10:
+			#new_map.set_script(preload("res://Levels/Level_10.gd"))
 	add_child(new_map)
 	current_map = new_map
 	$LeverPicker.hide()
