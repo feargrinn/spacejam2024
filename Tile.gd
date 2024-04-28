@@ -41,7 +41,6 @@ static func to_vector(direction: int):
 			return Vector2i(-1, 0)
 
 var links: Array[int] = []
-var texture_to_set : Texture
 var is_painted: bool
 var color: Colour
 var pipe_size: float
@@ -65,14 +64,14 @@ func rotate_right():
 	links = new_links
 	rotate(PI / 2)
 	
-func set_color(_color: Colour):
+func set_color(new_color: Colour):
 	if is_painted:
 		remove_child(color)
 	else:
 		is_painted = true
 		texture = transparent_texture
 
-	color = colour_script.new(_color.r, _color.y, _color.b)
+	color = colour_script.new(new_color.r, new_color.y, new_color.b)
 	add_child(color)
 
 func get_paint() -> Paint:

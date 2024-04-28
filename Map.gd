@@ -176,46 +176,37 @@ func _process(_delta):
 			tile = null
 			current_tile = null
 	pass
-	
+
+func update_timestep(to_update: Array[Vector2i]) -> Array[Vector2i]:
+	var update_in_next_step: Array[Vector2i] = []
+	for location in to_update:
+		var x = location.x
+		var y = location.y
+		var tile = tiles[x][y]
+		var empty_neighbours: Array[Vector2i] = []
+		var full_neighbours: Array[Paint] = []
+		for link in tile.links:
+			var offset = Tile.to_vector(link)
+			var other_x = x+offset.x
+			var other_y = y+offset.y
+			var other = tiles[other_x][other_y]
+			if Tile.connected(other, link):
+				if other.is_painted && !other is OutputTile:
+					full_neighbours.append(other.get_paint())
+				else:
+					empty_neighbours.append(Vector2i(other_x, other_y))
+		if full_neighbours.any(func(paint): return paint.amount > 0):
+			var colour = Paint.mix(full_neighbours)
+			tile.set_color(colour)
+			# don't update empty anti-tile neighbours
+			if not (tile is AntiTile):
+				update_in_next_step.append_array(empty_neighbours)
+	return update_in_next_step
+
 func update_at(x: int, y: int):
-	var empty_neighbours = []
-	var full_neighbours: Array[Paint] = []
-	var tile = tiles[x][y]
-	for link in tile.links:
-		var offset = Tile.to_vector(link)
-		var other_x = x+offset.x
-		var other_y = y+offset.y
-		var other = tiles[other_x][other_y]
-		if Tile.connected(other, link):
-			if other.is_painted && !other is OutputTile:
-				full_neighbours.append(other.get_paint())
-			else:
-				empty_neighbours.append(Vector2i(other_x, other_y))
-	if full_neighbours.any(func(paint): return paint.amount > 0):
-		var colour = Paint.mix(full_neighbours)
-		tile.set_color(colour)
-		if tile is OutputTile:
-			tile.texture = preload("res://images/tile_24x24_output_transparent.png")
-			tile.is_output_filled = true
-		if not (tile is AntiTile):
-			for neighbour in empty_neighbours:
-				fill_pipes(neighbour, colour)
-
-func fill_pipes(coords: Vector2i, colour: Colour):
-	var x = coords.x
-	var y = coords.y
-	var tile = tiles[x][y]
-	if tile.is_painted && !tile is OutputTile:
-		return
-
-	tile.set_color(colour)
-	if tile is OutputTile:
-		tile.texture = preload("res://images/tile_24x24_output_transparent.png")
-		tile.is_output_filled = true
-
-	for link in tile.links:
-		var offset = Tile.to_vector(link)
-		fill_pipes(Vector2i(x+offset.x, y+offset.y), colour)
+	var to_update: Array[Vector2i] = [Vector2i(x, y)]
+	while !to_update.is_empty():
+		to_update = update_timestep(to_update)
 
 func check_for_game_status():
 	if all_outputs.is_empty():
@@ -227,9 +218,8 @@ func check_for_game_status():
 			get_parent().loser_screen(scale, output_tile)
 			return
 
-	for output_tile in all_outputs:
-		if !output_tile.is_output_filled:
-			return
+	if all_outputs.any(func(tile): return !tile.is_output_filled):
+		return
 			
 	is_running = false
 	get_parent().victory_screen(scale, all_outputs)
