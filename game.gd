@@ -41,25 +41,25 @@ func _on_level_pressed(level: int):
 	new_map.name = "map"
 	match level:
 		1:
-			new_map.set_script(preload("res://Levels/LevelOne.gd"))
+			new_map.set_script(preload("res://Levels/Level_01.gd"))
 		2:
-			new_map.set_script(preload("res://Levels/LevelTwo.gd"))
+			new_map.set_script(preload("res://Levels/Level_02.gd"))
 		3:
-			new_map.set_script(preload("res://Levels/LevelThree.gd"))
+			new_map.set_script(preload("res://Levels/Level_03.gd"))
 		4:
-			new_map.set_script(preload("res://Levels/LevelFour.gd"))
+			new_map.set_script(preload("res://Levels/Level_04.gd"))
 		5:
-			new_map.set_script(preload("res://Levels/LevelFive.gd"))
+			new_map.set_script(preload("res://Levels/Level_05.gd"))
 		6:
-			new_map.set_script(preload("res://Levels/LevelSix.gd"))
+			new_map.set_script(preload("res://Levels/Level_06.gd"))
 		7:
-			new_map.set_script(preload("res://Levels/LevelSeven.gd"))
+			new_map.set_script(preload("res://Levels/Level_07.gd"))
 		8:
-			new_map.set_script(preload("res://Levels/LevelEight.gd"))
+			new_map.set_script(preload("res://Levels/Level_08.gd"))
 		9:
-			new_map.set_script(preload("res://Levels/LevelNine.gd"))
+			new_map.set_script(preload("res://Levels/Level_09.gd"))
 		10:
-			new_map.set_script(preload("res://Levels/LevelTen.gd"))
+			new_map.set_script(preload("res://Levels/Level_10.gd"))
 	add_child(new_map)
 	current_map = new_map
 	$LeverPicker.hide()

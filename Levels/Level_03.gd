@@ -1,6 +1,6 @@
 extends Map
 
-class_name LevelThree
+class_name Level_03
 
 func set_dimensions():
 	number_of_tiles_x = 7
