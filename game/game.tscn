@@ -504,32 +504,42 @@ theme_override_constants/separation = 30
 
 [node name="TextureRect" type="TextureRect" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 3
 texture = ExtResource("6_psk2b")
+expand_mode = 3
 stretch_mode = 5
 
 [node name="TextureRect2" type="TextureRect" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 3
 texture = ExtResource("7_ujjlr")
+expand_mode = 3
 stretch_mode = 5
 
 [node name="TextureRect3" type="TextureRect" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 3
 texture = ExtResource("8_l0vv8")
+expand_mode = 3
 stretch_mode = 5
 
 [node name="TextureRect4" type="TextureRect" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 3
 texture = ExtResource("9_yodhl")
+expand_mode = 3
 stretch_mode = 5
 
 [node name="TextureRect5" type="TextureRect" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 3
 texture = ExtResource("10_wju1l")
+expand_mode = 3
 stretch_mode = 5
 
 [node name="VictoryScreen" type="ColorRect" parent="."]
@@ -714,10 +724,15 @@ Thank you for playing :)[/center]"
 [connection signal="pressed" from="LeverPicker/VBoxContainer/ExitLevelPicker" to="." method="_on_exit_level_picker_pressed"]
 [connection signal="pressed" from="ExitLevel" to="." method="_on_exit_level_pressed"]
 [connection signal="mouse_entered" from="TilePicker/VBoxContainer/TextureRect" to="TilePicker" method="_on_mouse_entered_tile" binds= [1]]
+[connection signal="mouse_exited" from="TilePicker/VBoxContainer/TextureRect" to="TilePicker" method="_on_mouse_exited_tile"]
 [connection signal="mouse_entered" from="TilePicker/VBoxContainer/TextureRect2" to="TilePicker" method="_on_mouse_entered_tile" binds= [2]]
+[connection signal="mouse_exited" from="TilePicker/VBoxContainer/TextureRect2" to="TilePicker" method="_on_mouse_exited_tile"]
 [connection signal="mouse_entered" from="TilePicker/VBoxContainer/TextureRect3" to="TilePicker" method="_on_mouse_entered_tile" binds= [3]]
+[connection signal="mouse_exited" from="TilePicker/VBoxContainer/TextureRect3" to="TilePicker" method="_on_mouse_exited_tile"]
 [connection signal="mouse_entered" from="TilePicker/VBoxContainer/TextureRect4" to="TilePicker" method="_on_mouse_entered_tile" binds= [4]]
+[connection signal="mouse_exited" from="TilePicker/VBoxContainer/TextureRect4" to="TilePicker" method="_on_mouse_exited_tile"]
 [connection signal="mouse_entered" from="TilePicker/VBoxContainer/TextureRect5" to="TilePicker" method="_on_mouse_entered_tile" binds= [5]]
+[connection signal="mouse_exited" from="TilePicker/VBoxContainer/TextureRect5" to="TilePicker" method="_on_mouse_exited_tile"]
 [connection signal="pressed" from="VictoryScreen/MenuButtons/NextLevel" to="." method="_on_next_level_pressed"]
 [connection signal="pressed" from="LoserScreen/MenuButtons/Retry" to="." method="_on_retry_pressed"]
 [connection signal="animation_finished" from="Sprite2DWinning/AnimationPlayerWinning" to="." method="_on_animation_player_winning_animation_finished"]

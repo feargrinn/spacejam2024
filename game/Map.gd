@@ -174,7 +174,6 @@ func _process(_delta):
 				placing_sounds[RandomNumberGenerator.new().randi_range(0, 2)].play()
 				set_tile_at(tile, position[0], position[1], 0)
 			tile = null
-			current_tile = null
 	pass
 
 func update_timestep(to_update: Array[Vector2i]) -> Array[Vector2i]:

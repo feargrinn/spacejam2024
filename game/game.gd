@@ -25,7 +25,6 @@ func _process(_delta):
 	pass
 
 func unload_level():
-	current_map.current_tile = null
 	remove_child(current_map)
 	current_map.hide()
 	$ExitLevel.hide()
