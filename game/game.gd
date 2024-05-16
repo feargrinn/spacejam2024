@@ -11,6 +11,8 @@ var losing_sound
 @onready var _animation_winning = $Sprite2DWinning/AnimationPlayerWinning
 @onready var _animation_losing = $Sprite2DLosing/AnimationPlayerLosing
 
+var winning_sprites = []
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	winning_sound = AudioStreamPlayer.new()
@@ -31,8 +33,11 @@ func unload_level():
 	$TilePicker.hide()
 
 func _on_exit_level_pressed():
-	_sprite_winning.visible = false
 	_sprite_winning.scale = Vector2(1.0 ,1.0)
+	for sprite in winning_sprites:
+		sprite.visible = false;
+		sprite.get_child(0).stop()
+		
 	_sprite_losing.visible = false
 	_sprite_losing.scale = Vector2(1.0 ,1.0)
 	_animation_winning.stop()
@@ -90,12 +95,17 @@ func _on_next_level_pressed():
 func victory_screen(scale: Vector2, all_outputs: Array[OutputTile]):
 	_sprite_winning.scale *= scale
 	_sprite_winning.rotation_degrees = 0
-	var output = all_outputs[RandomNumberGenerator.new().randi_range(0, all_outputs.size()-1)]
-	for n in output.links[0]:
-		_sprite_winning.rotation_degrees += 90
-	_sprite_winning.position = output.global_position
-	_sprite_winning.visible = true
+	for output in all_outputs:
+		var sprite_winning = _sprite_winning.duplicate(8)
+		add_child(sprite_winning)
+		for n in output.links[0]:
+			sprite_winning.rotation_degrees += 90
+		sprite_winning.position = output.global_position
+		sprite_winning.visible = true
+		winning_sprites.append(sprite_winning)
 	_animation_winning.play("winning")
+	for sprite in winning_sprites:
+		sprite.get_child(0).play("winning")
 	winning_sound.play()
 
 func _on_retry_pressed():
@@ -139,8 +149,10 @@ func play_credits():
 	pass
 
 func _on_animation_player_winning_animation_finished(anim_name):
-	_sprite_winning.visible = false
 	_sprite_winning.scale = Vector2(1.0 ,1.0)
+	for sprite in winning_sprites:
+		sprite.queue_free()
+	winning_sprites = []
 	if current_level != 10:
 		unload_level()
 		$VictoryScreen.show()
