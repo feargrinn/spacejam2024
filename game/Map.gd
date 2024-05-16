@@ -172,6 +172,7 @@ func _process(_delta):
 				tile = null
 			else:
 				#tile.rotate_right();
+				tile.queue_free()
 				tile = null
 	pass
 
