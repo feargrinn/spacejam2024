@@ -120,7 +120,7 @@ func register_output(output: OutputTile, x: int, y: int):
 	all_outputs.append(output)
 
 func handle_left_mouse_button():
-		left_mouse_was_pressed = true
+		#left_mouse_was_pressed = true
 		match current_tile:
 			null:
 				return
@@ -146,24 +146,19 @@ func _process(_delta):
 	var game_position = Globals.WINDOW_SIZE / 2 - Vector2(
 		number_of_tiles_x * scale.x * Globals.TILE_SIZE / 2,
 		number_of_tiles_y * scale.y * Globals.TILE_SIZE / 2)
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and left_mouse_was_pressed and tile != null:
+	if tile != null:
 		if scale[0] != 1:
 			tile.position = (get_global_mouse_position() - game_position)/2
 		else:
 			tile.position = get_global_mouse_position() - position
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and right_mouse_was_pressed == false and tile != null:
-		right_mouse_was_pressed = true;
-		tile.rotate_right()
-		rotation_sound.play()
 	if Input.is_action_just_released("RMB"):
-		right_mouse_was_pressed = false
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and left_mouse_was_pressed == false:
-		handle_left_mouse_button()
+		if tile != null:
+			for i in range(3): tile.rotate_right()
 	
 	if Input.is_action_just_released("LMB"):
-		left_mouse_was_pressed = false
-		if tile != null:
-			remove_child(tile)
+		if tile == null:
+			handle_left_mouse_button()
+		else:
 			var position = _mouse_position_to_coordinates()
 			if (position[0] >= 0 
 				and position[0] < number_of_tiles_x 
@@ -172,8 +167,12 @@ func _process(_delta):
 				and tiles[position[0]][position[1]].is_replaceable
 			):
 				placing_sounds[RandomNumberGenerator.new().randi_range(0, 2)].play()
+				remove_child(tile)
 				set_tile_at(tile, position[0], position[1], 0)
-			tile = null
+				tile = null
+			else:
+				#tile.rotate_right();
+				tile = null
 	pass
 
 func update_timestep(to_update: Array[Vector2i]) -> Array[Vector2i]:
