@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://fhmwenm3h7c7"]
+[gd_scene load_steps=21 format=3 uid="uid://fhmwenm3h7c7"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_f0dd8"]
 [ext_resource type="Texture2D" uid="uid://oogt24347qv7" path="res://images/bg_640x480.png" id="2_5eohq"]
@@ -13,6 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://c6klyd06qogb" path="res://images/tile_24x24_anti_opaque.png" id="10_wju1l"]
 [ext_resource type="Texture2D" uid="uid://drv2yvqyelnkb" path="res://images/sprite sheets/sprite_sheet_winning_animation.png" id="12_tg20q"]
 [ext_resource type="Texture2D" uid="uid://devomnujdn5pj" path="res://images/sprite sheets/sprite_sheet_losing_animation.png" id="13_vb37n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5qjq1"]
 
 [sub_resource type="Animation" id="Animation_3pn8e"]
 length = 0.001
@@ -502,45 +504,79 @@ script = ExtResource("2_l2akx")
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="TextureRect" type="TextureRect" parent="TilePicker/VBoxContainer"]
+[node name="Container" type="Control" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 3
+size_flags_vertical = 6
+
+[node name="TextureRect" type="Area2D" parent="TilePicker/VBoxContainer/Container"]
+scale = Vector2(3, 3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container/TextureRect"]
+shape = SubResource("RectangleShape2D_5qjq1")
+
+[node name="Sprite2D" type="Sprite2D" parent="TilePicker/VBoxContainer/Container/TextureRect"]
 texture = ExtResource("6_psk2b")
-expand_mode = 3
-stretch_mode = 5
 
-[node name="TextureRect2" type="TextureRect" parent="TilePicker/VBoxContainer"]
+[node name="Container2" type="Control" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 3
+size_flags_vertical = 6
+
+[node name="TextureRect2" type="Area2D" parent="TilePicker/VBoxContainer/Container2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container2/TextureRect2"]
+scale = Vector2(3, 3)
+shape = SubResource("RectangleShape2D_5qjq1")
+
+[node name="Sprite2D" type="Sprite2D" parent="TilePicker/VBoxContainer/Container2/TextureRect2"]
+scale = Vector2(3, 3)
 texture = ExtResource("7_ujjlr")
-expand_mode = 3
-stretch_mode = 5
 
-[node name="TextureRect3" type="TextureRect" parent="TilePicker/VBoxContainer"]
+[node name="Container3" type="Control" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 3
+size_flags_vertical = 6
+
+[node name="TextureRect3" type="Area2D" parent="TilePicker/VBoxContainer/Container3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container3/TextureRect3"]
+scale = Vector2(3, 3)
+shape = SubResource("RectangleShape2D_5qjq1")
+
+[node name="Sprite2D" type="Sprite2D" parent="TilePicker/VBoxContainer/Container3/TextureRect3"]
+scale = Vector2(3, 3)
 texture = ExtResource("8_l0vv8")
-expand_mode = 3
-stretch_mode = 5
 
-[node name="TextureRect4" type="TextureRect" parent="TilePicker/VBoxContainer"]
+[node name="Container4" type="Control" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 3
+size_flags_vertical = 6
+
+[node name="TextureRect4" type="Area2D" parent="TilePicker/VBoxContainer/Container4"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container4/TextureRect4"]
+scale = Vector2(3, 3)
+shape = SubResource("RectangleShape2D_5qjq1")
+
+[node name="Sprite2D" type="Sprite2D" parent="TilePicker/VBoxContainer/Container4/TextureRect4"]
+scale = Vector2(3, 3)
 texture = ExtResource("9_yodhl")
-expand_mode = 3
-stretch_mode = 5
 
-[node name="TextureRect5" type="TextureRect" parent="TilePicker/VBoxContainer"]
+[node name="Container5" type="Control" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 3
+size_flags_vertical = 6
+
+[node name="TextureRect5" type="Area2D" parent="TilePicker/VBoxContainer/Container5"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container5/TextureRect5"]
+scale = Vector2(3, 3)
+shape = SubResource("RectangleShape2D_5qjq1")
+
+[node name="Sprite2D" type="Sprite2D" parent="TilePicker/VBoxContainer/Container5/TextureRect5"]
+scale = Vector2(3, 3)
 texture = ExtResource("10_wju1l")
-expand_mode = 3
-stretch_mode = 5
 
 [node name="VictoryScreen" type="ColorRect" parent="."]
 visible = false
@@ -723,16 +759,16 @@ Thank you for playing :)[/center]"
 [connection signal="pressed" from="LeverPicker/VBoxContainer/Rows/Columns4/MarginContainer5/Level" to="." method="_on_level_pressed" binds= [5]]
 [connection signal="pressed" from="LeverPicker/VBoxContainer/ExitLevelPicker" to="." method="_on_exit_level_picker_pressed"]
 [connection signal="pressed" from="ExitLevel" to="." method="_on_exit_level_pressed"]
-[connection signal="mouse_entered" from="TilePicker/VBoxContainer/TextureRect" to="TilePicker" method="_on_mouse_entered_tile" binds= [1]]
-[connection signal="mouse_exited" from="TilePicker/VBoxContainer/TextureRect" to="TilePicker" method="_on_mouse_exited_tile"]
-[connection signal="mouse_entered" from="TilePicker/VBoxContainer/TextureRect2" to="TilePicker" method="_on_mouse_entered_tile" binds= [2]]
-[connection signal="mouse_exited" from="TilePicker/VBoxContainer/TextureRect2" to="TilePicker" method="_on_mouse_exited_tile"]
-[connection signal="mouse_entered" from="TilePicker/VBoxContainer/TextureRect3" to="TilePicker" method="_on_mouse_entered_tile" binds= [3]]
-[connection signal="mouse_exited" from="TilePicker/VBoxContainer/TextureRect3" to="TilePicker" method="_on_mouse_exited_tile"]
-[connection signal="mouse_entered" from="TilePicker/VBoxContainer/TextureRect4" to="TilePicker" method="_on_mouse_entered_tile" binds= [4]]
-[connection signal="mouse_exited" from="TilePicker/VBoxContainer/TextureRect4" to="TilePicker" method="_on_mouse_exited_tile"]
-[connection signal="mouse_entered" from="TilePicker/VBoxContainer/TextureRect5" to="TilePicker" method="_on_mouse_entered_tile" binds= [5]]
-[connection signal="mouse_exited" from="TilePicker/VBoxContainer/TextureRect5" to="TilePicker" method="_on_mouse_exited_tile"]
+[connection signal="mouse_entered" from="TilePicker/VBoxContainer/Container/TextureRect" to="TilePicker" method="_on_mouse_entered_tile" binds= [1]]
+[connection signal="mouse_exited" from="TilePicker/VBoxContainer/Container/TextureRect" to="TilePicker" method="_on_mouse_exited_tile"]
+[connection signal="mouse_entered" from="TilePicker/VBoxContainer/Container2/TextureRect2" to="TilePicker" method="_on_mouse_entered_tile" binds= [2]]
+[connection signal="mouse_exited" from="TilePicker/VBoxContainer/Container2/TextureRect2" to="TilePicker" method="_on_mouse_exited_tile"]
+[connection signal="mouse_entered" from="TilePicker/VBoxContainer/Container3/TextureRect3" to="TilePicker" method="_on_mouse_entered_tile" binds= [3]]
+[connection signal="mouse_exited" from="TilePicker/VBoxContainer/Container3/TextureRect3" to="TilePicker" method="_on_mouse_exited_tile"]
+[connection signal="mouse_entered" from="TilePicker/VBoxContainer/Container4/TextureRect4" to="TilePicker" method="_on_mouse_entered_tile" binds= [4]]
+[connection signal="mouse_exited" from="TilePicker/VBoxContainer/Container4/TextureRect4" to="TilePicker" method="_on_mouse_exited_tile"]
+[connection signal="mouse_entered" from="TilePicker/VBoxContainer/Container5/TextureRect5" to="TilePicker" method="_on_mouse_entered_tile" binds= [5]]
+[connection signal="mouse_exited" from="TilePicker/VBoxContainer/Container5/TextureRect5" to="TilePicker" method="_on_mouse_exited_tile"]
 [connection signal="pressed" from="VictoryScreen/MenuButtons/NextLevel" to="." method="_on_next_level_pressed"]
 [connection signal="pressed" from="LoserScreen/MenuButtons/Retry" to="." method="_on_retry_pressed"]
 [connection signal="animation_finished" from="Sprite2DWinning/AnimationPlayerWinning" to="." method="_on_animation_player_winning_animation_finished"]
