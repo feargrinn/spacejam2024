@@ -16,7 +16,12 @@ var winning_sprites = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	save_data = PlayerData.new()
+	var loaded_data = PlayerData.load_default()
+	if loaded_data is Error:
+		print("Failed to load game state: ", loaded_data.as_string(), ".")
+		save_data = PlayerData.new()
+	else:
+		save_data = loaded_data
 	# Need the +1 because ranges are exclusive by default.
 	for level in save_data.get_reached_level() + 1:
 		unlock_level(level)
