@@ -153,7 +153,7 @@ func _process(_delta):
 			tile.position = get_global_mouse_position() - position
 	if Input.is_action_just_released("RMB"):
 		if tile != null:
-			for i in range(3): tile.rotate_right()
+			tile.rotate_right()
 	
 	if Input.is_action_just_released("LMB"):
 		if tile == null:
