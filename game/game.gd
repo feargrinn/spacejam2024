@@ -2,6 +2,7 @@ extends Node
 
 var current_map
 var current_level
+var save_data: PlayerData
 
 var winning_sound
 var losing_sound
@@ -15,6 +16,15 @@ var winning_sprites = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var loaded_data = PlayerData.load_default()
+	if loaded_data is Error:
+		print("Failed to load game state: ", loaded_data.as_string(), ".")
+		save_data = PlayerData.new()
+	else:
+		save_data = loaded_data
+	# Need the +1 because ranges are exclusive by default.
+	for level in save_data.get_reached_level() + 1:
+		unlock_level(level)
 	winning_sound = AudioStreamPlayer.new()
 	winning_sound.stream = preload("res://sfx/sfx_winning_animation.wav")
 	add_child(winning_sound)
@@ -67,29 +77,33 @@ func _on_level_pressed(level: int):
 	$ExitLevel.show()
 	current_map.show()
 
+func unlock_level(level: int):
+	match level:
+		1:
+			$LeverPicker/VBoxContainer/Rows/Columns/MarginContainer/Level.show()
+		2:
+			$LeverPicker/VBoxContainer/Rows/Columns/MarginContainer2/Level.show()
+		3:
+			$LeverPicker/VBoxContainer/Rows/Columns/MarginContainer3/Level.show()
+		4:
+			$LeverPicker/VBoxContainer/Rows/Columns/MarginContainer4/Level.show()
+		5:
+			$LeverPicker/VBoxContainer/Rows/Columns/MarginContainer5/Level.show()
+		6:
+			$LeverPicker/VBoxContainer/Rows/Columns2/MarginContainer/Level.show()
+		7:
+			$LeverPicker/VBoxContainer/Rows/Columns2/MarginContainer2/Level.show()
+		8:
+			$LeverPicker/VBoxContainer/Rows/Columns2/MarginContainer3/Level.show()
+		9:
+			$LeverPicker/VBoxContainer/Rows/Columns2/MarginContainer4/Level.show()
+		10:
+			$LeverPicker/VBoxContainer/Rows/Columns2/MarginContainer5/Level.show()
+	save_data.unlock_level(level)
+
 func _on_next_level_pressed():
 	$VictoryScreen.hide()
-	match current_level:
-		1:
-			$LeverPicker/VBoxContainer/Rows/Columns/MarginContainer2/Level.show()
-		2:
-			$LeverPicker/VBoxContainer/Rows/Columns/MarginContainer3/Level.show()
-		3:
-			$LeverPicker/VBoxContainer/Rows/Columns/MarginContainer4/Level.show()
-		4:
-			$LeverPicker/VBoxContainer/Rows/Columns/MarginContainer5/Level.show()
-		5:
-			$LeverPicker/VBoxContainer/Rows/Columns2/MarginContainer/Level.show()
-		6:
-			$LeverPicker/VBoxContainer/Rows/Columns2/MarginContainer2/Level.show()
-		7:
-			$LeverPicker/VBoxContainer/Rows/Columns2/MarginContainer3/Level.show()
-		8:
-			$LeverPicker/VBoxContainer/Rows/Columns2/MarginContainer4/Level.show()
-		9:
-			$LeverPicker/VBoxContainer/Rows/Columns2/MarginContainer5/Level.show()
-		10:
-			$LeverPicker/VBoxContainer/Rows/Columns3/MarginContainer/Level.show()
+	unlock_level(current_level + 1)
 	_on_level_pressed(current_level + 1)
 
 func victory_screen(scale: Vector2, all_outputs: Array[OutputTile]):
