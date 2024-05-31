@@ -9,7 +9,7 @@ func _init(colour: Colour, amount: float):
 	self.colour = colour
 	self.amount = amount
 
-static func mix(paints: Array[Paint]):
+static func mix(paints: Array[Paint]) -> Colour:
 	var r = 0
 	var y = 0
 	var b = 0

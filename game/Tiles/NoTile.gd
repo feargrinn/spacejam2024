@@ -3,6 +3,7 @@ extends Tile
 class_name NoTile
 
 func _init(_texture: Texture2D):
+	super._init()
 	z_index = -1
 	opaque_texture = _texture
 

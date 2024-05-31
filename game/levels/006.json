@@ -1,0 +1,96 @@
+{
+	"name": "Too hard",
+	"height": 8,
+	"width": 8,
+	"inputs": [
+		{
+			"colour": {
+				"red": 1,
+				"yellow": 0,
+				"blue": 0
+			},
+			"x": 1,
+			"y": 0,
+			"orientation": 0
+		},
+		{
+			"colour": {
+				"red": 0,
+				"yellow": 1,
+				"blue": 0
+			},
+			"x": 3,
+			"y": 0,
+			"orientation": 0
+		},
+		{
+			"colour": {
+				"red": 1,
+				"yellow": 1,
+				"blue": 1
+			},
+			"x": 6,
+			"y": 0,
+			"orientation": 0
+		}
+	],
+	"outputs": [
+		{
+			"colour": {
+				"mix": [
+					{
+						"colour": {
+							"input": 0
+						},
+						"amount": 1
+					},
+					{
+						"colour": {
+							"input": 1
+						},
+						"amount": 1
+					}
+				]
+			},
+			"x": 1,
+			"y": 7,
+			"orientation": 0
+		},
+		{
+			"colour": {
+				"input": 1
+			},
+			"x": 3,
+			"y": 7,
+			"orientation": 0
+		},
+		{
+			"colour": {
+				"mix": [
+					{
+						"colour": {
+							"input": 2
+						},
+						"amount": 1
+					},
+					{
+						"colour": {
+							"input": 2
+						},
+						"amount": 1
+					},
+					{
+						"colour": {
+							"input": 1
+						},
+						"amount": 1
+					}
+				]
+			},
+			"x": 6,
+			"y": 7,
+			"orientation": 0
+		}
+	],
+	"tiles": []
+}

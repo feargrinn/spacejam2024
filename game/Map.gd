@@ -22,15 +22,56 @@ var left_mouse_was_pressed = false;
 var right_mouse_was_pressed = false;
 var tile = null;
 var is_running: bool
+var level_name: String
 
 var placing_sounds = []
 var rotation_sound
 
-func set_dimensions():
-	pass
+func _init(level: Level):
+	# This name is used by the tile picker.
+	name = "map"
+	level_name = level.name
+	number_of_tiles_x = level.width
+	number_of_tiles_y = level.height
+	if max(number_of_tiles_x, number_of_tiles_y) <= 10:
+		scale = Vector2(2, 2)
+	position = Globals.WINDOW_SIZE / 2 - Vector2(
+		number_of_tiles_x * scale.x * Globals.TILE_SIZE / 2,
+		number_of_tiles_y * scale.y * Globals.TILE_SIZE / 2
+	)
+	fill_map()
+	for input in level.inputs:
+		place_input(input)
+	for output in level.outputs:
+		place_output(output)
+	for tile in level.tiles:
+		#TODO: doesn't seem to update on placement correctly?
+		place_tile(tile)
 
-func level_definition():
-	pass
+func place_input(input: PreInput):
+	var tile = InputTile.new(input.colour)
+	set_tile_at(tile, input.x, input.y, input.rot)
+
+func place_output(output: PreOutput):
+	var tile = OutputTile.new(output.colour)
+	set_tile_at(tile, output.x, output.y, output.rot)
+	register_output(tile, output.x, output.y)
+
+func place_tile(pretile: PreTile):
+	var tile
+	match pretile.type:
+		PreTile.TileType.STRAIGHT:
+			tile = StraightTile.new()
+		PreTile.TileType.T:
+			tile = TTile.new()
+		PreTile.TileType.L:
+			tile = LTile.new()
+		PreTile.TileType.CROSS:
+			tile = CrossTile.new()
+		PreTile.TileType.ANTI:
+			tile = AntiTile.new()
+	set_tile_at(tile, pretile.x, pretile.y, pretile.rot)
+
 
 func fill_map():
 	for i in range(number_of_tiles_x):
@@ -57,22 +98,9 @@ func fill_map():
 	set_tile_at(no_tile_script.new(preload("res://images/tile_24x24_frame_corner_top_left.png")), number_of_tiles_x-1, number_of_tiles_y-1)
 	set_tile_at(no_tile_script.new(preload("res://images/tile_24x24_frame_corner_top_right.png")), 0, number_of_tiles_y-1)
 
-func prepare_map():
-	set_dimensions()
-	if max(number_of_tiles_x, number_of_tiles_y) <= 10:
-		scale = Vector2(2, 2)
-	
-	position = Globals.WINDOW_SIZE / 2 - Vector2(
-		number_of_tiles_x * scale.x * Globals.TILE_SIZE / 2,
-		number_of_tiles_y * scale.y * Globals.TILE_SIZE / 2
-	)
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	is_running = true
-	prepare_map()
-	fill_map()
-	level_definition()
 	for i in 3:
 		placing_sounds.append(AudioStreamPlayer.new())
 	placing_sounds[0].stream = preload("res://sfx/sfx_pop_down_tile_1.wav")
@@ -101,8 +129,6 @@ func set_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
 	init_tile_at(tile, ix, iy, rot)
 	update_at(ix, iy)
 	check_for_game_status()
-	if tile is OutputTile:
-		register_output(tile, ix, iy)
 	
 func _mouse_position_to_coordinates():
 	var game_position = Globals.WINDOW_SIZE / 2 - Vector2(
@@ -120,7 +146,6 @@ func register_output(output: OutputTile, x: int, y: int):
 	all_outputs.append(output)
 
 func handle_left_mouse_button():
-		#left_mouse_was_pressed = true
 		match current_tile:
 			null:
 				return
@@ -129,7 +154,7 @@ func handle_left_mouse_button():
 			2:
 				tile = TTile.new()
 			3:
-				tile = BendTile.new()
+				tile = LTile.new()
 			4:
 				tile = CrossTile.new()
 			5:

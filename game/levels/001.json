@@ -1,0 +1,28 @@
+{
+	"name": "Trivial",
+	"height": 3,
+	"width": 3,
+	"inputs": [
+		{
+			"colour": {
+				"red": 1,
+				"yellow": 0,
+				"blue": 0
+			},
+			"x": 0,
+			"y": 1,
+			"orientation": 3
+		}
+	],
+	"outputs": [
+		{
+			"colour": {
+				"input": 0
+			},
+			"x": 2,
+			"y": 1,
+			"orientation": 3
+		}
+	],
+	"tiles": []
+}

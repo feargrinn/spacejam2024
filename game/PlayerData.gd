@@ -19,7 +19,7 @@ static func load_default():
 
 static func load_from_file(filename: String):
 	if not FileAccess.file_exists(filename):
-		return Error.new("file %s does not exist" % filename)
+		return Error.no_file(filename)
 	var save_file = FileAccess.open(save_filename, FileAccess.READ)
 	var loaded_json = save_file.get_line()
 	var result = load_from_json(loaded_json)
@@ -31,10 +31,10 @@ static func load_from_file(filename: String):
 static func load_from_json(raw_json):
 	var json = JSON.new()
 	if not json.parse(raw_json) == OK:
-		return Error.new("JSON Parse Error: %s in %s at line %d." % [json.get_error_message(), raw_json, json.get_error_line()])
+		return Error.json_parse(raw_json, json)
 	var loaded_data = json.get_data()
 	if not loaded_data.has(reached_level_name):
-		return Error.new("missing %s" % reached_level_name)
+		return Error.missing_field(reached_level_name)
 	var result = PlayerData.new()
 	result.reached_level = loaded_data[reached_level_name]
 	return result

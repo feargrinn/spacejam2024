@@ -8,11 +8,11 @@ var transparent_texture: Texture2D
 var opaque_texture: Texture2D
 var is_replaceable: bool
 
-const Direction = {
-	UP = 0,
-	RIGHT = 1,
-	DOWN = 2,
-	LEFT = 3
+enum Direction {
+	UP,
+	RIGHT,
+	DOWN,
+	LEFT
 }
 
 static func right(direction: int):
@@ -45,13 +45,18 @@ var is_painted: bool
 var color: Colour
 var pipe_size: float
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
+func _init():
 	is_painted = false
 	pipe_size = 1.
-	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	texture = opaque_texture
 	is_replaceable = false
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	if is_painted:
+		texture = transparent_texture
+	else:
+		texture = opaque_texture
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

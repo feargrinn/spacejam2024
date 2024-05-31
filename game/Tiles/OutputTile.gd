@@ -9,7 +9,8 @@ var target_color: Colour
 var coordinates: Vector2
 
 func _init(color: Colour):
-	self.color = color
+	super._init()
+	links.append(Direction.UP)
 	target_color = color
 	is_output_filled = false
 
@@ -20,10 +21,9 @@ func set_color(new_color: Colour):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	super._ready()
-	links.append(Direction.UP)
 	transparent_texture = preload("res://images/tile_24x24_output_partially_transparent.png")
-	super.set_color(color)
+	super._ready()
+	super.set_color(target_color)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

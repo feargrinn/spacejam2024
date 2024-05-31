@@ -1,0 +1,45 @@
+{
+	"name": "Dodge!",
+	"height": 4,
+	"width": 5,
+	"inputs": [
+		{
+			"colour": {
+				"red": 1,
+				"yellow": 0,
+				"blue": 0
+			},
+			"x": 1,
+			"y": 0,
+			"orientation": 0
+		},
+		{
+			"colour": {
+				"red": 1,
+				"yellow": 1,
+				"blue": 1
+			},
+			"x": 2,
+			"y": 3,
+			"orientation": 2
+		}
+	],
+	"outputs": [
+		{
+			"colour": {
+				"input": 0
+			},
+			"x": 3,
+			"y": 3,
+			"orientation": 0
+		}
+	],
+	"tiles": [
+		{
+			"type": 0,
+			"x": 2,
+			"y": 2,
+			"orientation": 0
+		}
+	]
+}

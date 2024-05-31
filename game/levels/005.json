@@ -1,0 +1,59 @@
+{
+	"name": "Reuse",
+	"height": 3,
+	"width": 4,
+	"inputs": [
+		{
+			"colour": {
+				"red": 1,
+				"yellow": 1,
+				"blue": 0
+			},
+			"x": 1,
+			"y": 0,
+			"orientation": 0
+		},
+		{
+			"colour": {
+				"red": 0,
+				"yellow": 0,
+				"blue": 1
+			},
+			"x": 2,
+			"y": 0,
+			"orientation": 0
+		}
+	],
+	"outputs": [
+		{
+			"colour": {
+				"mix": [
+					{
+						"colour": {
+							"input": 0
+						},
+						"amount": 1
+					},
+					{
+						"colour": {
+							"input": 1
+						},
+						"amount": 1
+					}
+				]
+			},
+			"x": 1,
+			"y": 2,
+			"orientation": 0
+		},
+		{
+			"colour": {
+				"input": 1
+			},
+			"x": 2,
+			"y": 2,
+			"orientation": 0
+		}
+	],
+	"tiles": []
+}

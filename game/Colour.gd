@@ -2,12 +2,13 @@ extends Sprite2D
 
 class_name Colour
 
-var globals
+const r_name: String = "red"
+const y_name: String = "yellow"
+const b_name: String = "blue"
 
 var r: float
 var y: float
 var b: float
-var anti: bool
 
 func _init(r: float, y: float, b: float):
 	self.r = r
@@ -16,6 +17,18 @@ func _init(r: float, y: float, b: float):
 	texture = preload("res://images/paint_texture.tres")
 	modulate = color()
 	z_index = -1
+
+static func from_description(description):
+	if not description.has(r_name):
+		return Error.missing_field(r_name)
+	var r = description[r_name]
+	if not description.has(y_name):
+		return Error.missing_field(y_name)
+	var y = description[y_name]
+	if not description.has(b_name):
+		return Error.missing_field(b_name)
+	var b = description[b_name]
+	return Colour.new(r, y, b)
 
 func __ready():
 	pass

@@ -1,0 +1,160 @@
+{
+	"name": "Swirl",
+	"height": 4,
+	"width": 4,
+	"inputs": [
+		{
+			"colour": {
+				"red": 0,
+				"yellow": 1,
+				"blue": 0
+			},
+			"x": 1,
+			"y": 0,
+			"orientation": 0
+		},
+		{
+			"colour": {
+				"red": 1,
+				"yellow": 0,
+				"blue": 0
+			},
+			"x": 3,
+			"y": 1,
+			"orientation": 1
+		},
+		{
+			"colour": {
+				"red": 1,
+				"yellow": 1,
+				"blue": 0
+			},
+			"x": 2,
+			"y": 3,
+			"orientation": 2
+		},
+		{
+			"colour": {
+				"red": 0,
+				"yellow": 0,
+				"blue": 1
+			},
+			"x": 0,
+			"y": 2,
+			"orientation": 3
+		}
+	],
+	"outputs": [
+		{
+			"colour": {
+				"input": 2
+			},
+			"x": 3,
+			"y": 2,
+			"orientation": 3
+		},
+		{
+			"colour": {
+				"mix": [
+					{
+						"colour": {
+							"input": 2
+						},
+						"amount": 1
+					},
+					{
+						"colour": {
+							"input": 3
+						},
+						"amount": 1
+					}
+				]
+			},
+			"x": 1,
+			"y": 3,
+			"orientation": 0
+		},
+		{
+			"colour": {
+				"mix": [
+					{
+						"colour": {
+							"mix": [
+								{
+									"colour": {
+										"input": 2
+									},
+									"amount": 1
+								},
+								{
+									"colour": {
+										"input": 3
+									},
+									"amount": 1
+								}
+							]
+						},
+						"amount": 1
+					},
+					{
+						"colour": {
+							"input": 0
+						},
+						"amount": 1
+					}
+				]
+			},
+			"x": 0,
+			"y": 1,
+			"orientation": 1
+		},
+		{
+			"colour": {
+				"mix": [
+					{
+						"colour": {
+							"mix": [
+								{
+									"colour": {
+										"mix": [
+											{
+												"colour": {
+													"input": 2
+												},
+												"amount": 1
+											},
+											{
+												"colour": {
+													"input": 3
+												},
+												"amount": 1
+											}
+										]
+									},
+									"amount": 1
+								},
+								{
+									"colour": {
+										"input": 0
+									},
+									"amount": 1
+								}
+							]
+						},
+						"amount": 1
+					},
+					{
+						"colour": {
+							"input": 1
+						},
+						"amount": 1
+					}
+				]
+			},
+			"x": 2,
+			"y": 0,
+			"orientation": 2
+		}
+	],
+	"tiles": []
+}

@@ -1,0 +1,51 @@
+{
+	"name": "Just mix",
+	"height": 3,
+	"width": 5,
+	"inputs": [
+		{
+			"colour": {
+				"red": 1,
+				"yellow": 0,
+				"blue": 0
+			},
+			"x": 1,
+			"y": 2,
+			"orientation": 2
+		},
+		{
+			"colour": {
+				"red": 0,
+				"yellow": 0,
+				"blue": 1
+			},
+			"x": 3,
+			"y": 2,
+			"orientation": 2
+		}
+	],
+	"outputs": [
+		{
+			"colour": {
+				"mix": [
+					{
+						"colour": {
+							"input": 0
+						},
+						"amount": 1
+					},
+					{
+						"colour": {
+							"input": 1
+						},
+						"amount": 1
+					}
+				]
+			},
+			"x": 2,
+			"y": 2,
+			"orientation": 0
+		}
+	],
+	"tiles": []
+}

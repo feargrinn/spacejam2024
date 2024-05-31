@@ -3,6 +3,7 @@ extends Node
 var current_map
 var current_level
 var save_data: PlayerData
+var levels: Array[Level]
 
 var winning_sound
 var losing_sound
@@ -22,9 +23,13 @@ func _ready():
 		save_data = PlayerData.new()
 	else:
 		save_data = loaded_data
-	# Need the +1 because ranges are exclusive by default.
-	for level in save_data.get_reached_level() + 1:
-		unlock_level(level)
+	for level in range(save_data.get_reached_level()):
+		unlock_level(level+1)
+	var loaded_levels = Level.load_default()
+	if loaded_levels is Error:
+		print("Failed to load levels: ", loaded_levels.as_string(), ".")
+	levels = loaded_levels
+	print("Loaded ", levels.size(), " levels.")
 	winning_sound = AudioStreamPlayer.new()
 	winning_sound.stream = preload("res://sfx/sfx_winning_animation.wav")
 	add_child(winning_sound)
@@ -59,16 +64,7 @@ func _on_exit_level_pressed():
 
 func _on_level_pressed(level: int):
 	current_level = level
-	var new_map = Sprite2D.new()
-	new_map.name = "map"
-	
-	const FILE_BEGIN = "res://Levels/Level_"
-	var level_path
-	if level < 10:
-		level_path = FILE_BEGIN + "0" + str(level) + ".gd"
-	else:
-		level_path = FILE_BEGIN + str(level) + ".gd"
-	new_map.set_script(load(level_path))
+	var new_map = Map.new(levels[level-1])
 	
 	add_child(new_map)
 	current_map = new_map
@@ -159,7 +155,6 @@ func play_credits():
 		$RichTextLabel.position.y -= 10
 		await get_tree().create_timer(delay/5000).timeout
 		OS.delay_msec(delay/5);
-		print($RichTextLabel.position.y )
 	pass
 
 func _on_animation_player_winning_animation_finished(anim_name):
