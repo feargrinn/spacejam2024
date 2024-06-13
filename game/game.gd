@@ -4,6 +4,8 @@ var current_map
 var current_level
 var save_data: PlayerData
 var levels: Array[Level]
+var level_buttons: Array[LevelButton]
+var level_columns: Array[HBoxContainer]
 
 var winning_sound
 var losing_sound
@@ -17,6 +19,13 @@ var winning_sprites = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var loaded_levels = Level.load_default()
+	if loaded_levels is Error:
+		print("Failed to load levels: ", loaded_levels.as_string(), ".")
+	levels = loaded_levels
+	print("Loaded ", levels.size(), " levels.")
+	for level in range(len(loaded_levels)):
+		create_level_button(level+1)
 	var loaded_data = PlayerData.load_default()
 	if loaded_data is Error:
 		print("Failed to load game state: ", loaded_data.as_string(), ".")
@@ -25,11 +34,6 @@ func _ready():
 		save_data = loaded_data
 	for level in range(save_data.get_reached_level()):
 		unlock_level(level+1)
-	var loaded_levels = Level.load_default()
-	if loaded_levels is Error:
-		print("Failed to load levels: ", loaded_levels.as_string(), ".")
-	levels = loaded_levels
-	print("Loaded ", levels.size(), " levels.")
 	winning_sound = AudioStreamPlayer.new()
 	winning_sound.stream = preload("res://sfx/sfx_winning_animation.wav")
 	add_child(winning_sound)
@@ -73,28 +77,22 @@ func _on_level_pressed(level: int):
 	$ExitLevel.show()
 	current_map.show()
 
+func create_level_button(level: int):
+	if len(level_buttons) % 5 == 0:
+		var new_columns = HBoxContainer.new()
+		new_columns.set("size_flags_vertical", 3)
+		level_columns.append(new_columns)
+		$LeverPicker/VBoxContainer/Rows.add_child(new_columns)
+	var level_button = LevelButton.new(level, self)
+	level_button.hide()
+	level_buttons.append(level_button)
+	var level_container = MarginContainer.new()
+	level_container.set("size_flags_horizontal", 3)
+	level_container.add_child(level_button)
+	level_columns.back().add_child(level_container)
+
 func unlock_level(level: int):
-	match level:
-		1:
-			$LeverPicker/VBoxContainer/Rows/Columns/MarginContainer/Level.show()
-		2:
-			$LeverPicker/VBoxContainer/Rows/Columns/MarginContainer2/Level.show()
-		3:
-			$LeverPicker/VBoxContainer/Rows/Columns/MarginContainer3/Level.show()
-		4:
-			$LeverPicker/VBoxContainer/Rows/Columns/MarginContainer4/Level.show()
-		5:
-			$LeverPicker/VBoxContainer/Rows/Columns/MarginContainer5/Level.show()
-		6:
-			$LeverPicker/VBoxContainer/Rows/Columns2/MarginContainer/Level.show()
-		7:
-			$LeverPicker/VBoxContainer/Rows/Columns2/MarginContainer2/Level.show()
-		8:
-			$LeverPicker/VBoxContainer/Rows/Columns2/MarginContainer3/Level.show()
-		9:
-			$LeverPicker/VBoxContainer/Rows/Columns2/MarginContainer4/Level.show()
-		10:
-			$LeverPicker/VBoxContainer/Rows/Columns2/MarginContainer5/Level.show()
+	level_buttons[level-1].show()
 	save_data.unlock_level(level)
 
 func _on_next_level_pressed():
@@ -162,7 +160,7 @@ func _on_animation_player_winning_animation_finished(anim_name):
 	for sprite in winning_sprites:
 		sprite.queue_free()
 	winning_sprites = []
-	if current_level != 10:
+	if current_level != len(levels):
 		unload_level()
 		$VictoryScreen.show()
 	else:
