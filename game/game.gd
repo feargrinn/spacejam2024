@@ -46,7 +46,7 @@ func _ready():
 			custom_level_picker.hide()
 			custom_levels_visible = false
 			$LeverPicker/VBoxContainer.add_child(custom_level_picker)
-			$LeverPicker/VBoxContainer/Custom.set_disabled(false)
+			$LeverPicker/VBoxContainer/HBoxContainer/Custom.set_disabled(false)
 	winning_sound = AudioStreamPlayer.new()
 	winning_sound.stream = preload("res://sfx/sfx_winning_animation.wav")
 	add_child(winning_sound)
@@ -137,15 +137,15 @@ func _on_exit_level_picker_pressed():
 	get_tree().change_scene_to_file("res://node_2d.tscn")
 
 func _on_custom_pressed():
-	$LeverPicker/VBoxContainer/Custom.set_disabled(true)
-	$LeverPicker/VBoxContainer/Base.set_disabled(false)
+	$LeverPicker/VBoxContainer/HBoxContainer/Custom.set_disabled(true)
+	$LeverPicker/VBoxContainer/HBoxContainer/Base.set_disabled(false)
 	level_picker.hide()
 	custom_level_picker.show()
 	custom_levels_visible = true
 
 func _on_base_pressed():
-	$LeverPicker/VBoxContainer/Base.set_disabled(true)
-	$LeverPicker/VBoxContainer/Custom.set_disabled(false)
+	$LeverPicker/VBoxContainer/HBoxContainer/Base.set_disabled(true)
+	$LeverPicker/VBoxContainer/HBoxContainer/Custom.set_disabled(false)
 	custom_level_picker.hide()
 	level_picker.show()
 	custom_levels_visible = false
