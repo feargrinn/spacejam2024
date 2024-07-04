@@ -1,6 +1,7 @@
 class_name Level
 
 const official_level_dir: String = "res://levels"
+const user_level_dir: String = "user://levels"
 
 const title_name: String = "name"
 const height_name: String = "height"
@@ -18,6 +19,9 @@ var tiles: Array[PreTile]
 
 static func load_default():
 	return load_from_dir(official_level_dir)
+
+static func load_user():
+	return load_from_dir(user_level_dir)
 
 static func load_from_dir(dir_name: String):
 	var dir = DirAccess.open(dir_name)

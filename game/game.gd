@@ -3,9 +3,9 @@ extends Node
 var current_map
 var current_level
 var save_data: PlayerData
-var levels: Array[Level]
-var level_buttons: Array[LevelButton]
-var level_columns: Array[HBoxContainer]
+var level_picker: LevelPicker
+var custom_level_picker: LevelPicker
+var custom_levels_visible: bool
 
 var winning_sound
 var losing_sound
@@ -22,10 +22,11 @@ func _ready():
 	var loaded_levels = Level.load_default()
 	if loaded_levels is Error:
 		print("Failed to load levels: ", loaded_levels.as_string(), ".")
-	levels = loaded_levels
-	print("Loaded ", levels.size(), " levels.")
-	for level in range(len(loaded_levels)):
-		create_level_button(level+1)
+	print("Loaded ", loaded_levels.size(), " levels.")
+	level_picker = LevelPicker.new(loaded_levels, self._on_level_pressed)
+	$LeverPicker/VBoxContainer.add_child(level_picker)
+	level_picker.show()
+	$LeverPicker/VBoxContainer/Base.set_disabled(true)
 	var loaded_data = PlayerData.load_default()
 	if loaded_data is Error:
 		print("Failed to load game state: ", loaded_data.as_string(), ".")
@@ -33,7 +34,19 @@ func _ready():
 	else:
 		save_data = loaded_data
 	for level in range(save_data.get_reached_level()):
-		unlock_level(level+1)
+		level_picker.unlock_level(level+1)
+	var loaded_user_levels = Level.load_user()
+	if loaded_user_levels is Error:
+		print("Failed to load user levels: ", loaded_user_levels.as_string(), ".")
+	else:
+		print("Loaded ", loaded_user_levels.size(), " custom levels.")
+		if len(loaded_user_levels) > 0:
+			custom_level_picker = LevelPicker.new(loaded_user_levels, self._on_level_pressed)
+			custom_level_picker.unlock_all()
+			custom_level_picker.hide()
+			custom_levels_visible = false
+			$LeverPicker/VBoxContainer.add_child(custom_level_picker)
+			$LeverPicker/VBoxContainer/Custom.set_disabled(false)
 	winning_sound = AudioStreamPlayer.new()
 	winning_sound.stream = preload("res://sfx/sfx_winning_animation.wav")
 	add_child(winning_sound)
@@ -66,7 +79,7 @@ func _on_exit_level_pressed():
 	unload_level()
 	$LeverPicker.show()
 
-func _on_level_pressed(level: int):
+func _on_level_pressed(levels: Array[Level], level: int):
 	current_level = level
 	var new_map = Map.new(levels[level-1])
 	
@@ -77,28 +90,17 @@ func _on_level_pressed(level: int):
 	$ExitLevel.show()
 	current_map.show()
 
-func create_level_button(level: int):
-	if len(level_buttons) % 5 == 0:
-		var new_columns = HBoxContainer.new()
-		new_columns.set("size_flags_vertical", 3)
-		level_columns.append(new_columns)
-		$LeverPicker/VBoxContainer/Rows.add_child(new_columns)
-	var level_button = LevelButton.new(level, self)
-	level_button.hide()
-	level_buttons.append(level_button)
-	var level_container = MarginContainer.new()
-	level_container.set("size_flags_horizontal", 3)
-	level_container.add_child(level_button)
-	level_columns.back().add_child(level_container)
-
 func unlock_level(level: int):
-	level_buttons[level-1].show()
+	level_picker.unlock_level(level)
 	save_data.unlock_level(level)
 
 func _on_next_level_pressed():
 	$VictoryScreen.hide()
-	unlock_level(current_level + 1)
-	_on_level_pressed(current_level + 1)
+	if custom_levels_visible:
+		_on_exit_level_pressed()
+	else:
+		unlock_level(current_level + 1)
+		level_picker.click_level_button(current_level + 1)
 
 func victory_screen(scale: Vector2, all_outputs: Array[OutputTile]):
 	_sprite_winning.scale *= scale
@@ -118,7 +120,7 @@ func victory_screen(scale: Vector2, all_outputs: Array[OutputTile]):
 
 func _on_retry_pressed():
 	$LoserScreen.hide()
-	_on_level_pressed(current_level)
+	level_picker.click_level_button(current_level)
 
 func loser_screen(scale: Vector2, losing_output: OutputTile):
 	_sprite_losing.scale *= scale
@@ -130,10 +132,23 @@ func loser_screen(scale: Vector2, losing_output: OutputTile):
 	_animation_losing.play("losing")
 	losing_sound.play()
 
-
 func _on_exit_level_picker_pressed():
 	$LeverPicker.hide()
 	get_tree().change_scene_to_file("res://node_2d.tscn")
+
+func _on_custom_pressed():
+	$LeverPicker/VBoxContainer/Custom.set_disabled(true)
+	$LeverPicker/VBoxContainer/Base.set_disabled(false)
+	level_picker.hide()
+	custom_level_picker.show()
+	custom_levels_visible = true
+
+func _on_base_pressed():
+	$LeverPicker/VBoxContainer/Base.set_disabled(true)
+	$LeverPicker/VBoxContainer/Custom.set_disabled(false)
+	custom_level_picker.hide()
+	level_picker.show()
+	custom_levels_visible = false
 
 func play_credits():
 	var delay = 500.
@@ -160,7 +175,7 @@ func _on_animation_player_winning_animation_finished(anim_name):
 	for sprite in winning_sprites:
 		sprite.queue_free()
 	winning_sprites = []
-	if current_level != len(levels):
+	if custom_levels_visible or (current_level != level_picker.max_level()):
 		unload_level()
 		$VictoryScreen.show()
 	else:
