@@ -26,7 +26,7 @@ func _ready():
 	level_picker = LevelPicker.new(loaded_levels, self._on_level_pressed)
 	$LeverPicker/VBoxContainer.add_child(level_picker)
 	level_picker.show()
-	$LeverPicker/VBoxContainer/Base.set_disabled(true)
+	$LeverPicker/VBoxContainer/HBoxContainer/Base.set_disabled(true)
 	var loaded_data = PlayerData.load_default()
 	if loaded_data is Error:
 		print("Failed to load game state: ", loaded_data.as_string(), ".")
