@@ -1,18 +1,22 @@
-[gd_scene load_steps=21 format=3 uid="uid://fhmwenm3h7c7"]
+[gd_scene load_steps=25 format=3 uid="uid://fhmwenm3h7c7"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_f0dd8"]
 [ext_resource type="Texture2D" uid="uid://oogt24347qv7" path="res://images/bg_640x480.png" id="2_5eohq"]
-[ext_resource type="Script" path="res://TilePlacing.gd" id="2_l2akx"]
 [ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://fonts/menu_font.ttf" id="2_rssi8"]
 [ext_resource type="Texture2D" uid="uid://c3msrgw8yn1n4" path="res://images/menu_button_lvl_empty.png" id="3_eonvc"]
 [ext_resource type="Texture2D" uid="uid://c86rrp0hau4hr" path="res://images/menu_button_empty.png" id="5_8wxpr"]
 [ext_resource type="Texture2D" uid="uid://iaumk5tbsbn1" path="res://images/tile_24x24_I_opaque.png" id="6_psk2b"]
 [ext_resource type="Texture2D" uid="uid://bfb2by036wdfm" path="res://images/tile_24x24_T_opaque.png" id="7_ujjlr"]
+[ext_resource type="Script" path="res://Tiles/StraightTile.gd" id="7_wyg0a"]
 [ext_resource type="Texture2D" uid="uid://dgumx31nso486" path="res://images/tile_24x24_L_opaque.png" id="8_l0vv8"]
+[ext_resource type="Script" path="res://Tiles/TTile.gd" id="9_1vo7x"]
 [ext_resource type="Texture2D" uid="uid://gp7xpxacd1ql" path="res://images/tile_24x24_cross_opaque.png" id="9_yodhl"]
 [ext_resource type="Texture2D" uid="uid://c6klyd06qogb" path="res://images/tile_24x24_anti_opaque.png" id="10_wju1l"]
+[ext_resource type="Script" path="res://Tiles/LTile.gd" id="11_cprsa"]
 [ext_resource type="Texture2D" uid="uid://drv2yvqyelnkb" path="res://images/sprite sheets/sprite_sheet_winning_animation.png" id="12_tg20q"]
+[ext_resource type="Script" path="res://Tiles/CrossTile.gd" id="13_f2vtf"]
 [ext_resource type="Texture2D" uid="uid://devomnujdn5pj" path="res://images/sprite sheets/sprite_sheet_losing_animation.png" id="13_vb37n"]
+[ext_resource type="Script" path="res://Tiles/AntiTile.gd" id="15_62jrv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5qjq1"]
 
@@ -172,7 +176,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/margin_top = 40
 theme_override_constants/margin_bottom = 40
-script = ExtResource("2_l2akx")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="TilePicker"]
 layout_mode = 2
@@ -183,74 +186,75 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 
-[node name="TextureRect" type="Area2D" parent="TilePicker/VBoxContainer/Container"]
+[node name="Area2D" type="Area2D" parent="TilePicker/VBoxContainer/Container"]
 scale = Vector2(3, 3)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container/TextureRect"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container/Area2D"]
 shape = SubResource("RectangleShape2D_5qjq1")
 
-[node name="Sprite2D" type="Sprite2D" parent="TilePicker/VBoxContainer/Container/TextureRect"]
+[node name="StraightTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container/Area2D"]
 texture = ExtResource("6_psk2b")
+script = ExtResource("7_wyg0a")
 
 [node name="Container2" type="Control" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 
-[node name="TextureRect2" type="Area2D" parent="TilePicker/VBoxContainer/Container2"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container2/TextureRect2"]
+[node name="Area2D" type="Area2D" parent="TilePicker/VBoxContainer/Container2"]
 scale = Vector2(3, 3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container2/Area2D"]
 shape = SubResource("RectangleShape2D_5qjq1")
 
-[node name="Sprite2D" type="Sprite2D" parent="TilePicker/VBoxContainer/Container2/TextureRect2"]
-scale = Vector2(3, 3)
+[node name="TTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container2/Area2D"]
 texture = ExtResource("7_ujjlr")
+script = ExtResource("9_1vo7x")
 
 [node name="Container3" type="Control" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 
-[node name="TextureRect3" type="Area2D" parent="TilePicker/VBoxContainer/Container3"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container3/TextureRect3"]
+[node name="Area2D" type="Area2D" parent="TilePicker/VBoxContainer/Container3"]
 scale = Vector2(3, 3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container3/Area2D"]
 shape = SubResource("RectangleShape2D_5qjq1")
 
-[node name="Sprite2D" type="Sprite2D" parent="TilePicker/VBoxContainer/Container3/TextureRect3"]
-scale = Vector2(3, 3)
+[node name="LTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container3/Area2D"]
 texture = ExtResource("8_l0vv8")
+script = ExtResource("11_cprsa")
 
 [node name="Container4" type="Control" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 
-[node name="TextureRect4" type="Area2D" parent="TilePicker/VBoxContainer/Container4"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container4/TextureRect4"]
+[node name="Area2D" type="Area2D" parent="TilePicker/VBoxContainer/Container4"]
 scale = Vector2(3, 3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container4/Area2D"]
 shape = SubResource("RectangleShape2D_5qjq1")
 
-[node name="Sprite2D" type="Sprite2D" parent="TilePicker/VBoxContainer/Container4/TextureRect4"]
-scale = Vector2(3, 3)
+[node name="CrossTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container4/Area2D"]
 texture = ExtResource("9_yodhl")
+script = ExtResource("13_f2vtf")
 
 [node name="Container5" type="Control" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 
-[node name="TextureRect5" type="Area2D" parent="TilePicker/VBoxContainer/Container5"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container5/TextureRect5"]
+[node name="Area2D" type="Area2D" parent="TilePicker/VBoxContainer/Container5"]
 scale = Vector2(3, 3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container5/Area2D"]
 shape = SubResource("RectangleShape2D_5qjq1")
 
-[node name="Sprite2D" type="Sprite2D" parent="TilePicker/VBoxContainer/Container5/TextureRect5"]
-scale = Vector2(3, 3)
+[node name="AntiTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container5/Area2D"]
 texture = ExtResource("10_wju1l")
+script = ExtResource("15_62jrv")
 
 [node name="VictoryScreen" type="ColorRect" parent="."]
 visible = false
@@ -413,16 +417,6 @@ Thank you for playing :)[/center]"
 
 [connection signal="pressed" from="LeverPicker/VBoxContainer/ExitLevelPicker" to="." method="_on_exit_level_picker_pressed"]
 [connection signal="pressed" from="ExitLevel" to="." method="_on_exit_level_pressed"]
-[connection signal="mouse_entered" from="TilePicker/VBoxContainer/Container/TextureRect" to="TilePicker" method="_on_mouse_entered_tile" binds= [1]]
-[connection signal="mouse_exited" from="TilePicker/VBoxContainer/Container/TextureRect" to="TilePicker" method="_on_mouse_exited_tile"]
-[connection signal="mouse_entered" from="TilePicker/VBoxContainer/Container2/TextureRect2" to="TilePicker" method="_on_mouse_entered_tile" binds= [2]]
-[connection signal="mouse_exited" from="TilePicker/VBoxContainer/Container2/TextureRect2" to="TilePicker" method="_on_mouse_exited_tile"]
-[connection signal="mouse_entered" from="TilePicker/VBoxContainer/Container3/TextureRect3" to="TilePicker" method="_on_mouse_entered_tile" binds= [3]]
-[connection signal="mouse_exited" from="TilePicker/VBoxContainer/Container3/TextureRect3" to="TilePicker" method="_on_mouse_exited_tile"]
-[connection signal="mouse_entered" from="TilePicker/VBoxContainer/Container4/TextureRect4" to="TilePicker" method="_on_mouse_entered_tile" binds= [4]]
-[connection signal="mouse_exited" from="TilePicker/VBoxContainer/Container4/TextureRect4" to="TilePicker" method="_on_mouse_exited_tile"]
-[connection signal="mouse_entered" from="TilePicker/VBoxContainer/Container5/TextureRect5" to="TilePicker" method="_on_mouse_entered_tile" binds= [5]]
-[connection signal="mouse_exited" from="TilePicker/VBoxContainer/Container5/TextureRect5" to="TilePicker" method="_on_mouse_exited_tile"]
 [connection signal="pressed" from="VictoryScreen/MenuButtons/NextLevel" to="." method="_on_next_level_pressed"]
 [connection signal="pressed" from="LoserScreen/MenuButtons/Retry" to="." method="_on_retry_pressed"]
 [connection signal="animation_finished" from="Sprite2DWinning/AnimationPlayerWinning" to="." method="_on_animation_player_winning_animation_finished"]

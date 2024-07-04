@@ -145,23 +145,6 @@ func register_output(output: OutputTile, x: int, y: int):
 	output.coordinates.y = y
 	all_outputs.append(output)
 
-func handle_left_mouse_button():
-		match current_tile:
-			null:
-				return
-			1:
-				tile = straight_tile_script.new()
-			2:
-				tile = TTile.new()
-			3:
-				tile = LTile.new()
-			4:
-				tile = CrossTile.new()
-			5:
-				tile = AntiTile.new()
-
-		tile.position = get_global_mouse_position()
-		add_child(tile)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -180,10 +163,8 @@ func _process(_delta):
 		if tile != null:
 			tile.rotate_right()
 	
-	if Input.is_action_just_released("LMB"):
-		if tile == null:
-			handle_left_mouse_button()
-		else:
+	if Input.is_action_just_pressed("LMB"):
+		if tile != null:
 			var position = _mouse_position_to_coordinates()
 			if (position[0] >= 0 
 				and position[0] < number_of_tiles_x 

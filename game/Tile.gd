@@ -8,6 +8,10 @@ var transparent_texture: Texture2D
 var opaque_texture: Texture2D
 var is_replaceable: bool
 
+#v for clickability
+var parent_area : Area2D
+var mouse_over = false
+
 enum Direction {
 	UP,
 	RIGHT,
@@ -49,6 +53,11 @@ func _init():
 	is_painted = false
 	pipe_size = 1.
 	is_replaceable = false
+	
+func clone():
+	var my_clone = self.duplicate()
+	my_clone.links = links
+	return my_clone
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -57,6 +66,13 @@ func _ready():
 		texture = transparent_texture
 	else:
 		texture = opaque_texture
+		
+	
+	if get_parent() is Area2D:
+		parent_area = get_parent()
+		parent_area.connect("mouse_entered", func(): mouse_over = true)
+		parent_area.connect("mouse_exited", func(): mouse_over = false)
+		parent_area.connect("input_event", handle_click)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -81,6 +97,30 @@ func set_color(new_color: Colour):
 
 func get_paint() -> Paint:
 	return paint_script.new(color, pipe_size)
+	
+	
+func handle_click(_viewport, event, _shape_index):
+	if mouse_over and event is InputEventMouseButton and event.pressed == false and event.button_index == MOUSE_BUTTON_LEFT:
+		left_clicked_on()
+	if mouse_over and event is InputEventMouseButton and event.pressed == false and event.button_index == MOUSE_BUTTON_RIGHT:
+		right_clicked_on()
+			
+func left_clicked_on():
+	var map = null;
+	
+	var parent = get_tree().get_root().get_node("Game")
+	var children = parent.get_children()
+	for child in children:
+		if child.name == "map":
+			map = child
+	
+	var tile = self.clone()
+	map.tile = tile
+	tile.position = get_global_mouse_position()
+	map.add_child(tile)
+	
+func right_clicked_on():
+	rotate_right()
 
 # Check if the other tile is connected to this one, assuming this one has a connection in that direction.
 static func connected(other: Tile, direction: int):
