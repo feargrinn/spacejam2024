@@ -217,12 +217,17 @@ func check_for_game_status():
 	if all_outputs.is_empty():
 		return
 
+	var losing_outputs: Array[OutputTile]
+
 	for output_tile in all_outputs:
 		#if output_tile.is_output_filled && !output_tile.color.isEqual(output_tile.target_color):
-		if output_tile.is_output_filled && !output_tile.color.color_diffference(output_tile.target_color):
+		if output_tile.is_output_filled and not output_tile.color.color_diffference(output_tile.target_color):
 			is_running = false
-			get_parent().loser_screen(scale, output_tile)
-			return
+			losing_outputs.append(output_tile)
+	
+	if not losing_outputs.is_empty():
+		get_parent().loser_screen(scale, losing_outputs)
+		return
 
 	if all_outputs.any(func(tile): return !tile.is_output_filled):
 		return

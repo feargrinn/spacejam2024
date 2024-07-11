@@ -16,6 +16,7 @@ var losing_sound
 @onready var _animation_losing = $Sprite2DLosing/AnimationPlayerLosing
 
 var winning_sprites = []
+var losing_sprites = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -69,8 +70,11 @@ func _on_exit_level_pressed():
 	for sprite in winning_sprites:
 		sprite.visible = false;
 		sprite.get_child(0).stop()
+	for sprite in losing_sprites:
+		sprite.visible = false;
+		sprite.get_child(0).stop()
 		
-	_sprite_losing.visible = false
+	#_sprite_losing.visible = false
 	_sprite_losing.scale = Vector2(1.0 ,1.0)
 	_animation_winning.stop()
 	_animation_losing.stop()
@@ -121,18 +125,38 @@ func victory_screen(scale: Vector2, all_outputs: Array[OutputTile]):
 func _on_retry_pressed():
 	$LoserScreen.hide()
 	level_picker.click_level_button(current_level)
+	for child in $LoserScreen/VBoxContainer/ColorDifference/ColorDifference.get_child_count() - 2:
+		$LoserScreen/VBoxContainer/ColorDifference/ColorDifference.get_child(child + 2).queue_free()
+		$LoserScreen/VBoxContainer/ColorDifference/ColorDifference2.get_child(child + 2).queue_free()
 
-func loser_screen(scale: Vector2, losing_output: OutputTile):
+func loser_screen(scale: Vector2, losing_outputs: Array[OutputTile]):
 	_sprite_losing.scale *= scale
 	_sprite_losing.rotation_degrees = 0
-	for n in losing_output.links[0]:
-		_sprite_losing.rotation_degrees += 90
-	_sprite_losing.position = losing_output.global_position
-	_sprite_losing.visible = true
+	for output in losing_outputs:
+		var sprite_losing = _sprite_losing.duplicate(8)
+		add_child(sprite_losing)
+		for n in output.links[0]:
+			sprite_losing.rotation_degrees += 90
+		sprite_losing.position = output.global_position
+		sprite_losing.visible = true
+		losing_sprites.append(sprite_losing)
 	_animation_losing.play("losing")
+	for sprite in losing_sprites:
+		sprite.get_child(0).play("losing")
 	losing_sound.play()
-	$LoserScreen/VBoxContainer/ColorDifference/ColorDifference/Target.color = losing_output.target_color.color()
-	$LoserScreen/VBoxContainer/ColorDifference/ColorDifference2/Gotten.color = losing_output.color.color()
+	
+	var target_original = $LoserScreen/VBoxContainer/ColorDifference/ColorDifference/Target
+	target_original.color = losing_outputs[0].target_color.color()
+	var gotten_original = $LoserScreen/VBoxContainer/ColorDifference/ColorDifference2/Gotten
+	gotten_original.color = losing_outputs[0].color.color()
+	for output in range(losing_outputs.size() - 1):
+		var target = target_original.duplicate()
+		var gotten = gotten_original.duplicate()
+		target.color = losing_outputs[output + 1].target_color.color()
+		gotten.color = losing_outputs[output + 1].color.color()
+		target_original.get_parent().add_child(target)
+		gotten_original.get_parent().add_child(gotten)
+	
 
 func _on_exit_level_picker_pressed():
 	$LeverPicker.hide()
@@ -187,5 +211,8 @@ func _on_animation_player_winning_animation_finished(anim_name):
 func _on_animation_player_losing_animation_finished(anim_name):
 	_sprite_losing.visible = false
 	_sprite_losing.scale = Vector2(1.0 ,1.0)
+	for sprite in losing_sprites:
+		sprite.queue_free()
+	losing_sprites = []
 	unload_level()
 	$LoserScreen.show()
