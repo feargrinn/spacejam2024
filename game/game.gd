@@ -131,6 +131,8 @@ func loser_screen(scale: Vector2, losing_output: OutputTile):
 	_sprite_losing.visible = true
 	_animation_losing.play("losing")
 	losing_sound.play()
+	$LoserScreen/VBoxContainer/ColorDifference/ColorDifference/Target.color = losing_output.target_color.color()
+	$LoserScreen/VBoxContainer/ColorDifference/ColorDifference2/Gotten.color = losing_output.color.color()
 
 func _on_exit_level_picker_pressed():
 	$LeverPicker.hide()
