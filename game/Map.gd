@@ -218,7 +218,8 @@ func check_for_game_status():
 		return
 
 	for output_tile in all_outputs:
-		if output_tile.is_output_filled && !output_tile.color.isEqual(output_tile.target_color):
+		#if output_tile.is_output_filled && !output_tile.color.isEqual(output_tile.target_color):
+		if output_tile.is_output_filled && !output_tile.color.color_diffference(output_tile.target_color):
 			is_running = false
 			get_parent().loser_screen(scale, output_tile)
 			return
