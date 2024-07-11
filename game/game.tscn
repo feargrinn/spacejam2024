@@ -198,80 +198,154 @@ theme_override_constants/margin_bottom = 40
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Container" type="Control" parent="TilePicker/VBoxContainer"]
+[node name="Container" type="HBoxContainer" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
+size_flags_vertical = 3
 
-[node name="Area2D" type="Area2D" parent="TilePicker/VBoxContainer/Container"]
+[node name="RotateLeft" type="Button" parent="TilePicker/VBoxContainer/Container"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = " < "
+
+[node name="Control" type="Control" parent="TilePicker/VBoxContainer/Container"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+
+[node name="Area2D" type="Area2D" parent="TilePicker/VBoxContainer/Container/Control"]
 scale = Vector2(3, 3)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container/Control/Area2D"]
 shape = SubResource("RectangleShape2D_5qjq1")
 
-[node name="StraightTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container/Area2D"]
+[node name="StraightTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container/Control/Area2D"]
 texture = ExtResource("6_psk2b")
 script = ExtResource("7_wyg0a")
 
-[node name="Container2" type="Control" parent="TilePicker/VBoxContainer"]
+[node name="RotateRight" type="Button" parent="TilePicker/VBoxContainer/Container"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
+size_flags_horizontal = 6
+text = " > "
 
-[node name="Area2D" type="Area2D" parent="TilePicker/VBoxContainer/Container2"]
+[node name="Container2" type="HBoxContainer" parent="TilePicker/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RotateLeft" type="Button" parent="TilePicker/VBoxContainer/Container2"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = " < "
+
+[node name="Control" type="Control" parent="TilePicker/VBoxContainer/Container2"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+
+[node name="Area2D" type="Area2D" parent="TilePicker/VBoxContainer/Container2/Control"]
 scale = Vector2(3, 3)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container2/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container2/Control/Area2D"]
 shape = SubResource("RectangleShape2D_5qjq1")
 
-[node name="TTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container2/Area2D"]
+[node name="TTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container2/Control/Area2D"]
+position = Vector2(0.333328, 0)
 texture = ExtResource("7_ujjlr")
 script = ExtResource("9_1vo7x")
 
-[node name="Container3" type="Control" parent="TilePicker/VBoxContainer"]
+[node name="RotateRight" type="Button" parent="TilePicker/VBoxContainer/Container2"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
+size_flags_horizontal = 6
+text = " > "
 
-[node name="Area2D" type="Area2D" parent="TilePicker/VBoxContainer/Container3"]
+[node name="Container3" type="HBoxContainer" parent="TilePicker/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RotateLeft" type="Button" parent="TilePicker/VBoxContainer/Container3"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = " < "
+
+[node name="Control" type="Control" parent="TilePicker/VBoxContainer/Container3"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+
+[node name="Area2D" type="Area2D" parent="TilePicker/VBoxContainer/Container3/Control"]
 scale = Vector2(3, 3)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container3/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container3/Control/Area2D"]
 shape = SubResource("RectangleShape2D_5qjq1")
 
-[node name="LTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container3/Area2D"]
+[node name="LTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container3/Control/Area2D"]
+position = Vector2(0.333328, 0)
 texture = ExtResource("8_l0vv8")
 script = ExtResource("11_cprsa")
 
-[node name="Container4" type="Control" parent="TilePicker/VBoxContainer"]
+[node name="RotateRight" type="Button" parent="TilePicker/VBoxContainer/Container3"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
+size_flags_horizontal = 6
+text = " > "
 
-[node name="Area2D" type="Area2D" parent="TilePicker/VBoxContainer/Container4"]
+[node name="Container4" type="HBoxContainer" parent="TilePicker/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RotateLeft" type="Button" parent="TilePicker/VBoxContainer/Container4"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = " < "
+
+[node name="Control" type="Control" parent="TilePicker/VBoxContainer/Container4"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+
+[node name="Area2D" type="Area2D" parent="TilePicker/VBoxContainer/Container4/Control"]
 scale = Vector2(3, 3)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container4/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container4/Control/Area2D"]
 shape = SubResource("RectangleShape2D_5qjq1")
 
-[node name="CrossTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container4/Area2D"]
+[node name="CrossTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container4/Control/Area2D"]
+position = Vector2(0.333328, 0)
 texture = ExtResource("9_yodhl")
 script = ExtResource("13_f2vtf")
 
-[node name="Container5" type="Control" parent="TilePicker/VBoxContainer"]
+[node name="RotateRight" type="Button" parent="TilePicker/VBoxContainer/Container4"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
+size_flags_horizontal = 6
+text = " > "
 
-[node name="Area2D" type="Area2D" parent="TilePicker/VBoxContainer/Container5"]
+[node name="Container5" type="HBoxContainer" parent="TilePicker/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RotateLeft" type="Button" parent="TilePicker/VBoxContainer/Container5"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = " < "
+
+[node name="Control" type="Control" parent="TilePicker/VBoxContainer/Container5"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+
+[node name="Area2D" type="Area2D" parent="TilePicker/VBoxContainer/Container5/Control"]
 scale = Vector2(3, 3)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container5/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container5/Control/Area2D"]
 shape = SubResource("RectangleShape2D_5qjq1")
 
-[node name="AntiTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container5/Area2D"]
+[node name="AntiTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container5/Control/Area2D"]
+position = Vector2(0.333328, 0)
 texture = ExtResource("10_wju1l")
 script = ExtResource("15_62jrv")
+
+[node name="RotateRight" type="Button" parent="TilePicker/VBoxContainer/Container5"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = " > "
 
 [node name="VictoryScreen" type="ColorRect" parent="."]
 visible = false

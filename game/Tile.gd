@@ -73,6 +73,11 @@ func _ready():
 		parent_area.connect("mouse_entered", func(): mouse_over = true)
 		parent_area.connect("mouse_exited", func(): mouse_over = false)
 		parent_area.connect("input_event", handle_click)
+		var container = parent_area.get_parent().get_parent()
+		var left = container.get_child(0)
+		left.connect("pressed", func(): for i in range(3): rotate_right())
+		var right = container.get_child(2)
+		right.connect("pressed", func(): rotate_right())
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
