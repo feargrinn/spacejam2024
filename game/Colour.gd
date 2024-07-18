@@ -33,10 +33,6 @@ static func from_description(description):
 func __ready():
 	pass
 
-# nie jest ok bo porownujesz floaty, zrobic inty (rgb przyjmuje rgp inty jako string???)
-func isEqual(colour: Colour) -> bool:
-	return r == colour.r && y == colour.y && b == colour.b
-
 # RYB to RGB conversion
 func color():
 	var revr = 1 - self.r
@@ -47,32 +43,23 @@ func color():
 	var b = (revr * revy * revb) + (revr * revy * self.b) + (0.5 * (self.r * revy * self.b))
 	return Color(r, g, b)
 
-func color_diffference(target_colour: Colour) -> bool:
-	var error_margin = 50
-	# add a step converting ryb to rgb??? or h, adjust stuff for ryb somehow...
-	
-	# crude RYB variant
-	#var r1 := int(target_colour.r * 255) # needs rounding?
-	#var g1 := int(target_colour.y * 255)
-	#var b1 := int(target_colour.b * 255)
-	#var r2 := int(r * 255)
-	#var g2 := int(y * 255)
-	#var b2 := int(b * 255)
+func is_similar(target_colour: Colour) -> bool:
+	var error_margin = 0.2
 	
 	# converted RGB variant
 	var color1 = color()
 	var color2 = target_colour.color()
-	var r1 := int(color1.r * 255) # needs rounding?
-	var g1 := int(color1.g * 255)
-	var b1 := int(color1.b * 255)
-	var r2 := int(color2.r * 255)
-	var g2 := int(color2.g * 255)
-	var b2 := int(color2.b * 255)
+	var r1 = color1.r
+	var g1 = color1.g
+	var b1 = color1.b
+	var r2 = color2.r
+	var g2 = color2.g
+	var b2 = color2.b
 	
 	# same for both
-	# redmean approach for colour components 0-255 in RGB colour space
-	var rm := float(0.5 * (r1 + r2)) # rounding again?
-	var difference := float(sqrt((2 + rm / 256) * pow((r1 - r2), 2) +
-	4 * pow((g1 - g2), 2) + (2 + (255 - rm) / 256) * pow((b1 - b2), 2)))
-	#print("colour dif = ", difference)
+	# redmean approach for colour components 0-1 in RGB colour space
+	var rm = 0.5 * (r1 + r2)
+	var difference = sqrt((2 + rm) * pow((r1 - r2), 2) +
+	4 * pow((g1 - g2), 2) + (2 + (1 - rm)) * pow((b1 - b2), 2))
+	print("colour dif = ", difference)
 	return difference < error_margin
