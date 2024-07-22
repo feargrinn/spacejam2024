@@ -43,6 +43,9 @@ func color():
 	var b = (revr * revy * revb) + (revr * revy * self.b) + (0.5 * (self.r * revy * self.b))
 	return Color(r, g, b)
 
+func whiteness() -> float:
+	return (1 - self.r)*(1 - self.y)*(1 - self.b)
+
 func is_similar(target_colour: Colour) -> bool:
 	var error_margin = 0.2
 	
