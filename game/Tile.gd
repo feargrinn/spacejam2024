@@ -75,9 +75,9 @@ func _ready():
 		parent_area.connect("input_event", handle_click)
 		var container = parent_area.get_parent().get_parent()
 		var left = container.get_child(0)
-		left.connect("pressed", func(): for i in range(3): rotate_right())
+		left.connect("pressed", func(): for i in range(3): rotate_right(); play_rotation_sound())
 		var right = container.get_child(2)
-		right.connect("pressed", func(): rotate_right())
+		right.connect("pressed", func(): rotate_right(); play_rotation_sound())
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -111,13 +111,7 @@ func handle_click(_viewport, event, _shape_index):
 		right_clicked_on()
 			
 func left_clicked_on():
-	var map = null;
-	
-	var parent = get_tree().get_root().get_node("Game")
-	var children = parent.get_children()
-	for child in children:
-		if child.name == "map":
-			map = child
+	var map = get_node("/root/Game/map");
 	
 	var tile = self.clone()
 	map.tile = tile
@@ -125,7 +119,12 @@ func left_clicked_on():
 	map.add_child(tile)
 	
 func right_clicked_on():
+	play_rotation_sound()
 	rotate_right()
+
+func play_rotation_sound():
+	var map = get_node("/root/Game/map");
+	map.rotation_sound.play()
 
 # Check if the other tile is connected to this one, assuming this one has a connection in that direction.
 static func connected(other: Tile, direction: int):
