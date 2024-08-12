@@ -14,6 +14,8 @@ script = ExtResource("1_motdp")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -55.0
+offset_bottom = 55.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
@@ -39,6 +41,8 @@ horizontal_alignment = 1
 [node name="TextureRect" type="TextureRect" parent="MenuScreen/VBoxContainer2/MarginContainer"]
 z_index = 1
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 texture = ExtResource("2_1n7gv")
 stretch_mode = 5
 
@@ -55,6 +59,13 @@ flat = true
 icon_alignment = 1
 
 [node name="Settings" type="Button" parent="MenuScreen/VBoxContainer2/MenuButtons"]
+layout_mode = 2
+size_flags_vertical = 6
+icon = ExtResource("3_pripr")
+flat = true
+icon_alignment = 1
+
+[node name="Create" type="Button" parent="MenuScreen/VBoxContainer2/MenuButtons"]
 layout_mode = 2
 size_flags_vertical = 6
 icon = ExtResource("3_pripr")
@@ -130,6 +141,7 @@ grow_vertical = 2
 texture = ExtResource("5_yynow")
 
 [connection signal="pressed" from="MenuScreen/VBoxContainer2/MenuButtons/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MenuScreen/VBoxContainer2/MenuButtons/Create" to="." method="_on_create_pressed"]
 [connection signal="pressed" from="MenuScreen/VBoxContainer2/MenuButtons/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="GameScreen/MarginContainer/VBoxContainer/MainMenu" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="GameScreen/MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

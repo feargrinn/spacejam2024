@@ -70,14 +70,14 @@ func _ready():
 	
 	if get_parent() is Area2D:
 		parent_area = get_parent()
-		parent_area.connect("mouse_entered", func(): mouse_over = true)
-		parent_area.connect("mouse_exited", func(): mouse_over = false)
 		parent_area.connect("input_event", handle_click)
 		var container = parent_area.get_parent().get_parent()
 		var left = container.get_child(0)
-		left.connect("pressed", func(): for i in range(3): rotate_right(); play_rotation_sound())
+		if left.name == "RotateLeft":
+			left.connect("pressed", func(): for i in range(3): rotate_right(); play_rotation_sound())
 		var right = container.get_child(2)
-		right.connect("pressed", func(): rotate_right(); play_rotation_sound())
+		if right.name == "RotateRight":
+			right.connect("pressed", func(): rotate_right(); play_rotation_sound())
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -105,9 +105,9 @@ func get_paint() -> Paint:
 	
 	
 func handle_click(_viewport, event, _shape_index):
-	if mouse_over and event is InputEventMouseButton and event.pressed == false and event.button_index == MOUSE_BUTTON_LEFT:
+	if event is InputEventMouseButton and event.pressed == false and event.button_index == MOUSE_BUTTON_LEFT:
 		left_clicked_on()
-	if mouse_over and event is InputEventMouseButton and event.pressed == false and event.button_index == MOUSE_BUTTON_RIGHT:
+	if event is InputEventMouseButton and event.pressed == false and event.button_index == MOUSE_BUTTON_RIGHT:
 		right_clicked_on()
 			
 func left_clicked_on():

@@ -34,3 +34,7 @@ func _on_main_menu_pressed():
 	$GameScreen/MarginContainer.hide();
 	$GameScreen.hide()
 	$MenuScreen.show();
+
+
+func _on_create_pressed():
+	get_tree().change_scene_to_file("res://editor.tscn")
