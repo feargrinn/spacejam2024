@@ -74,21 +74,29 @@ func _ready():
 		var container = parent_area.get_parent().get_parent()
 		var left = container.get_child(0)
 		if left.name == "RotateLeft":
-			left.connect("pressed", func(): for i in range(3): rotate_right(); play_rotation_sound())
+			left.connect("pressed", player_rotates_left)
 		var right = container.get_child(2)
 		if right.name == "RotateRight":
-			right.connect("pressed", func(): rotate_right(); play_rotation_sound())
+			right.connect("pressed", player_rotates_right)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
 
-func rotate_right():
+func _rotate_right():
 	var new_links: Array[int] = []
 	for link in links:
 		new_links.append(right(link))
 	links = new_links
 	rotate(PI / 2)
+	
+func player_rotates_right():
+	_rotate_right()
+	get_node("/root/Game/TileTurning").play()
+	
+func player_rotates_left():
+	for i in range(3): _rotate_right()
+	get_node("/root/Game/TileTurning").play()
 	
 func set_color(new_color: Colour):
 	if is_painted:
@@ -119,12 +127,7 @@ func left_clicked_on():
 	map.add_child(tile)
 	
 func right_clicked_on():
-	play_rotation_sound()
-	rotate_right()
-
-func play_rotation_sound():
-	var map = get_node("/root/Game/map");
-	map.rotation_sound.play()
+	player_rotates_right()
 
 # Check if the other tile is connected to this one, assuming this one has a connection in that direction.
 static func connected(other: Tile, direction: int):

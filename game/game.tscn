@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://fhmwenm3h7c7"]
+[gd_scene load_steps=26 format=3 uid="uid://fhmwenm3h7c7"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_f0dd8"]
 [ext_resource type="Texture2D" uid="uid://oogt24347qv7" path="res://images/bg_640x480.png" id="2_5eohq"]
@@ -17,6 +17,7 @@
 [ext_resource type="Script" path="res://Tiles/CrossTile.gd" id="13_f2vtf"]
 [ext_resource type="Texture2D" uid="uid://devomnujdn5pj" path="res://images/sprite sheets/sprite_sheet_losing_animation.png" id="13_vb37n"]
 [ext_resource type="Script" path="res://Tiles/AntiTile.gd" id="15_62jrv"]
+[ext_resource type="AudioStream" uid="uid://c5gs0ghhvhac3" path="res://sfx/sfx_pipe_turning.wav" id="18_5qrdi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5qjq1"]
 
@@ -542,6 +543,9 @@ Regnihov
 
 
 Thank you for playing :)[/center]"
+
+[node name="TileTurning" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("18_5qrdi")
 
 [connection signal="pressed" from="LeverPicker/VBoxContainer/ExitLevelPicker" to="." method="_on_exit_level_picker_pressed"]
 [connection signal="pressed" from="LeverPicker/VBoxContainer/HBoxContainer/Base" to="." method="_on_base_pressed"]

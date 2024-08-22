@@ -25,7 +25,6 @@ var is_running: bool
 var level_name: String
 
 var placing_sounds = []
-var rotation_sound
 
 func _init(level: Level):
 	# This name is used by the tile picker.
@@ -108,9 +107,6 @@ func _ready():
 	placing_sounds[2].stream = preload("res://sfx/sfx_pop_down_tile_3.wav")
 	for sound in placing_sounds:
 		add_child(sound)
-	rotation_sound = AudioStreamPlayer.new()
-	rotation_sound.stream = preload("res://sfx/sfx_pipe_turning.wav")
-	add_child(rotation_sound)
 	
 func init_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
 	tiles[ix][iy] = tile
@@ -121,7 +117,7 @@ func init_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
 		iy * Globals.TILE_SIZE + Globals.TILE_SIZE / 2 
 	)
 	for i in range(rot):
-		tile.rotate_right()
+		tile._rotate_right()
 	
 func set_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
 	tile.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
@@ -161,7 +157,7 @@ func _process(_delta):
 			tile.position = get_global_mouse_position() - position
 	if Input.is_action_just_released("RMB"):
 		if tile != null:
-			tile.rotate_right()
+			tile.player_rotates_right()
 	
 	if Input.is_action_just_pressed("LMB"):
 		if tile != null:
