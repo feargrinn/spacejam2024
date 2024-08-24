@@ -1,10 +1,11 @@
-[gd_scene load_steps=26 format=3 uid="uid://fhmwenm3h7c7"]
+[gd_scene load_steps=27 format=3 uid="uid://fhmwenm3h7c7"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_f0dd8"]
 [ext_resource type="Texture2D" uid="uid://oogt24347qv7" path="res://images/bg_640x480.png" id="2_5eohq"]
 [ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://fonts/menu_font.ttf" id="2_rssi8"]
 [ext_resource type="Texture2D" uid="uid://c3msrgw8yn1n4" path="res://images/menu_button_lvl_empty.png" id="3_eonvc"]
 [ext_resource type="Texture2D" uid="uid://c86rrp0hau4hr" path="res://images/menu_button_empty.png" id="5_8wxpr"]
+[ext_resource type="Script" path="res://TileRotator.gd" id="6_nfqgf"]
 [ext_resource type="Texture2D" uid="uid://iaumk5tbsbn1" path="res://images/tile_24x24_I_opaque.png" id="6_psk2b"]
 [ext_resource type="Texture2D" uid="uid://bfb2by036wdfm" path="res://images/tile_24x24_T_opaque.png" id="7_ujjlr"]
 [ext_resource type="Script" path="res://Tiles/StraightTile.gd" id="7_wyg0a"]
@@ -202,6 +203,7 @@ theme_override_constants/separation = 30
 [node name="Container" type="HBoxContainer" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+script = ExtResource("6_nfqgf")
 
 [node name="RotateLeft" type="Button" parent="TilePicker/VBoxContainer/Container"]
 layout_mode = 2
@@ -231,6 +233,7 @@ text = " > "
 [node name="Container2" type="HBoxContainer" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+script = ExtResource("6_nfqgf")
 
 [node name="RotateLeft" type="Button" parent="TilePicker/VBoxContainer/Container2"]
 layout_mode = 2
@@ -261,6 +264,7 @@ text = " > "
 [node name="Container3" type="HBoxContainer" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+script = ExtResource("6_nfqgf")
 
 [node name="RotateLeft" type="Button" parent="TilePicker/VBoxContainer/Container3"]
 layout_mode = 2
@@ -291,6 +295,7 @@ text = " > "
 [node name="Container4" type="HBoxContainer" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+script = ExtResource("6_nfqgf")
 
 [node name="RotateLeft" type="Button" parent="TilePicker/VBoxContainer/Container4"]
 layout_mode = 2
@@ -321,6 +326,7 @@ text = " > "
 [node name="Container5" type="HBoxContainer" parent="TilePicker/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+script = ExtResource("6_nfqgf")
 
 [node name="RotateLeft" type="Button" parent="TilePicker/VBoxContainer/Container5"]
 layout_mode = 2

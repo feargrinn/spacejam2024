@@ -71,13 +71,6 @@ func _ready():
 	if get_parent() is Area2D:
 		parent_area = get_parent()
 		parent_area.connect("input_event", handle_click)
-		var container = parent_area.get_parent().get_parent()
-		var left = container.get_child(0)
-		if left.name == "RotateLeft":
-			left.connect("pressed", player_rotates_left)
-		var right = container.get_child(2)
-		if right.name == "RotateRight":
-			right.connect("pressed", player_rotates_right)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
