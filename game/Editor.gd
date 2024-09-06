@@ -8,9 +8,9 @@ func _on_back_pressed():
 
 func _on_gui_input(event):
 	if event is InputEventMouseButton and event.pressed == false and event.button_index == MOUSE_BUTTON_RIGHT:
-		var held_tile = $VBoxContainer/MarginContainer/TileMap.held_tile
+		var held_tile = $VBoxContainer/TileMap.held_tile
 		if held_tile:
 			held_tile[1] = (held_tile[1] + 1) % 4
-			$VBoxContainer/MarginContainer/TileMap.held_tile = held_tile
+			$VBoxContainer/TileMap.held_tile = held_tile
 	if event is InputEventMouseButton and event.pressed == false and event.button_index == MOUSE_BUTTON_LEFT:
-		$VBoxContainer/MarginContainer/TileMap.place()
+		$VBoxContainer/TileMap.place()

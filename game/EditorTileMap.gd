@@ -1,4 +1,4 @@
-extends TileMap
+extends MarginContainer
 
 var held_tile = null;
 
@@ -8,20 +8,20 @@ func _ready():
 
 func get_coordinates():
 	var mouse_pos_global = get_viewport().get_mouse_position()
-	var mouse_pos_local = to_local(mouse_pos_global)
-	return local_to_map(mouse_pos_local)
+	var mouse_pos_local = $background.to_local(mouse_pos_global)
+	return $background.local_to_map(mouse_pos_local)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	var tile_pos = get_coordinates()
-	clear_layer(3)
-	if get_cell_tile_data(0, tile_pos):
+	$"tile_hover".clear()
+	if $"background".get_cell_tile_data(tile_pos): #checking if on background
 		if held_tile:
-			set_cell(3, tile_pos, 0, held_tile[0], held_tile[1])
+			$"tile_hover".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
 		else:
-			set_cell(3, tile_pos, 0, Vector2i(2,4))
+			$"tile_hover".set_cell(tile_pos, 0, Vector2i(2,4))
 			
 func place():
 	if held_tile:
 		var tile_pos = get_coordinates()
-		set_cell(1, tile_pos, 0, held_tile[0], held_tile[1])
+		$"tile".set_cell(tile_pos, 0, held_tile[0], held_tile[1])

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://5lq7qwq8odor"]
+[gd_scene load_steps=8 format=4 uid="uid://5lq7qwq8odor"]
 
 [ext_resource type="Texture2D" uid="uid://iaumk5tbsbn1" path="res://images/tile_24x24_I_opaque.png" id="1_5piyg"]
 [ext_resource type="Script" path="res://Editor.gd" id="1_jy0y8"]
@@ -64,24 +64,31 @@ size_flags_horizontal = 3
 text = "Save
 "
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+[node name="TileMap" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 size_flags_stretch_ratio = 5.3
-
-[node name="TileMap" type="TileMap" parent="VBoxContainer/MarginContainer"]
-tile_set = ExtResource("3_dhhqi")
-format = 2
-layer_0/name = "background"
-layer_0/tile_data = PackedInt32Array(196604, 458752, 0, 196605, 458752, 0, 196606, 458752, 0, 196607, 458752, 0, 131072, 458752, 0, 131073, 458752, 0, 131074, 458752, 0, 131075, 458752, 0, 65539, 458752, 0, 3, 458752, 0, -65533, 458752, 0, -131069, 458752, 0, -131070, 458752, 0, -131071, 458752, 0, -131072, 458752, 0, -65537, 458752, 0, -65538, 458752, 0, -65539, 458752, 0, -65540, 458752, 0, -4, 458752, 0, 65532, 458752, 0, 131068, 458752, 0, 131069, 458752, 0, 131070, 458752, 0, 131071, 458752, 0, 65536, 458752, 0, 65537, 458752, 0, 65538, 458752, 0, 2, 458752, 0, -65534, 458752, 0, -65535, 458752, 0, -65536, 458752, 0, -1, 458752, 0, -2, 458752, 0, -3, 458752, 0, 65533, 458752, 0, 65534, 458752, 0, 65535, 458752, 0, 0, 458752, 0, 1, 458752, 0, -131076, 458752, 0, -131075, 458752, 0, -131074, 458752, 0, -131073, 458752, 0, -196608, 458752, 0, -196607, 458752, 0, -196606, 458752, 0, -196605, 458752, 0)
-layer_1/name = "tile"
-layer_1/tile_data = PackedInt32Array()
-layer_2/name = "tile_colour"
-layer_2/tile_data = PackedInt32Array()
-layer_3/name = "tile_hover"
-layer_3/tile_data = PackedInt32Array()
 script = ExtResource("5_htd13")
+
+[node name="background" type="TileMapLayer" parent="VBoxContainer/TileMap"]
+use_parent_material = true
+tile_map_data = PackedByteArray("AAD8/wIAAAAHAAAAAAD9/wIAAAAHAAAAAAD+/wIAAAAHAAAAAAD//wIAAAAHAAAAAAAAAAIAAAAHAAAAAAABAAIAAAAHAAAAAAACAAIAAAAHAAAAAAADAAIAAAAHAAAAAAADAAEAAAAHAAAAAAADAAAAAAAHAAAAAAADAP//AAAHAAAAAAADAP7/AAAHAAAAAAACAP7/AAAHAAAAAAABAP7/AAAHAAAAAAAAAP7/AAAHAAAAAAD///7/AAAHAAAAAAD+//7/AAAHAAAAAAD9//7/AAAHAAAAAAD8//7/AAAHAAAAAAD8////AAAHAAAAAAD8/wAAAAAHAAAAAAD8/wEAAAAHAAAAAAD9/wEAAAAHAAAAAAD+/wEAAAAHAAAAAAD//wEAAAAHAAAAAAAAAAEAAAAHAAAAAAABAAEAAAAHAAAAAAACAAEAAAAHAAAAAAACAAAAAAAHAAAAAAACAP//AAAHAAAAAAABAP//AAAHAAAAAAAAAP//AAAHAAAAAAD/////AAAHAAAAAAD+////AAAHAAAAAAD9////AAAHAAAAAAD9/wAAAAAHAAAAAAD+/wAAAAAHAAAAAAD//wAAAAAHAAAAAAAAAAAAAAAHAAAAAAABAAAAAAAHAAAAAAD8//3/AAAHAAAAAAD9//3/AAAHAAAAAAD+//3/AAAHAAAAAAD///3/AAAHAAAAAAAAAP3/AAAHAAAAAAABAP3/AAAHAAAAAAACAP3/AAAHAAAAAAADAP3/AAAHAAAAAAA=")
+tile_set = ExtResource("3_dhhqi")
+
+[node name="tile" type="TileMapLayer" parent="VBoxContainer/TileMap"]
+use_parent_material = true
+tile_set = ExtResource("3_dhhqi")
+
+[node name="tile_colour" type="TileMapLayer" parent="VBoxContainer/TileMap"]
+use_parent_material = true
+tile_set = ExtResource("3_dhhqi")
+
+[node name="tile_hover" type="TileMapLayer" parent="VBoxContainer/TileMap"]
+modulate = Color(1, 1, 1, 0.498039)
+use_parent_material = true
+tile_map_data = PackedByteArray("AAAAAAEAAAACAAQAAAA=")
+tile_set = ExtResource("3_dhhqi")
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="input_event" from="VBoxContainer/Tools/Place/Area2D" to="VBoxContainer/Tools/Place/Area2D" method="_on_input_event"]
