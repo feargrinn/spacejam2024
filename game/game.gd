@@ -196,7 +196,7 @@ func play_credits():
 		OS.delay_msec(delay/5);
 	pass
 
-func _on_animation_player_winning_animation_finished(anim_name):
+func _on_animation_player_winning_animation_finished(_anim_name):
 	_sprite_winning.scale = Vector2(1.0 ,1.0)
 	for sprite in winning_sprites:
 		sprite.queue_free()
@@ -208,7 +208,7 @@ func _on_animation_player_winning_animation_finished(anim_name):
 		play_credits();
 
 
-func _on_animation_player_losing_animation_finished(anim_name):
+func _on_animation_player_losing_animation_finished(_anim_name):
 	_sprite_losing.visible = false
 	_sprite_losing.scale = Vector2(1.0 ,1.0)
 	for sprite in losing_sprites:
