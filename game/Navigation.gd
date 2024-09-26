@@ -11,7 +11,7 @@ func _ready():
 func _process(_delta):
 	pass
 	
-func _input(event):
+func _input(_event):
 	if Input.is_key_pressed(KEY_ESCAPE) and esc_pressed == false:
 		esc_pressed = true
 		if $GameScreen.is_visible():

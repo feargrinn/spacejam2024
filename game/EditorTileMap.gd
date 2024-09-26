@@ -22,17 +22,30 @@ func _process(_delta):
 			$"tile_hover".set_cell(tile_pos, 0, Vector2i(2,4))
 			
 func place():
+	var in_range = func(vec):
+		var rect_position = Vector2i(-7,-5)
+		var rect_size = Vector2i(14,10)
+		var rect = Rect2i(rect_position, rect_size)
+		return rect.has_point(vec)
 	if held_tile:
 		var tile_pos = get_coordinates()
-		if $background.get_cell_tile_data(tile_pos):
+		var eraser = Vector2i(1,3)
+		if in_range.call(tile_pos) and held_tile[0] == Vector2i(0,0):
+			$"tile".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
+		elif held_tile[0] == eraser:
+			if $tile.get_cell_tile_data(tile_pos):
+				$tile.erase_cell(tile_pos)
+			elif $background.get_cell_tile_data(tile_pos):
+				$background.erase_cell(tile_pos)
+		elif in_range.call(tile_pos) and $background.get_cell_tile_data(tile_pos):
 			$"tile".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
 			
-func to_json(name):
+func to_json(level_name):
 	var converted = {}
-	converted["name"] = name
-	var size = $background.get_used_rect().size
-	converted["height"] = size.y
-	converted["width"] = size.x
+	converted["name"] = level_name
+	var board_size = $background.get_used_rect().size
+	converted["height"] = board_size.y
+	converted["width"] = board_size.x
 	converted["inputs"] = {}
 	converted["outputs"] = {}
 	converted["tiles"] = {}
