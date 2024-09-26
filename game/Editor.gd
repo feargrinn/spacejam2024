@@ -14,3 +14,15 @@ func _on_gui_input(event):
 			$VBoxContainer/TileMap.held_tile = held_tile
 	if event is InputEventMouseButton and event.pressed == false and event.button_index == MOUSE_BUTTON_LEFT:
 		$VBoxContainer/TileMap.place()
+
+
+func _on_save_pressed() -> void:
+	$SaveLevelDialog.show()
+
+
+func _on_save_level_dialog_confirmed() -> void:
+	var dialog = $SaveLevelDialog
+	print(dialog.current_file)
+	var file = FileAccess.open("user://levels/" + dialog.current_file, FileAccess.WRITE)
+	var name = dialog.current_file.split(".")[0]
+	file.store_string(JSON.stringify($VBoxContainer/TileMap.to_json(name)))

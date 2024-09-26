@@ -24,4 +24,16 @@ func _process(_delta):
 func place():
 	if held_tile:
 		var tile_pos = get_coordinates()
-		$"tile".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
+		if $background.get_cell_tile_data(tile_pos):
+			$"tile".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
+			
+func to_json(name):
+	var converted = {}
+	converted["name"] = name
+	var size = $background.get_used_rect().size
+	converted["height"] = size.y
+	converted["width"] = size.x
+	converted["inputs"] = {}
+	converted["outputs"] = {}
+	converted["tiles"] = {}
+	return converted
