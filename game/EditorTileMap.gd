@@ -31,7 +31,7 @@ func place():
 		var tile_pos = get_coordinates()
 		var eraser = Vector2i(1,3)
 		if in_range.call(tile_pos) and held_tile[0] == Vector2i(0,0):
-			$"tile".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
+			$"background".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
 		elif held_tile[0] == eraser:
 			if $tile.get_cell_tile_data(tile_pos):
 				$tile.erase_cell(tile_pos)
