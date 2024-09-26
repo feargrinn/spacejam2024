@@ -1,6 +1,7 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://b64fhmdc5bn5"]
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://b64fhmdc5bn5"]
 
 [ext_resource type="Texture2D" uid="uid://b012vf0cvuq0o" path="res://images/tilesheet_v1.1.png" id="1_ed0iy"]
+[ext_resource type="PackedScene" uid="uid://c27ixjwx35fy0" path="res://color.tscn" id="2_vefvq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_msbxn"]
 texture = ExtResource("1_ed0iy")
@@ -97,8 +98,12 @@ texture_region_size = Vector2i(24, 24)
 8:4/0 = 0
 9:4/0 = 0
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_ijkaf"]
+scenes/0/scene = ExtResource("2_vefvq")
+
 [resource]
 tile_size = Vector2i(24, 24)
 custom_data_layer_0/name = "walkable"
 custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_msbxn")
+sources/1 = SubResource("TileSetScenesCollectionSource_ijkaf")

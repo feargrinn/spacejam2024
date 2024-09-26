@@ -1,6 +1,7 @@
 extends MarginContainer
 
 var held_tile = null;
+var last_placed_input;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -30,6 +31,7 @@ func place():
 	if held_tile:
 		var tile_pos = get_coordinates()
 		var eraser = Vector2i(1,3)
+		var input = Vector2i(0,1)
 		if in_range.call(tile_pos) and held_tile[0] == Vector2i(0,0):
 			$"background".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
 		elif held_tile[0] == eraser:
@@ -37,6 +39,11 @@ func place():
 				$tile.erase_cell(tile_pos)
 			elif $background.get_cell_tile_data(tile_pos):
 				$background.erase_cell(tile_pos)
+		elif in_range.call(tile_pos) and held_tile[0] == input:
+			$"tile".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
+			$"../../Popup".position = position + $"tile".map_to_local(tile_pos + Vector2i(1,1))
+			$"../../Popup".show()
+			last_placed_input = tile_pos
 		elif in_range.call(tile_pos) and $background.get_cell_tile_data(tile_pos):
 			$"tile".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
 			
@@ -50,3 +57,10 @@ func to_json(level_name):
 	converted["outputs"] = {}
 	converted["tiles"] = {}
 	return converted
+
+
+func _on_confirm_color_pressed() -> void:
+	#$tile_colour.set_cell(last_placed_input, 1, Vector2i(1,0))
+	#var scene = $tile_colour.get_child(0)
+	#scene.get_child(0).color = $"../../Popup/ColorPicker/ColorRect".color
+	$"../../Popup".hide()
