@@ -11,7 +11,7 @@ func _ready():
 	var color_to_preview = Colour.new(red, yellow, blue)
 	color = color_to_preview.color()
 
-func _on_drag_ended(value_changed: bool) -> void:
+func _on_drag_ended(_value_changed: bool) -> void:
 	red = $"../Red".value
 	yellow = $"../Yellow".value
 	blue = $"../Blue".value

@@ -6,7 +6,7 @@ func _on_back_pressed():
 
 
 
-func _on_gui_input(event):
+func _input(event):
 	if event is InputEventMouseButton and event.pressed == false and event.button_index == MOUSE_BUTTON_RIGHT:
 		var held_tile = $VBoxContainer/TileMap.held_tile
 		if held_tile:
