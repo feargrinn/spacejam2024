@@ -2,6 +2,7 @@ extends MarginContainer
 
 var held_tile = null;
 var last_placed_input;
+var colour_retriever = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -54,25 +55,41 @@ func to_json(level_name):
 	var board_size = $background.get_used_rect().size
 	converted["height"] = board_size.y
 	converted["width"] = board_size.x
-	converted["inputs"] = {}
+	var tiles = $tile.get_used_cells()
+	var inputs = [];
+	var outputs = [];
+	var other = [];
+	for tile in tiles:
+		var tile_position = $tile.get_cell_atlas_coords(tile)
+		var tile_rotation = $tile.get_cell_alternative_tile(tile)
+		if tile_position == Vector2i(1,1):
+			inputs.append({"colour" : {"red" : colour_retriever[tile].r, "yellow" : colour_retriever[tile].y, "blue" : colour_retriever[tile].b}, "x" : tile.x, "y" : tile.y, "orientation" :tile_rotation})
+		elif tile_position == Vector2i(2,1):
+			outputs += [tile, tile_rotation]
+		else:
+			other.append({"type" : tile_position.x, "x" : tile.x, "y" : tile.y, "orientation" : tile_rotation}) 
+	converted["inputs"] = inputs
 	converted["outputs"] = {}
-	converted["tiles"] = {}
+	converted["tiles"] = other
 	return converted
 
+func get_packed_scene_from_tilemap(tilemap_layer, tilemap_position):
+	var source_id = tilemap_layer.get_cell_source_id(tilemap_position)
+	if source_id > -1:
+		var scene_source = tilemap_layer.tile_set.get_source(source_id)
+		if scene_source is TileSetScenesCollectionSource:
+			var alt_id = tilemap_layer.get_cell_alternative_tile(tilemap_position)
+			# The assigned PackedScene.
+			return scene_source.get_scene_tile_scene(alt_id)
+	return null
 
 func _on_confirm_color_pressed() -> void:
-	var tile_map_layer = $tile_colour
 	$tile_colour.set_cell(last_placed_input, 1, Vector2i(0,0), 1) #argument 3 is always Vector2i(0,0) for SceneCollectionSource, alternative tile picks the actual scene from source
 	
-	var source_id = tile_map_layer.get_cell_source_id(last_placed_input)
-	if source_id > -1:
-		var scene_source = tile_map_layer.tile_set.get_source(source_id)
-		if scene_source is TileSetScenesCollectionSource:
-			var alt_id = tile_map_layer.get_cell_alternative_tile(last_placed_input)
-			# The assigned PackedScene.
-			var scene = scene_source.get_scene_tile_scene(alt_id)
-			var instance = scene.instantiate() #required to change color from white
-			instance.color = $"../../Popup/ColorPicker/ColorRect".color
-			scene.pack(instance) #required to update the color to display correctly
+	var scene = get_packed_scene_from_tilemap($tile_colour, last_placed_input)
+	var instance = scene.instantiate() #required to change color from white
+	instance.color = $"../../Popup/ColorPicker/ColorRect".color
+	colour_retriever[last_placed_input] = $"../../Popup/ColorPicker/ColorRect".color_to_preview
+	scene.pack(instance) #required to update the color to display correctly
 			
 	$"../../Popup".hide()
