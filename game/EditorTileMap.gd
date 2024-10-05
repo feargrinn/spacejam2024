@@ -23,6 +23,59 @@ func _process(_delta):
 		else:
 			$"tile_hover".set_cell(tile_pos, 0, Vector2i(2,4))
 			
+func better_get_surrounding_cells(pos):
+	var surrounding = [Vector2i(-1,-1), Vector2i(0,-1), Vector2i(1,-1),
+	Vector2i(-1,0), Vector2i(1,0),
+	Vector2i(-1,1), Vector2i(0,1), Vector2i(1,1)]
+	for i in range(surrounding.size()):
+		surrounding[i] += pos
+	return surrounding
+			
+func get_cell_vectors(pos, alt):
+	if !$background.tile_set.get_source(0).has_alternative_tile(pos, alt):
+		return []
+	var directions = [Vector2i(-1,-1),Vector2i(0,-1),Vector2i(1,-1),
+	Vector2i(-1,0),Vector2i(1,0),
+	Vector2i(-1,1),Vector2i(0,1),Vector2i(1,1)]
+	var cell_data = $background.tile_set.get_source(0).get_tile_data(pos, alt)
+	if !cell_data:
+		return []
+	var cell_directions = []
+	for i in range(8):
+		if cell_data.get_custom_data_by_layer_id(i):
+			cell_directions.append(directions[i])
+	cell_directions.sort()
+	return cell_directions
+	
+func search_for_border(directions):
+	directions.sort()
+	for i in range(3):
+		for j in range(16):
+			if directions == get_cell_vectors(Vector2i(i,2),j):
+				print("found correct border")
+				return [Vector2i(i,2), j]
+	print("failed to find border")
+	return []
+	
+			
+func put_border(pos, surroundings):
+	var border_coords = search_for_border(surroundings)
+	if border_coords != []:
+		$"background".set_cell(pos, 0, border_coords[0], border_coords[1])
+			
+func update_surrounding_background(tile_pos):
+	var surrounding = better_get_surrounding_cells(tile_pos)
+	for cell in surrounding:
+		if $background.get_cell_atlas_coords(cell) != Vector2i(0,0):
+			var neighbours = better_get_surrounding_cells(cell)
+			var border_neighbours = []
+			for neighbour in neighbours:
+				if $background.get_cell_atlas_coords(neighbour) == Vector2i(0,0):
+					border_neighbours.append(neighbour - cell) 
+			put_border(cell, border_neighbours)
+			print(cell - tile_pos, " => ", border_neighbours)
+			
+			
 func place():
 	var in_range = func(vec):
 		var rect_position = Vector2i(-7,-5)
@@ -35,6 +88,7 @@ func place():
 		var input = Vector2i(1,1)
 		if in_range.call(tile_pos) and held_tile[0] == Vector2i(0,0):
 			$"background".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
+			update_surrounding_background(tile_pos)
 		elif held_tile[0] == eraser:
 			if $tile.get_cell_source_id(tile_pos) != -1:
 				$tile.erase_cell(tile_pos)

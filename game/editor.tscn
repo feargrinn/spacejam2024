@@ -3,12 +3,12 @@
 [ext_resource type="Texture2D" uid="uid://iaumk5tbsbn1" path="res://images/tile_24x24_I_opaque.png" id="1_5piyg"]
 [ext_resource type="Script" path="res://Editor.gd" id="1_jy0y8"]
 [ext_resource type="Script" path="res://PlacableTileEditor.gd" id="2_yidxy"]
-[ext_resource type="Texture2D" uid="uid://c6klyd06qogb" path="res://images/tile_24x24_anti_opaque.png" id="3_0b8ah"]
 [ext_resource type="TileSet" uid="uid://b64fhmdc5bn5" path="res://images/tile_map.tres" id="3_dhhqi"]
 [ext_resource type="Texture2D" uid="uid://dh65qm2vqea6e" path="res://images/tile_24x24_empty.png" id="4_cbgpr"]
 [ext_resource type="Script" path="res://EditorTileMap.gd" id="5_htd13"]
 [ext_resource type="Texture2D" uid="uid://b3vpg8gtgmms5" path="res://images/tile_24x24_input_transparent.png" id="5_pb2q0"]
 [ext_resource type="Texture2D" uid="uid://cd26s8grhji0j" path="res://images/tile_24x24_output_partially_transparent.png" id="6_kih53"]
+[ext_resource type="Texture2D" uid="uid://dh2l8475cocg6" path="res://images/tile_24x24_eraser.png" id="7_w3tkq"]
 [ext_resource type="Script" path="res://color_preview.gd" id="10_u8w6p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1pntj"]
@@ -101,7 +101,7 @@ script = ExtResource("2_yidxy")
 shape = SubResource("RectangleShape2D_1pntj")
 
 [node name="StraightTile" type="Sprite2D" parent="VBoxContainer/Tools/Delete/Area2D"]
-texture = ExtResource("3_0b8ah")
+texture = ExtResource("7_w3tkq")
 
 [node name="Back" type="Button" parent="VBoxContainer/Tools"]
 layout_mode = 2
