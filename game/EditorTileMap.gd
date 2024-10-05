@@ -50,7 +50,8 @@ func get_cell_vectors(pos, alt):
 func search_for_border(directions):
 	directions.sort()
 	for i in range(3):
-		for j in range(16):
+		var amount_of_alternatives = $background.tile_set.get_source(0).get_alternative_tiles_count(Vector2i(i,2))
+		for j in range(amount_of_alternatives):
 			if directions == get_cell_vectors(Vector2i(i,2),j):
 				print("found correct border")
 				return [Vector2i(i,2), j]
