@@ -49,11 +49,11 @@ func get_cell_vectors(pos, alt):
 	
 func search_for_border(directions):
 	directions.sort()
-	for i in range(3):
+	for i in range(12):
 		var amount_of_alternatives = $background.tile_set.get_source(0).get_alternative_tiles_count(Vector2i(i,2))
 		for j in range(amount_of_alternatives):
 			if directions == get_cell_vectors(Vector2i(i,2),j):
-				print("found correct border")
+				#print("found correct border")
 				return [Vector2i(i,2), j]
 	print("failed to find border")
 	return []
@@ -85,8 +85,8 @@ func place():
 		return rect.has_point(vec)
 	if held_tile:
 		var tile_pos = get_coordinates()
-		var eraser = Vector2i(1,3)
-		var input = Vector2i(1,1)
+		var eraser = Vector2i(1,4)
+		var input = Vector2i(0,1)
 		if in_range.call(tile_pos) and held_tile[0] == Vector2i(0,0):
 			$"background".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
 			update_surrounding_background(tile_pos)

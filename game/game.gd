@@ -19,6 +19,7 @@ var winning_sprites = []
 var losing_sprites = []
 
 # Called when the node enters the scene tree for the first time.
+##Loads levels player has accessible, custom levels, also loads sounds
 func _ready():
 	var loaded_levels = Level.load_default()
 	if loaded_levels is Error:
@@ -59,12 +60,15 @@ func _ready():
 func _process(_delta):
 	pass
 
+##Removes map - 		TODO: should clear our tilemap
 func unload_level():
-	remove_child(current_map)
-	current_map.hide()
+	if current_map:
+		current_map.queue_free()
+		current_map = null
 	$ExitLevel.hide()
 	$TilePicker.hide()
 
+##Omg why is there a scale here, stops animations, removes map, goes back to lever picker
 func _on_exit_level_pressed():
 	_sprite_winning.scale = Vector2(1.0 ,1.0)
 	for sprite in winning_sprites:
@@ -83,6 +87,7 @@ func _on_exit_level_pressed():
 	unload_level()
 	$LeverPicker.show()
 
+## Creates a new map - 			TODO: we should fill our tilemap here
 func _on_level_pressed(levels: Array[Level], level: int):
 	current_level = level
 	var new_map = Map.new(levels[level-1])
@@ -94,10 +99,12 @@ func _on_level_pressed(levels: Array[Level], level: int):
 	$ExitLevel.show()
 	current_map.show()
 
+## Shows button for unlocked level and saves in player data that lvl is unlocked
 func unlock_level(level: int):
 	level_picker.unlock_level(level)
 	save_data.unlock_level(level)
 
+## TODO: throws an error for custom levels, why?
 func _on_next_level_pressed():
 	$VictoryScreen.hide()
 	if custom_levels_visible:
