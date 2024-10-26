@@ -19,13 +19,13 @@ WINDOWS_EXECUTABLE := $(FILE_PREFIX).exe
 WINDOWS_ZIP := $(FILE_PREFIX)_windows.zip
 
 $(LINUX_EXECUTABLE): $(PROJECT_DIR)/*
-	godot4 --headless --path $(PROJECT_DIR) --export-release "Linux/X11"  $@
+	godot --headless --path $(PROJECT_DIR) --export-release "Linux"  $@
 
 $(WEB_EXECUTABLE): $(PROJECT_DIR)/*
-	godot4 --headless --path $(PROJECT_DIR) --export-release "Web"  $@
+	godot --headless --path $(PROJECT_DIR) --export-release "Web"  $@
 
 $(WINDOWS_EXECUTABLE): $(PROJECT_DIR)/*
-	godot4 --headless --path $(PROJECT_DIR) --export-release "Windows Desktop"  $@
+	godot --headless --path $(PROJECT_DIR) --export-release "Windows Desktop"  $@
 
 $(LINUX_ZIP): $(LINUX_EXECUTABLE) $(PCK_FILE)
 	zip -j $(LINUX_ZIP) $(PCK_FILE) $(LINUX_EXECUTABLE)
