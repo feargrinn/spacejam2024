@@ -103,30 +103,26 @@ func place():
 			last_placed_input = tile_pos
 		elif in_range.call(tile_pos) and $background.get_cell_tile_data(tile_pos):
 			$"tile".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
+
+# TODO: this is temporary until we let the user pick a name
+static func random_name():
+	var alphabet = "qwertyuiopasdfghjklzxcvbnm"
+	var result = ""
+	for i in range(16):
+		result += alphabet[randi()%len(alphabet)]
+	return result
 			
-func to_json(level_name):
-	var converted = {}
-	converted["name"] = level_name
+func to_level():
+	var name = random_name()
 	var board_size = $background.get_used_rect().size
-	converted["height"] = board_size.y
-	converted["width"] = board_size.x
-	var tiles = $tile.get_used_cells()
-	var inputs = [];
-	var outputs = [];
-	var other = [];
-	for tile in tiles:
-		var tile_position = $tile.get_cell_atlas_coords(tile)
-		var tile_rotation = $tile.get_cell_alternative_tile(tile)
-		if tile_position == Vector2i(1,1):
-			inputs.append({"colour" : {"red" : colour_retriever[tile].r, "yellow" : colour_retriever[tile].y, "blue" : colour_retriever[tile].b}, "x" : tile.x, "y" : tile.y, "orientation" :tile_rotation})
-		elif tile_position == Vector2i(2,1):
-			outputs += [tile, tile_rotation]
-		else:
-			other.append({"type" : tile_position.x, "x" : tile.x, "y" : tile.y, "orientation" : tile_rotation}) 
-	converted["inputs"] = inputs
-	converted["outputs"] = {}
-	converted["tiles"] = other
-	return converted
+	var height = board_size.y
+	var width = board_size.x
+	# TODO: these should be filled from the editor properties,
+	# but that's too much for one commit
+	var inputs: Array[PreInput] = []
+	var outputs: Array[PreOutput] = []
+	var tiles: Array[PreTile] = []
+	return Level.new(name, height, width, inputs, outputs, tiles)
 
 func get_packed_scene_from_tilemap(tilemap_layer, tilemap_position):
 	var source_id = tilemap_layer.get_cell_source_id(tilemap_position)

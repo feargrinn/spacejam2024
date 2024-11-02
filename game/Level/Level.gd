@@ -17,6 +17,14 @@ var inputs: Array[PreInput]
 var outputs: Array[PreOutput]
 var tiles: Array[PreTile]
 
+func _init(name: String, height: int, width: int, inputs: Array[PreInput], outputs: Array[PreOutput], tiles: Array[PreTile]):
+	self.name = name
+	self.height = height
+	self.width = width
+	self.inputs = inputs
+	self.outputs = outputs
+	self.tiles = tiles
+
 static func load_default():
 	return load_from_dir(official_level_dir)
 
@@ -79,10 +87,26 @@ static func load_from_file(filename: String):
 		tiles.append(tile)
 	return Level.new(name, height, width, inputs, outputs, tiles)
 
-func _init(name: String, height: int, width: int, inputs: Array[PreInput], outputs: Array[PreOutput], tiles: Array[PreTile]):
-	self.name = name
-	self.height = height
-	self.width = width
-	self.inputs = inputs
-	self.outputs = outputs
-	self.tiles = tiles
+func to_description():
+	var inputs_description = []
+	for input in self.inputs:
+		inputs_description.append(input.to_description())
+	var outputs_description = []
+	for output in self.outputs:
+		outputs_description.append(output.to_description())
+	var tiles_description = []
+	for tile in self.tiles:
+		tiles_description.append(tile.to_description())
+	return {
+		title_name: self.name,
+		height_name: self.height,
+		width_name: self.width,
+		inputs_name: inputs_description,
+		outputs_name: outputs_description,
+		tiles_name: tiles_description,
+	}
+
+func save_to_file():
+	var filename = "%s/%s.json" % [user_level_dir, self.name]
+	var level_file = FileAccess.open(filename, FileAccess.WRITE)
+	level_file.store_string(JSON.stringify(to_description()))

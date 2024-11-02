@@ -41,3 +41,11 @@ static func from_description(description):
 		return Error.missing_field(rot_name)
 	var rot = description[rot_name]
 	return PreTile.new(type, x, y, rot)
+
+func to_description():
+	return {
+		type_name: self.type,
+		x_name: self.x,
+		y_name: self.y,
+		rot_name: self.rot
+	}

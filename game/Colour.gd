@@ -30,6 +30,13 @@ static func from_description(description):
 	var b = description[b_name]
 	return Colour.new(r, y, b)
 
+func to_description():
+	return {
+		r_name: self.r,
+		y_name: self.y,
+		b_name: self.b
+	}
+
 func __ready():
 	pass
 

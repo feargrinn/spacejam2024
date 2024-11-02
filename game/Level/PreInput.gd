@@ -34,3 +34,10 @@ static func from_description(description):
 	var rot = description[rot_name]
 	return PreInput.new(colour, x, y, rot)
 
+func to_description():
+	return {
+		colour_name: self.colour.to_description(),
+		x_name: self.x,
+		y_name: self.y,
+		rot_name: self.rot,
+	}

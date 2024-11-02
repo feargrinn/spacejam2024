@@ -8,16 +8,24 @@ const input_index_name: String = "input"
 const mix_name: String = "mix"
 const amount_name: String = "amount"
 
+var colour_description
 var colour: Colour
 var x: int
 var y: int
 var rot: int
 
-func _init(colour: Colour, x: int, y: int, rot: int):
-	self.colour = colour
+func _init(colour_description, x: int, y: int, rot: int):
+	self.colour_description = colour_description
 	self.x = x
 	self.y = y
 	self.rot = rot
+
+# doing this separately, because apparently you cannot return errors from constructors :<
+func init_colour(inputs):
+	var colour_result = load_colour(self.colour_description, inputs)
+	if colour_result is Error:
+		return colour_result.wrap("failed to load colour")
+	self.colour = colour_result
 
 static func load_paint(description, inputs):
 	if not description.has(colour_name):
@@ -52,10 +60,7 @@ static func load_colour(description, inputs):
 static func from_description(description, inputs):
 	if not description.has(colour_name):
 		return Error.missing_field(colour_name)
-	var colour_result = load_colour(description[colour_name], inputs) 
-	if colour_result is Error:
-		return colour_result.wrap("failed to load colour")
-	var colour = colour_result
+	var colour_description = description[colour_name]
 	if not description.has(x_name):
 		return Error.missing_field(x_name)
 	var x = description[x_name]
@@ -65,4 +70,16 @@ static func from_description(description, inputs):
 	if not description.has(rot_name):
 		return Error.missing_field(rot_name)
 	var rot = description[rot_name]
-	return PreOutput.new(colour, x, y, rot)
+	var result = PreOutput.new(colour_description, x, y, rot)
+	var init_colour_result = result.init_colour(inputs)
+	if init_colour_result is Error:
+		return init_colour_result
+	return result
+
+func to_description():
+	return {
+		colour_name: self.colour_description,
+		x_name: self.x,
+		y_name: self.y,
+		rot_name: self.rot
+	}

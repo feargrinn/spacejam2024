@@ -139,15 +139,6 @@ modulate = Color(1, 1, 1, 0.498039)
 use_parent_material = true
 tile_set = ExtResource("3_dhhqi")
 
-[node name="SaveLevelDialog" type="FileDialog" parent="."]
-position = Vector2i(75, 75)
-size = Vector2i(478, 325)
-popup_window = true
-ok_button_text = "Save"
-access = 1
-root_subfolder = "levels"
-filters = PackedStringArray("*.json; Json files")
-
 [node name="Popup" type="Popup" parent="."]
 position = Vector2i(405, 220)
 
@@ -193,7 +184,6 @@ text = "Confirm
 [connection signal="input_event" from="VBoxContainer/Tools/Delete/Area2D" to="VBoxContainer/Tools/Delete/Area2D" method="_on_input_event" binds= [Vector2i(1, 4)]]
 [connection signal="pressed" from="VBoxContainer/Tools/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="VBoxContainer/Tools/Save" to="." method="_on_save_pressed"]
-[connection signal="confirmed" from="SaveLevelDialog" to="." method="_on_save_level_dialog_confirmed"]
 [connection signal="drag_ended" from="Popup/ColorPicker/Red" to="Popup/ColorPicker/ColorRect" method="_on_drag_ended"]
 [connection signal="drag_ended" from="Popup/ColorPicker/Yellow" to="Popup/ColorPicker/ColorRect" method="_on_drag_ended"]
 [connection signal="drag_ended" from="Popup/ColorPicker/Blue" to="Popup/ColorPicker/ColorRect" method="_on_drag_ended"]
