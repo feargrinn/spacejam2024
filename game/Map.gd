@@ -25,6 +25,7 @@ var is_running: bool
 var level_name: String
 
 var placing_sounds = []
+var color_sounds = []
 
 func _init(level: Level):
 	# This name is used by the tile picker.
@@ -102,11 +103,23 @@ func _ready():
 	is_running = true
 	for i in 3:
 		placing_sounds.append(AudioStreamPlayer.new())
+		color_sounds.append(AudioStreamPlayer.new())
 	placing_sounds[0].stream = preload("res://sfx/sfx_pop_down_tile_1.wav")
 	placing_sounds[1].stream = preload("res://sfx/sfx_pop_down_tile_2.wav")
 	placing_sounds[2].stream = preload("res://sfx/sfx_pop_down_tile_3.wav")
+	color_sounds[0].stream = preload("res://sfx/pat1.wav")
+	color_sounds[1].stream = preload("res://sfx/pat2.wav")
+	color_sounds[2].stream = preload("res://sfx/pat3.wav")
 	for sound in placing_sounds:
 		add_child(sound)
+	for sound in color_sounds:
+		add_child(sound)
+	color_sounds[0].bus = &"Red"
+	color_sounds[1].bus = &"Yellow"
+	color_sounds[2].bus = &"Blue"
+	#print(color_sounds[0].bus)
+	#print(color_sounds[1].bus)
+	#print(color_sounds[2].bus)
 	
 func init_tile_at(tile:Tile, ix:int, iy:int, rot: int = 0):
 	tiles[ix][iy] = tile
@@ -199,6 +212,24 @@ func update_timestep(to_update: Array[Vector2i]) -> Array[Vector2i]:
 		if full_neighbours.any(func(paint): return paint.amount > 0):
 			var colour = Paint.mix(full_neighbours)
 			tile.set_color(colour)
+			# color sounds
+			var pitch_shift_r = AudioServer.get_bus_effect(1, 0)
+			var pitch_shift_y = AudioServer.get_bus_effect(2, 0)
+			var pitch_shift_b = AudioServer.get_bus_effect(3, 0)
+			print(AudioServer.get_bus_effect(1, 0))
+			print(AudioServer.get_bus_effect(2, 0))
+			print(AudioServer.get_bus_effect(3, 0))
+			var scale_upper_limit = 8.0
+			var scale_lower_limit = 0.5
+			var scale_range = scale_upper_limit - scale_lower_limit
+			# applies pitch shift per color to audio buses and plays sounds
+			pitch_shift_r.pitch_scale = colour.r * scale_range + scale_lower_limit
+			color_sounds[0].play()
+			pitch_shift_y.pitch_scale = colour.y * scale_range + scale_lower_limit
+			color_sounds[1].play()
+			pitch_shift_b.pitch_scale = colour.b * scale_range + scale_lower_limit
+			color_sounds[2].play()
+			# doesnt work stlil... takes same pitch shifter instance for some reason
 			# don't update empty anti-tile neighbours
 			if not (tile is AntiTile):
 				update_in_next_step.append_array(empty_neighbours)
