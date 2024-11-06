@@ -90,7 +90,7 @@ func _on_exit_level_pressed():
 ## Creates a new map - 			TODO: we should fill our tilemap here
 func _on_level_pressed(levels: Array[Level], level: int):
 	current_level = level
-	var new_map = Map.new(levels[level-1])
+	var new_map = LevelTileMap.new(levels[level-1])
 	
 	add_child(new_map)
 	current_map = new_map
@@ -104,7 +104,7 @@ func unlock_level(level: int):
 	level_picker.unlock_level(level)
 	save_data.unlock_level(level)
 
-## TODO: throws an error for custom levels, why?
+
 func _on_next_level_pressed():
 	$VictoryScreen.hide()
 	if custom_levels_visible:

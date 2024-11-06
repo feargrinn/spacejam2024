@@ -4,6 +4,7 @@ var held_tile = null;
 var last_placed_input;
 var colour_retriever = {}
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -20,85 +21,8 @@ func _process(_delta):
 	if $"background".get_cell_tile_data(tile_pos): #checking if on background
 		if held_tile:
 			$"tile_hover".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
-		else:
-			$"tile_hover".set_cell(tile_pos, 0, Vector2i(2,4))
-			
-# gets global positions of cells surrounding cell at position pos
-func better_get_surrounding_cells(pos):
-	var surrounding = [Vector2i(-1,-1), Vector2i(0,-1), Vector2i(1,-1),
-	Vector2i(-1,0), Vector2i(1,0),
-	Vector2i(-1,1), Vector2i(0,1), Vector2i(1,1)]
-	for i in range(surrounding.size()):
-		surrounding[i] += pos
-	return surrounding
-			
-# gets directional vectors to tiles which have a background cell, for a specific tile in tilemap
-func get_cell_vectors(pos, alt):
-	if !$background.tile_set.get_source(0).has_alternative_tile(pos, alt):
-		return []
-	var directions = [Vector2i(-1,-1),Vector2i(0,-1),Vector2i(1,-1),
-	Vector2i(-1,0),Vector2i(1,0),
-	Vector2i(-1,1),Vector2i(0,1),Vector2i(1,1)]
-	var cell_data = $background.tile_set.get_source(0).get_tile_data(pos, alt)
-	var cell_directions = []
-	for i in range(8):
-		if cell_data.get_custom_data_by_layer_id(i):
-			cell_directions.append(directions[i])
-	return cell_directions
 
-# if there is a tile up, the tiles up-left and up-right don't matter, that's why it doesn't need to perfectly match
-func approx_equals(actual_directions, potential_cell_directions):
-	var base_directions = []
-	for direction in actual_directions:
-		if direction.length() == 1:
-			base_directions.append(direction)
-	var directions_to_check = better_get_surrounding_cells(Vector2i.ZERO)
-	for direction in base_directions:
-		if !potential_cell_directions.has(direction):
-			return false
-		else:
-			directions_to_check.erase(direction)
-			directions_to_check.erase(direction + Vector2i(direction.y, direction.x))
-			directions_to_check.erase(direction - Vector2i(direction.y, direction.x))
-	for direction in directions_to_check:
-		if !(actual_directions.has(direction) == potential_cell_directions.has(direction)):
-			return false
-	return true
 
-# finds an appropriate border given directions from tile to background tiles (not borders)
-func search_for_border(directions):
-	for i in range(13):
-		var amount_of_alternatives = $background.tile_set.get_source(0).get_alternative_tiles_count(Vector2i(i,2))
-		for j in range(amount_of_alternatives):
-			if approx_equals(directions, get_cell_vectors(Vector2i(i,2),j)):
-				return [Vector2i(i,2), j]
-	return []
-	
-# places a border tile or empty tile if not found
-func put_border(pos, surroundings):
-	var border_coords = search_for_border(surroundings)
-	if !border_coords == []:
-		$"background".set_cell(pos, 0, border_coords[0], border_coords[1])
-	else:
-		$"background".set_cell(pos, 0, Vector2i(-1,-1), 0)
-			
-			
-func get_cell_surroundings(pos):
-	var neighbours = better_get_surrounding_cells(pos)
-	var border_neighbours = []
-	for neighbour in neighbours:
-		if $background.get_cell_atlas_coords(neighbour) == Vector2i(0,0):
-			border_neighbours.append(neighbour - pos) 
-	return border_neighbours
-	
-func update_surrounding_background(tile_pos):
-	var surrounding = better_get_surrounding_cells(tile_pos)
-	for cell in surrounding:
-		if $background.get_cell_atlas_coords(cell) != Vector2i(0,0):
-			var neighbours = get_cell_surroundings(cell)
-			put_border(cell, neighbours)
-			
-			
 func place():
 	var in_range = func(vec):
 		var rect_position = Vector2i(-7,-5)
@@ -107,20 +31,18 @@ func place():
 		return rect.has_point(vec)
 	if held_tile:
 		var tile_pos = get_coordinates()
-		var eraser = Vector2i(1,4)
-		var input = Vector2i(0,1)
-		if in_range.call(tile_pos) and held_tile[0] == Vector2i(0,0):
+		if in_range.call(tile_pos) and held_tile[0] == TileType.BACKGROUND():
 			$"background".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
-			update_surrounding_background(tile_pos)
-		elif held_tile[0] == eraser:
+			BorderHandler.update_surrounding_background($"background", tile_pos)
+		elif held_tile[0] == TileType.ERASER():
 			if $tile.get_cell_source_id(tile_pos) != -1:
 				$tile.erase_cell(tile_pos)
 				$tile_colour.erase_cell(tile_pos)
-			elif $background.get_cell_atlas_coords(tile_pos) == Vector2i(0,0):
+			elif $background.get_cell_atlas_coords(tile_pos) == TileType.BACKGROUND():
 				$background.erase_cell(tile_pos)
-				update_surrounding_background(tile_pos)
-				put_border(tile_pos, get_cell_surroundings(tile_pos))
-		elif in_range.call(tile_pos) and held_tile[0] == input:
+				BorderHandler.update_surrounding_background($"background", tile_pos)
+				BorderHandler.put_border($"background", tile_pos, BorderHandler.get_cell_surroundings($"background", tile_pos))
+		elif in_range.call(tile_pos) and held_tile[0] == TileType.INPUT():
 			$"tile".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
 			$"../../Popup".position = position + $"tile".map_to_local(tile_pos + Vector2i(1,1))
 			$"../../Popup".show()
@@ -138,7 +60,7 @@ static func random_name():
 			
 func to_level():
 	#var name = random_name()
-	var name = "seven"
+	var level_name = "seven"
 	var board_size = $background.get_used_rect().size
 	var height = board_size.y
 	var width = board_size.x
@@ -147,7 +69,7 @@ func to_level():
 	var inputs: Array[PreInput] = []
 	var outputs: Array[PreOutput] = []
 	var tiles: Array[PreTile] = []
-	return Level.new(name, height, width, inputs, outputs, tiles)
+	return Level.new(level_name, height, width, inputs, outputs, tiles)
 
 func get_packed_scene_from_tilemap(tilemap_layer, tilemap_position):
 	var source_id = tilemap_layer.get_cell_source_id(tilemap_position)
