@@ -4,6 +4,7 @@ class_name LTile
 
 func _init():
 	super._init()
+	tiletype = TileType.L()
 	links.append(Direction.UP)
 	links.append(Direction.RIGHT)
 

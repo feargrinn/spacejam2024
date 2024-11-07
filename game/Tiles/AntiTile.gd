@@ -4,6 +4,7 @@ class_name AntiTile
 
 func _init():
 	super._init()
+	tiletype = TileType.ANTI()
 	links.append(Direction.UP)
 	links.append(Direction.DOWN)
 	pipe_size = -1

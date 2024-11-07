@@ -4,6 +4,7 @@ class_name InputTile
 
 func _init(color: Colour):
 	super._init()
+	tiletype = TileType.INPUT()
 	links.append(Direction.DOWN)
 	set_color(color)
 

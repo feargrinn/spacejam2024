@@ -4,6 +4,7 @@ class_name CrossTile
 
 func _init():
 	super._init()
+	tiletype = TileType.CROSS()
 	links.append(Direction.UP)
 	links.append(Direction.RIGHT)
 	links.append(Direction.DOWN)

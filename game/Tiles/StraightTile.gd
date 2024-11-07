@@ -4,6 +4,7 @@ class_name StraightTile
 
 func _init():
 	super._init()
+	tiletype = TileType.STRAIGHT()
 	links.append(Direction.UP)
 	links.append(Direction.DOWN)
 

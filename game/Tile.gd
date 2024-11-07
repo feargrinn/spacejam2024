@@ -11,6 +11,7 @@ var is_replaceable: bool
 #v for clickability
 var parent_area : Area2D
 var mouse_over = false
+var tiletype
 
 enum Direction {
 	UP,
@@ -53,6 +54,7 @@ func _init():
 	is_painted = false
 	pipe_size = 1.
 	is_replaceable = false
+	tiletype = TileType.EMPTY()
 	
 func clone():
 	var my_clone = self.duplicate()
@@ -72,9 +74,6 @@ func _ready():
 		parent_area = get_parent()
 		parent_area.connect("input_event", handle_click)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 
 func _rotate_right():
 	var new_links: Array[int] = []
@@ -114,7 +113,7 @@ func handle_click(_viewport, event, _shape_index):
 func left_clicked_on():
 	var map = get_node("/root/Game/map");
 	
-	map.tile = [TileType.CROSS(), rotation_degrees/360*4]
+	map.tile = [tiletype, rotation_degrees/360*4]
 	
 func right_clicked_on():
 	player_rotates_right()

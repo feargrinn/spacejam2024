@@ -163,7 +163,7 @@ func _process(_delta):
 func get_possible_connections(tile_position):
 	if tile_layer.get_cell_atlas_coords(tile_position) == TileType.EMPTY():
 		return []
-	var check_direction = func(direction_name):
+	var check_direction = func(direction_name): #somthing broke after rotating anti
 		return tile_layer.get_cell_tile_data(tile_position).get_custom_data(direction_name)
 	var connections = []
 	if check_direction.call("UP"):
