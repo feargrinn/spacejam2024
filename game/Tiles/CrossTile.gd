@@ -4,7 +4,7 @@ class_name CrossTile
 
 func _init():
 	super._init()
-	tiletype = TileType.CROSS()
+	tile_type = TileType.CROSS()
 	links.append(Direction.UP)
 	links.append(Direction.RIGHT)
 	links.append(Direction.DOWN)
@@ -12,8 +12,6 @@ func _init():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	opaque_texture = preload("res://images/tile_24x24_cross_opaque.png")
-	transparent_texture = preload("res://images/tile_24x24_cross.png")
 	
 	super._ready()
 	

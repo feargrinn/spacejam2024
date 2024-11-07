@@ -1,17 +1,13 @@
-extends Sprite2D
+extends Area2D
 
 class_name Tile
 
 var paint_script = preload("res://Paint.gd")
-var colour_script = preload("res://Colour.gd")
-var transparent_texture: Texture2D
-var opaque_texture: Texture2D
+
 var is_replaceable: bool
 
-#v for clickability
-var parent_area : Area2D
-var mouse_over = false
-var tiletype
+var tile_type: Vector2i
+var tile_rotation: int
 
 enum Direction {
 	UP,
@@ -54,25 +50,16 @@ func _init():
 	is_painted = false
 	pipe_size = 1.
 	is_replaceable = false
-	tiletype = TileType.EMPTY()
-	
-func clone():
-	var my_clone = self.duplicate()
-	my_clone.links = links
-	return my_clone
+	tile_type = TileType.EMPTY()
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	if is_painted:
-		texture = transparent_texture
-	else:
-		texture = opaque_texture
-		
-	
-	if get_parent() is Area2D:
-		parent_area = get_parent()
-		parent_area.connect("input_event", handle_click)
+	#if is_painted:
+		#texture = transparent_texture
+	#else:
+		#texture = opaque_texture
+	pass
 
 
 func _rotate_right():
@@ -91,33 +78,20 @@ func player_rotates_left():
 	get_node("/root/Game/TileTurning").play()
 	
 func set_color(new_color: Colour):
-	if is_painted:
-		remove_child(color)
-	else:
-		is_painted = true
-		texture = transparent_texture
-
-	color = colour_script.new(new_color.r, new_color.y, new_color.b)
-	add_child(color)
+	#if is_painted:
+		#remove_child(color)
+	#else:
+		#is_painted = true
+		#texture = transparent_texture
+#
+	#color = colour_script.new(new_color.r, new_color.y, new_color.b)
+	#add_child(color)
+	pass
 
 func get_paint() -> Paint:
 	return paint_script.new(color, pipe_size)
 	
-	
-func handle_click(_viewport, event, _shape_index):
-	if event is InputEventMouseButton and event.pressed == false and event.button_index == MOUSE_BUTTON_LEFT:
-		left_clicked_on()
-	if event is InputEventMouseButton and event.pressed == false and event.button_index == MOUSE_BUTTON_RIGHT:
-		right_clicked_on()
-			
-func left_clicked_on():
-	var map = get_node("/root/Game/map");
-	
-	var max_alternatives = Globals.TILE_SET.get_source(0).get_alternative_tiles_count(tiletype)
-	map.tile = [tiletype, int(rotation_degrees/360*4) % max_alternatives]
-	
-func right_clicked_on():
-	player_rotates_right()
+
 
 # Check if the other tile is connected to this one, assuming this one has a connection in that direction.
 static func connected(other: Tile, direction: int):

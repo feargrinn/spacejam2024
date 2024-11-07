@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://fhmwenm3h7c7"]
+[gd_scene load_steps=22 format=3 uid="uid://fhmwenm3h7c7"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_f0dd8"]
 [ext_resource type="Texture2D" uid="uid://oogt24347qv7" path="res://images/bg_640x480.png" id="2_5eohq"]
@@ -8,16 +8,11 @@
 [ext_resource type="Script" path="res://TileRotator.gd" id="6_nfqgf"]
 [ext_resource type="Texture2D" uid="uid://iaumk5tbsbn1" path="res://images/tile_24x24_I_opaque.png" id="6_psk2b"]
 [ext_resource type="Texture2D" uid="uid://bfb2by036wdfm" path="res://images/tile_24x24_T_opaque.png" id="7_ujjlr"]
-[ext_resource type="Script" path="res://Tiles/StraightTile.gd" id="7_wyg0a"]
 [ext_resource type="Texture2D" uid="uid://dgumx31nso486" path="res://images/tile_24x24_L_opaque.png" id="8_l0vv8"]
-[ext_resource type="Script" path="res://Tiles/TTile.gd" id="9_1vo7x"]
 [ext_resource type="Texture2D" uid="uid://gp7xpxacd1ql" path="res://images/tile_24x24_cross_opaque.png" id="9_yodhl"]
 [ext_resource type="Texture2D" uid="uid://c6klyd06qogb" path="res://images/tile_24x24_anti_opaque.png" id="10_wju1l"]
-[ext_resource type="Script" path="res://Tiles/LTile.gd" id="11_cprsa"]
 [ext_resource type="Texture2D" uid="uid://drv2yvqyelnkb" path="res://images/sprite sheets/sprite_sheet_winning_animation.png" id="12_tg20q"]
-[ext_resource type="Script" path="res://Tiles/CrossTile.gd" id="13_f2vtf"]
 [ext_resource type="Texture2D" uid="uid://devomnujdn5pj" path="res://images/sprite sheets/sprite_sheet_losing_animation.png" id="13_vb37n"]
-[ext_resource type="Script" path="res://Tiles/AntiTile.gd" id="15_62jrv"]
 [ext_resource type="AudioStream" uid="uid://c5gs0ghhvhac3" path="res://sfx/sfx_pipe_turning.wav" id="18_5qrdi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5qjq1"]
@@ -223,7 +218,6 @@ shape = SubResource("RectangleShape2D_5qjq1")
 
 [node name="StraightTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container/Control/Area2D"]
 texture = ExtResource("6_psk2b")
-script = ExtResource("7_wyg0a")
 
 [node name="RotateRight" type="Button" parent="TilePicker/VBoxContainer/Container"]
 layout_mode = 2
@@ -254,7 +248,6 @@ shape = SubResource("RectangleShape2D_5qjq1")
 [node name="TTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container2/Control/Area2D"]
 position = Vector2(0.333328, 0)
 texture = ExtResource("7_ujjlr")
-script = ExtResource("9_1vo7x")
 
 [node name="RotateRight" type="Button" parent="TilePicker/VBoxContainer/Container2"]
 layout_mode = 2
@@ -285,7 +278,6 @@ shape = SubResource("RectangleShape2D_5qjq1")
 [node name="LTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container3/Control/Area2D"]
 position = Vector2(0.333328, 0)
 texture = ExtResource("8_l0vv8")
-script = ExtResource("11_cprsa")
 
 [node name="RotateRight" type="Button" parent="TilePicker/VBoxContainer/Container3"]
 layout_mode = 2
@@ -316,7 +308,6 @@ shape = SubResource("RectangleShape2D_5qjq1")
 [node name="CrossTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container4/Control/Area2D"]
 position = Vector2(0.333328, 0)
 texture = ExtResource("9_yodhl")
-script = ExtResource("13_f2vtf")
 
 [node name="RotateRight" type="Button" parent="TilePicker/VBoxContainer/Container4"]
 layout_mode = 2
@@ -347,7 +338,6 @@ shape = SubResource("RectangleShape2D_5qjq1")
 [node name="AntiTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container5/Control/Area2D"]
 position = Vector2(0.333328, 0)
 texture = ExtResource("10_wju1l")
-script = ExtResource("15_62jrv")
 
 [node name="RotateRight" type="Button" parent="TilePicker/VBoxContainer/Container5"]
 layout_mode = 2
@@ -557,6 +547,11 @@ stream = ExtResource("18_5qrdi")
 [connection signal="pressed" from="LeverPicker/VBoxContainer/HBoxContainer/Base" to="." method="_on_base_pressed"]
 [connection signal="pressed" from="LeverPicker/VBoxContainer/HBoxContainer/Custom" to="." method="_on_custom_pressed"]
 [connection signal="pressed" from="ExitLevel" to="." method="_on_exit_level_pressed"]
+[connection signal="input_event" from="TilePicker/VBoxContainer/Container/Control/Area2D" to="TilePicker/VBoxContainer/Container" method="_on_click" binds= [Vector2i(1, 0)]]
+[connection signal="input_event" from="TilePicker/VBoxContainer/Container2/Control/Area2D" to="TilePicker/VBoxContainer/Container2" method="_on_click" binds= [Vector2i(2, 0)]]
+[connection signal="input_event" from="TilePicker/VBoxContainer/Container3/Control/Area2D" to="TilePicker/VBoxContainer/Container3" method="_on_click" binds= [Vector2i(3, 0)]]
+[connection signal="input_event" from="TilePicker/VBoxContainer/Container4/Control/Area2D" to="TilePicker/VBoxContainer/Container4" method="_on_click" binds= [Vector2i(4, 0)]]
+[connection signal="input_event" from="TilePicker/VBoxContainer/Container5/Control/Area2D" to="TilePicker/VBoxContainer/Container5" method="_on_click" binds= [Vector2i(5, 0)]]
 [connection signal="pressed" from="VictoryScreen/MenuButtons/NextLevel" to="." method="_on_next_level_pressed"]
 [connection signal="pressed" from="LoserScreen/VBoxContainer/MenuButtons/Retry" to="." method="_on_retry_pressed"]
 [connection signal="animation_finished" from="Sprite2DWinning/AnimationPlayerWinning" to="." method="_on_animation_player_winning_animation_finished"]
