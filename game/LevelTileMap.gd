@@ -145,15 +145,13 @@ func _process(_delta):
 	tile_hover_layer.clear()
 	if tile != null:
 		tile_hover_layer.set_cell(_mouse_position_to_coordinates(), 0, tile[0], tile[1])
-	if Input.is_action_just_released("RMB"):
-		if tile != null:
+		if Input.is_action_just_released("RMB"):
 			get_node("/root/Game/TileTurning").play()
 			tile[1] += 1
 			if !Globals.TILE_SET.get_source(0).has_alternative_tile(tile[0],tile[1]):
 				tile[1] = 0
-	
-	if Input.is_action_just_pressed("LMB"):
-		if tile != null:
+		
+		if Input.is_action_just_pressed("LMB"):
 			var tile_position = _mouse_position_to_coordinates()
 			if background_layer.get_cell_atlas_coords(tile_position) == TileType.BACKGROUND():
 				placing_sounds[RandomNumberGenerator.new().randi_range(0, 2)].play()
