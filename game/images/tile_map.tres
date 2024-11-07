@@ -1,10 +1,9 @@
-[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://b64fhmdc5bn5"]
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://b64fhmdc5bn5"]
 
-[ext_resource type="Texture2D" uid="uid://dmiyrxlt7wiv" path="res://images/tilesheet_v2.0.png" id="1_lr71w"]
-[ext_resource type="PackedScene" uid="uid://c4vo6x5od112a" path="res://color.tscn" id="2_vefvq"]
+[ext_resource type="Texture2D" uid="uid://d0051pmxmgsvf" path="res://images/tilesheet_v2.1.png" id="1_isbu4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_msbxn"]
-texture = ExtResource("1_lr71w")
+texture = ExtResource("1_isbu4")
 texture_region_size = Vector2i(24, 24)
 0:0/next_alternative_id = 5
 0:0/0 = 0
@@ -350,9 +349,7 @@ texture_region_size = Vector2i(24, 24)
 12:2/3/custom_data_1 = true
 12:2/3/custom_data_3 = true
 12:2/3/custom_data_7 = true
-
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_1c2hl"]
-scenes/1/scene = ExtResource("2_vefvq")
+5:1/0 = 0
 
 [resource]
 tile_size = Vector2i(24, 24)
@@ -373,4 +370,3 @@ custom_data_layer_6/type = 1
 custom_data_layer_7/name = "DOWN-RIGHT"
 custom_data_layer_7/type = 1
 sources/0 = SubResource("TileSetAtlasSource_msbxn")
-sources/1 = SubResource("TileSetScenesCollectionSource_1c2hl")

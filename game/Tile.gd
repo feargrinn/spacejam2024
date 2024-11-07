@@ -114,10 +114,7 @@ func handle_click(_viewport, event, _shape_index):
 func left_clicked_on():
 	var map = get_node("/root/Game/map");
 	
-	var tile = self.clone()
-	map.tile = tile
-	tile.position = get_global_mouse_position()
-	map.add_child(tile)
+	map.tile = [TileType.CROSS(), rotation_degrees/360*4]
 	
 func right_clicked_on():
 	player_rotates_right()

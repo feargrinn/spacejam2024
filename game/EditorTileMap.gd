@@ -46,7 +46,7 @@ func place():
 			$"tile".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
 			$"../../Popup".position = position + $"tile".map_to_local(tile_pos + Vector2i(1,1))
 			$"../../Popup".show()
-			last_placed_input = tile_pos
+			last_placed_input = [tile_pos, held_tile[1]]
 		elif in_range.call(tile_pos) and $background.get_cell_tile_data(tile_pos):
 			$"tile".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
 
@@ -82,12 +82,7 @@ func get_packed_scene_from_tilemap(tilemap_layer, tilemap_position):
 	return null
 
 func _on_confirm_color_pressed() -> void:
-	$tile_colour.set_cell(last_placed_input, 1, Vector2i(0,0), 1) #argument 3 is always Vector2i(0,0) for SceneCollectionSource, alternative tile picks the actual scene from source
-	
-	var scene = get_packed_scene_from_tilemap($tile_colour, last_placed_input)
-	var instance = scene.instantiate() #required to change color from white
-	instance.color = $"../../Popup/ColorPicker/ColorRect".color
+	var alternative_id = Colour.create_coloured_tile(TileType.INPUT_COLOR(), last_placed_input[1], $"../../Popup/ColorPicker/ColorRect".color)
+	$tile_colour.set_cell(last_placed_input[0], 0, TileType.INPUT_COLOR(), alternative_id) 
 	colour_retriever[last_placed_input] = $"../../Popup/ColorPicker/ColorRect".color_to_preview
-	scene.pack(instance) #required to update the color to display correctly
-			
 	$"../../Popup".hide()

@@ -36,5 +36,8 @@ static func OUTPUT_COLOR():
 static func OUTPUT_FILLED():
 	return Vector2i(4,1)
 
+static func COLOR():
+	return Vector2i(5,1)
+
 static func ERASER():
 	return Vector2i(1,4)

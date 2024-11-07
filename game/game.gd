@@ -113,15 +113,15 @@ func _on_next_level_pressed():
 		unlock_level(current_level + 1)
 		level_picker.click_level_button(current_level + 1)
 
-func victory_screen(scale: Vector2, all_outputs: Array[OutputTile]):
+func victory_screen(scale: Vector2, all_outputs: Array[Vector2i]):
 	_sprite_winning.scale *= scale
 	_sprite_winning.rotation_degrees = 0
 	for output in all_outputs:
 		var sprite_winning = _sprite_winning.duplicate(8)
 		add_child(sprite_winning)
-		for n in output.links[0]:
+		for n in current_map.tile_layer.get_cell_alternative_tile(output):
 			sprite_winning.rotation_degrees += 90
-		sprite_winning.position = output.global_position
+		sprite_winning.position = current_map.tile_layer.map_to_local(output)*scale.x + current_map.position
 		sprite_winning.visible = true
 		winning_sprites.append(sprite_winning)
 	_animation_winning.play("winning")
@@ -136,15 +136,15 @@ func _on_retry_pressed():
 		$LoserScreen/VBoxContainer/ColorDifference/ColorDifference.get_child(child + 2).queue_free()
 		$LoserScreen/VBoxContainer/ColorDifference/ColorDifference2.get_child(child + 2).queue_free()
 
-func loser_screen(scale: Vector2, losing_outputs: Array[OutputTile]):
+func loser_screen(scale: Vector2, losing_outputs: Array[Vector2i]):
 	_sprite_losing.scale *= scale
 	_sprite_losing.rotation_degrees = 0
 	for output in losing_outputs:
 		var sprite_losing = _sprite_losing.duplicate(8)
 		add_child(sprite_losing)
-		for n in output.links[0]:
+		for n in current_map.tile_layer.get_cell_alternative_tile(output):
 			sprite_losing.rotation_degrees += 90
-		sprite_losing.position = output.global_position
+		sprite_losing.position = current_map.tile_layer.map_to_local(output)*scale.x + current_map.position
 		sprite_losing.visible = true
 		losing_sprites.append(sprite_losing)
 	_animation_losing.play("losing")
@@ -152,17 +152,17 @@ func loser_screen(scale: Vector2, losing_outputs: Array[OutputTile]):
 		sprite.get_child(0).play("losing")
 	losing_sound.play()
 	
-	var target_original = $LoserScreen/VBoxContainer/ColorDifference/ColorDifference/Target
-	target_original.color = losing_outputs[0].target_color.color()
-	var gotten_original = $LoserScreen/VBoxContainer/ColorDifference/ColorDifference2/Gotten
-	gotten_original.color = losing_outputs[0].color.color()
-	for output in range(losing_outputs.size() - 1):
-		var target = target_original.duplicate()
-		var gotten = gotten_original.duplicate()
-		target.color = losing_outputs[output + 1].target_color.color()
-		gotten.color = losing_outputs[output + 1].color.color()
-		target_original.get_parent().add_child(target)
-		gotten_original.get_parent().add_child(gotten)
+	#var target_original = $LoserScreen/VBoxContainer/ColorDifference/ColorDifference/Target
+	#target_original.color = losing_outputs[0].target_color.color()
+	#var gotten_original = $LoserScreen/VBoxContainer/ColorDifference/ColorDifference2/Gotten
+	#gotten_original.color = losing_outputs[0].color.color()
+	#for output in range(losing_outputs.size() - 1):
+		#var target = target_original.duplicate()
+		#var gotten = gotten_original.duplicate()
+		#target.color = losing_outputs[output + 1].target_color.color()
+		#gotten.color = losing_outputs[output + 1].color.color()
+		#target_original.get_parent().add_child(target)
+		#gotten_original.get_parent().add_child(gotten)
 	
 
 func _on_exit_level_picker_pressed():

@@ -30,6 +30,18 @@ static func from_description(description):
 	var b = description[b_name]
 	return Colour.new(r, y, b)
 
+
+static func create_coloured_tile(coordinates_in_source, alternative_id, new_colour):
+	var atlas_source = Globals.TILE_SET.get_source(0)
+	var coloured_alternative_id = atlas_source.create_alternative_tile(coordinates_in_source)
+	var tile_data = atlas_source.get_tile_data(coordinates_in_source, alternative_id)
+	var new_tile_data = atlas_source.get_tile_data(coordinates_in_source, coloured_alternative_id)
+	new_tile_data.flip_h = tile_data.flip_h
+	new_tile_data.flip_v = tile_data.flip_v
+	new_tile_data.transpose = tile_data.transpose
+	new_tile_data.modulate = new_colour
+	return coloured_alternative_id
+
 func to_description():
 	return {
 		r_name: self.r,
