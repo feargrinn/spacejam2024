@@ -113,7 +113,8 @@ func handle_click(_viewport, event, _shape_index):
 func left_clicked_on():
 	var map = get_node("/root/Game/map");
 	
-	map.tile = [tiletype, rotation_degrees/360*4]
+	var max_alternatives = Globals.TILE_SET.get_source(0).get_alternative_tiles_count(tiletype)
+	map.tile = [tiletype, int(rotation_degrees/360*4) % max_alternatives]
 	
 func right_clicked_on():
 	player_rotates_right()
