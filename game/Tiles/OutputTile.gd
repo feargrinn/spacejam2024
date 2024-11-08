@@ -10,7 +10,7 @@ var coordinates: Vector2
 
 func _init(color: Colour):
 	super._init()
-	tile_type = TileType.OUTPUT()
+	tile_type = TileType.coordinates(TileType.Type.OUTPUT)
 	links.append(Direction.UP)
 	target_color = color
 	is_output_filled = false

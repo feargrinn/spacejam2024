@@ -6,6 +6,7 @@ var paint_script = preload("res://Paint.gd")
 
 var is_replaceable: bool
 
+var tile_position: Vector2i
 var tile_type: Vector2i
 var tile_rotation: int
 
@@ -50,7 +51,7 @@ func _init():
 	is_painted = false
 	pipe_size = 1.
 	is_replaceable = false
-	tile_type = TileType.EMPTY()
+	tile_type = TileType.coordinates(TileType.Type.EMPTY)
 
 
 # Called when the node enters the scene tree for the first time.

@@ -63,13 +63,13 @@ static func get_cell_surroundings(layer, pos):
 	var neighbours = get_all_surrounding_cells(pos)
 	var border_neighbours = []
 	for neighbour in neighbours:
-		if layer.get_cell_atlas_coords(neighbour) == TileType.BACKGROUND():
+		if layer.get_cell_atlas_coords(neighbour) == TileType.coordinates(TileType.Type.BACKGROUND):
 			border_neighbours.append(neighbour - pos) 
 	return border_neighbours
 	
 static func update_surrounding_background(layer, tile_pos):
 	var surrounding = get_all_surrounding_cells(tile_pos)
 	for cell in surrounding:
-		if layer.get_cell_atlas_coords(cell) != TileType.BACKGROUND():
+		if layer.get_cell_atlas_coords(cell) != TileType.coordinates(TileType.Type.BACKGROUND):
 			var neighbours = get_cell_surroundings(layer, cell)
 			put_border(layer, cell, neighbours)

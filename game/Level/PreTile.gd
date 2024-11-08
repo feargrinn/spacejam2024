@@ -5,21 +5,13 @@ const x_name: String = "x"
 const y_name: String = "y"
 const rot_name: String = "orientation"
 
-enum TileTypeEnum {
-	STRAIGHT,
-	T,
-	L,
-	CROSS,
-	ANTI,
-	MAX_TYPES,
-}
 
-var type: TileTypeEnum
+var type: TileType.Type
 var x: int
 var y: int
 var rot: int
 
-func _init(type: TileTypeEnum, x: int, y: int, rot: int):
+func _init(type: TileType.Type, x: int, y: int, rot: int):
 	self.type = type
 	self.x = x
 	self.y = y
@@ -28,7 +20,7 @@ func _init(type: TileTypeEnum, x: int, y: int, rot: int):
 static func from_description(description):
 	if not description.has(type_name):
 		return Error.missing_field(type_name)
-	if description[type_name] >= TileTypeEnum.MAX_TYPES:
+	if description[type_name] >= TileType.Type.MAX_TYPES:
 		return Error.new("unknown tile type")
 	var type = description[type_name]
 	if not description.has(x_name):

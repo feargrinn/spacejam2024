@@ -4,7 +4,7 @@ class_name TTile
 
 func _init():
 	super._init()
-	tile_type = TileType.T()
+	tile_type = TileType.coordinates(TileType.Type.T)
 	links.append(Direction.LEFT)
 	links.append(Direction.DOWN)
 	links.append(Direction.RIGHT)
