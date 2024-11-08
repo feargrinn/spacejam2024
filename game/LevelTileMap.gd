@@ -21,7 +21,7 @@ var all_outputs: Array[Vector2i] = []
 var current_tile = null;
 var left_mouse_was_pressed = false;
 var right_mouse_was_pressed = false;
-var tile = null;
+var tile = {"position" : null, "alternative_id" : null};
 var is_running: bool
 var level_name: String
 
@@ -132,7 +132,7 @@ func init_tile_at(tiletype: Vector2i, ix:int, iy:int, rot: int = 0):
 	tile_layer.set_cell(Vector2i(ix, iy), 0, tiletype, rot)
 	
 func set_tile_at(tile_position):
-	tile_layer.set_cell(tile_position, 0, tile[0], tile[1])
+	tile_layer.set_cell(tile_position, 0, tile["position"], tile["alternative_id"])
 	update_at(tile_position)
 	check_for_game_status()
 	
@@ -151,20 +151,21 @@ func _process(_delta):
 		return
 
 	tile_hover_layer.clear()
-	if tile != null:
-		tile_hover_layer.set_cell(_mouse_position_to_coordinates(), 0, tile[0], tile[1])
+	if tile["position"] != null:
+		tile_hover_layer.set_cell(_mouse_position_to_coordinates(), 0, tile["position"], tile["alternative_id"])
 		if Input.is_action_just_released("RMB"):
 			get_node("/root/Game/TileTurning").play()
-			tile[1] += 1
-			if !Globals.TILE_SET.get_source(0).has_alternative_tile(tile[0],tile[1]):
-				tile[1] = 0
+			tile["alternative_id"] += 1
+			if !Globals.TILE_SET.get_source(0).has_alternative_tile(tile["position"],tile["alternative_id"]):
+				tile["alternative_id"] = 0
 		
 		if Input.is_action_just_pressed("LMB"):
 			var tile_position = _mouse_position_to_coordinates()
 			if background_layer.get_cell_atlas_coords(tile_position) == coordinates(TileType.Type.BACKGROUND):
 				placing_sounds[RandomNumberGenerator.new().randi_range(0, 2)].play()
 				set_tile_at(tile_position)
-			tile = null
+			tile["position"] = null
+			tile["alternative_id"] = null
 
 func get_possible_connections(tile_position):
 	if tile_layer.get_cell_atlas_coords(tile_position) == coordinates(TileType.Type.EMPTY):
