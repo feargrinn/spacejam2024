@@ -93,7 +93,7 @@ func fill_map():
 	for i in range(number_of_tiles_x - 2):
 		for j in range(number_of_tiles_y - 2):
 			background_layer.set_cell(Vector2i(i + 1, j + 1), 0, Vector2i(0,0))
-			BorderHandler.update_surrounding_background(background_layer, Vector2i(i + 1, j + 1))
+			BorderHandler.update_border_around(background_layer, Vector2i(i + 1, j + 1))
 
 
 func create_layers():

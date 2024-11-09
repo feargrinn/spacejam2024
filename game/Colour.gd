@@ -31,7 +31,8 @@ static func from_description(description):
 	return Colour.new(r, y, b)
 
 
-static func create_coloured_tile(coordinates_in_source, alternative_id, new_colour):
+static func create_coloured_tile(tile_type, alternative_id, new_colour):
+	var coordinates_in_source = TileType.coordinates(tile_type)
 	var atlas_source = Globals.TILE_SET.get_source(0)
 	var coloured_alternative_id = atlas_source.create_alternative_tile(coordinates_in_source)
 	var tile_data = atlas_source.get_tile_data(coordinates_in_source, alternative_id)

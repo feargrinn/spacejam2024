@@ -59,15 +59,15 @@ func place_output(output: PreOutput):
 func place_tile(pretile: PreTile):
 	var tile
 	match pretile.type:
-		PreTile.TileType.STRAIGHT:
+		TileType.Type.STRAIGHT:
 			tile = StraightTile.new()
-		PreTile.TileType.T:
+		TileType.Type.T:
 			tile = TTile.new()
-		PreTile.TileType.L:
+		TileType.Type.L:
 			tile = LTile.new()
-		PreTile.TileType.CROSS:
+		TileType.Type.CROSS:
 			tile = CrossTile.new()
-		PreTile.TileType.ANTI:
+		TileType.Type.ANTI:
 			tile = AntiTile.new()
 	set_tile_at(tile, pretile.x, pretile.y, pretile.rot)
 

@@ -31,18 +31,17 @@ func place():
 		return rect.has_point(vec)
 	if held_tile:
 		var tile_pos = get_coordinates()
-		if in_range.call(tile_pos) and held_tile[0] == TileType.BACKGROUND():
+		if in_range.call(tile_pos) and held_tile[0] == TileType.coordinates(TileType.Type.BACKGROUND):
 			$"background".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
-			BorderHandler.update_surrounding_background($"background", tile_pos)
-		elif held_tile[0] == TileType.ERASER():
+			BorderHandler.update_border_around($"background", tile_pos)
+		elif held_tile[0] == TileType.coordinates(TileType.Type.ERASER):
 			if $tile.get_cell_source_id(tile_pos) != -1:
 				$tile.erase_cell(tile_pos)
 				$tile_colour.erase_cell(tile_pos)
-			elif $background.get_cell_atlas_coords(tile_pos) == TileType.BACKGROUND():
+			elif $background.get_cell_atlas_coords(tile_pos) == TileType.coordinates(TileType.Type.BACKGROUND):
 				$background.erase_cell(tile_pos)
-				BorderHandler.update_surrounding_background($"background", tile_pos)
-				BorderHandler.put_border($"background", tile_pos, BorderHandler.get_cell_surroundings($"background", tile_pos))
-		elif in_range.call(tile_pos) and held_tile[0] == TileType.INPUT():
+				BorderHandler.update_border_around($"background", tile_pos)
+		elif in_range.call(tile_pos) and held_tile[0] == TileType.coordinates(TileType.Type.INPUT):
 			$"tile".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
 			$"../../Popup".position = position + $"tile".map_to_local(tile_pos + Vector2i(1,1))
 			$"../../Popup".show()
@@ -82,7 +81,7 @@ func get_packed_scene_from_tilemap(tilemap_layer, tilemap_position):
 	return null
 
 func _on_confirm_color_pressed() -> void:
-	var alternative_id = Colour.create_coloured_tile(TileType.INPUT_COLOR(), last_placed_input[1], $"../../Popup/ColorPicker/ColorRect".color)
-	$tile_colour.set_cell(last_placed_input[0], 0, TileType.INPUT_COLOR(), alternative_id) 
+	var alternative_id = Colour.create_coloured_tile(TileType.Type.INPUT_COLOR, last_placed_input[1], $"../../Popup/ColorPicker/ColorRect".color)
+	$tile_colour.set_cell(last_placed_input[0], 0, TileType.coordinates(TileType.Type.INPUT_COLOR), alternative_id)
 	colour_retriever[last_placed_input] = $"../../Popup/ColorPicker/ColorRect".color_to_preview
 	$"../../Popup".hide()
