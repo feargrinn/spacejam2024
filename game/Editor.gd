@@ -10,7 +10,7 @@ func _input(event):
 	if event is InputEventMouseButton and event.pressed == false and event.button_index == MOUSE_BUTTON_RIGHT:
 		var held_tile = $VBoxContainer/TileMap.held_tile
 		if held_tile:
-			if $VBoxContainer/TileMap/background.tile_set.get_source(0).has_alternative_tile(held_tile[0], held_tile[1] + 1):
+			if Globals.TILE_SET.get_source(0).has_alternative_tile(held_tile[0], held_tile[1] + 1):
 				held_tile[1] = (held_tile[1] + 1)
 			else:
 				held_tile[1] = 0

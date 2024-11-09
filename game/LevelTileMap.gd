@@ -27,7 +27,7 @@ var level_name: String
 
 var placing_sounds = []
 
-var background_layer : TileMapLayer
+var background_layer: BackgroundLayer
 var tile_colour_layer
 var tile_layer
 var tile_hover_layer
@@ -89,11 +89,12 @@ func place_tile(pretile: PreTile):
 	update_at(Vector2i(pretile.x, pretile.y))
 
 
-func fill_map():
+func background_description():
+	var description = {}
 	for i in range(number_of_tiles_x - 2):
 		for j in range(number_of_tiles_y - 2):
-			background_layer.set_cell(Vector2i(i + 1, j + 1), 0, Vector2i(0,0))
-			BorderHandler.update_border_around(background_layer, Vector2i(i + 1, j + 1))
+			description[Vector2i(i + 1, j + 1)] = true
+	return description
 
 
 func create_layers():
@@ -102,7 +103,8 @@ func create_layers():
 		layer.tile_set = Globals.TILE_SET
 		add_child(layer)
 		return layer
-	background_layer = create_layer.call()
+	background_layer = BackgroundLayer.new(background_description())
+	add_child(background_layer)
 	tile_colour_layer = create_layer.call()
 	tile_layer = create_layer.call()
 	tile_hover_layer = create_layer.call()
@@ -119,8 +121,7 @@ func _ready():
 	placing_sounds[2].stream = preload("res://sfx/sfx_pop_down_tile_3.wav")
 	for sound in placing_sounds:
 		add_child(sound)
-	create_layers() 
-	fill_map()
+	create_layers()
 	for input in level_data.inputs:
 		place_input(input)
 	for output in level_data.outputs:
@@ -161,7 +162,7 @@ func _process(_delta):
 		
 		if Input.is_action_just_pressed("LMB"):
 			var tile_position = _mouse_position_to_coordinates()
-			if background_layer.get_cell_atlas_coords(tile_position) == coordinates(TileType.Type.BACKGROUND):
+			if background_layer.is_background(tile_position):
 				placing_sounds[RandomNumberGenerator.new().randi_range(0, 2)].play()
 				set_tile_at(tile_position)
 			tile["position"] = null

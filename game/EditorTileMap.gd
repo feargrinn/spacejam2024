@@ -4,21 +4,32 @@ var held_tile = null;
 var last_placed_input;
 var colour_retriever = {}
 
+var background_layer: BackgroundLayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	self.background_layer = BackgroundLayer.new({
+		Vector2i(1,1): true,
+		Vector2i(1,2): true,
+		Vector2i(1,3): true,
+		Vector2i(1,4): true,
+		Vector2i(2,1): true,
+		Vector2i(2,2): true,
+		Vector2i(2,3): true,
+		Vector2i(2,4): true,
+	})
+	self.add_child(self.background_layer)
 
 func get_coordinates():
 	var mouse_pos_global = get_viewport().get_mouse_position()
-	var mouse_pos_local = $background.to_local(mouse_pos_global)
-	return $background.local_to_map(mouse_pos_local)
+	var mouse_pos_local = background_layer.to_local(mouse_pos_global)
+	return background_layer.local_to_map(mouse_pos_local)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	var tile_pos = get_coordinates()
 	$"tile_hover".clear()
-	if $"background".get_cell_tile_data(tile_pos): #checking if on background
+	if background_layer.is_background(tile_pos):
 		if held_tile:
 			$"tile_hover".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
 
@@ -32,21 +43,19 @@ func place():
 	if held_tile:
 		var tile_pos = get_coordinates()
 		if in_range.call(tile_pos) and held_tile[0] == TileType.coordinates(TileType.Type.BACKGROUND):
-			$"background".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
-			BorderHandler.update_border_around($"background", tile_pos)
+			background_layer.set_background(tile_pos)
 		elif held_tile[0] == TileType.coordinates(TileType.Type.ERASER):
 			if $tile.get_cell_source_id(tile_pos) != -1:
 				$tile.erase_cell(tile_pos)
 				$tile_colour.erase_cell(tile_pos)
-			elif $background.get_cell_atlas_coords(tile_pos) == TileType.coordinates(TileType.Type.BACKGROUND):
-				$background.erase_cell(tile_pos)
-				BorderHandler.update_border_around($"background", tile_pos)
+			else:
+				background_layer.delete_background(tile_pos)
 		elif in_range.call(tile_pos) and held_tile[0] == TileType.coordinates(TileType.Type.INPUT):
 			$"tile".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
 			$"../../Popup".position = position + $"tile".map_to_local(tile_pos + Vector2i(1,1))
 			$"../../Popup".show()
 			last_placed_input = [tile_pos, held_tile[1]]
-		elif in_range.call(tile_pos) and $background.get_cell_tile_data(tile_pos):
+		elif in_range.call(tile_pos) and background_layer.is_background(tile_pos):
 			$"tile".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
 
 # TODO: this is temporary until we let the user pick a name
@@ -60,7 +69,7 @@ static func random_name():
 func to_level():
 	#var name = random_name()
 	var level_name = "seven"
-	var board_size = $background.get_used_rect().size
+	var board_size = background_layer.get_used_rect().size
 	var height = board_size.y
 	var width = board_size.x
 	# TODO: these should be filled from the editor properties,

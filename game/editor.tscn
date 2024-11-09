@@ -121,11 +121,6 @@ size_flags_vertical = 6
 size_flags_stretch_ratio = 5.3
 script = ExtResource("5_htd13")
 
-[node name="background" type="TileMapLayer" parent="VBoxContainer/TileMap"]
-use_parent_material = true
-tile_map_data = PackedByteArray("AAD/////AAAAAAAAAAD//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP//AAAAAAAAAAD+////AAAAAAAAAAD+/wAAAAAAAAAAAAABAAAAAAAAAAAAAAABAP//AAAAAAAAAAA=")
-tile_set = ExtResource("3_dhhqi")
-
 [node name="tile_colour" type="TileMapLayer" parent="VBoxContainer/TileMap"]
 use_parent_material = true
 tile_set = ExtResource("3_dhhqi")
