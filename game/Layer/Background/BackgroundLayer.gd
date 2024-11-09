@@ -27,15 +27,15 @@ var has_background: Dictionary
 func _init(background: Dictionary):
 	self.tile_set = Globals.TILE_SET
 	self.has_background = {}
-	for background_cell in background:
+	for background_cell in background.keys():
 		set_background(background_cell)
 
 # whether the given coordinates have a background
 func is_background(pos: Vector2i) -> bool:
-	return self.has_background[pos]
+	return self.has_background.has(pos)
 
 func set_background(pos: Vector2i):
-	if has_background[pos]:
+	if is_background(pos):
 		# nothing to do
 		return
 	self.has_background[pos] = true
@@ -43,7 +43,7 @@ func set_background(pos: Vector2i):
 	_update_border_around(pos)
 
 func delete_background(pos: Vector2i):
-	if !has_background[pos]:
+	if !is_background(pos):
 		# nothing to do
 		return
 	self.has_background.erase(pos)
