@@ -53,14 +53,14 @@ func _init(level: Level):
 
 func place_input(input: PreInput):
 	tile_layer.set_cell(Vector2i(input.x, input.y), 0, coordinates(TileType.Type.INPUT), input.rot)
-	var alternative_id = Colour.create_coloured_tile(coordinates(TileType.Type.INPUT_COLOR), input.rot, input.colour.color())
+	var alternative_id = Colour.create_coloured_tile(TileType.Type.INPUT_COLOR, input.rot, input.colour.color())
 	color_translation[input.colour.color()] = input.colour
 	tile_colour_layer.set_cell(Vector2i(input.x, input.y), 0, coordinates(TileType.Type.INPUT_COLOR), alternative_id)
 
 
 func place_output(output: PreOutput):
 	tile_layer.set_cell(Vector2i(output.x, output.y), 0, coordinates(TileType.Type.OUTPUT), output.rot)
-	var alternative_id = Colour.create_coloured_tile(coordinates(TileType.Type.OUTPUT_TARGET_COLOR), output.rot, output.colour.color())
+	var alternative_id = Colour.create_coloured_tile(TileType.Type.OUTPUT_TARGET_COLOR, output.rot, output.colour.color())
 	color_translation[output.colour.color()] = output.colour
 	tile_colour_layer.set_cell(Vector2i(output.x, output.y), 0, coordinates(TileType.Type.OUTPUT_TARGET_COLOR), alternative_id)
 	#register_output(tile, output.x, output.y)
@@ -217,7 +217,7 @@ func update_timestep(to_update: Array[Vector2i]) -> Array[Vector2i]:
 			var colour = Paint.mix(full_neighbours)
 			color_translation[colour.color()] = colour
 			if tile_layer.get_cell_atlas_coords(location) == coordinates(TileType.Type.OUTPUT):
-				var alternative_id = Colour.create_coloured_tile(coordinates(TileType.Type.OUTPUT_FILLED), tile_layer.get_cell_alternative_tile(location), colour.color())
+				var alternative_id = Colour.create_coloured_tile(TileType.Type.OUTPUT_FILLED, tile_layer.get_cell_alternative_tile(location), colour.color())
 				var target_colour = get_tile_colour(location)
 				tile_colour_layer.set_cell(location, 0, coordinates(TileType.Type.OUTPUT_FILLED), alternative_id)
 				var filling_colour = get_tile_colour(location)
@@ -225,7 +225,7 @@ func update_timestep(to_update: Array[Vector2i]) -> Array[Vector2i]:
 					losing_outputs.append(location)
 					is_running = false
 			else:
-				var alternative_id = Colour.create_coloured_tile(coordinates(TileType.Type.COLOR), 0, colour.color())
+				var alternative_id = Colour.create_coloured_tile(TileType.Type.COLOR, 0, colour.color())
 				tile_colour_layer.set_cell(location, 0, coordinates(TileType.Type.COLOR), alternative_id)
 			## don't update empty anti-tile neighbours
 			if tile_layer.get_cell_atlas_coords(location) != coordinates(TileType.Type.ANTI):
