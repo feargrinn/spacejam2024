@@ -12,16 +12,14 @@ const colour_script = preload("res://Colour.gd")
 const input_script = preload("res://Tiles/InputTile.gd")
 const output_script = preload("res://Tiles/OutputTile.gd")
 
-var tiles = {}
 var number_of_tiles_x: int
 var number_of_tiles_y: int
-#var all_outputs: Array[OutputTile] = []
 var all_outputs: Array[Vector2i] = []
 
 var current_tile = null;
 var left_mouse_was_pressed = false;
 var right_mouse_was_pressed = false;
-var tile = {"position" : null, "alternative_id" : null};
+var tile = null
 var is_running: bool
 var level_name: String
 
@@ -29,7 +27,7 @@ var placing_sounds = []
 
 var background_layer: BackgroundLayer
 var tile_colour_layer
-var tile_layer
+var tile_layer: TileLayer
 var tile_hover_layer
 
 var level_data
@@ -52,40 +50,24 @@ func _init(level: Level):
 
 
 func place_input(input: PreInput):
-	tile_layer.set_cell(Vector2i(input.x, input.y), 0, coordinates(TileType.Type.INPUT), input.rot)
+	tile_layer.place_tile(Vector2i(input.x, input.y), TileId.new(coordinates(TileType.Type.INPUT), input.rot))
 	var alternative_id = Colour.create_coloured_tile(TileType.Type.INPUT_COLOR, input.rot, input.colour.color())
 	color_translation[input.colour.color()] = input.colour
 	tile_colour_layer.set_cell(Vector2i(input.x, input.y), 0, coordinates(TileType.Type.INPUT_COLOR), alternative_id)
 
 
 func place_output(output: PreOutput):
-	tile_layer.set_cell(Vector2i(output.x, output.y), 0, coordinates(TileType.Type.OUTPUT), output.rot)
+	tile_layer.place_tile(Vector2i(output.x, output.y), TileId.new(coordinates(TileType.Type.OUTPUT), output.rot))
 	var alternative_id = Colour.create_coloured_tile(TileType.Type.OUTPUT_TARGET_COLOR, output.rot, output.colour.color())
 	color_translation[output.colour.color()] = output.colour
 	tile_colour_layer.set_cell(Vector2i(output.x, output.y), 0, coordinates(TileType.Type.OUTPUT_TARGET_COLOR), alternative_id)
-	#register_output(tile, output.x, output.y)
-	all_outputs.append(Vector2i(output.x, output.y))
 
 func coordinates(tile_type : TileType.Type):
 	return TileType.coordinates(tile_type)
 
 func place_tile(pretile: PreTile):
-	match pretile.type:
-		TileType.Type.STRAIGHT:
-			tile_layer.set_cell(Vector2i(pretile.x, pretile.y), 0, coordinates(TileType.Type.STRAIGHT), pretile.rot)
-			tiles[Vector2i(pretile.x, pretile.y)] = StraightTile.new()
-		TileType.Type.T:
-			tile_layer.set_cell(Vector2i(pretile.x, pretile.y), 0, coordinates(TileType.Type.T), pretile.rot)
-			tiles[Vector2i(pretile.x, pretile.y)] = TTile.new()
-		TileType.Type.L:
-			tile_layer.set_cell(Vector2i(pretile.x, pretile.y), 0, coordinates(TileType.Type.L), pretile.rot)
-			tiles[Vector2i(pretile.x, pretile.y)] = LTile.new()
-		TileType.Type.CROSS:
-			tile_layer.set_cell(Vector2i(pretile.x, pretile.y), 0, coordinates(TileType.Type.CROSS), pretile.rot)
-			tiles[Vector2i(pretile.x, pretile.y)] = CrossTile.new()
-		TileType.Type.ANTI:
-			tile_layer.set_cell(Vector2i(pretile.x, pretile.y), 0, coordinates(TileType.Type.ANTI), pretile.rot)
-			tiles[Vector2i(pretile.x, pretile.y)] = AntiTile.new()
+	# TODO: this is actually wrong, because the enum got renumbered
+	tile_layer.place_tile(Vector2i(pretile.x, pretile.y), TileId.new(coordinates(pretile.type), pretile.rot))
 	update_at(Vector2i(pretile.x, pretile.y))
 
 
@@ -106,7 +88,8 @@ func create_layers():
 	background_layer = BackgroundLayer.new(background_description())
 	add_child(background_layer)
 	tile_colour_layer = create_layer.call()
-	tile_layer = create_layer.call()
+	tile_layer = TileLayer.new()
+	add_child(tile_layer)
 	tile_hover_layer = create_layer.call()
 	tile_hover_layer.modulate.a /= 2
 	
@@ -129,22 +112,13 @@ func _ready():
 	for other_tile in level_data.tiles:
 		place_tile(other_tile)
 		
-func init_tile_at(tiletype: Vector2i, ix:int, iy:int, rot: int = 0):
-	tile_layer.set_cell(Vector2i(ix, iy), 0, tiletype, rot)
-	
 func set_tile_at(tile_position):
-	tile_layer.set_cell(tile_position, 0, tile["position"], tile["alternative_id"])
+	tile_layer.place_tile(tile_position, tile)
 	update_at(tile_position)
 	check_for_game_status()
 	
 func _mouse_position_to_coordinates():
 	return background_layer.local_to_map(get_local_mouse_position())
-
-#func register_output(output: OutputTile, x: int, y: int):
-	#output.coordinates.x = x
-	#output.coordinates.y = y
-	#all_outputs.append(output)
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -152,40 +126,18 @@ func _process(_delta):
 		return
 
 	tile_hover_layer.clear()
-	if tile["position"] != null:
-		tile_hover_layer.set_cell(_mouse_position_to_coordinates(), 0, tile["position"], tile["alternative_id"])
+	if tile != null:
+		tile_hover_layer.set_cell(_mouse_position_to_coordinates(), 0, tile.id, tile.alternative)
 		if Input.is_action_just_released("RMB"):
 			get_node("/root/Game/TileTurning").play()
-			tile["alternative_id"] += 1
-			if !Globals.TILE_SET.get_source(0).has_alternative_tile(tile["position"],tile["alternative_id"]):
-				tile["alternative_id"] = 0
+			tile.rotate()
 		
 		if Input.is_action_just_pressed("LMB"):
 			var tile_position = _mouse_position_to_coordinates()
 			if background_layer.is_background(tile_position):
 				placing_sounds[RandomNumberGenerator.new().randi_range(0, 2)].play()
 				set_tile_at(tile_position)
-			tile["position"] = null
-			tile["alternative_id"] = null
-
-func get_possible_connections(tile_position):
-	if tile_layer.get_cell_atlas_coords(tile_position) == coordinates(TileType.Type.EMPTY):
-		return []
-	var check_direction = func(direction_name): 
-		return tile_layer.get_cell_tile_data(tile_position).get_custom_data(direction_name)
-	var connections = []
-	if check_direction.call("UP"):
-		connections.append(Vector2i.UP)
-	if check_direction.call("RIGHT"):
-		connections.append(Vector2i.RIGHT)
-	if check_direction.call("DOWN"):
-		connections.append(Vector2i.DOWN)
-	if check_direction.call("LEFT"):
-		connections.append(Vector2i.LEFT)
-	return connections
-
-func connects_back(tile_position, vector_to_this):
-	return get_possible_connections(tile_position).has(vector_to_this * -1)
+			tile = null
 
 func is_painted(tile_position):
 	if tile_colour_layer.get_cell_atlas_coords(tile_position) != coordinates(TileType.Type.EMPTY):
@@ -204,20 +156,18 @@ var losing_outputs: Array[Vector2i] = []
 func update_timestep(to_update: Array[Vector2i]) -> Array[Vector2i]:
 	var update_in_next_step: Array[Vector2i] = []
 	for location in to_update:
-		var tile_connections = get_possible_connections(location)
+		var connected_pipes = tile_layer.connected_pipes(location)
 		var empty_neighbours: Array[Vector2i] = []
 		var full_neighbours: Array[Paint] = []
-		for link in tile_connections:
-			var other = location + link
-			if connects_back(other, link):
-				if is_painted(other) && tile_layer.get_cell_atlas_coords(other) != coordinates(TileType.Type.OUTPUT):
-					full_neighbours.append(Paint.new(get_tile_colour(other),1.))
-				else:
-					empty_neighbours.append(other)
+		for pipe in connected_pipes:
+			if is_painted(pipe.position) && tile_layer.valid_paint_source(pipe.position):
+				full_neighbours.append(Paint.new(get_tile_colour(pipe.position),pipe.flow_coefficient))
+			else:
+				empty_neighbours.append(pipe.position)
 		if full_neighbours.any(func(paint): return paint.amount > 0):
 			var colour = Paint.mix(full_neighbours)
 			color_translation[colour.color()] = colour
-			if tile_layer.get_cell_atlas_coords(location) == coordinates(TileType.Type.OUTPUT):
+			if tile_layer.is_output(location):
 				var alternative_id = Colour.create_coloured_tile(TileType.Type.OUTPUT_FILLED, tile_layer.get_cell_alternative_tile(location), colour.color())
 				var target_colour = get_tile_colour(location)
 				tile_colour_layer.set_cell(location, 0, coordinates(TileType.Type.OUTPUT_FILLED), alternative_id)
@@ -228,8 +178,7 @@ func update_timestep(to_update: Array[Vector2i]) -> Array[Vector2i]:
 			else:
 				var alternative_id = Colour.create_coloured_tile(TileType.Type.COLOR, 0, colour.color())
 				tile_colour_layer.set_cell(location, 0, coordinates(TileType.Type.COLOR), alternative_id)
-			## don't update empty anti-tile neighbours
-			if tile_layer.get_cell_atlas_coords(location) != coordinates(TileType.Type.ANTI):
+			if tile_layer.continue_flow(location):
 				update_in_next_step.append_array(empty_neighbours)
 	return update_in_next_step
 
@@ -240,24 +189,13 @@ func update_at(pos : Vector2i):
 
 
 func check_for_game_status():
-	if all_outputs.is_empty():
+	if tile_layer.all_outputs().is_empty():
 		return
-#
-	#var losing_outputs: Array[Vector2i]
-#
-	#for output_tile in all_outputs:
-		##if output_tile.is_output_filled && !output_tile.color.isEqual(output_tile.target_color):
-		#if output_tile.is_output_filled and not output_tile.color.is_similar(output_tile.target_color):
-			#is_running = false
-			#losing_outputs.append(output_tile)
-	#
 	if not losing_outputs.is_empty():
 		get_parent().loser_screen(scale, losing_outputs)
 		return
-
-
-	if all_outputs.any(func(tile_position): return !(tile_colour_layer.get_cell_atlas_coords(tile_position) == coordinates(TileType.Type.OUTPUT_FILLED))):
+	if tile_layer.all_outputs().any(func(tile_position): return !(tile_colour_layer.get_cell_atlas_coords(tile_position) == coordinates(TileType.Type.OUTPUT_FILLED))):
 		return
 
 	is_running = false
-	get_parent().victory_screen(scale, all_outputs)
+	get_parent().victory_screen(scale, tile_layer.all_outputs())
