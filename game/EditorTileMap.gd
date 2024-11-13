@@ -22,6 +22,8 @@ func _ready():
 	self.add_child(self.background_layer)
 	self.tile_layer = TileLayer.new()
 	self.add_child(self.tile_layer)
+	self.move_child(self.background_layer, 0)
+	self.move_child(self.tile_layer, 2)
 
 func get_coordinates():
 	var mouse_pos_global = get_viewport().get_mouse_position()
@@ -32,10 +34,16 @@ func get_coordinates():
 func _process(_delta):
 	var tile_pos = get_coordinates()
 	$"tile_hover".clear()
-	if background_layer.is_background(tile_pos):
-		if held_tile:
+	if held_tile:
+		if background_layer.is_ok_for_input_or_output(tile_pos) and TileType.is_input_or_output(held_tile.id):
+			var output_offset = 2 if held_tile.id == TileType.coordinates(TileType.Type.OUTPUT) else 0
+			while !background_layer.is_ok_for_input_or_output(tile_pos).has((held_tile.alternative + output_offset)%4):
+				held_tile.rotate()
 			$"tile_hover".set_cell(tile_pos, 0, held_tile.id, held_tile.alternative)
-
+		elif background_layer.is_background(tile_pos) and TileType.is_pipe_tile(held_tile.id):
+			$"tile_hover".set_cell(tile_pos, 0, held_tile.id, held_tile.alternative)
+		elif not background_layer.is_background(tile_pos) and held_tile.id == TileType.coordinates(TileType.Type.BACKGROUND):
+			$"tile_hover".set_cell(tile_pos, 0, held_tile.id, held_tile.alternative)
 
 func place():
 	var in_range = func(vec):

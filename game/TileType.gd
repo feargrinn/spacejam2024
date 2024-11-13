@@ -18,6 +18,17 @@ enum Type {
 	MAX_TYPES,
 }
 
+static func is_input_or_output(tile_coords : Vector2i):
+	var types = [Type.INPUT, Type.OUTPUT]
+	var type_coordinates = []
+	types.all(func(type): type_coordinates.append(coordinates(type)); return true)
+	return type_coordinates.has(tile_coords)
+
+static func is_pipe_tile(tile_coords : Vector2i):
+	var types = [Type.STRAIGHT, Type.T, Type.L, Type.CROSS, Type.ANTI]
+	var type_coordinates = []
+	types.all(func(type): type_coordinates.append(coordinates(type)); return true)
+	return type_coordinates.has(tile_coords)
 
 static func coordinates(tile_type : Type):
 	match tile_type:

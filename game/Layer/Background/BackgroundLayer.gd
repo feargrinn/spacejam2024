@@ -34,6 +34,18 @@ func _init(background: Dictionary):
 func is_background(pos: Vector2i) -> bool:
 	return self.has_background.has(pos)
 
+func is_ok_for_input_or_output(pos: Vector2i):
+	if self.has_background.has(pos):
+		return false
+	else:
+		var proper_alternatives = []
+		for neighbour in get_surrounding_cells(pos):
+			if self.has_background.has(neighbour):
+				proper_alternatives.append(int(round(((Vector2(Vector2.UP).angle_to(neighbour-pos) + PI)/PI)*2))%4)
+		proper_alternatives.sort()
+		return proper_alternatives
+	
+
 func set_background(pos: Vector2i):
 	if is_background(pos):
 		# nothing to do
