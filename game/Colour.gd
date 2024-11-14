@@ -14,7 +14,6 @@ func _init(r: float, y: float, b: float):
 	self.r = r
 	self.y = y
 	self.b = b
-	texture = preload("res://images/paint_texture.tres")
 	modulate = color()
 	z_index = -1
 
