@@ -60,7 +60,7 @@ func _ready():
 	turning_sound.name = "TileTurning"
 	turning_sound.stream = preload("res://sfx/sfx_pipe_turning.wav")
 	add_child(turning_sound)
-	for tile_type in TileType.get_pipe_types():
+	for tile_type in TileType.pipe_types:
 		$TilePicker/VBoxContainer.add_child(_create_button(tile_type))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

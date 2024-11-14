@@ -26,17 +26,14 @@ static func is_input_or_output(tile_coords : Vector2i):
 	types.all(func(type): type_coordinates.append(coordinates(type)); return true)
 	return type_coordinates.has(tile_coords)
 
-static func is_pipe_tile(tile_coords : Vector2i):
-	var type_coordinates = []
-	pipe_types.all(func(type): type_coordinates.append(coordinates(type)); return true)
-	return type_coordinates.has(tile_coords)
+static func is_pipe_tile(tile_type):
+	if tile_type is Vector2i:
+		var type_coordinates = []
+		pipe_types.all(func(type): type_coordinates.append(coordinates(type)); return true)
+		return type_coordinates.has(tile_type)
+	else:
+		return pipe_types.has(tile_type)
 
-static func get_pipe_types():
-	var array = []
-	for element in Type:
-		if pipe_types.has(Type[element]):
-			array.append(Type[element])
-	return array
 
 static func id_from_coordinates(a_coordinates : Vector2i):
 	for element in Type:
