@@ -57,6 +57,7 @@ func _ready():
 	losing_sound.stream = preload("res://sfx/sfx_losing_animation.wav")
 	add_child(losing_sound)
 	turning_sound = AudioStreamPlayer.new()
+	turning_sound.name = "TileTurning"
 	turning_sound.stream = preload("res://sfx/sfx_pipe_turning.wav")
 	add_child(turning_sound)
 	for tile_type in TileType.get_pipe_types():

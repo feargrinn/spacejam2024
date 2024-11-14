@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://fhmwenm3h7c7"]
+[gd_scene load_steps=14 format=3 uid="uid://fhmwenm3h7c7"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_f0dd8"]
 [ext_resource type="Texture2D" uid="uid://oogt24347qv7" path="res://images/bg_640x480.png" id="2_5eohq"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://c86rrp0hau4hr" path="res://images/menu_button_empty.png" id="5_8wxpr"]
 [ext_resource type="Texture2D" uid="uid://drv2yvqyelnkb" path="res://images/sprite sheets/sprite_sheet_winning_animation.png" id="12_tg20q"]
 [ext_resource type="Texture2D" uid="uid://devomnujdn5pj" path="res://images/sprite sheets/sprite_sheet_losing_animation.png" id="13_vb37n"]
-[ext_resource type="AudioStream" uid="uid://c5gs0ghhvhac3" path="res://sfx/sfx_pipe_turning.wav" id="18_5qrdi"]
 
 [sub_resource type="Animation" id="Animation_3pn8e"]
 length = 0.001
@@ -382,9 +381,6 @@ Regnihov
 
 
 Thank you for playing :)[/center]"
-
-[node name="TileTurning" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("18_5qrdi")
 
 [connection signal="pressed" from="LeverPicker/VBoxContainer/ExitLevelPicker" to="." method="_on_exit_level_picker_pressed"]
 [connection signal="pressed" from="LeverPicker/VBoxContainer/HBoxContainer/Base" to="." method="_on_base_pressed"]
