@@ -9,6 +9,7 @@ var custom_levels_visible: bool
 
 var winning_sound
 var losing_sound
+var turning_sound
 
 @onready var _sprite_winning = $Sprite2DWinning
 @onready var _sprite_losing = $Sprite2DLosing
@@ -55,12 +56,17 @@ func _ready():
 	losing_sound = AudioStreamPlayer.new()
 	losing_sound.stream = preload("res://sfx/sfx_losing_animation.wav")
 	add_child(losing_sound)
+	turning_sound = AudioStreamPlayer.new()
+	turning_sound.stream = preload("res://sfx/sfx_pipe_turning.wav")
+	add_child(turning_sound)
+	for tile_type in TileType.get_pipe_types():
+		$TilePicker/VBoxContainer.add_child(_create_button(tile_type))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	pass
 
-##Removes map - 		TODO: should clear our tilemap
+##Removes map
 func unload_level():
 	if current_map:
 		current_map.queue_free()
@@ -87,11 +93,15 @@ func _on_exit_level_pressed():
 	unload_level()
 	$LeverPicker.show()
 
-## Creates a new map - 			TODO: we should fill our tilemap here
+## Creates clickable tile buttons
+func _create_button(tile_type: TileType.Type):
+	var container = TileRotator.new(TileType.coordinates(tile_type), TileType.texture(tile_type))
+	return container
+
+## Creates a new map
 func _on_level_pressed(levels: Array[Level], level: int):
 	current_level = level
 	var new_map = LevelTileMap.new(levels[level-1])
-	
 	add_child(new_map)
 	current_map = new_map
 	$LeverPicker.hide()

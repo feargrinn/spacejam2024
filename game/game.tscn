@@ -1,21 +1,13 @@
-[gd_scene load_steps=22 format=3 uid="uid://fhmwenm3h7c7"]
+[gd_scene load_steps=15 format=3 uid="uid://fhmwenm3h7c7"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_f0dd8"]
 [ext_resource type="Texture2D" uid="uid://oogt24347qv7" path="res://images/bg_640x480.png" id="2_5eohq"]
 [ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://fonts/menu_font.ttf" id="2_rssi8"]
 [ext_resource type="Texture2D" uid="uid://c3msrgw8yn1n4" path="res://images/menu_button_lvl_empty.png" id="3_eonvc"]
 [ext_resource type="Texture2D" uid="uid://c86rrp0hau4hr" path="res://images/menu_button_empty.png" id="5_8wxpr"]
-[ext_resource type="Script" path="res://TileRotator.gd" id="6_nfqgf"]
-[ext_resource type="Texture2D" uid="uid://iaumk5tbsbn1" path="res://images/tile_24x24_I_opaque.png" id="6_psk2b"]
-[ext_resource type="Texture2D" uid="uid://bfb2by036wdfm" path="res://images/tile_24x24_T_opaque.png" id="7_ujjlr"]
-[ext_resource type="Texture2D" uid="uid://dgumx31nso486" path="res://images/tile_24x24_L_opaque.png" id="8_l0vv8"]
-[ext_resource type="Texture2D" uid="uid://gp7xpxacd1ql" path="res://images/tile_24x24_cross_opaque.png" id="9_yodhl"]
-[ext_resource type="Texture2D" uid="uid://c6klyd06qogb" path="res://images/tile_24x24_anti_opaque.png" id="10_wju1l"]
 [ext_resource type="Texture2D" uid="uid://drv2yvqyelnkb" path="res://images/sprite sheets/sprite_sheet_winning_animation.png" id="12_tg20q"]
 [ext_resource type="Texture2D" uid="uid://devomnujdn5pj" path="res://images/sprite sheets/sprite_sheet_losing_animation.png" id="13_vb37n"]
 [ext_resource type="AudioStream" uid="uid://c5gs0ghhvhac3" path="res://sfx/sfx_pipe_turning.wav" id="18_5qrdi"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5qjq1"]
 
 [sub_resource type="Animation" id="Animation_3pn8e"]
 length = 0.001
@@ -194,155 +186,6 @@ theme_override_constants/margin_bottom = 40
 [node name="VBoxContainer" type="VBoxContainer" parent="TilePicker"]
 layout_mode = 2
 theme_override_constants/separation = 30
-
-[node name="Container" type="HBoxContainer" parent="TilePicker/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-script = ExtResource("6_nfqgf")
-
-[node name="RotateLeft" type="Button" parent="TilePicker/VBoxContainer/Container"]
-layout_mode = 2
-size_flags_horizontal = 6
-text = " < "
-
-[node name="Control" type="Control" parent="TilePicker/VBoxContainer/Container"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 4
-
-[node name="Area2D" type="Area2D" parent="TilePicker/VBoxContainer/Container/Control"]
-scale = Vector2(3, 3)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container/Control/Area2D"]
-shape = SubResource("RectangleShape2D_5qjq1")
-
-[node name="StraightTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container/Control/Area2D"]
-texture = ExtResource("6_psk2b")
-
-[node name="RotateRight" type="Button" parent="TilePicker/VBoxContainer/Container"]
-layout_mode = 2
-size_flags_horizontal = 6
-text = " > "
-
-[node name="Container2" type="HBoxContainer" parent="TilePicker/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-script = ExtResource("6_nfqgf")
-
-[node name="RotateLeft" type="Button" parent="TilePicker/VBoxContainer/Container2"]
-layout_mode = 2
-size_flags_horizontal = 6
-text = " < "
-
-[node name="Control" type="Control" parent="TilePicker/VBoxContainer/Container2"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 4
-
-[node name="Area2D" type="Area2D" parent="TilePicker/VBoxContainer/Container2/Control"]
-scale = Vector2(3, 3)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container2/Control/Area2D"]
-shape = SubResource("RectangleShape2D_5qjq1")
-
-[node name="TTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container2/Control/Area2D"]
-position = Vector2(0.333328, 0)
-texture = ExtResource("7_ujjlr")
-
-[node name="RotateRight" type="Button" parent="TilePicker/VBoxContainer/Container2"]
-layout_mode = 2
-size_flags_horizontal = 6
-text = " > "
-
-[node name="Container3" type="HBoxContainer" parent="TilePicker/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-script = ExtResource("6_nfqgf")
-
-[node name="RotateLeft" type="Button" parent="TilePicker/VBoxContainer/Container3"]
-layout_mode = 2
-size_flags_horizontal = 6
-text = " < "
-
-[node name="Control" type="Control" parent="TilePicker/VBoxContainer/Container3"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 4
-
-[node name="Area2D" type="Area2D" parent="TilePicker/VBoxContainer/Container3/Control"]
-scale = Vector2(3, 3)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container3/Control/Area2D"]
-shape = SubResource("RectangleShape2D_5qjq1")
-
-[node name="LTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container3/Control/Area2D"]
-position = Vector2(0.333328, 0)
-texture = ExtResource("8_l0vv8")
-
-[node name="RotateRight" type="Button" parent="TilePicker/VBoxContainer/Container3"]
-layout_mode = 2
-size_flags_horizontal = 6
-text = " > "
-
-[node name="Container4" type="HBoxContainer" parent="TilePicker/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-script = ExtResource("6_nfqgf")
-
-[node name="RotateLeft" type="Button" parent="TilePicker/VBoxContainer/Container4"]
-layout_mode = 2
-size_flags_horizontal = 6
-text = " < "
-
-[node name="Control" type="Control" parent="TilePicker/VBoxContainer/Container4"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 4
-
-[node name="Area2D" type="Area2D" parent="TilePicker/VBoxContainer/Container4/Control"]
-scale = Vector2(3, 3)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container4/Control/Area2D"]
-shape = SubResource("RectangleShape2D_5qjq1")
-
-[node name="CrossTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container4/Control/Area2D"]
-position = Vector2(0.333328, 0)
-texture = ExtResource("9_yodhl")
-
-[node name="RotateRight" type="Button" parent="TilePicker/VBoxContainer/Container4"]
-layout_mode = 2
-size_flags_horizontal = 6
-text = " > "
-
-[node name="Container5" type="HBoxContainer" parent="TilePicker/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-script = ExtResource("6_nfqgf")
-
-[node name="RotateLeft" type="Button" parent="TilePicker/VBoxContainer/Container5"]
-layout_mode = 2
-size_flags_horizontal = 6
-text = " < "
-
-[node name="Control" type="Control" parent="TilePicker/VBoxContainer/Container5"]
-layout_mode = 2
-size_flags_horizontal = 6
-size_flags_vertical = 4
-
-[node name="Area2D" type="Area2D" parent="TilePicker/VBoxContainer/Container5/Control"]
-scale = Vector2(3, 3)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TilePicker/VBoxContainer/Container5/Control/Area2D"]
-shape = SubResource("RectangleShape2D_5qjq1")
-
-[node name="AntiTile" type="Sprite2D" parent="TilePicker/VBoxContainer/Container5/Control/Area2D"]
-position = Vector2(0.333328, 0)
-texture = ExtResource("10_wju1l")
-
-[node name="RotateRight" type="Button" parent="TilePicker/VBoxContainer/Container5"]
-layout_mode = 2
-size_flags_horizontal = 6
-text = " > "
 
 [node name="VictoryScreen" type="ColorRect" parent="."]
 visible = false
@@ -547,11 +390,6 @@ stream = ExtResource("18_5qrdi")
 [connection signal="pressed" from="LeverPicker/VBoxContainer/HBoxContainer/Base" to="." method="_on_base_pressed"]
 [connection signal="pressed" from="LeverPicker/VBoxContainer/HBoxContainer/Custom" to="." method="_on_custom_pressed"]
 [connection signal="pressed" from="ExitLevel" to="." method="_on_exit_level_pressed"]
-[connection signal="input_event" from="TilePicker/VBoxContainer/Container/Control/Area2D" to="TilePicker/VBoxContainer/Container" method="_on_click" binds= [Vector2i(1, 0)]]
-[connection signal="input_event" from="TilePicker/VBoxContainer/Container2/Control/Area2D" to="TilePicker/VBoxContainer/Container2" method="_on_click" binds= [Vector2i(2, 0)]]
-[connection signal="input_event" from="TilePicker/VBoxContainer/Container3/Control/Area2D" to="TilePicker/VBoxContainer/Container3" method="_on_click" binds= [Vector2i(3, 0)]]
-[connection signal="input_event" from="TilePicker/VBoxContainer/Container4/Control/Area2D" to="TilePicker/VBoxContainer/Container4" method="_on_click" binds= [Vector2i(4, 0)]]
-[connection signal="input_event" from="TilePicker/VBoxContainer/Container5/Control/Area2D" to="TilePicker/VBoxContainer/Container5" method="_on_click" binds= [Vector2i(5, 0)]]
 [connection signal="pressed" from="VictoryScreen/MenuButtons/NextLevel" to="." method="_on_next_level_pressed"]
 [connection signal="pressed" from="LoserScreen/VBoxContainer/MenuButtons/Retry" to="." method="_on_retry_pressed"]
 [connection signal="animation_finished" from="Sprite2DWinning/AnimationPlayerWinning" to="." method="_on_animation_player_winning_animation_finished"]

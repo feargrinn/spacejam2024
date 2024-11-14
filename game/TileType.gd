@@ -18,6 +18,8 @@ enum Type {
 	MAX_TYPES,
 }
 
+const pipe_types = [Type.STRAIGHT, Type.T, Type.L, Type.CROSS, Type.ANTI]
+
 static func is_input_or_output(tile_coords : Vector2i):
 	var types = [Type.INPUT, Type.OUTPUT]
 	var type_coordinates = []
@@ -25,14 +27,20 @@ static func is_input_or_output(tile_coords : Vector2i):
 	return type_coordinates.has(tile_coords)
 
 static func is_pipe_tile(tile_coords : Vector2i):
-	var types = [Type.STRAIGHT, Type.T, Type.L, Type.CROSS, Type.ANTI]
 	var type_coordinates = []
-	types.all(func(type): type_coordinates.append(coordinates(type)); return true)
+	pipe_types.all(func(type): type_coordinates.append(coordinates(type)); return true)
 	return type_coordinates.has(tile_coords)
 
-static func id_from_coordinates(coordinates : Vector2i):
+static func get_pipe_types():
+	var array = []
 	for element in Type:
-		if coordinates(Type[element]) == coordinates:
+		if pipe_types.has(Type[element]):
+			array.append(Type[element])
+	return array
+
+static func id_from_coordinates(a_coordinates : Vector2i):
+	for element in Type:
+		if coordinates(Type[element]) == a_coordinates:
 			return Type[element]
 	return Type.ERASER
 
@@ -45,9 +53,9 @@ static func coordinates(tile_type : Type):
 		Type.STRAIGHT:
 			return Vector2i(1,0)
 		Type.L:
-			return Vector2i(2,0)
-		Type.T:
 			return Vector2i(3,0)
+		Type.T:
+			return Vector2i(2,0)
 		Type.CROSS:
 			return Vector2i(4,0)
 		Type.ANTI:
@@ -66,3 +74,24 @@ static func coordinates(tile_type : Type):
 			return Vector2i(5,1)
 		Type.ERASER:
 			return Vector2i(1,4)
+
+static func texture(tile_type : Type):
+	match tile_type:
+		Type.BACKGROUND:
+			return "res://images/tile_24x24_empty.png"
+		Type.STRAIGHT:
+			return "res://images/tile_24x24_I_opaque.png"
+		Type.L:
+			return "res://images/tile_24x24_L_opaque.png"
+		Type.T:
+			return "res://images/tile_24x24_T_opaque.png"
+		Type.CROSS:
+			return "res://images/tile_24x24_cross_opaque.png"
+		Type.ANTI:
+			return "res://images/tile_24x24_anti_opaque.png"
+		Type.INPUT:
+			return "res://images/tile_24x24_input_opaque.png"
+		Type.OUTPUT:
+			return "res://images/tile_24x24_output_opaque.png"
+		_:
+			return "res://images/tile_24x24_eraser.png"

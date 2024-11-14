@@ -1,14 +1,14 @@
 [gd_scene load_steps=7 format=3 uid="uid://b6ldch5v2bfc3"]
 
-[ext_resource type="Script" path="res://Navigation.gd" id="1_motdp"]
-[ext_resource type="Texture2D" uid="uid://b6y06h2qilehi" path="res://images/title_banner.png" id="2_1n7gv"]
-[ext_resource type="Texture2D" uid="uid://lijymylkpj6r" path="res://images/menu_button_play.png" id="2_yxybc"]
-[ext_resource type="Texture2D" uid="uid://ixy8mrfmko3r" path="res://images/menu_button_settings.png" id="3_pripr"]
-[ext_resource type="Texture2D" uid="uid://dx1f0ybknw5qb" path="res://images/menu_button_quit.png" id="4_13pl1"]
-[ext_resource type="Texture2D" uid="uid://oogt24347qv7" path="res://images/bg_640x480.png" id="5_yynow"]
+[ext_resource type="Script" path="res://Navigation.gd" id="1_v5a62"]
+[ext_resource type="Texture2D" uid="uid://b6y06h2qilehi" path="res://images/title_banner.png" id="2_22tjx"]
+[ext_resource type="Texture2D" uid="uid://lijymylkpj6r" path="res://images/menu_button_play.png" id="3_5doiu"]
+[ext_resource type="Texture2D" uid="uid://ixy8mrfmko3r" path="res://images/menu_button_settings.png" id="4_xoh45"]
+[ext_resource type="Texture2D" uid="uid://dx1f0ybknw5qb" path="res://images/menu_button_quit.png" id="5_c153i"]
+[ext_resource type="Texture2D" uid="uid://oogt24347qv7" path="res://images/bg_640x480.png" id="6_p2qv7"]
 
 [node name="Node" type="Node"]
-script = ExtResource("1_motdp")
+script = ExtResource("1_v5a62")
 
 [node name="MenuScreen" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -43,7 +43,7 @@ z_index = 1
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-texture = ExtResource("2_1n7gv")
+texture = ExtResource("2_22tjx")
 stretch_mode = 5
 
 [node name="MenuButtons" type="VBoxContainer" parent="MenuScreen/VBoxContainer2"]
@@ -54,28 +54,28 @@ size_flags_stretch_ratio = 4.15
 [node name="Play" type="Button" parent="MenuScreen/VBoxContainer2/MenuButtons"]
 layout_mode = 2
 size_flags_vertical = 6
-icon = ExtResource("2_yxybc")
+icon = ExtResource("3_5doiu")
 flat = true
 icon_alignment = 1
 
 [node name="Settings" type="Button" parent="MenuScreen/VBoxContainer2/MenuButtons"]
 layout_mode = 2
 size_flags_vertical = 6
-icon = ExtResource("3_pripr")
+icon = ExtResource("4_xoh45")
 flat = true
 icon_alignment = 1
 
 [node name="Create" type="Button" parent="MenuScreen/VBoxContainer2/MenuButtons"]
 layout_mode = 2
 size_flags_vertical = 6
-icon = ExtResource("3_pripr")
+icon = ExtResource("4_xoh45")
 flat = true
 icon_alignment = 1
 
 [node name="Quit" type="Button" parent="MenuScreen/VBoxContainer2/MenuButtons"]
 layout_mode = 2
 size_flags_vertical = 6
-icon = ExtResource("4_13pl1")
+icon = ExtResource("5_c153i")
 flat = true
 icon_alignment = 1
 
@@ -138,7 +138,7 @@ offset_right = 640.0
 offset_bottom = 480.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("5_yynow")
+texture = ExtResource("6_p2qv7")
 
 [connection signal="pressed" from="MenuScreen/VBoxContainer2/MenuButtons/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="MenuScreen/VBoxContainer2/MenuButtons/Create" to="." method="_on_create_pressed"]
