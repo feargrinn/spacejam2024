@@ -30,6 +30,12 @@ static func is_pipe_tile(tile_coords : Vector2i):
 	types.all(func(type): type_coordinates.append(coordinates(type)); return true)
 	return type_coordinates.has(tile_coords)
 
+static func id_from_coordinates(coordinates : Vector2i):
+	for element in Type:
+		if coordinates(Type[element]) == coordinates:
+			return Type[element]
+	return Type.ERASER
+
 static func coordinates(tile_type : Type):
 	match tile_type:
 		Type.EMPTY:

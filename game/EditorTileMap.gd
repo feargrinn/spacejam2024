@@ -66,6 +66,8 @@ func place():
 			$"../../Popup".position = position + tile_layer.map_to_local(tile_pos + Vector2i(1,1))
 			$"../../Popup".show()
 			last_placed_input = [tile_pos, held_tile.alternative]
+		elif in_range.call(tile_pos) and held_tile.id == TileType.coordinates(TileType.Type.OUTPUT):
+			tile_layer.place_tile(tile_pos, held_tile)
 		elif in_range.call(tile_pos) and background_layer.is_background(tile_pos):
 			tile_layer.place_tile(tile_pos, held_tile)
 
@@ -76,7 +78,16 @@ static func random_name():
 	for i in range(16):
 		result += alphabet[randi()%len(alphabet)]
 	return result
-			
+
+func get_pretiles_from_tilemap_layer():
+	var pretiles: Array[PreTile] = []
+	var used_cells = tile_layer.get_used_cells()
+	for cell_coordinates in used_cells:
+		pretiles.append(
+			PreTile.new(TileType.id_from_coordinates(tile_layer.get_cell_atlas_coords(cell_coordinates)), 
+			cell_coordinates.x, cell_coordinates.y, tile_layer.get_cell_alternative_tile(cell_coordinates)))
+	return pretiles
+
 func to_level():
 	#var name = random_name()
 	var level_name = "seven"
@@ -88,6 +99,7 @@ func to_level():
 	var inputs: Array[PreInput] = []
 	var outputs: Array[PreOutput] = []
 	var tiles: Array[PreTile] = []
+	tiles = get_pretiles_from_tilemap_layer()
 	return Level.new(level_name, height, width, inputs, outputs, tiles)
 
 func get_packed_scene_from_tilemap(tilemap_layer, tilemap_position):
