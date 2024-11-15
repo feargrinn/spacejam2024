@@ -5,9 +5,9 @@ const BORDER_SPRITE_NUM = 13
 var id;
 var alternative;
 
-func _init(id, alternative):
-	self.id = id
-	self.alternative = alternative
+func _init(a_id, a_alternative):
+	self.id = a_id
+	self.alternative = a_alternative
 
 func get_sprite_pointer():
 	# apparently this is the format for the sprite pointer
@@ -16,8 +16,8 @@ func get_sprite_pointer():
 func get_alternative():
 	return self.alternative
 
-static func alternatives_for(id):
-		return range(Globals.TILE_SET.get_source(0).get_alternative_tiles_count(Vector2i(id,2)))
+static func alternatives_for(a_id):
+		return range(Globals.TILE_SET.get_source(0).get_alternative_tiles_count(Vector2i(a_id,2)))
 
 func is_valid():
 	return Globals.TILE_SET.get_source(0).has_alternative_tile(self.get_sprite_pointer(), self.alternative)
@@ -39,10 +39,9 @@ func fits_neighbours(neighbours):
 
 # finds an appropriate border sprite given directions from tile to background tiles
 static func with_background_neighbours(neighbours):
-	for id in range(BORDER_SPRITE_NUM):
-		for alternative in alternatives_for(id):
-			var candidate_sprite = BorderSprite.new(id, alternative)
+	for l_id in range(BORDER_SPRITE_NUM):
+		for l_alternative in alternatives_for(l_id):
+			var candidate_sprite = BorderSprite.new(l_id, l_alternative)
 			if candidate_sprite.fits_neighbours(neighbours):
 				return candidate_sprite
 	return Error.new("no border sprite needed")
-

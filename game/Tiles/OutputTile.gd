@@ -8,11 +8,11 @@ var target_color: Colour
 
 var coordinates: Vector2
 
-func _init(color: Colour):
+func _init(a_color: Colour):
 	super._init()
 	tile_type = TileType.coordinates(TileType.Type.OUTPUT)
 	links.append(Direction.UP)
-	target_color = color
+	target_color = a_color
 	is_output_filled = false
 
 func set_color(new_color: Colour):

@@ -178,7 +178,7 @@ func loser_screen(scale: Vector2, losing_outputs: Array[Vector2i]):
 
 func _on_exit_level_picker_pressed():
 	$LeverPicker.hide()
-	get_tree().change_scene_to_file("res://node_2d.tscn")
+	get_tree().change_scene_to_file("res://menu.tscn")
 
 func _on_custom_pressed():
 	$LeverPicker/VBoxContainer/HBoxContainer/Custom.set_disabled(true)

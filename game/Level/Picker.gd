@@ -6,9 +6,9 @@ var levels: Array[Level]
 var level_buttons: Array[LevelButton]
 var level_columns: Array[HBoxContainer]
 
-func _init(levels: Array[Level], level_loading_function):
+func _init(a_levels: Array[Level], level_loading_function):
 	set_v_size_flags(SIZE_EXPAND)
-	self.levels = levels
+	self.levels = a_levels
 	for level in range(len(levels)):
 		create_level_button(level+1, level_loading_function)
 

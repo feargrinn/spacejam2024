@@ -14,11 +14,11 @@ var x: int
 var y: int
 var rot: int
 
-func _init(colour_description, x: int, y: int, rot: int):
-	self.colour_description = colour_description
-	self.x = x
-	self.y = y
-	self.rot = rot
+func _init(a_colour_description, a_x: int, a_y: int, a_rot: int):
+	self.colour_description = a_colour_description
+	self.x = a_x
+	self.y = a_y
+	self.rot = a_rot
 
 # doing this separately, because apparently you cannot return errors from constructors :<
 func init_colour(inputs):
@@ -30,13 +30,13 @@ func init_colour(inputs):
 static func load_paint(description, inputs):
 	if not description.has(colour_name):
 		return Error.missing_field(colour_name)
-	var colour = load_colour(description[colour_name], inputs)
-	if colour is Error:
-		return colour.wrap("failed to load colour")
+	var l_colour = load_colour(description[colour_name], inputs)
+	if l_colour is Error:
+		return l_colour.wrap("failed to load colour")
 	if not description.has(amount_name):
 		return Error.missing_field(amount_name)
 	var amount = description[amount_name]
-	return Paint.new(colour, amount)
+	return Paint.new(l_colour, amount)
 
 static func load_mix(description, inputs):
 	var paints: Array[Paint] = []
@@ -60,17 +60,17 @@ static func load_colour(description, inputs):
 static func from_description(description, inputs):
 	if not description.has(colour_name):
 		return Error.missing_field(colour_name)
-	var colour_description = description[colour_name]
+	var l_colour_description = description[colour_name]
 	if not description.has(x_name):
 		return Error.missing_field(x_name)
-	var x = description[x_name]
+	var l_x = description[x_name]
 	if not description.has(y_name):
 		return Error.missing_field(y_name)
-	var y = description[y_name]
+	var l_y = description[y_name]
 	if not description.has(rot_name):
 		return Error.missing_field(rot_name)
-	var rot = description[rot_name]
-	var result = PreOutput.new(colour_description, x, y, rot)
+	var l_rot = description[rot_name]
+	var result = PreOutput.new(l_colour_description, l_x, l_y, l_rot)
 	var init_colour_result = result.init_colour(inputs)
 	if init_colour_result is Error:
 		return init_colour_result
