@@ -2,15 +2,7 @@ extends Sprite2D
 
 class_name LevelTileMap
 
-const empty_tile_script = preload("res://Tiles/EmptyTile.gd")
-const no_tile_script = preload("res://Tiles/NoTile.gd")
-const t_tile_script = preload("res://Tiles/TTile.gd")
-const straight_tile_script = preload("res://Tiles/StraightTile.gd")
-const bend_tile_script = preload("res://Tiles/LTile.gd")
-const anti_tile_script = preload("res://Tiles/AntiTile.gd")
 const colour_script = preload("res://Colour.gd")
-const input_script = preload("res://Tiles/InputTile.gd")
-const output_script = preload("res://Tiles/OutputTile.gd")
 
 var number_of_tiles_x: int
 var number_of_tiles_y: int
@@ -88,10 +80,16 @@ func create_layers():
 	background_layer = BackgroundLayer.new(background_description())
 	add_child(background_layer)
 	tile_colour_layer = create_layer.call()
+	Tile.colour_layer = tile_colour_layer
 	tile_layer = TileLayer.new()
 	add_child(tile_layer)
 	tile_hover_layer = create_layer.call()
 	tile_hover_layer.modulate.a /= 2
+	Tile.hover_layer = tile_hover_layer
+	move_child(background_layer, 0)
+	move_child(tile_colour_layer, 1)
+	move_child(tile_layer, 2)
+	move_child(tile_hover_layer, 3)
 	
 
 # Called when the node enters the scene tree for the first time.
@@ -125,7 +123,7 @@ func _process(_delta):
 	if !is_running:
 		return
 
-	tile_hover_layer.clear()
+	if(tile != null):tile_hover_layer.clear()
 	if tile != null:
 		tile_hover_layer.set_cell(_mouse_position_to_coordinates(), 0, tile.id, tile.alternative)
 		if Input.is_action_just_released("RMB"):
