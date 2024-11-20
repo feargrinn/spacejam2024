@@ -1,5 +1,5 @@
 extends HBoxContainer
-class_name TileRotator
+class_name PickableTile
 
 var tile_texture : String
 var tile_coordinates : Vector2i
