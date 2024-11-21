@@ -80,12 +80,11 @@ func create_layers():
 	background_layer = BackgroundLayer.new(background_description())
 	add_child(background_layer)
 	tile_colour_layer = create_layer.call()
-	Tile.colour_layer = tile_colour_layer
 	tile_layer = TileLayer.new()
 	add_child(tile_layer)
 	tile_hover_layer = create_layer.call()
 	tile_hover_layer.modulate.a /= 2
-	Tile.hover_layer = tile_hover_layer
+	TileInteractor.hover_layer = tile_hover_layer
 	move_child(background_layer, 0)
 	move_child(tile_colour_layer, 1)
 	move_child(tile_layer, 2)

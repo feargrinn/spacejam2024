@@ -7,12 +7,13 @@ var outputs: Array[Vector2i]
 const EMPTY = Vector2i(-1,-1)
 const OUTPUT = Vector2i(1,1)
 
-var tiles: Array[Tile]
+var tiles: Array[TileInteractor]
 
 func _init():
 	self.tile_set = Globals.TILE_SET
 	self.outputs = []
-	Tile.tile_layer = self
+	TileInteractor.tile_layer = self
+
 
 func empty_at(pos: Vector2i) -> bool:
 	return self.get_cell_atlas_coords(pos) == EMPTY
@@ -52,7 +53,7 @@ func valid_paint_source(pos: Vector2i) -> bool:
 
 func place_tile(pos: Vector2i, tile: TileId):
 	self.set_cell(pos, 0, tile.id, tile.alternative)
-	var l_tile = Tile.new(pos, TileType.id_from_coordinates(tile.id), tile.alternative)
+	var l_tile = TileInteractor.new(pos)
 	tiles.append(l_tile)
 	add_child(l_tile)
 	if tile.id == OUTPUT:
