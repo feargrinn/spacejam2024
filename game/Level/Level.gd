@@ -17,13 +17,13 @@ var inputs: Array[PreInput]
 var outputs: Array[PreOutput]
 var tiles: Array[PreTile]
 
-func _init(name: String, height: int, width: int, inputs: Array[PreInput], outputs: Array[PreOutput], tiles: Array[PreTile]):
-	self.name = name
-	self.height = height
-	self.width = width
-	self.inputs = inputs
-	self.outputs = outputs
-	self.tiles = tiles
+func _init(a_name: String, a_height: int, a_width: int, a_inputs: Array[PreInput], a_outputs: Array[PreOutput], a_tiles: Array[PreTile]):
+	self.name = a_name
+	self.height = a_height
+	self.width = a_width
+	self.inputs = a_inputs
+	self.outputs = a_outputs
+	self.tiles = a_tiles
 
 static func load_default():
 	return load_from_dir(official_level_dir)
@@ -54,38 +54,38 @@ static func load_from_file(filename: String):
 	var loaded_data = json.get_data()
 	if not loaded_data.has(title_name):
 		return Error.missing_field(title_name)
-	var name = loaded_data[title_name]
+	var l_name = loaded_data[title_name]
 	if not loaded_data.has(height_name):
 		return Error.missing_field(height_name)
-	var height = loaded_data[height_name]
+	var l_height = loaded_data[height_name]
 	if not loaded_data.has(width_name):
 		return Error.missing_field(width_name)
-	var width = loaded_data[width_name]
+	var l_width = loaded_data[width_name]
 	if not loaded_data.has(inputs_name):
 		return Error.missing_field(inputs_name)
-	var inputs: Array[PreInput] = []
+	var l_inputs: Array[PreInput] = []
 	for input_description in loaded_data[inputs_name]:
 		var input_tile = PreInput.from_description(input_description)
 		if input_tile is Error:
 			return input_tile.wrap("failed to load input tile")
-		inputs.append(input_tile)
+		l_inputs.append(input_tile)
 	if not loaded_data.has(outputs_name):
 		return Error.missing_field(outputs_name)
-	var outputs: Array[PreOutput] = []
+	var l_outputs: Array[PreOutput] = []
 	for output_description in loaded_data[outputs_name]:
-		var output_tile = PreOutput.from_description(output_description, inputs)
+		var output_tile = PreOutput.from_description(output_description, l_inputs)
 		if output_tile is Error:
 			return output_tile.wrap("failed to load output tile")
-		outputs.append(output_tile)
+		l_outputs.append(output_tile)
 	if not loaded_data.has(tiles_name):
 		return Error.missing_field(tiles_name)
-	var tiles: Array[PreTile] = []
+	var l_tiles: Array[PreTile] = []
 	for tile_description in loaded_data[tiles_name]:
 		var tile = PreTile.from_description(tile_description)
 		if tile is Error:
 			return tile.wrap("failed to load tile")
-		tiles.append(tile)
-	return Level.new(name, height, width, inputs, outputs, tiles)
+		l_tiles.append(tile)
+	return Level.new(l_name, l_height, l_width, l_inputs, l_outputs, l_tiles)
 
 func to_description():
 	var inputs_description = []

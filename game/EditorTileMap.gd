@@ -4,79 +4,47 @@ var held_tile = null;
 var last_placed_input;
 var colour_retriever = {}
 
+var background_layer: BackgroundLayer
+var tile_layer: TileLayer
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	self.background_layer = BackgroundLayer.new({
+		Vector2i(1,1): true,
+		Vector2i(1,2): true,
+		Vector2i(1,3): true,
+		Vector2i(1,4): true,
+		Vector2i(2,1): true,
+		Vector2i(2,2): true,
+		Vector2i(2,3): true,
+		Vector2i(2,4): true,
+	})
+	self.add_child(self.background_layer)
+	self.tile_layer = TileLayer.new()
+	self.add_child(self.tile_layer)
+	self.move_child(self.background_layer, 0)
+	self.move_child(self.tile_layer, 2)
 
 func get_coordinates():
 	var mouse_pos_global = get_viewport().get_mouse_position()
-	var mouse_pos_local = $background.to_local(mouse_pos_global)
-	return $background.local_to_map(mouse_pos_local)
+	var mouse_pos_local = background_layer.to_local(mouse_pos_global)
+	return background_layer.local_to_map(mouse_pos_local)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	var tile_pos = get_coordinates()
 	$"tile_hover".clear()
-	if $"background".get_cell_tile_data(tile_pos): #checking if on background
-		if held_tile:
-			$"tile_hover".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
-		else:
-			$"tile_hover".set_cell(tile_pos, 0, Vector2i(2,4))
-			
-func better_get_surrounding_cells(pos):
-	var surrounding = [Vector2i(-1,-1), Vector2i(0,-1), Vector2i(1,-1),
-	Vector2i(-1,0), Vector2i(1,0),
-	Vector2i(-1,1), Vector2i(0,1), Vector2i(1,1)]
-	for i in range(surrounding.size()):
-		surrounding[i] += pos
-	return surrounding
-			
-func get_cell_vectors(pos, alt):
-	if !$background.tile_set.get_source(0).has_alternative_tile(pos, alt):
-		return []
-	var directions = [Vector2i(-1,-1),Vector2i(0,-1),Vector2i(1,-1),
-	Vector2i(-1,0),Vector2i(1,0),
-	Vector2i(-1,1),Vector2i(0,1),Vector2i(1,1)]
-	var cell_data = $background.tile_set.get_source(0).get_tile_data(pos, alt)
-	if !cell_data:
-		return []
-	var cell_directions = []
-	for i in range(8):
-		if cell_data.get_custom_data_by_layer_id(i):
-			cell_directions.append(directions[i])
-	cell_directions.sort()
-	return cell_directions
-	
-func search_for_border(directions):
-	directions.sort()
-	for i in range(12):
-		var amount_of_alternatives = $background.tile_set.get_source(0).get_alternative_tiles_count(Vector2i(i,2))
-		for j in range(amount_of_alternatives):
-			if directions == get_cell_vectors(Vector2i(i,2),j):
-				#print("found correct border")
-				return [Vector2i(i,2), j]
-	print("failed to find border")
-	return []
-	
-			
-func put_border(pos, surroundings):
-	var border_coords = search_for_border(surroundings)
-	if border_coords != []:
-		$"background".set_cell(pos, 0, border_coords[0], border_coords[1])
-			
-func update_surrounding_background(tile_pos):
-	var surrounding = better_get_surrounding_cells(tile_pos)
-	for cell in surrounding:
-		if $background.get_cell_atlas_coords(cell) != Vector2i(0,0):
-			var neighbours = better_get_surrounding_cells(cell)
-			var border_neighbours = []
-			for neighbour in neighbours:
-				if $background.get_cell_atlas_coords(neighbour) == Vector2i(0,0):
-					border_neighbours.append(neighbour - cell) 
-			put_border(cell, border_neighbours)
-			print(cell - tile_pos, " => ", border_neighbours)
-			
-			
+	if held_tile:
+		if background_layer.is_ok_for_input_or_output(tile_pos) and TileType.is_input_or_output(held_tile.id):
+			var output_offset = 2 if held_tile.id == TileType.coordinates(TileType.Type.OUTPUT) else 0
+			while !background_layer.is_ok_for_input_or_output(tile_pos).has((held_tile.alternative + output_offset)%4):
+				held_tile.rotate()
+			$"tile_hover".set_cell(tile_pos, 0, held_tile.id, held_tile.alternative)
+		elif background_layer.is_background(tile_pos) and TileType.is_pipe_tile(held_tile.id):
+			$"tile_hover".set_cell(tile_pos, 0, held_tile.id, held_tile.alternative)
+		elif not background_layer.is_background(tile_pos) and held_tile.id == TileType.coordinates(TileType.Type.BACKGROUND):
+			$"tile_hover".set_cell(tile_pos, 0, held_tile.id, held_tile.alternative)
+
 func place():
 	var in_range = func(vec):
 		var rect_position = Vector2i(-7,-5)
@@ -85,24 +53,23 @@ func place():
 		return rect.has_point(vec)
 	if held_tile:
 		var tile_pos = get_coordinates()
-		var eraser = Vector2i(1,4)
-		var input = Vector2i(0,1)
-		if in_range.call(tile_pos) and held_tile[0] == Vector2i(0,0):
-			$"background".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
-			update_surrounding_background(tile_pos)
-		elif held_tile[0] == eraser:
-			if $tile.get_cell_source_id(tile_pos) != -1:
-				$tile.erase_cell(tile_pos)
+		if in_range.call(tile_pos) and held_tile.id == TileType.coordinates(TileType.Type.BACKGROUND):
+			background_layer.set_background(tile_pos)
+		elif held_tile.id == TileType.coordinates(TileType.Type.ERASER):
+			if !tile_layer.empty_at(tile_pos):
+				tile_layer.remove_tile(tile_pos)
 				$tile_colour.erase_cell(tile_pos)
-			elif $background.get_cell_tile_data(tile_pos):
-				$background.erase_cell(tile_pos)
-		elif in_range.call(tile_pos) and held_tile[0] == input:
-			$"tile".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
-			$"../../Popup".position = position + $"tile".map_to_local(tile_pos + Vector2i(1,1))
+			else:
+				background_layer.delete_background(tile_pos)
+		elif in_range.call(tile_pos) and held_tile.id == TileType.coordinates(TileType.Type.INPUT):
+			tile_layer.place_tile(tile_pos, held_tile)
+			$"../../Popup".position = position + tile_layer.map_to_local(tile_pos + Vector2i(1,1))
 			$"../../Popup".show()
-			last_placed_input = tile_pos
-		elif in_range.call(tile_pos) and $background.get_cell_tile_data(tile_pos):
-			$"tile".set_cell(tile_pos, 0, held_tile[0], held_tile[1])
+			last_placed_input = [tile_pos, held_tile.alternative]
+		elif in_range.call(tile_pos) and held_tile.id == TileType.coordinates(TileType.Type.OUTPUT):
+			tile_layer.place_tile(tile_pos, held_tile)
+		elif in_range.call(tile_pos) and background_layer.is_background(tile_pos):
+			tile_layer.place_tile(tile_pos, held_tile)
 
 # TODO: this is temporary until we let the user pick a name
 static func random_name():
@@ -111,10 +78,20 @@ static func random_name():
 	for i in range(16):
 		result += alphabet[randi()%len(alphabet)]
 	return result
-			
+
+func get_pretiles_from_tilemap_layer():
+	var pretiles: Array[PreTile] = []
+	var used_cells = tile_layer.get_used_cells()
+	for cell_coordinates in used_cells:
+		pretiles.append(
+			PreTile.new(TileType.id_from_coordinates(tile_layer.get_cell_atlas_coords(cell_coordinates)), 
+			cell_coordinates.x, cell_coordinates.y, tile_layer.get_cell_alternative_tile(cell_coordinates)))
+	return pretiles
+
 func to_level():
-	var name = random_name()
-	var board_size = $background.get_used_rect().size
+	#var name = random_name()
+	var level_name = "seven"
+	var board_size = background_layer.get_used_rect().size
 	var height = board_size.y
 	var width = board_size.x
 	# TODO: these should be filled from the editor properties,
@@ -122,7 +99,8 @@ func to_level():
 	var inputs: Array[PreInput] = []
 	var outputs: Array[PreOutput] = []
 	var tiles: Array[PreTile] = []
-	return Level.new(name, height, width, inputs, outputs, tiles)
+	tiles = get_pretiles_from_tilemap_layer()
+	return Level.new(level_name, height, width, inputs, outputs, tiles)
 
 func get_packed_scene_from_tilemap(tilemap_layer, tilemap_position):
 	var source_id = tilemap_layer.get_cell_source_id(tilemap_position)
@@ -135,12 +113,7 @@ func get_packed_scene_from_tilemap(tilemap_layer, tilemap_position):
 	return null
 
 func _on_confirm_color_pressed() -> void:
-	$tile_colour.set_cell(last_placed_input, 1, Vector2i(0,0), 1) #argument 3 is always Vector2i(0,0) for SceneCollectionSource, alternative tile picks the actual scene from source
-	
-	var scene = get_packed_scene_from_tilemap($tile_colour, last_placed_input)
-	var instance = scene.instantiate() #required to change color from white
-	instance.color = $"../../Popup/ColorPicker/ColorRect".color
+	var alternative_id = Colour.create_coloured_tile(TileType.Type.INPUT_COLOR, last_placed_input[1], $"../../Popup/ColorPicker/ColorRect".color)
+	$tile_colour.set_cell(last_placed_input[0], 0, TileType.coordinates(TileType.Type.INPUT_COLOR), alternative_id)
 	colour_retriever[last_placed_input] = $"../../Popup/ColorPicker/ColorRect".color_to_preview
-	scene.pack(instance) #required to update the color to display correctly
-			
 	$"../../Popup".hide()

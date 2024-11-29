@@ -10,25 +10,37 @@ var r: float
 var y: float
 var b: float
 
-func _init(r: float, y: float, b: float):
-	self.r = r
-	self.y = y
-	self.b = b
-	texture = preload("res://images/paint_texture.tres")
+func _init(a_r: float, a_y: float, a_b: float):
+	self.r = a_r
+	self.y = a_y
+	self.b = a_b
 	modulate = color()
 	z_index = -1
 
 static func from_description(description):
 	if not description.has(r_name):
 		return Error.missing_field(r_name)
-	var r = description[r_name]
+	var l_r = description[r_name]
 	if not description.has(y_name):
 		return Error.missing_field(y_name)
-	var y = description[y_name]
+	var l_y = description[y_name]
 	if not description.has(b_name):
 		return Error.missing_field(b_name)
-	var b = description[b_name]
-	return Colour.new(r, y, b)
+	var l_b = description[b_name]
+	return Colour.new(l_r, l_y, l_b)
+
+
+static func create_coloured_tile(tile_type, alternative_id, new_colour):
+	var coordinates_in_source = TileType.coordinates(tile_type)
+	var atlas_source = Globals.TILE_SET.get_source(0)
+	var coloured_alternative_id = atlas_source.create_alternative_tile(coordinates_in_source)
+	var tile_data = atlas_source.get_tile_data(coordinates_in_source, alternative_id)
+	var new_tile_data = atlas_source.get_tile_data(coordinates_in_source, coloured_alternative_id)
+	new_tile_data.flip_h = tile_data.flip_h
+	new_tile_data.flip_v = tile_data.flip_v
+	new_tile_data.transpose = tile_data.transpose
+	new_tile_data.modulate = new_colour
+	return coloured_alternative_id
 
 func to_description():
 	return {
@@ -45,10 +57,10 @@ func color():
 	var revr = 1 - self.r
 	var revy = 1 - self.y
 	var revb = 1 - self.b
-	var r = (revr * revy * revb) + (revr * self.y * revb) + (self.r * revy * revb) + (0.5 * (self.r * revy * self.b)) + (self.r * self.y * revb)
-	var g = (revr * revy * revb) + (revr * self.y * revb) + (revr * self.y * self.b) + (0.5 * (self.r * self.y * revb))
-	var b = (revr * revy * revb) + (revr * revy * self.b) + (0.5 * (self.r * revy * self.b))
-	return Color(r, g, b)
+	var l_r = (revr * revy * revb) + (revr * self.y * revb) + (self.r * revy * revb) + (0.5 * (self.r * revy * self.b)) + (self.r * self.y * revb)
+	var l_g = (revr * revy * revb) + (revr * self.y * revb) + (revr * self.y * self.b) + (0.5 * (self.r * self.y * revb))
+	var l_b = (revr * revy * revb) + (revr * revy * self.b) + (0.5 * (self.r * revy * self.b))
+	return Color(l_r, l_g, l_b)
 
 func whiteness() -> float:
 	return (1 - self.r)*(1 - self.y)*(1 - self.b)

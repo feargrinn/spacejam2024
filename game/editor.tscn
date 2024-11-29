@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://5lq7qwq8odor"]
+[gd_scene load_steps=12 format=3 uid="uid://5lq7qwq8odor"]
 
 [ext_resource type="Texture2D" uid="uid://iaumk5tbsbn1" path="res://images/tile_24x24_I_opaque.png" id="1_5piyg"]
 [ext_resource type="Script" path="res://Editor.gd" id="1_jy0y8"]
@@ -121,16 +121,7 @@ size_flags_vertical = 6
 size_flags_stretch_ratio = 5.3
 script = ExtResource("5_htd13")
 
-[node name="background" type="TileMapLayer" parent="VBoxContainer/TileMap"]
-use_parent_material = true
-tile_map_data = PackedByteArray("AAD/////AAAAAAAAAAD//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP//AAAAAAAAAAD+////AAAAAAAAAAD+/wAAAAAAAAAAAAABAAAAAAAAAAAAAAABAP//AAAAAAAAAAA=")
-tile_set = ExtResource("3_dhhqi")
-
 [node name="tile_colour" type="TileMapLayer" parent="VBoxContainer/TileMap"]
-use_parent_material = true
-tile_set = ExtResource("3_dhhqi")
-
-[node name="tile" type="TileMapLayer" parent="VBoxContainer/TileMap"]
 use_parent_material = true
 tile_set = ExtResource("3_dhhqi")
 

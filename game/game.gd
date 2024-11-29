@@ -9,6 +9,7 @@ var custom_levels_visible: bool
 
 var winning_sound
 var losing_sound
+var turning_sound
 
 @onready var _sprite_winning = $Sprite2DWinning
 @onready var _sprite_losing = $Sprite2DLosing
@@ -55,12 +56,18 @@ func _ready():
 	losing_sound = AudioStreamPlayer.new()
 	losing_sound.stream = preload("res://sfx/sfx_losing_animation.wav")
 	add_child(losing_sound)
+	turning_sound = AudioStreamPlayer.new()
+	turning_sound.name = "TileTurning"
+	turning_sound.stream = preload("res://sfx/sfx_pipe_turning.wav")
+	add_child(turning_sound)
+	for tile_type in TileType.pipe_types:
+		$TilePicker/VBoxContainer.add_child(_create_button(tile_type))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	pass
 
-##Removes map - 		TODO: should clear our tilemap
+##Removes map
 func unload_level():
 	if current_map:
 		current_map.queue_free()
@@ -87,11 +94,15 @@ func _on_exit_level_pressed():
 	unload_level()
 	$LeverPicker.show()
 
-## Creates a new map - 			TODO: we should fill our tilemap here
+## Creates clickable tile buttons
+func _create_button(tile_type: TileType.Type):
+	var container = PickableTile.new(TileType.coordinates(tile_type), TileType.texture(tile_type))
+	return container
+
+## Creates a new map
 func _on_level_pressed(levels: Array[Level], level: int):
 	current_level = level
-	var new_map = Map.new(levels[level-1])
-	
+	var new_map = LevelTileMap.new(levels[level-1])
 	add_child(new_map)
 	current_map = new_map
 	$LeverPicker.hide()
@@ -104,7 +115,7 @@ func unlock_level(level: int):
 	level_picker.unlock_level(level)
 	save_data.unlock_level(level)
 
-## TODO: throws an error for custom levels, why?
+
 func _on_next_level_pressed():
 	$VictoryScreen.hide()
 	if custom_levels_visible:
@@ -113,15 +124,15 @@ func _on_next_level_pressed():
 		unlock_level(current_level + 1)
 		level_picker.click_level_button(current_level + 1)
 
-func victory_screen(scale: Vector2, all_outputs: Array[OutputTile]):
+func victory_screen(scale: Vector2, all_outputs: Array[Vector2i]):
 	_sprite_winning.scale *= scale
 	_sprite_winning.rotation_degrees = 0
 	for output in all_outputs:
 		var sprite_winning = _sprite_winning.duplicate(8)
 		add_child(sprite_winning)
-		for n in output.links[0]:
+		for n in current_map.tile_layer.get_cell_alternative_tile(output):
 			sprite_winning.rotation_degrees += 90
-		sprite_winning.position = output.global_position
+		sprite_winning.position = current_map.tile_layer.map_to_local(output)*scale.x + current_map.position
 		sprite_winning.visible = true
 		winning_sprites.append(sprite_winning)
 	_animation_winning.play("winning")
@@ -136,15 +147,15 @@ func _on_retry_pressed():
 		$LoserScreen/VBoxContainer/ColorDifference/ColorDifference.get_child(child + 2).queue_free()
 		$LoserScreen/VBoxContainer/ColorDifference/ColorDifference2.get_child(child + 2).queue_free()
 
-func loser_screen(scale: Vector2, losing_outputs: Array[OutputTile]):
+func loser_screen(scale: Vector2, losing_outputs: Array[Vector2i]):
 	_sprite_losing.scale *= scale
 	_sprite_losing.rotation_degrees = 0
 	for output in losing_outputs:
 		var sprite_losing = _sprite_losing.duplicate(8)
 		add_child(sprite_losing)
-		for n in output.links[0]:
+		for n in current_map.tile_layer.get_cell_alternative_tile(output):
 			sprite_losing.rotation_degrees += 90
-		sprite_losing.position = output.global_position
+		sprite_losing.position = current_map.tile_layer.map_to_local(output)*scale.x + current_map.position
 		sprite_losing.visible = true
 		losing_sprites.append(sprite_losing)
 	_animation_losing.play("losing")
@@ -152,22 +163,22 @@ func loser_screen(scale: Vector2, losing_outputs: Array[OutputTile]):
 		sprite.get_child(0).play("losing")
 	losing_sound.play()
 	
-	var target_original = $LoserScreen/VBoxContainer/ColorDifference/ColorDifference/Target
-	target_original.color = losing_outputs[0].target_color.color()
-	var gotten_original = $LoserScreen/VBoxContainer/ColorDifference/ColorDifference2/Gotten
-	gotten_original.color = losing_outputs[0].color.color()
-	for output in range(losing_outputs.size() - 1):
-		var target = target_original.duplicate()
-		var gotten = gotten_original.duplicate()
-		target.color = losing_outputs[output + 1].target_color.color()
-		gotten.color = losing_outputs[output + 1].color.color()
-		target_original.get_parent().add_child(target)
-		gotten_original.get_parent().add_child(gotten)
+	#var target_original = $LoserScreen/VBoxContainer/ColorDifference/ColorDifference/Target
+	#target_original.color = losing_outputs[0].target_color.color()
+	#var gotten_original = $LoserScreen/VBoxContainer/ColorDifference/ColorDifference2/Gotten
+	#gotten_original.color = losing_outputs[0].color.color()
+	#for output in range(losing_outputs.size() - 1):
+		#var target = target_original.duplicate()
+		#var gotten = gotten_original.duplicate()
+		#target.color = losing_outputs[output + 1].target_color.color()
+		#gotten.color = losing_outputs[output + 1].color.color()
+		#target_original.get_parent().add_child(target)
+		#gotten_original.get_parent().add_child(gotten)
 	
 
 func _on_exit_level_picker_pressed():
 	$LeverPicker.hide()
-	get_tree().change_scene_to_file("res://node_2d.tscn")
+	get_tree().change_scene_to_file("res://menu.tscn")
 
 func _on_custom_pressed():
 	$LeverPicker/VBoxContainer/HBoxContainer/Custom.set_disabled(true)

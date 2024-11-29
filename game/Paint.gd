@@ -3,9 +3,9 @@ class_name Paint
 var colour: Colour
 var amount: float
 
-func _init(colour: Colour, amount: float):
-	self.colour = colour
-	self.amount = amount
+func _init(a_colour: Colour, a_amount: float):
+	self.colour = a_colour
+	self.amount = a_amount
 
 static func negligible(f: float) -> bool:
 	# so close that it shouldn't impact anything visible (and thus colour comparison), but way above the float accuracy
@@ -27,13 +27,13 @@ static func normalized_colour(r: float, y: float, b: float, whiteness: float) ->
 	while attempt < 100:
 		attempt += 1
 		var beta = (upper_limit + lower_limit)/2
-		var colour = Colour.new(r*beta, y*beta, b*beta)
-		var inaccuracy = whiteness*beta - colour.whiteness()
+		var l_colour = Colour.new(r*beta, y*beta, b*beta)
+		var inaccuracy = whiteness*beta - l_colour.whiteness()
 		if attempt % 10 == 0:
 			print("attempt ", attempt, " with inaccuracy ", inaccuracy)
 		# the proportion is close enough
 		if negligible(inaccuracy):
-			return colour
+			return l_colour
 		# just binsearch
 		if inaccuracy > 0:
 			upper_limit = beta
