@@ -12,6 +12,7 @@ var tiles: Array[TileInteractor]
 func _init():
 	self.tile_set = Globals.TILE_SET
 	self.outputs = []
+	self.name = "TileLayer"
 	TileInteractor.tile_layer = self
 
 

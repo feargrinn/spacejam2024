@@ -2,8 +2,6 @@ extends Node2D
 
 class_name LevelTileMap
 
-const colour_script = preload("res://Colour.gd")
-
 var number_of_tiles_x: int
 var number_of_tiles_y: int
 var all_outputs: Array[Vector2i] = []
@@ -18,7 +16,7 @@ var level_name: String
 var placing_sounds = []
 
 var background_layer: BackgroundLayer
-var tile_colour_layer
+var tile_colour_layer: ColourLayer
 var tile_layer: TileLayer
 var tile_hover_layer
 
@@ -43,16 +41,12 @@ func _init(level: Level):
 
 func place_input(input: PreInput):
 	tile_layer.place_tile(Vector2i(input.x, input.y), TileId.new(coordinates(TileType.Type.INPUT), input.rot))
-	var alternative_id = Colour.create_coloured_tile(TileType.Type.INPUT_COLOR, input.rot, input.colour.color())
-	color_translation[input.colour.color()] = input.colour
-	tile_colour_layer.set_cell(Vector2i(input.x, input.y), 0, coordinates(TileType.Type.INPUT_COLOR), alternative_id)
+	tile_colour_layer.set_tile_colour(Vector2i(input.x, input.y), input.colour, input)
 
 
 func place_output(output: PreOutput):
 	tile_layer.place_tile(Vector2i(output.x, output.y), TileId.new(coordinates(TileType.Type.OUTPUT), output.rot))
-	var alternative_id = Colour.create_coloured_tile(TileType.Type.OUTPUT_TARGET_COLOR, output.rot, output.colour.color())
-	color_translation[output.colour.color()] = output.colour
-	tile_colour_layer.set_cell(Vector2i(output.x, output.y), 0, coordinates(TileType.Type.OUTPUT_TARGET_COLOR), alternative_id)
+	tile_colour_layer.set_tile_colour(Vector2i(output.x, output.y), output.colour, output)
 
 func coordinates(tile_type : TileType.Type):
 	return TileType.coordinates(tile_type)
@@ -60,7 +54,7 @@ func coordinates(tile_type : TileType.Type):
 func place_tile(pretile: PreTile):
 	# TODO: this is actually wrong, because the enum got renumbered
 	tile_layer.place_tile(Vector2i(pretile.x, pretile.y), TileId.new(coordinates(pretile.type), pretile.rot))
-	update_at(Vector2i(pretile.x, pretile.y))
+	tile_colour_layer.update_at(Vector2i(pretile.x, pretile.y))
 
 
 func background_description():
@@ -79,8 +73,10 @@ func create_layers():
 		return layer
 	background_layer = BackgroundLayer.new(background_description())
 	add_child(background_layer)
-	tile_colour_layer = create_layer.call()
+	tile_colour_layer = ColourLayer.new()
+	add_child(tile_colour_layer)
 	tile_layer = TileLayer.new()
+	ColourLayer.tile_layer = tile_layer
 	add_child(tile_layer)
 	tile_hover_layer = create_layer.call()
 	tile_hover_layer.modulate.a /= 2
@@ -111,7 +107,7 @@ func _ready():
 		
 func set_tile_at(tile_position):
 	tile_layer.place_tile(tile_position, tile)
-	update_at(tile_position)
+	tile_colour_layer.update_at(tile_position)
 	check_for_game_status()
 	
 func _mouse_position_to_coordinates():
@@ -136,54 +132,8 @@ func _process(_delta):
 				set_tile_at(tile_position)
 			tile = null
 
-func is_painted(tile_position):
-	if tile_colour_layer.get_cell_atlas_coords(tile_position) != coordinates(TileType.Type.EMPTY):
-		return true
-	return false
 
-func get_tile_colour(tile_position):
-	var position_in_atlas = tile_colour_layer.get_cell_atlas_coords(tile_position)
-	var alternative_id = tile_colour_layer.get_cell_alternative_tile(tile_position)
-	var atlas_source = Globals.TILE_SET.get_source(0)
-	var tile_data = atlas_source.get_tile_data(position_in_atlas, alternative_id)
-	return color_translation[tile_data.modulate]
-
-var losing_outputs: Array[Vector2i] = []
-
-func update_timestep(to_update: Array[Vector2i]) -> Array[Vector2i]:
-	var update_in_next_step: Array[Vector2i] = []
-	for location in to_update:
-		var connected_pipes = tile_layer.connected_pipes(location)
-		var empty_neighbours: Array[Vector2i] = []
-		var full_neighbours: Array[Paint] = []
-		for pipe in connected_pipes:
-			if is_painted(pipe.position) && tile_layer.valid_paint_source(pipe.position):
-				full_neighbours.append(Paint.new(get_tile_colour(pipe.position),pipe.flow_coefficient))
-			else:
-				empty_neighbours.append(pipe.position)
-		if full_neighbours.any(func(paint): return paint.amount > 0):
-			var colour = Paint.mix(full_neighbours)
-			color_translation[colour.color()] = colour
-			if tile_layer.is_output(location):
-				var alternative_id = Colour.create_coloured_tile(TileType.Type.OUTPUT_FILLED, tile_layer.get_cell_alternative_tile(location), colour.color())
-				var target_colour = get_tile_colour(location)
-				tile_colour_layer.set_cell(location, 0, coordinates(TileType.Type.OUTPUT_FILLED), alternative_id)
-				var filling_colour = get_tile_colour(location)
-				if !target_colour.is_similar(filling_colour):
-					losing_outputs.append(location)
-					is_running = false
-			else:
-				var alternative_id = Colour.create_coloured_tile(TileType.Type.COLOR, 0, colour.color())
-				tile_colour_layer.set_cell(location, 0, coordinates(TileType.Type.COLOR), alternative_id)
-			if tile_layer.continue_flow(location):
-				update_in_next_step.append_array(empty_neighbours)
-	return update_in_next_step
-
-func update_at(pos : Vector2i):
-	var to_update: Array[Vector2i] = [pos]
-	while !to_update.is_empty():
-		to_update = update_timestep(to_update)
-
+var losing_outputs: Dictionary
 
 func check_for_game_status():
 	if tile_layer.all_outputs().is_empty():

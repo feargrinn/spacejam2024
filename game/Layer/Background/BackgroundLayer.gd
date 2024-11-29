@@ -25,6 +25,7 @@ static func get_all_surrounding_cells(pos):
 var has_background: Dictionary
 
 func _init(background: Dictionary):
+	name = "BackgroundLayer"
 	self.tile_set = Globals.TILE_SET
 	self.has_background = {}
 	for background_cell in background.keys():

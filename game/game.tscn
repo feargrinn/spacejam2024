@@ -259,37 +259,27 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="ColorDifference" type="VBoxContainer" parent="LoserScreen/VBoxContainer/ColorDifference"]
+[node name="TargetList" type="VBoxContainer" parent="LoserScreen/VBoxContainer/ColorDifference"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="Label" type="Label" parent="LoserScreen/VBoxContainer/ColorDifference/ColorDifference"]
+[node name="Label" type="Label" parent="LoserScreen/VBoxContainer/ColorDifference/TargetList"]
 layout_mode = 2
 text = "Target color"
 horizontal_alignment = 1
 
-[node name="Target" type="ColorRect" parent="LoserScreen/VBoxContainer/ColorDifference/ColorDifference"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="ColorDifference2" type="VBoxContainer" parent="LoserScreen/VBoxContainer/ColorDifference"]
+[node name="GottenList" type="VBoxContainer" parent="LoserScreen/VBoxContainer/ColorDifference"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 0
 
-[node name="Label" type="Label" parent="LoserScreen/VBoxContainer/ColorDifference/ColorDifference2"]
+[node name="Label" type="Label" parent="LoserScreen/VBoxContainer/ColorDifference/GottenList"]
 layout_mode = 2
 text = "Your color"
 horizontal_alignment = 1
-
-[node name="Gotten" type="ColorRect" parent="LoserScreen/VBoxContainer/ColorDifference/ColorDifference2"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="MenuButtons" type="VBoxContainer" parent="LoserScreen/VBoxContainer"]
 layout_mode = 2

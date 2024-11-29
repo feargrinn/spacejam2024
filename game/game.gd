@@ -147,7 +147,7 @@ func _on_retry_pressed():
 		$LoserScreen/VBoxContainer/ColorDifference/ColorDifference.get_child(child + 2).queue_free()
 		$LoserScreen/VBoxContainer/ColorDifference/ColorDifference2.get_child(child + 2).queue_free()
 
-func loser_screen(scale: Vector2, losing_outputs: Array[Vector2i]):
+func loser_screen(scale: Vector2, losing_outputs: Dictionary):
 	_sprite_losing.scale *= scale
 	_sprite_losing.rotation_degrees = 0
 	for output in losing_outputs:
@@ -163,17 +163,18 @@ func loser_screen(scale: Vector2, losing_outputs: Array[Vector2i]):
 		sprite.get_child(0).play("losing")
 	losing_sound.play()
 	
-	#var target_original = $LoserScreen/VBoxContainer/ColorDifference/ColorDifference/Target
-	#target_original.color = losing_outputs[0].target_color.color()
-	#var gotten_original = $LoserScreen/VBoxContainer/ColorDifference/ColorDifference2/Gotten
-	#gotten_original.color = losing_outputs[0].color.color()
-	#for output in range(losing_outputs.size() - 1):
-		#var target = target_original.duplicate()
-		#var gotten = gotten_original.duplicate()
-		#target.color = losing_outputs[output + 1].target_color.color()
-		#gotten.color = losing_outputs[output + 1].color.color()
-		#target_original.get_parent().add_child(target)
-		#gotten_original.get_parent().add_child(gotten)
+	
+	var create_color_rect = func(colour):
+		var rect = ColorRect.new()
+		rect.size_flags_horizontal = Control.SIZE_FILL
+		rect.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		rect.color = colour.color()
+		return rect
+	var target_list = $LoserScreen/VBoxContainer/ColorDifference/TargetList
+	var gotten_list = $LoserScreen/VBoxContainer/ColorDifference/GottenList
+	for output in losing_outputs:
+		target_list.add_child(create_color_rect.call(losing_outputs[output]["target"]))
+		gotten_list.add_child(create_color_rect.call(losing_outputs[output]["actual"]))
 	
 
 func _on_exit_level_picker_pressed():
