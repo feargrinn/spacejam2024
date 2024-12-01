@@ -143,9 +143,9 @@ func victory_screen(scale: Vector2, all_outputs: Array[Vector2i]):
 func _on_retry_pressed():
 	$LoserScreen.hide()
 	level_picker.click_level_button(current_level)
-	for child in $LoserScreen/VBoxContainer/ColorDifference/ColorDifference.get_child_count() - 2:
-		$LoserScreen/VBoxContainer/ColorDifference/ColorDifference.get_child(child + 2).queue_free()
-		$LoserScreen/VBoxContainer/ColorDifference/ColorDifference2.get_child(child + 2).queue_free()
+	for child in $LoserScreen/VBoxContainer/ColorDifference/TargetList.get_child_count() - 1:
+		$LoserScreen/VBoxContainer/ColorDifference/TargetList.get_child(child + 1).queue_free()
+		$LoserScreen/VBoxContainer/ColorDifference/GottenList.get_child(child + 1).queue_free()
 
 func loser_screen(scale: Vector2, losing_outputs: Dictionary):
 	_sprite_losing.scale *= scale
