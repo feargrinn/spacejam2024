@@ -91,16 +91,14 @@ func get_pretiles_from_tilemap_layer():
 func to_level():
 	#var name = random_name()
 	var level_name = "seven"
-	var board_size = background_layer.get_used_rect().size
-	var height = board_size.y
-	var width = board_size.x
+	var background = {}
 	# TODO: these should be filled from the editor properties,
 	# but that's too much for one commit
 	var inputs: Array[PreInput] = []
 	var outputs: Array[PreOutput] = []
 	var tiles: Array[PreTile] = []
 	tiles = get_pretiles_from_tilemap_layer()
-	return Level.new(level_name, height, width, inputs, outputs, tiles)
+	return Level.new(level_name, background, inputs, outputs, tiles)
 
 func get_packed_scene_from_tilemap(tilemap_layer, tilemap_position):
 	var source_id = tilemap_layer.get_cell_source_id(tilemap_position)

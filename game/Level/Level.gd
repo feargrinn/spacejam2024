@@ -1,35 +1,37 @@
 class_name Level
 
-const official_level_dir: String = "res://levels"
-const user_level_dir: String = "user://levels"
+const OFFICIAL_LEVEL_DIR: String = "res://levels"
+const USER_LEVEL_DIR: String = "user://levels"
 
-const title_name: String = "name"
-const height_name: String = "height"
-const width_name: String = "width"
-const inputs_name: String = "inputs"
-const outputs_name: String = "outputs"
-const tiles_name: String = "tiles"
+const VERSION_NAME: String = "version"
+const TITLE_NAME: String = "name"
+const BACKGROUND_NAME: String = "background"
+const INPUTS_NAME: String = "inputs"
+const OUTPUTS_NAME: String = "outputs"
+const TILES_NAME: String = "tiles"
+
+# legacy
+const HEIGHT_NAME: String = "height"
+const WIDTH_NAME: String = "width"
 
 var name: String
-var height: int
-var width: int
+var background: Dictionary
 var inputs: Array[PreInput]
 var outputs: Array[PreOutput]
 var tiles: Array[PreTile]
 
-func _init(a_name: String, a_height: int, a_width: int, a_inputs: Array[PreInput], a_outputs: Array[PreOutput], a_tiles: Array[PreTile]):
+func _init(a_name: String, new_background: Dictionary, a_inputs: Array[PreInput], a_outputs: Array[PreOutput], a_tiles: Array[PreTile]):
 	self.name = a_name
-	self.height = a_height
-	self.width = a_width
+	self.background = new_background
 	self.inputs = a_inputs
 	self.outputs = a_outputs
 	self.tiles = a_tiles
 
 static func load_default():
-	return load_from_dir(official_level_dir)
+	return load_from_dir(OFFICIAL_LEVEL_DIR)
 
 static func load_user():
-	return load_from_dir(user_level_dir)
+	return load_from_dir(USER_LEVEL_DIR)
 
 static func load_from_dir(dir_name: String):
 	var dir = DirAccess.open(dir_name)
@@ -52,40 +54,49 @@ static func load_from_file(filename: String):
 	if not json.parse(loaded_json) == OK:
 		return Error.json_parse(loaded_json, json)
 	var loaded_data = json.get_data()
-	if not loaded_data.has(title_name):
-		return Error.missing_field(title_name)
-	var l_name = loaded_data[title_name]
-	if not loaded_data.has(height_name):
-		return Error.missing_field(height_name)
-	var l_height = loaded_data[height_name]
-	if not loaded_data.has(width_name):
-		return Error.missing_field(width_name)
-	var l_width = loaded_data[width_name]
-	if not loaded_data.has(inputs_name):
-		return Error.missing_field(inputs_name)
+	if not loaded_data.has(VERSION_NAME):
+		return Error.missing_field(VERSION_NAME)
+	var format_version: int = loaded_data[VERSION_NAME]
+	match format_version:
+		1:
+			return from_json_v1(loaded_data)
+		_:
+			return Error.new("unknown level encoding version: %d" % format_version)
+
+static func from_json_v1(loaded_data):
+	if not loaded_data.has(TITLE_NAME):
+		return Error.missing_field(TITLE_NAME)
+	var l_name = loaded_data[TITLE_NAME]
+	if not loaded_data.has(BACKGROUND_NAME):
+		return Error.missing_field(BACKGROUND_NAME)
+	var loaded_background = {}
+	for background_tile_string in loaded_data[BACKGROUND_NAME]:
+		loaded_background[str_to_var(background_tile_string)] = true
+	if not loaded_data.has(INPUTS_NAME):
+		return Error.missing_field(INPUTS_NAME)
 	var l_inputs: Array[PreInput] = []
-	for input_description in loaded_data[inputs_name]:
+	for input_description in loaded_data[INPUTS_NAME]:
 		var input_tile = PreInput.from_description(input_description)
 		if input_tile is Error:
 			return input_tile.wrap("failed to load input tile")
 		l_inputs.append(input_tile)
-	if not loaded_data.has(outputs_name):
-		return Error.missing_field(outputs_name)
+	if not loaded_data.has(OUTPUTS_NAME):
+		return Error.missing_field(OUTPUTS_NAME)
 	var l_outputs: Array[PreOutput] = []
-	for output_description in loaded_data[outputs_name]:
+	for output_description in loaded_data[OUTPUTS_NAME]:
 		var output_tile = PreOutput.from_description(output_description, l_inputs)
 		if output_tile is Error:
 			return output_tile.wrap("failed to load output tile")
 		l_outputs.append(output_tile)
-	if not loaded_data.has(tiles_name):
-		return Error.missing_field(tiles_name)
+	if not loaded_data.has(TILES_NAME):
+		return Error.missing_field(TILES_NAME)
 	var l_tiles: Array[PreTile] = []
-	for tile_description in loaded_data[tiles_name]:
-		var tile = PreTile.from_description(tile_description)
+	for tile_description in loaded_data[TILES_NAME]:
+		var tile = PreTile.from_description_v1(tile_description)
 		if tile is Error:
 			return tile.wrap("failed to load tile")
 		l_tiles.append(tile)
-	return Level.new(l_name, l_height, l_width, l_inputs, l_outputs, l_tiles)
+	return Level.new(l_name, loaded_background, l_inputs, l_outputs, l_tiles)
 
 func to_description():
 	var inputs_description = []
@@ -97,16 +108,19 @@ func to_description():
 	var tiles_description = []
 	for tile in self.tiles:
 		tiles_description.append(tile.to_description())
+	var background_tiles_to_save = []
+	for background_tile in self.background.keys():
+		background_tiles_to_save.append(var_to_str(background_tile))
 	return {
-		title_name: self.name,
-		height_name: self.height,
-		width_name: self.width,
-		inputs_name: inputs_description,
-		outputs_name: outputs_description,
-		tiles_name: tiles_description,
+		VERSION_NAME: 1,
+		TITLE_NAME: self.name,
+		BACKGROUND_NAME: background_tiles_to_save,
+		INPUTS_NAME: inputs_description,
+		OUTPUTS_NAME: outputs_description,
+		TILES_NAME: tiles_description,
 	}
 
 func save_to_file():
-	var filename = "%s/%s.json" % [user_level_dir, self.name]
+	var filename = "%s/%s.json" % [USER_LEVEL_DIR, self.name]
 	var level_file = FileAccess.open(filename, FileAccess.WRITE)
-	level_file.store_string(JSON.stringify(to_description()))
+	level_file.store_string(JSON.stringify(to_description(), "\t", false))

@@ -1,7 +1,13 @@
 {
+	"version": 1,
 	"name": "Now there's two of 'em!",
-	"height": 3,
-	"width": 7,
+	"background": [
+		"Vector2i(1, 1)",
+		"Vector2i(2, 1)",
+		"Vector2i(3, 1)",
+		"Vector2i(4, 1)",
+		"Vector2i(5, 1)"
+	],
 	"inputs": [
 		{
 			"colour": {
@@ -80,7 +86,7 @@
 	],
 	"tiles": [
 		{
-			"type": 1,
+			"type": "Vector2i(2, 0)",
 			"x": 3,
 			"y": 1,
 			"orientation": 2

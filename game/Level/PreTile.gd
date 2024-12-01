@@ -1,43 +1,42 @@
 class_name PreTile
 
-const type_name: String = "type"
-const x_name: String = "x"
-const y_name: String = "y"
-const rot_name: String = "orientation"
+const TYPE_NAME: String = "type"
+const X_NAME: String = "x"
+const Y_NAME: String = "y"
+const ROT_NAME: String = "orientation"
 
 
-var type: TileType.Type
+# coordinates on the tile map
+var type: Vector2i
 var x: int
 var y: int
 var rot: int
 
-func _init(a_type: TileType.Type, a_x: int, a_y: int, a_rot: int):
+func _init(a_type: Vector2i, a_x: int, a_y: int, a_rot: int):
 	self.type = a_type
 	self.x = a_x
 	self.y = a_y
 	self.rot = a_rot
 
-static func from_description(description):
-	if not description.has(type_name):
-		return Error.missing_field(type_name)
-	if description[type_name] >= TileType.Type.MAX_TYPES:
-		return Error.new("unknown tile type")
-	var l_type = description[type_name]
-	if not description.has(x_name):
-		return Error.missing_field(x_name)
-	var l_x = description[x_name]
-	if not description.has(y_name):
-		return Error.missing_field(y_name)
-	var l_y = description[y_name]
-	if not description.has(rot_name):
-		return Error.missing_field(rot_name)
-	var l_rot = description[rot_name]
+static func from_description_v1(description):
+	if not description.has(TYPE_NAME):
+		return Error.missing_field(TYPE_NAME)
+	var l_type = str_to_var(description[TYPE_NAME])
+	if not description.has(X_NAME):
+		return Error.missing_field(X_NAME)
+	var l_x = description[X_NAME]
+	if not description.has(Y_NAME):
+		return Error.missing_field(Y_NAME)
+	var l_y = description[Y_NAME]
+	if not description.has(ROT_NAME):
+		return Error.missing_field(ROT_NAME)
+	var l_rot = description[ROT_NAME]
 	return PreTile.new(l_type, l_x, l_y, l_rot)
 
 func to_description():
 	return {
-		type_name: self.type,
-		x_name: self.x,
-		y_name: self.y,
-		rot_name: self.rot
+		TYPE_NAME: var_to_str(self.type),
+		X_NAME: self.x,
+		Y_NAME: self.y,
+		ROT_NAME: self.rot
 	}

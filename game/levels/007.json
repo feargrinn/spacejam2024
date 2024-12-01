@@ -1,7 +1,12 @@
 {
+	"version": 1,
 	"name": "Swirl",
-	"height": 4,
-	"width": 4,
+	"background": [
+		"Vector2i(1, 1)",
+		"Vector2i(1, 2)",
+		"Vector2i(2, 1)",
+		"Vector2i(2, 2)"
+	],
 	"inputs": [
 		{
 			"colour": {

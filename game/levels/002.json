@@ -1,7 +1,11 @@
 {
+	"version": 1,
 	"name": "Just mix",
-	"height": 3,
-	"width": 5,
+	"background": [
+		"Vector2i(1, 1)",
+		"Vector2i(2, 1)",
+		"Vector2i(3, 1)"
+	],
 	"inputs": [
 		{
 			"colour": {

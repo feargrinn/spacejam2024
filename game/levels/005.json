@@ -1,7 +1,10 @@
 {
+	"version": 1,
 	"name": "Reuse",
-	"height": 3,
-	"width": 4,
+	"background": [
+		"Vector2i(1, 1)",
+		"Vector2i(2, 1)"
+	],
 	"inputs": [
 		{
 			"colour": {

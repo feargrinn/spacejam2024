@@ -1,7 +1,9 @@
 {
+	"version": 1,
 	"name": "Trivial",
-	"height": 3,
-	"width": 3,
+	"background": [
+		"Vector2i(1, 1)"
+	],
 	"inputs": [
 		{
 			"colour": {

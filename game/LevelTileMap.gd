@@ -2,8 +2,6 @@ extends Node2D
 
 class_name LevelTileMap
 
-var number_of_tiles_x: int
-var number_of_tiles_y: int
 var all_outputs: Array[Vector2i] = []
 
 var current_tile = null;
@@ -23,21 +21,45 @@ var tile_hover_layer
 var level_data
 var color_translation = {}
 
+static func dimension_from_background(background: Dictionary) -> Vector2i:
+	var max_width
+	var min_width
+	var max_height
+	var min_height
+	for background_tile in background.keys():
+		if max_width == null:
+			max_width = background_tile.x
+			min_width = background_tile.x
+			max_height = background_tile.y
+			min_height = background_tile.y
+		else:
+			max_width = max(max_width, background_tile.x)
+			min_width = min(min_width, background_tile.x)
+			max_height = max(max_height, background_tile.y)
+			min_height = min(min_height, background_tile.y)
+	# also add the borders on both sides
+	var total_width = max_width - min_width + 1 + 2
+	var total_height = max_height - min_height + 1 + 2
+	return Vector2i(total_width, total_height)
+
+
+static func scale_from_dimensions(dimensions: Vector2i) -> Vector2:
+	if max(dimensions.x, dimensions.y) <= 10:
+		return Vector2(2, 2)
+	else:
+		return Vector2(1, 1)
+
 func _init(level: Level):
 	# This name is used by the tile picker.
 	name = "map"
 	level_data = level
 	level_name = level.name
-	number_of_tiles_x = level.width
-	number_of_tiles_y = level.height
-	if max(number_of_tiles_x, number_of_tiles_y) <= 10:
-		scale = Vector2(2, 2)
+	var dimensions = dimension_from_background(level.background)
+	scale = scale_from_dimensions(dimensions)
 	position = Globals.WINDOW_SIZE / 2 - Vector2(
-		number_of_tiles_x * scale.x * Globals.TILE_SIZE / 2,
-		number_of_tiles_y * scale.y * Globals.TILE_SIZE / 2
+		dimensions.x * scale.x * Globals.TILE_SIZE / 2,
+		dimensions.y * scale.y * Globals.TILE_SIZE / 2
 	)
-
-
 
 func place_input(input: PreInput):
 	tile_layer.place_tile(Vector2i(input.x, input.y), TileId.new(coordinates(TileType.Type.INPUT), input.rot))
@@ -52,18 +74,8 @@ func coordinates(tile_type : TileType.Type):
 	return TileType.coordinates(tile_type)
 
 func place_tile(pretile: PreTile):
-	# TODO: this is actually wrong, because the enum got renumbered
-	tile_layer.place_tile(Vector2i(pretile.x, pretile.y), TileId.new(coordinates(pretile.type), pretile.rot))
+	tile_layer.place_tile(Vector2i(pretile.x, pretile.y), TileId.new(pretile.type, pretile.rot))
 	tile_colour_layer.update_at(Vector2i(pretile.x, pretile.y))
-
-
-func background_description():
-	var description = {}
-	for i in range(number_of_tiles_x - 2):
-		for j in range(number_of_tiles_y - 2):
-			description[Vector2i(i + 1, j + 1)] = true
-	return description
-
 
 func create_layers():
 	var create_layer = func():
@@ -71,7 +83,7 @@ func create_layers():
 		layer.tile_set = Globals.TILE_SET
 		add_child(layer)
 		return layer
-	background_layer = BackgroundLayer.new(background_description())
+	background_layer = BackgroundLayer.new(level_data.background)
 	add_child(background_layer)
 	tile_colour_layer = ColourLayer.new()
 	add_child(tile_colour_layer)
