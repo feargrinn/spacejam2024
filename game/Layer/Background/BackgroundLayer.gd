@@ -63,6 +63,10 @@ func delete_background(pos: Vector2i):
 	erase_cell(pos)
 	_update_border_around(pos)
 
+# return the dict, for saving purposes
+func background_dict() -> Dictionary:
+	return self.has_background
+
 # returns the directions in which the specified cell neighbours a background cell
 func _background_cell_directions(pos: Vector2i) -> Array[Vector2i]:
 	var border_neighbours: Array[Vector2i] = []

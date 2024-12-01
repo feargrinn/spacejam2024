@@ -71,27 +71,19 @@ func place():
 		elif in_range.call(tile_pos) and background_layer.is_background(tile_pos):
 			tile_layer.place_tile(tile_pos, held_tile)
 
-# TODO: this is temporary until we let the user pick a name
-static func random_name():
-	var alphabet = "qwertyuiopasdfghjklzxcvbnm"
-	var result = ""
-	for i in range(16):
-		result += alphabet[randi()%len(alphabet)]
-	return result
-
 func get_pretiles_from_tilemap_layer():
 	var pretiles: Array[PreTile] = []
 	var used_cells = tile_layer.get_used_cells()
 	for cell_coordinates in used_cells:
-		pretiles.append(
-			PreTile.new(TileType.id_from_coordinates(tile_layer.get_cell_atlas_coords(cell_coordinates)), 
-			cell_coordinates.x, cell_coordinates.y, tile_layer.get_cell_alternative_tile(cell_coordinates)))
+		if tile_layer.is_input(cell_coordinates) or tile_layer.is_output(cell_coordinates):
+			continue
+		var tile_type = tile_layer.get_cell_atlas_coords(cell_coordinates)
+		pretiles.append(PreTile.new(tile_type,	cell_coordinates.x, cell_coordinates.y, tile_layer.get_cell_alternative_tile(cell_coordinates)))
 	return pretiles
 
 func to_level():
-	#var name = random_name()
 	var level_name = "seven"
-	var background = {}
+	var background = self.background_layer.background_dict()
 	# TODO: these should be filled from the editor properties,
 	# but that's too much for one commit
 	var inputs: Array[PreInput] = []

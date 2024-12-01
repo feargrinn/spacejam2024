@@ -2,9 +2,11 @@ extends TileMapLayer
 
 class_name TileLayer
 
+var inputs: Array[Vector2i]
 var outputs: Array[Vector2i]
 
 const EMPTY = Vector2i(-1,-1)
+const INPUT = Vector2i(0,1)
 const OUTPUT = Vector2i(1,1)
 
 var tiles: Array[TileInteractor]
@@ -57,11 +59,16 @@ func place_tile(pos: Vector2i, tile: TileId):
 	var l_tile = TileInteractor.new(pos)
 	tiles.append(l_tile)
 	add_child(l_tile)
+	if tile.id == INPUT:
+		inputs.append(pos)
 	if tile.id == OUTPUT:
 		outputs.append(pos)
 
 func continue_flow(pos: Vector2i) -> bool:
 	return !_get_data(pos).get_custom_data("delayed_flow")
+
+func is_input(pos: Vector2i) -> bool:
+	return inputs.has(pos)
 
 func is_output(pos: Vector2i) -> bool:
 	return outputs.has(pos)
