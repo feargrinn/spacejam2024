@@ -22,10 +22,10 @@ var level_data
 var color_translation = {}
 
 static func dimension_from_background(background: Dictionary) -> Vector2i:
-	var max_width
-	var min_width
-	var max_height
-	var min_height
+	var max_width = null
+	var min_width = null
+	var max_height = null
+	var min_height = null
 	for background_tile in background.keys():
 		if max_width == null:
 			max_width = background_tile.x

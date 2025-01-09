@@ -6,6 +6,7 @@ var colour_retriever = {}
 
 var background_layer: BackgroundLayer
 var tile_layer: TileLayer
+var tile_colour_layer: ColourLayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -22,7 +23,12 @@ func _ready():
 	self.add_child(self.background_layer)
 	self.tile_layer = TileLayer.new()
 	self.add_child(self.tile_layer)
+	self.tile_colour_layer = ColourLayer.new()
+	self.add_child(self.tile_colour_layer)
+	TileInteractor.hover_layer = $tile_hover
+	TileInteractor.tile_layer = self.tile_layer
 	self.move_child(self.background_layer, 0)
+	self.move_child(self.tile_colour_layer, 1)
 	self.move_child(self.tile_layer, 2)
 
 func get_coordinates():
@@ -58,7 +64,7 @@ func place():
 		elif held_tile.id == TileType.coordinates(TileType.Type.ERASER):
 			if !tile_layer.empty_at(tile_pos):
 				tile_layer.remove_tile(tile_pos)
-				$tile_colour.erase_cell(tile_pos)
+				tile_colour_layer.erase_cell(tile_pos)
 			else:
 				background_layer.delete_background(tile_pos)
 		elif in_range.call(tile_pos) and held_tile.id == TileType.coordinates(TileType.Type.INPUT):
@@ -103,7 +109,7 @@ func get_packed_scene_from_tilemap(tilemap_layer, tilemap_position):
 	return null
 
 func _on_confirm_color_pressed() -> void:
-	var alternative_id = Colour.create_coloured_tile(TileType.Type.INPUT_COLOR, last_placed_input[1], $"../../Popup/ColorPicker/ColorRect".color)
-	$tile_colour.set_cell(last_placed_input[0], 0, TileType.coordinates(TileType.Type.INPUT_COLOR), alternative_id)
+	var alternative_id = Colour.create_input_or_output_colour(TileType.Type.INPUT_COLOR, last_placed_input[1], $"../../Popup/ColorPicker/ColorRect".color)
+	tile_colour_layer.set_cell(last_placed_input[0], 0, TileType.coordinates(TileType.Type.INPUT_COLOR), alternative_id)
 	colour_retriever[last_placed_input] = $"../../Popup/ColorPicker/ColorRect".color_to_preview
 	$"../../Popup".hide()
