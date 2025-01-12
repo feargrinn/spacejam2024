@@ -13,12 +13,13 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1pntj"]
 
-[node name="Control" type="MarginContainer"]
+[node name="Editor" type="MarginContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 1
 script = ExtResource("1_jy0y8")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -114,6 +115,12 @@ size_flags_horizontal = 3
 text = "Save
 "
 
+[node name="LevelName" type="LineEdit" parent="VBoxContainer"]
+layout_mode = 2
+placeholder_text = "level name"
+alignment = 1
+flat = true
+
 [node name="TileMap" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
@@ -163,7 +170,6 @@ layout_mode = 2
 text = "Confirm
 "
 
-[connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="input_event" from="VBoxContainer/Tools/Background/Area2D" to="VBoxContainer/Tools/Background/Area2D" method="_on_input_event" binds= [Vector2i(0, 0)]]
 [connection signal="input_event" from="VBoxContainer/Tools/Straight/Area2D" to="VBoxContainer/Tools/Straight/Area2D" method="_on_input_event" binds= [Vector2i(1, 0)]]
 [connection signal="input_event" from="VBoxContainer/Tools/Input/Area2D" to="VBoxContainer/Tools/Input/Area2D" method="_on_input_event" binds= [Vector2i(0, 1)]]
