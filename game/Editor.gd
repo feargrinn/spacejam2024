@@ -6,7 +6,7 @@ func _ready() -> void:
 	var name_edit = $VBoxContainer/LevelName
 	name_edit.connect("focus_entered", _on_level_name_focus_entered.bind(name_edit))
 	name_edit.connect("text_submitted", _on_level_name_text_submitted.bind(name_edit))
-	name_edit.connect("focus_exited", _on_level_name_focus_exited.bind(name_edit))
+	name_edit.connect("gui_input", _on_level_name_gui_input.bind(name_edit))
 
 func _on_back_pressed():
 	get_tree().change_scene_to_file("res://menu.tscn")
@@ -32,5 +32,7 @@ func _on_level_name_text_submitted(text, edit_node) -> void:
 	level_name = text
 	edit_node.release_focus()
 
-func _on_level_name_focus_exited(edit_node) -> void:
-	edit_node.text = level_name
+
+func _on_level_name_gui_input(input_event : InputEvent, edit_node) -> void:
+	if input_event is InputEventKey and input_event.pressed == true and input_event.keycode == KEY_ESCAPE:
+		edit_node.text = level_name
