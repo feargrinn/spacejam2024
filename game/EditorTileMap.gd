@@ -88,7 +88,7 @@ func get_pretiles_from_tilemap_layer():
 	return pretiles
 
 func to_level():
-	var level_name = "seven"
+	var level_name = $"../LevelName".get_text()
 	var background = self.background_layer.background_dict()
 	# TODO: these should be filled from the editor properties,
 	# but that's too much for one commit
