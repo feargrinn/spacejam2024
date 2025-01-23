@@ -2,7 +2,6 @@ extends MarginContainer
 
 var held_tile = null;
 var last_placed_input;
-var colour_retriever = {}
 
 var background_layer: BackgroundLayer
 var tile_layer: TileLayer
@@ -77,7 +76,7 @@ func place():
 		elif in_range.call(tile_pos) and background_layer.is_background(tile_pos):
 			tile_layer.place_tile(tile_pos, held_tile)
 
-func get_pretiles_from_tilemap_layer():
+func get_pretiles_from_tilemap_layer() -> Array[PreTile]:
 	var pretiles: Array[PreTile] = []
 	var used_cells = tile_layer.get_used_cells()
 	for cell_coordinates in used_cells:
@@ -87,15 +86,22 @@ func get_pretiles_from_tilemap_layer():
 		pretiles.append(PreTile.new(tile_type,	cell_coordinates.x, cell_coordinates.y, tile_layer.get_cell_alternative_tile(cell_coordinates)))
 	return pretiles
 
-func to_level():
+func get_preinputs_from_layers() -> Array[PreInput]:
+	var preinputs: Array[PreInput] = []
+	var used_cells = tile_layer.get_used_cells()
+	for cell_coordinates in used_cells:
+		if tile_layer.is_input(cell_coordinates):
+			preinputs.append(PreInput.new(tile_colour_layer.get_tile_colour(cell_coordinates), cell_coordinates.x, cell_coordinates.y, tile_layer.get_cell_alternative_tile(cell_coordinates)))
+	return preinputs
+
+func to_level() -> Level:
 	var level_name = $"../LevelName".get_text()
 	var background = self.background_layer.background_dict()
 	# TODO: these should be filled from the editor properties,
 	# but that's too much for one commit
-	var inputs: Array[PreInput] = []
+	var inputs = get_preinputs_from_layers()
 	var outputs: Array[PreOutput] = []
-	var tiles: Array[PreTile] = []
-	tiles = get_pretiles_from_tilemap_layer()
+	var tiles = get_pretiles_from_tilemap_layer()
 	return Level.new(level_name, background, inputs, outputs, tiles)
 
 func get_packed_scene_from_tilemap(tilemap_layer, tilemap_position):
@@ -109,7 +115,7 @@ func get_packed_scene_from_tilemap(tilemap_layer, tilemap_position):
 	return null
 
 func _on_confirm_color_pressed() -> void:
-	var alternative_id = Colour.create_input_or_output_colour(TileType.Type.INPUT_COLOR, last_placed_input[1], $"../../Popup/ColorPicker/ColorRect".color)
-	tile_colour_layer.set_cell(last_placed_input[0], 0, TileType.coordinates(TileType.Type.INPUT_COLOR), alternative_id)
-	colour_retriever[last_placed_input] = $"../../Popup/ColorPicker/ColorRect".color_to_preview
+	var colour = $"../../Popup/ColorPicker/ColorRect".color_to_preview
+	var input = PreInput.new(colour, last_placed_input[0].x, last_placed_input[0].y, last_placed_input[1])
+	tile_colour_layer.set_tile_colour(last_placed_input[0], colour, input)
 	$"../../Popup".hide()
