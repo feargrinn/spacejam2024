@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://vpxsj0e6x6lk"
-path="res://.godot/imported/menu_font.ttf-abc1b87a236b80ea033fbf2d4cfa3a9a.fontdata"
+path="res://.godot/imported/menu_font.ttf-2edad9af1d079d7894b9df8b3cd48158.fontdata"
 
 [deps]
 
-source_file="res://fonts/menu_font.ttf"
-dest_files=["res://.godot/imported/menu_font.ttf-abc1b87a236b80ea033fbf2d4cfa3a9a.fontdata"]
+source_file="res://menu/graphics/fonts/menu_font.ttf"
+dest_files=["res://.godot/imported/menu_font.ttf-2edad9af1d079d7894b9df8b3cd48158.fontdata"]
 
 [params]
 
@@ -28,7 +28,13 @@ Fallbacks=null
 fallbacks=[]
 Compress=null
 compress=true
-preload=[]
+preload=[{
+"chars": [],
+"glyphs": [],
+"name": "New Configuration",
+"size": Vector2i(16, 0),
+"variation_embolden": 0.0
+}]
 language_support={}
 script_support={}
 opentype_features={}

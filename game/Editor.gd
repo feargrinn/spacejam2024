@@ -9,7 +9,7 @@ func _ready() -> void:
 	name_edit.connect("gui_input", _on_level_name_gui_input.bind(name_edit))
 
 func _on_back_pressed():
-	get_tree().change_scene_to_file("res://menu.tscn")
+	get_tree().change_scene_to_file("res://menu/main_menu/menu.tscn")
 
 func _input(event):
 	if event is InputEventMouseButton and event.pressed == false and event.button_index == MOUSE_BUTTON_RIGHT:

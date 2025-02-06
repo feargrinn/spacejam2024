@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Iks"
-run/main_scene="res://menu.tscn"
+run/main_scene="res://menu/main_menu/menu.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://images/sprite_24x24_game_icon_scaled_10x.png"
 
@@ -22,6 +22,10 @@ window/size/viewport_height=480
 window/size/always_on_top=true
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
+
+[gui]
+
+theme/custom="res://menu/graphics/fonts/button_theme.tres"
 
 [input]
 

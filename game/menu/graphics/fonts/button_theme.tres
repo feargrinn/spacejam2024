@@ -1,0 +1,15 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://ck7jhnw1ogkal"]
+
+[ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://menu/graphics/fonts/menu_font.ttf" id="2_utsr7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_de12c"]
+
+[resource]
+default_font = ExtResource("2_utsr7")
+default_font_size = 64
+Button/colors/font_color = Color(0.792157, 0.823529, 0.772549, 1)
+Button/colors/font_focus_color = Color(0.792157, 0.823529, 0.772549, 1)
+Button/colors/font_hover_color = Color(0.792157, 0.823529, 0.772549, 1)
+Button/colors/font_hover_pressed_color = Color(0.792157, 0.823529, 0.772549, 1)
+Button/colors/font_pressed_color = Color(0.792157, 0.823529, 0.772549, 1)
+Button/styles/focus = SubResource("StyleBoxEmpty_de12c")
