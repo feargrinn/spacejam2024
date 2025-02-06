@@ -1,6 +1,6 @@
 class_name Level
 
-const OFFICIAL_LEVEL_DIR: String = "res://levels"
+const OFFICIAL_LEVEL_DIR: String = "res://data/levels/"
 const USER_LEVEL_DIR: String = "user://levels"
 
 const VERSION_NAME: String = "version"

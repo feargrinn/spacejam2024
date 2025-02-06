@@ -11,4 +11,4 @@ func _on_play_pressed():
 
 
 func _on_create_pressed():
-	get_tree().change_scene_to_file("res://editor.tscn")
+	get_tree().change_scene_to_file("res://game/editor/editor.tscn")

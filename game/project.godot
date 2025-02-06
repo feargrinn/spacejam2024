@@ -13,7 +13,7 @@ config_version=5
 config/name="Iks"
 run/main_scene="res://menu/main_menu/menu.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
-config/icon="res://images/sprite_24x24_game_icon_scaled_10x.png"
+config/icon="res://game/shared/graphics/images/game_icon/sprite_24x24_game_icon_scaled_10x.png"
 
 [display]
 
@@ -25,7 +25,7 @@ window/stretch/aspect="expand"
 
 [gui]
 
-theme/custom="res://menu/graphics/fonts/button_theme.tres"
+theme/custom="res://menu/shared/graphics/fonts/button_theme.tres"
 
 [input]
 

@@ -51,21 +51,18 @@ func _ready():
 			$LeverPicker/VBoxContainer.add_child(custom_level_picker)
 			$LeverPicker/VBoxContainer/HBoxContainer/Custom.set_disabled(false)
 	winning_sound = AudioStreamPlayer.new()
-	winning_sound.stream = preload("res://sfx/sfx_winning_animation.wav")
+	winning_sound.stream = preload("res://game/shared/sfx/sfx_winning_animation.wav")
 	add_child(winning_sound)
 	losing_sound = AudioStreamPlayer.new()
-	losing_sound.stream = preload("res://sfx/sfx_losing_animation.wav")
+	losing_sound.stream = preload("res://game/shared/sfx/sfx_losing_animation.wav")
 	add_child(losing_sound)
 	turning_sound = AudioStreamPlayer.new()
 	turning_sound.name = "TileTurning"
-	turning_sound.stream = preload("res://sfx/sfx_pipe_turning.wav")
+	turning_sound.stream = preload("res://game/shared/sfx/sfx_pipe_turning.wav")
 	add_child(turning_sound)
 	for tile_type in TileType.pipe_types:
 		$TilePicker/VBoxContainer.add_child(_create_button(tile_type))
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	pass
 
 ##Removes map
 func unload_level():
