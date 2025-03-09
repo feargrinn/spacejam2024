@@ -109,6 +109,9 @@ func _ready():
 	placing_sounds[2].stream = preload("res://game/shared/sfx/sfx_pop_down_tile_3.wav")
 	for sound in placing_sounds:
 		add_child(sound)
+	set_starting_map()
+
+func set_starting_map():
 	create_layers()
 	for input in level_data.inputs:
 		place_input(input)
@@ -116,7 +119,8 @@ func _ready():
 		place_output(output)
 	for other_tile in level_data.tiles:
 		place_tile(other_tile)
-		
+
+
 func set_tile_at(tile_position):
 	tile_layer.place_tile(tile_position, tile)
 	tile_colour_layer.update_at(tile_position)

@@ -1,0 +1,62 @@
+[gd_scene load_steps=3 format=3 uid="uid://bx33hrjamvvs3"]
+
+[ext_resource type="Script" path="res://menu/in_game/end_screen/end_screen.gd" id="1_ccqpm"]
+[ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://menu/shared/graphics/fonts/menu_font.ttf" id="1_kl7yl"]
+
+[node name="EndScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ccqpm")
+
+[node name="Credits" type="ColorRect" parent="."]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.792157, 0.823529, 0.772549, 1)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+z_index = 2
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -320.0
+offset_top = 480.0
+offset_right = 320.0
+offset_bottom = 1480.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_fonts/normal_font = ExtResource("1_kl7yl")
+theme_override_font_sizes/normal_font_size = 60
+bbcode_enabled = true
+text = "[center]You won.
+
+
+
+Congratulations.
+
+
+
+Developers:
+
+Bartanakin	
+
+feargrinn
+
+timorl
+
+Regnihov
+
+
+Thank you for playing :)[/center]"

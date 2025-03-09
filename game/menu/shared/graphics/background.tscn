@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7fyxc5vat0fl"]
+
+[ext_resource type="Texture2D" uid="uid://oogt24347qv7" path="res://menu/shared/graphics/bg_640x480.png" id="1_33rp0"]
+
+[node name="Background" type="ParallaxBackground"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -480.0
+offset_right = 640.0
+offset_bottom = 480.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_33rp0")
+metadata/_edit_lock_ = true

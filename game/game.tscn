@@ -1,33 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://fhmwenm3h7c7"]
+[gd_scene load_steps=13 format=3 uid="uid://fhmwenm3h7c7"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_f0dd8"]
-[ext_resource type="Texture2D" uid="uid://oogt24347qv7" path="res://menu/shared/graphics/bg_640x480.png" id="2_5eohq"]
 [ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://menu/shared/graphics/fonts/menu_font.ttf" id="2_rssi8"]
 [ext_resource type="Texture2D" uid="uid://c3msrgw8yn1n4" path="res://menu/shared/graphics/buttons/menu_button_lvl_empty.png" id="3_eonvc"]
-[ext_resource type="Theme" uid="uid://ck7jhnw1ogkal" path="res://menu/shared/graphics/fonts/button_theme.tres" id="4_t5yrl"]
-[ext_resource type="Texture2D" uid="uid://c86rrp0hau4hr" path="res://menu/shared/graphics/buttons/menu_button_empty.png" id="5_8wxpr"]
+[ext_resource type="PackedScene" uid="uid://b7fyxc5vat0fl" path="res://menu/shared/graphics/background.tscn" id="6_vjhe0"]
 [ext_resource type="Texture2D" uid="uid://drv2yvqyelnkb" path="res://game/shared/graphics/images/sprite sheets/sprite_sheet_winning_animation.png" id="12_tg20q"]
 [ext_resource type="Texture2D" uid="uid://devomnujdn5pj" path="res://game/shared/graphics/images/sprite sheets/sprite_sheet_losing_animation.png" id="13_vb37n"]
-
-[sub_resource type="Theme" id="Theme_ytt8h"]
-default_font = ExtResource("2_rssi8")
-default_font_size = 64
-dafault/base_type = &"control"
-dafault/colors/font_color = Color(0, 0, 0, 1)
-dafault/colors/font_disabled_color = Color(0, 0, 0, 1)
-dafault/colors/font_focus_color = Color(0, 0, 0, 1)
-dafault/colors/font_hover_color = Color(0, 0, 0, 1)
-dafault/colors/font_hover_pressed_color = Color(0, 0, 0, 1)
-dafault/colors/font_outline_color = Color(0, 0, 0, 1)
-dafault/colors/font_pressed_color = Color(0, 0, 0, 1)
-dafault/colors/icon_disabled_color = Color(0, 0, 0, 1)
-dafault/colors/icon_focus_color = Color(0, 0, 0, 1)
-dafault/colors/icon_hover_color = Color(0, 0, 0, 1)
-dafault/colors/icon_hover_pressed_color = Color(0, 0, 0, 1)
-dafault/colors/icon_normal_color = Color(0, 0, 0, 1)
-dafault/colors/icon_pressed_color = Color(0, 0, 0, 1)
-dafault/font_sizes/default = 64
-dafault/fonts/default = ExtResource("2_rssi8")
 
 [sub_resource type="Animation" id="Animation_3pn8e"]
 length = 0.001
@@ -111,77 +89,9 @@ _data = {
 texture_filter = 1
 script = ExtResource("1_f0dd8")
 
-[node name="LeverPicker" type="MarginContainer" parent="."]
-texture_filter = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 640.0
-offset_bottom = 480.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme = SubResource("Theme_ytt8h")
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 30
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="LeverPicker"]
-layout_mode = 2
-
-[node name="ExitLevelPicker" type="Button" parent="LeverPicker/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("2_rssi8")
-theme_override_font_sizes/font_size = 64
-text = "Iks"
-icon = ExtResource("3_eonvc")
-flat = true
-icon_alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="LeverPicker/VBoxContainer"]
-layout_mode = 2
-alignment = 1
-
-[node name="Base" type="Button" parent="LeverPicker/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 6
-theme = ExtResource("4_t5yrl")
-text = "Base"
-icon = ExtResource("5_8wxpr")
-flat = true
-icon_alignment = 1
-
-[node name="Custom" type="Button" parent="LeverPicker/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 6
-disabled = true
-text = "Custom"
-icon = ExtResource("5_8wxpr")
-flat = true
-icon_alignment = 1
-
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-
-[node name="TextureRect" type="TextureRect" parent="ParallaxBackground"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -640.0
-offset_top = -480.0
-offset_right = 640.0
-offset_bottom = 480.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_5eohq")
-metadata/_edit_lock_ = true
+[node name="Background" parent="." instance=ExtResource("6_vjhe0")]
 
 [node name="ExitLevel" type="Button" parent="."]
-visible = false
 offset_right = 8.0
 offset_bottom = 8.0
 theme_override_fonts/font = ExtResource("2_rssi8")
@@ -192,7 +102,6 @@ flat = true
 icon_alignment = 1
 
 [node name="TilePicker" type="MarginContainer" parent="."]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -209,117 +118,6 @@ theme_override_constants/margin_bottom = 40
 [node name="VBoxContainer" type="VBoxContainer" parent="TilePicker"]
 layout_mode = 2
 theme_override_constants/separation = 30
-
-[node name="VictoryScreen" type="ColorRect" parent="."]
-visible = false
-offset_left = 105.0
-offset_top = 103.0
-offset_right = 517.0
-offset_bottom = 401.0
-color = Color(0.321569, 0.47451, 0.435294, 1)
-
-[node name="MarginContainer" type="MarginContainer" parent="VictoryScreen"]
-layout_mode = 2
-offset_left = 75.0
-offset_top = 78.0
-offset_right = 342.0
-offset_bottom = 108.0
-size_flags_vertical = 3
-
-[node name="LevelComplete" type="Label" parent="VictoryScreen/MarginContainer"]
-layout_mode = 2
-text = "Level complete!"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="MenuButtons" type="VBoxContainer" parent="VictoryScreen"]
-layout_mode = 2
-offset_left = 86.0
-offset_top = 129.0
-offset_right = 331.0
-offset_bottom = 224.0
-size_flags_horizontal = 4
-size_flags_vertical = 6
-size_flags_stretch_ratio = 4.15
-
-[node name="NextLevel" type="Button" parent="VictoryScreen/MenuButtons"]
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_fonts/font = ExtResource("2_rssi8")
-theme_override_font_sizes/font_size = 60
-text = "Next level"
-icon = ExtResource("5_8wxpr")
-flat = true
-icon_alignment = 1
-
-[node name="LoserScreen" type="ColorRect" parent="."]
-visible = false
-offset_left = 105.0
-offset_top = 103.0
-offset_right = 517.0
-offset_bottom = 401.0
-color = Color(0.321569, 0.47451, 0.435294, 1)
-
-[node name="VBoxContainer" type="VBoxContainer" parent="LoserScreen"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="LoserScreen/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="LolLoser" type="Label" parent="LoserScreen/VBoxContainer/MarginContainer"]
-layout_mode = 2
-text = "Lol, loser"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorDifference" type="HBoxContainer" parent="LoserScreen/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 0
-
-[node name="TargetList" type="VBoxContainer" parent="LoserScreen/VBoxContainer/ColorDifference"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/separation = 0
-
-[node name="Label" type="Label" parent="LoserScreen/VBoxContainer/ColorDifference/TargetList"]
-layout_mode = 2
-text = "Target color"
-horizontal_alignment = 1
-
-[node name="GottenList" type="VBoxContainer" parent="LoserScreen/VBoxContainer/ColorDifference"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/separation = 0
-
-[node name="Label" type="Label" parent="LoserScreen/VBoxContainer/ColorDifference/GottenList"]
-layout_mode = 2
-text = "Your color"
-horizontal_alignment = 1
-
-[node name="MenuButtons" type="VBoxContainer" parent="LoserScreen/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
-size_flags_stretch_ratio = 4.15
-
-[node name="Retry" type="Button" parent="LoserScreen/VBoxContainer/MenuButtons"]
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_fonts/font = ExtResource("2_rssi8")
-theme_override_font_sizes/font_size = 60
-text = "Retry"
-icon = ExtResource("5_8wxpr")
-flat = true
-icon_alignment = 1
 
 [node name="Sprite2DWinning" type="Sprite2D" parent="."]
 visible = false
@@ -345,62 +143,6 @@ libraries = {
 "": SubResource("AnimationLibrary_lblpr")
 }
 
-[node name="Credits" type="ColorRect" parent="."]
-visible = false
-z_index = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 640.0
-offset_bottom = 480.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-color = Color(0.792157, 0.823529, 0.772549, 1)
-
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-visible = false
-z_index = 2
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 480.0
-offset_right = 640.0
-offset_bottom = 1480.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_fonts/normal_font = ExtResource("2_rssi8")
-theme_override_font_sizes/normal_font_size = 60
-bbcode_enabled = true
-text = "[center]You won.
-
-
-
-Congratulations.
-
-
-
-Developers:
-
-Bartanakin	
-
-feargrinn
-
-timorl
-
-Regnihov
-
-
-Thank you for playing :)[/center]"
-
-[connection signal="pressed" from="LeverPicker/VBoxContainer/ExitLevelPicker" to="." method="_on_exit_level_picker_pressed"]
-[connection signal="pressed" from="LeverPicker/VBoxContainer/HBoxContainer/Base" to="." method="_on_base_pressed"]
-[connection signal="pressed" from="LeverPicker/VBoxContainer/HBoxContainer/Custom" to="." method="_on_custom_pressed"]
 [connection signal="pressed" from="ExitLevel" to="." method="_on_exit_level_pressed"]
-[connection signal="pressed" from="VictoryScreen/MenuButtons/NextLevel" to="." method="_on_next_level_pressed"]
-[connection signal="pressed" from="LoserScreen/VBoxContainer/MenuButtons/Retry" to="." method="_on_retry_pressed"]
 [connection signal="animation_finished" from="Sprite2DWinning/AnimationPlayerWinning" to="." method="_on_animation_player_winning_animation_finished"]
 [connection signal="animation_finished" from="Sprite2DLosing/AnimationPlayerLosing" to="." method="_on_animation_player_losing_animation_finished"]

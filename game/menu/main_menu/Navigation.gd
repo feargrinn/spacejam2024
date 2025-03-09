@@ -7,7 +7,7 @@ func _on_quit_pressed():
 
 
 func _on_play_pressed():
-	get_tree().change_scene_to_file("res://game.tscn")
+	get_tree().change_scene_to_file("res://menu/lever_picker/lever_picker.tscn")
 
 
 func _on_create_pressed():
