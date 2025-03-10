@@ -21,6 +21,8 @@ var tile_hover_layer
 var level_data
 var color_translation = {}
 
+var animations
+
 static func dimension_from_background(background: Dictionary) -> Vector2i:
 	var max_width = null
 	var min_width = null
@@ -54,6 +56,10 @@ func _init(level: Level):
 	name = "map"
 	level_data = level
 	level_name = level.name
+	
+	animations = load("res://game/level/animations.tscn").instantiate()
+	add_child(animations)
+	
 	var dimensions = dimension_from_background(level.background)
 	scale = scale_from_dimensions(dimensions)
 	position = Globals.WINDOW_SIZE / 2 - Vector2(
@@ -152,13 +158,12 @@ func _process(_delta):
 var losing_outputs: Dictionary
 
 func check_for_game_status():
-	if tile_layer.all_outputs().is_empty():
-		return
 	if not losing_outputs.is_empty():
-		get_parent().loser_screen(scale, losing_outputs)
+		animations.animate_loss(losing_outputs, tile_layer)
+		#get_parent().loser_screen(scale, losing_outputs)
 		return
 	if tile_layer.all_outputs().any(func(tile_position): return !(tile_colour_layer.get_cell_atlas_coords(tile_position) == coordinates(TileType.Type.OUTPUT_FILLED))):
 		return
-
+	
 	is_running = false
-	get_parent().victory_screen(scale, tile_layer.all_outputs())
+	animations.animate_win(tile_layer.all_outputs(), tile_layer)

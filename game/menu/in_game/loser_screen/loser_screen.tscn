@@ -5,7 +5,6 @@
 [ext_resource type="Script" path="res://menu/in_game/loser_screen/retry.gd" id="3_em025"]
 
 [node name="LoserScreen" type="ColorRect"]
-visible = false
 offset_left = 105.0
 offset_top = 103.0
 offset_right = 517.0
