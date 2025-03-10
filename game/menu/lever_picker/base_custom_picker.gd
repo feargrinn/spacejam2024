@@ -57,7 +57,7 @@ func _on_base_pressed():
 
 ## Creates a new map
 func _on_level_pressed(levels: Array[Level], level: int):
-	var game = load("res://game.tscn")
+	var game = load("res://game/level/game.tscn")
 	var level_instance = game.instantiate()
 	level_instance.current_level = level
 	var new_map = LevelTileMap.new(levels[level-1])
@@ -70,3 +70,4 @@ func _on_level_pressed(levels: Array[Level], level: int):
 
 func _on_exit_level_picker_pressed():
 	get_tree().change_scene_to_file("res://menu/main_menu/menu.tscn")
+	queue_free()

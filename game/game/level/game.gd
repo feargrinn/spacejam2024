@@ -24,8 +24,7 @@ func _ready():
 
 ##Goes back to lever picker
 func _on_exit_level_pressed():
-	var picker = load("res://menu/lever_picker/lever_picker.tscn")
-	add_sibling(picker.instantiate())
+	get_tree().change_scene_to_file("res://menu/lever_picker/base_custom_picker.tscn")
 	queue_free()
 
 ## Creates clickable tile buttons
@@ -38,7 +37,7 @@ func _on_next_level_pressed():
 	if false: #custom_levels_visible:
 		_on_exit_level_pressed()
 	else:
-		var lever_picker = load("res://menu/lever_picker/lever_picker.tscn").instantiate()
+		var lever_picker = load("res://menu/lever_picker/base_custom_picker.tscn").instantiate()
 		add_sibling(lever_picker)
 		reparent(lever_picker)
 		lever_picker.get_child(0).level_picker.unlock_level(current_level + 1)
@@ -61,7 +60,7 @@ func victory_screen(scale: Vector2, all_outputs: Array[Vector2i]):
 	sound_system.play("winning")
 
 func _on_retry_pressed():
-	var game = load("res://game.tscn")
+	var game = load("res://game/level/game.tscn")
 	name = "old_game"
 	var level_instance = game.instantiate()
 	level_instance.current_level = current_level

@@ -1,0 +1,54 @@
+[gd_scene load_steps=5 format=3 uid="uid://73rlpqdm2f80"]
+
+[ext_resource type="Texture2D" uid="uid://drv2yvqyelnkb" path="res://game/shared/graphics/images/sprite sheets/sprite_sheet_winning_animation.png" id="1_ydmny"]
+
+[sub_resource type="Animation" id="Animation_3pn8e"]
+length = 0.001
+step = 0.0416667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_u8huv"]
+resource_name = "winning"
+length = 5.0
+step = 0.0416667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0, 119]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fj7jl"]
+_data = {
+"RESET": SubResource("Animation_3pn8e"),
+"winning": SubResource("Animation_u8huv")
+}
+
+[node name="WinningAnimation" type="Sprite2D"]
+visible = false
+z_index = 1
+texture_filter = 1
+texture = ExtResource("1_ydmny")
+hframes = 120
+
+[node name="AnimationPlayerWinning" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_fj7jl")
+}
