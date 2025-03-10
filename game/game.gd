@@ -3,9 +3,7 @@ extends Node
 var current_map
 var current_level
 
-var winning_sound
-var losing_sound
-var turning_sound
+var sound_system
 
 @onready var _sprite_winning = $Sprite2DWinning
 @onready var _sprite_losing = $Sprite2DLosing
@@ -18,16 +16,8 @@ var losing_sprites = []
 
 ##Loads sounds
 func _ready():
-	winning_sound = AudioStreamPlayer.new()
-	winning_sound.stream = preload("res://game/shared/sfx/sfx_winning_animation.wav")
-	add_child(winning_sound)
-	losing_sound = AudioStreamPlayer.new()
-	losing_sound.stream = preload("res://game/shared/sfx/sfx_losing_animation.wav")
-	add_child(losing_sound)
-	turning_sound = AudioStreamPlayer.new()
-	turning_sound.name = "TileTurning"
-	turning_sound.stream = preload("res://game/shared/sfx/sfx_pipe_turning.wav")
-	add_child(turning_sound)
+	sound_system = load("res://game/shared/sfx/sounds.tscn").instantiate()
+	add_child(sound_system)
 	for tile_type in TileType.pipe_types:
 		$TilePicker/VBoxContainer.add_child(_create_button(tile_type))
 
@@ -68,7 +58,7 @@ func victory_screen(scale: Vector2, all_outputs: Array[Vector2i]):
 	_animation_winning.play("winning")
 	for sprite in winning_sprites:
 		sprite.get_child(0).play("winning")
-	winning_sound.play()
+	sound_system.play("winning")
 
 func _on_retry_pressed():
 	var game = load("res://game.tscn")
@@ -97,7 +87,7 @@ func loser_screen(scale: Vector2, losing_outputs: Dictionary):
 	_animation_losing.play("losing")
 	for sprite in losing_sprites:
 		sprite.get_child(0).play("losing")
-	losing_sound.play()
+	sound_system.play("losing")
 	
 	var loser_scene = load("res://menu/in_game/loser_screen/loser_screen.tscn")
 	add_child(loser_scene.instantiate())

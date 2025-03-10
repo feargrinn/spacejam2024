@@ -46,12 +46,12 @@ func _create_clickable_tile():
 
 func _on_rotate_left_pressed():
 	texture.rotation -= PI/2
-	get_node("/root/Game/TileTurning").play()
+	get_node("/root/Game/Sounds").play("turning")
 
 
 func _on_rotate_right_pressed():
 	texture.rotation += PI/2
-	get_node("/root/Game/TileTurning").play()
+	get_node("/root/Game/Sounds").play("turning")
 
 
 func _on_click(_viewport: Node, event: InputEvent, _shape_idx: int, tile_type: Vector2i) -> void:

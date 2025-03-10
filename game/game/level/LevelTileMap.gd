@@ -138,7 +138,7 @@ func _process(_delta):
 	if tile != null:
 		tile_hover_layer.set_cell(_mouse_position_to_coordinates(), 0, tile.id, tile.alternative)
 		if Input.is_action_just_released("RMB"):
-			get_node("/root/Game/TileTurning").play()
+			get_node("/root/Game/Sounds").play("turning")
 			tile.rotate()
 		
 		if Input.is_action_just_pressed("LMB"):
