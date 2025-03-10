@@ -160,7 +160,6 @@ var losing_outputs: Dictionary
 func check_for_game_status():
 	if not losing_outputs.is_empty():
 		animations.animate_loss(losing_outputs, tile_layer)
-		#get_parent().loser_screen(scale, losing_outputs)
 		return
 	if tile_layer.all_outputs().any(func(tile_position): return !(tile_colour_layer.get_cell_atlas_coords(tile_position) == coordinates(TileType.Type.OUTPUT_FILLED))):
 		return
