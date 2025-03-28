@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bx33hrjamvvs3"]
 
-[ext_resource type="Script" path="res://menu/in_game/end_screen/end_screen.gd" id="1_ccqpm"]
+[ext_resource type="Script" uid="uid://cg3h0s0qcyaay" path="res://menu/in_game/end_screen/end_screen.gd" id="1_ccqpm"]
 [ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://menu/shared/graphics/fonts/menu_font.ttf" id="1_kl7yl"]
 
 [node name="EndScreen" type="Control"]

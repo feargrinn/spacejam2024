@@ -2,7 +2,7 @@
 
 [ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://menu/shared/graphics/fonts/menu_font.ttf" id="1_3g1e1"]
 [ext_resource type="Texture2D" uid="uid://c86rrp0hau4hr" path="res://menu/shared/graphics/buttons/menu_button_empty.png" id="2_rk5rx"]
-[ext_resource type="Script" path="res://menu/in_game/loser_screen/retry.gd" id="3_em025"]
+[ext_resource type="Script" uid="uid://b6c0axi2mb1wc" path="res://menu/in_game/loser_screen/retry.gd" id="3_em025"]
 
 [node name="LoserScreen" type="ColorRect"]
 offset_left = 105.0

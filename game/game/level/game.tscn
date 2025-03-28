@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://fhmwenm3h7c7"]
 
-[ext_resource type="Script" path="res://game/level/game.gd" id="1_f0dd8"]
+[ext_resource type="Script" uid="uid://dn584k3p7vand" path="res://game/level/game.gd" id="1_f0dd8"]
 [ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://menu/shared/graphics/fonts/menu_font.ttf" id="2_rssi8"]
 [ext_resource type="Texture2D" uid="uid://c3msrgw8yn1n4" path="res://menu/shared/graphics/buttons/menu_button_lvl_empty.png" id="3_eonvc"]
 [ext_resource type="PackedScene" uid="uid://b7fyxc5vat0fl" path="res://menu/shared/graphics/background.tscn" id="6_vjhe0"]

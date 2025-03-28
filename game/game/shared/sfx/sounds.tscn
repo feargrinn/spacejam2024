@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://btvc4sf61je7b"]
 
-[ext_resource type="Script" path="res://game/shared/sfx/sounds.gd" id="1_tekua"]
+[ext_resource type="Script" uid="uid://tgp7a0uibu2x" path="res://game/shared/sfx/sounds.gd" id="1_tekua"]
 [ext_resource type="AudioStream" uid="uid://dwuvx2ss6bldj" path="res://game/shared/sfx/sfx_winning_animation.wav" id="2_hnqev"]
 [ext_resource type="AudioStream" uid="uid://cpm3fa8jq1iyi" path="res://game/shared/sfx/sfx_losing_animation.wav" id="3_uiri0"]
 [ext_resource type="AudioStream" uid="uid://c5gs0ghhvhac3" path="res://game/shared/sfx/sfx_pipe_turning.wav" id="4_ah3jy"]

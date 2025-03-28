@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://30vigruyl1u8"]
 
 [ext_resource type="Texture2D" uid="uid://drv2yvqyelnkb" path="res://game/shared/graphics/images/sprite sheets/sprite_sheet_winning_animation.png" id="1_bjtid"]
-[ext_resource type="Script" path="res://game/level/animations.gd" id="1_kv4e0"]
+[ext_resource type="Script" uid="uid://qdvn4ib0i1aj" path="res://game/level/animations.gd" id="1_kv4e0"]
 [ext_resource type="Texture2D" uid="uid://devomnujdn5pj" path="res://game/shared/graphics/images/sprite sheets/sprite_sheet_losing_animation.png" id="2_4pxrq"]
 
 [sub_resource type="Animation" id="Animation_3pn8e"]
@@ -39,8 +39,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fj7jl"]
 _data = {
-"RESET": SubResource("Animation_3pn8e"),
-"winning": SubResource("Animation_u8huv")
+&"RESET": SubResource("Animation_3pn8e"),
+&"winning": SubResource("Animation_u8huv")
 }
 
 [sub_resource type="Animation" id="Animation_ujscq"]
@@ -78,8 +78,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lblpr"]
 _data = {
-"RESET": SubResource("Animation_ujscq"),
-"losing": SubResource("Animation_1jl2t")
+&"RESET": SubResource("Animation_ujscq"),
+&"losing": SubResource("Animation_1jl2t")
 }
 
 [node name="Animations" type="Node2D"]
@@ -94,7 +94,7 @@ hframes = 120
 
 [node name="AnimationPlayerWinning" type="AnimationPlayer" parent="WinningAnimation"]
 libraries = {
-"": SubResource("AnimationLibrary_fj7jl")
+&"": SubResource("AnimationLibrary_fj7jl")
 }
 
 [node name="LosingAnimation" type="Sprite2D" parent="."]
@@ -106,7 +106,7 @@ hframes = 162
 
 [node name="AnimationPlayerLosing" type="AnimationPlayer" parent="LosingAnimation"]
 libraries = {
-"": SubResource("AnimationLibrary_lblpr")
+&"": SubResource("AnimationLibrary_lblpr")
 }
 
 [connection signal="animation_finished" from="WinningAnimation/AnimationPlayerWinning" to="." method="_on_animation_player_winning_finished"]

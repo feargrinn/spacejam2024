@@ -2,7 +2,7 @@
 
 [ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://menu/shared/graphics/fonts/menu_font.ttf" id="1_fxi58"]
 [ext_resource type="Texture2D" uid="uid://c86rrp0hau4hr" path="res://menu/shared/graphics/buttons/menu_button_empty.png" id="2_xge52"]
-[ext_resource type="Script" path="res://menu/in_game/victory_screen/next_level.gd" id="3_ftl5k"]
+[ext_resource type="Script" uid="uid://1rj3gn0qfj3b" path="res://menu/in_game/victory_screen/next_level.gd" id="3_ftl5k"]
 
 [node name="VictoryScreen" type="ColorRect"]
 offset_left = 105.0
