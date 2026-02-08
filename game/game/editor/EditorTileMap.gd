@@ -114,8 +114,8 @@ func get_packed_scene_from_tilemap(tilemap_layer, tilemap_position):
 			return scene_source.get_scene_tile_scene(alt_id)
 	return null
 
-func _on_confirm_color_pressed() -> void:
-	var colour = $"../../Popup/ColorPicker/ColorRect".color_to_preview
+
+func _on_colour_picked(colour: Colour) -> void:
 	var input = PreInput.new(colour, last_placed_input[0].x, last_placed_input[0].y, last_placed_input[1])
 	tile_colour_layer.set_tile_colour(last_placed_input[0], colour, input)
 	$"../../Popup".hide()

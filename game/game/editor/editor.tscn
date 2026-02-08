@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dh2l8475cocg6" path="res://game/shared/graphics/images/tools/tile_24x24_eraser.png" id="7_u505k"]
 [ext_resource type="Script" uid="uid://d1c0srj1n5d5o" path="res://game/editor/EditorTileMap.gd" id="8_qugu2"]
 [ext_resource type="TileSet" uid="uid://b64fhmdc5bn5" path="res://game/shared/graphics/tile_map.tres" id="9_o1xlw"]
-[ext_resource type="Script" uid="uid://23cth8kx7ujq" path="res://game/editor/color_preview.gd" id="10_41xc2"]
+[ext_resource type="PackedScene" uid="uid://b8000wuccu80j" path="res://game/editor/colour_picker.tscn" id="10_fijmg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1pntj"]
 
@@ -136,39 +136,7 @@ tile_set = ExtResource("9_o1xlw")
 [node name="Popup" type="Popup" parent="."]
 position = Vector2i(405, 220)
 
-[node name="ColorPicker" type="VBoxContainer" parent="Popup"]
-top_level = true
-offset_right = 40.0
-offset_bottom = 40.0
-theme_override_constants/separation = 1
-
-[node name="Red" type="HSlider" parent="Popup/ColorPicker"]
-modulate = Color(1, 0, 0, 1)
-layout_mode = 2
-max_value = 1.0
-step = 0.01
-
-[node name="Yellow" type="HSlider" parent="Popup/ColorPicker"]
-modulate = Color(1, 1, 0, 1)
-layout_mode = 2
-max_value = 1.0
-step = 0.01
-
-[node name="Blue" type="HSlider" parent="Popup/ColorPicker"]
-modulate = Color(0, 0, 1, 1)
-layout_mode = 2
-max_value = 1.0
-step = 0.01
-
-[node name="ColorRect" type="ColorRect" parent="Popup/ColorPicker"]
-custom_minimum_size = Vector2(20, 10)
-layout_mode = 2
-script = ExtResource("10_41xc2")
-
-[node name="Confirm" type="Button" parent="Popup/ColorPicker"]
-layout_mode = 2
-text = "Confirm
-"
+[node name="ColorPicker" parent="Popup" instance=ExtResource("10_fijmg")]
 
 [connection signal="input_event" from="VBoxContainer/Tools/Background/Area2D" to="VBoxContainer/Tools/Background/Area2D" method="_on_input_event" binds= [Vector2i(0, 0)]]
 [connection signal="input_event" from="VBoxContainer/Tools/Straight/Area2D" to="VBoxContainer/Tools/Straight/Area2D" method="_on_input_event" binds= [Vector2i(1, 0)]]
@@ -177,7 +145,4 @@ text = "Confirm
 [connection signal="input_event" from="VBoxContainer/Tools/Delete/Area2D" to="VBoxContainer/Tools/Delete/Area2D" method="_on_input_event" binds= [Vector2i(1, 4)]]
 [connection signal="pressed" from="VBoxContainer/Tools/Back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="VBoxContainer/Tools/Save" to="." method="_on_save_pressed"]
-[connection signal="value_changed" from="Popup/ColorPicker/Red" to="Popup/ColorPicker/ColorRect" method="_on_value_changed"]
-[connection signal="value_changed" from="Popup/ColorPicker/Yellow" to="Popup/ColorPicker/ColorRect" method="_on_value_changed"]
-[connection signal="value_changed" from="Popup/ColorPicker/Blue" to="Popup/ColorPicker/ColorRect" method="_on_value_changed"]
-[connection signal="pressed" from="Popup/ColorPicker/Confirm" to="VBoxContainer/TileMap" method="_on_confirm_color_pressed"]
+[connection signal="picked_colour" from="Popup/ColorPicker" to="VBoxContainer/TileMap" method="_on_colour_picked"]

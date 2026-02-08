@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8000wuccu80j"]
+
+[ext_resource type="Script" uid="uid://df6kshap16g32" path="res://game/editor/colour_picker.gd" id="1_guka5"]
+
+[node name="ColourPicker" type="VBoxContainer"]
+top_level = true
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/separation = 1
+script = ExtResource("1_guka5")
+
+[node name="Red" type="HSlider" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 0, 0, 1)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="Yellow" type="HSlider" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 0, 1)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="Blue" type="HSlider" parent="."]
+unique_name_in_owner = true
+modulate = Color(0, 0, 1, 1)
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+
+[node name="ColorPreview" type="ColorRect" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(20, 10)
+layout_mode = 2
+
+[node name="Confirm" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Confirm
+"

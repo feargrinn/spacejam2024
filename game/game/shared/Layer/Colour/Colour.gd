@@ -1,8 +1,10 @@
 class_name Colour
+extends Resource
 
 const r_name: String = "red"
 const y_name: String = "yellow"
 const b_name: String = "blue"
+
 
 var r: float
 var y: float
