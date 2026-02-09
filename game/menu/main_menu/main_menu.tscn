@@ -17,6 +17,13 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_winya")
 
+[node name="Background" type="TextureRect" parent="."]
+z_index = -1000
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 480.0
+texture = ExtResource("5_fk4bx")
+
 [node name="MenuLogoRatio" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
@@ -162,13 +169,6 @@ patch_margin_left = 6
 patch_margin_top = 6
 patch_margin_right = 6
 patch_margin_bottom = 6
-
-[node name="Background" type="TextureRect" parent="."]
-z_index = -1000
-layout_mode = 0
-offset_right = 640.0
-offset_bottom = 480.0
-texture = ExtResource("5_fk4bx")
 
 [connection signal="pressed" from="MenuLogoRatio/MenuButtons/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="MenuLogoRatio/MenuButtons/Create" to="." method="_on_create_pressed"]

@@ -21,6 +21,7 @@ var tile_hover_layer
 var level_data
 var color_translation = {}
 
+var game: Game
 
 static func dimension_from_background(background: Dictionary) -> Vector2i:
 	var max_width = null
@@ -103,6 +104,7 @@ func create_layers():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	game = get_node("/root/Game")
 	is_running = true
 	for i in 3:
 		placing_sounds.append(AudioStreamPlayer.new())
@@ -161,7 +163,7 @@ func check_for_game_status():
 		for output in losing_outputs:
 			var a_tile := AnimatedTile.custom_new(tile_layer, "losing", output)
 			animated_tiles.append(a_tile)
-		animated_tiles[0].animation_finished.connect(get_parent().loser_screen.bind(losing_outputs))
+		animated_tiles[0].animation_finished.connect(game.loser_screen.bind(losing_outputs))
 		return
 	
 	
@@ -177,4 +179,4 @@ func check_for_game_status():
 	for output in tile_layer.all_outputs():
 		var a_tile := AnimatedTile.custom_new(tile_layer, "winning", output)
 		animated_tiles.append(a_tile)
-	animated_tiles[0].animation_finished.connect(get_parent().victory_screen)
+	animated_tiles[0].animation_finished.connect(game.victory_screen)

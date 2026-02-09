@@ -1,3 +1,4 @@
+class_name Game
 extends Node
 
 var current_map
@@ -6,7 +7,7 @@ var current_level
 
 func _ready():
 	for tile_type in TileType.pipe_types:
-		$TilePicker/VBoxContainer.add_child(_create_button(tile_type))
+		%TilePicker.add_child(_create_button(tile_type))
 
 
 ##Goes back to lever picker
@@ -35,11 +36,11 @@ func _on_next_level_pressed():
 func victory_screen():
 	if true: #custom_levels_visible or (current_level != level_picker.max_level()):
 		var victory_scene: VictoryScreen = preload("uid://c5jhprfubvllq").instantiate()
-		add_child(victory_scene)
+		$Controls.add_child(victory_scene)
 		victory_scene.next_level_requested.connect(_on_next_level_pressed)
 	else:
 		var credits = load("res://menu/in_game/end_screen/end_screen.tscn")
-		add_child(credits.instantiate())
+		$Controls.add_child(credits.instantiate())
 
 
 func _on_retry_pressed():
@@ -58,7 +59,7 @@ func _on_retry_pressed():
 
 func loser_screen(losing_outputs: Dictionary):
 	var loser_scene: LoserScreen = preload("uid://drw6h3oglmj2e").instantiate()
-	add_child(loser_scene)
+	$Controls.add_child(loser_scene)
 	loser_scene.retry_requested.connect(_on_retry_pressed)
 	
 	var create_color_rect = func(colour):
@@ -67,8 +68,8 @@ func loser_screen(losing_outputs: Dictionary):
 		rect.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		rect.color = colour.color()
 		return rect
-	var target_list = $LoserScreen/VBoxContainer/ColorDifference/TargetList
-	var gotten_list = $LoserScreen/VBoxContainer/ColorDifference/GottenList
+	var target_list = loser_scene.target_list
+	var gotten_list = loser_scene.gotten_list
 	for output in losing_outputs:
 		target_list.add_child(create_color_rect.call(losing_outputs[output]["target"]))
 		gotten_list.add_child(create_color_rect.call(losing_outputs[output]["actual"]))

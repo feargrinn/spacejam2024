@@ -36,6 +36,7 @@ size_flags_vertical = 3
 theme_override_constants/separation = 0
 
 [node name="TargetList" type="VBoxContainer" parent="VBoxContainer/ColorDifference"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -47,6 +48,7 @@ text = "Target color"
 horizontal_alignment = 1
 
 [node name="GottenList" type="VBoxContainer" parent="VBoxContainer/ColorDifference"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

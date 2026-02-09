@@ -1,5 +1,5 @@
 class_name MainMenu
-extends MarginContainer
+extends Control
 
 
 func _on_quit_pressed():
