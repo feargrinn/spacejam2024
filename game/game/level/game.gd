@@ -3,8 +3,6 @@ extends Node
 var current_map
 var current_level
 
-var sound_system
-
 #@onready var _sprite_winning = $Sprite2DWinning
 #@onready var _sprite_losing = $Sprite2DLosing
 #@onready var _animation_winning = $Sprite2DWinning/AnimationPlayerWinning
@@ -16,8 +14,6 @@ var losing_sprites = []
 
 ##Loads sounds
 func _ready():
-	sound_system = load("res://game/shared/sfx/sounds.tscn").instantiate()
-	add_child(sound_system)
 	for tile_type in TileType.pipe_types:
 		$TilePicker/VBoxContainer.add_child(_create_button(tile_type))
 

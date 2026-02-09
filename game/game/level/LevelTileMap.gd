@@ -140,7 +140,7 @@ func _process(_delta):
 	if tile != null:
 		tile_hover_layer.set_cell(_mouse_position_to_coordinates(), 0, tile.id, tile.alternative)
 		if Input.is_action_just_released("RMB"):
-			get_node("/root/Game/Sounds").play("turning")
+			Sounds.play("turning")
 			tile.rotate()
 		
 		if Input.is_action_just_pressed("LMB"):
@@ -155,7 +155,7 @@ var losing_outputs: Dictionary
 
 func check_for_game_status():
 	if not losing_outputs.is_empty():
-		get_parent().sound_system.play("losing") #TODO: make sound autoload...
+		Sounds.play("losing")
 		@warning_ignore("confusable_local_declaration")
 		var animated_tiles: Array[AnimatedTile] = []
 		for output in losing_outputs:
@@ -172,7 +172,7 @@ func check_for_game_status():
 	
 	is_running = false
 	
-	get_parent().sound_system.play("winning")
+	Sounds.play("winning")
 	var animated_tiles: Array[AnimatedTile] = []
 	for output in tile_layer.all_outputs():
 		var a_tile := AnimatedTile.custom_new(tile_layer, "winning", output)
