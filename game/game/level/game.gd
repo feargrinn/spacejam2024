@@ -3,16 +3,7 @@ extends Node
 var current_map
 var current_level
 
-#@onready var _sprite_winning = $Sprite2DWinning
-#@onready var _sprite_losing = $Sprite2DLosing
-#@onready var _animation_winning = $Sprite2DWinning/AnimationPlayerWinning
-#@onready var _animation_losing = $Sprite2DLosing/AnimationPlayerLosing
 
-var winning_sprites = []
-var losing_sprites = []
-
-
-##Loads sounds
 func _ready():
 	for tile_type in TileType.pipe_types:
 		$TilePicker/VBoxContainer.add_child(_create_button(tile_type))
@@ -22,6 +13,7 @@ func _ready():
 func _on_exit_level_pressed():
 	get_tree().change_scene_to_file("res://menu/lever_picker/base_custom_picker.tscn")
 	queue_free()
+
 
 ## Creates clickable tile buttons
 func _create_button(tile_type: TileType.Type):
@@ -39,6 +31,7 @@ func _on_next_level_pressed():
 		lever_picker.get_child(0).level_picker.unlock_level(current_level + 1)
 		lever_picker.get_child(0).level_picker.click_level_button(current_level + 1)
 
+
 func victory_screen():
 	if true: #custom_levels_visible or (current_level != level_picker.max_level()):
 		var victory_scene: VictoryScreen = preload("uid://c5jhprfubvllq").instantiate()
@@ -47,6 +40,7 @@ func victory_screen():
 	else:
 		var credits = load("res://menu/in_game/end_screen/end_screen.tscn")
 		add_child(credits.instantiate())
+
 
 func _on_retry_pressed():
 	var game = load("res://game/level/game.tscn")
@@ -60,6 +54,7 @@ func _on_retry_pressed():
 	level_instance.current_map.show()
 	get_tree().root.add_child(level_instance, true)
 	queue_free()
+
 
 func loser_screen(losing_outputs: Dictionary):
 	var loser_scene: LoserScreen = preload("uid://drw6h3oglmj2e").instantiate()
