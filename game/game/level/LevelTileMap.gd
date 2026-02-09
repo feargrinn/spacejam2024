@@ -21,7 +21,6 @@ var tile_hover_layer
 var level_data
 var color_translation = {}
 
-var animations
 
 static func dimension_from_background(background: Dictionary) -> Vector2i:
 	var max_width = null
@@ -56,9 +55,6 @@ func _init(level: Level):
 	name = "map"
 	level_data = level
 	level_name = level.name
-	
-	animations = load("res://game/level/animations.tscn").instantiate()
-	add_child(animations)
 	
 	var dimensions = dimension_from_background(level.background)
 	scale = scale_from_dimensions(dimensions)
@@ -159,10 +155,26 @@ var losing_outputs: Dictionary
 
 func check_for_game_status():
 	if not losing_outputs.is_empty():
-		animations.animate_loss(losing_outputs, tile_layer)
+		get_parent().sound_system.play("losing") #TODO: make sound autoload...
+		@warning_ignore("confusable_local_declaration")
+		var animated_tiles: Array[AnimatedTile] = []
+		for output in losing_outputs:
+			var a_tile := AnimatedTile.custom_new(tile_layer, "losing", output)
+			animated_tiles.append(a_tile)
+		animated_tiles[0].animation_finished.connect(get_parent().loser_screen.bind(losing_outputs))
 		return
-	if tile_layer.all_outputs().any(func(tile_position): return !(tile_colour_layer.get_cell_atlas_coords(tile_position) == coordinates(TileType.Type.OUTPUT_FILLED))):
+	
+	
+	if tile_layer.all_outputs().any(
+		func(tile_position): 
+			return !(tile_colour_layer.get_cell_atlas_coords(tile_position) == coordinates(TileType.Type.OUTPUT_FILLED))):
 		return
 	
 	is_running = false
-	animations.animate_win(tile_layer.all_outputs(), tile_layer)
+	
+	get_parent().sound_system.play("winning")
+	var animated_tiles: Array[AnimatedTile] = []
+	for output in tile_layer.all_outputs():
+		var a_tile := AnimatedTile.custom_new(tile_layer, "winning", output)
+		animated_tiles.append(a_tile)
+	animated_tiles[0].animation_finished.connect(get_parent().victory_screen)
