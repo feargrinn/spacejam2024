@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://drw6h3oglmj2e"]
 
 [ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://menu/shared/graphics/fonts/menu_font.ttf" id="1_3g1e1"]
+[ext_resource type="Script" uid="uid://0u0nr4tqb0ew" path="res://menu/in_game/loser_screen/loser_screen.gd" id="1_bhseh"]
 [ext_resource type="Texture2D" uid="uid://c86rrp0hau4hr" path="res://menu/shared/graphics/buttons/menu_button_empty.png" id="2_rk5rx"]
-[ext_resource type="Script" uid="uid://b6c0axi2mb1wc" path="res://menu/in_game/loser_screen/retry.gd" id="3_em025"]
 
 [node name="LoserScreen" type="ColorRect"]
 offset_left = 105.0
@@ -10,6 +10,7 @@ offset_top = 103.0
 offset_right = 517.0
 offset_bottom = 401.0
 color = Color(0.321569, 0.47451, 0.435294, 1)
+script = ExtResource("1_bhseh")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -62,7 +63,8 @@ size_flags_horizontal = 4
 size_flags_vertical = 6
 size_flags_stretch_ratio = 4.15
 
-[node name="Retry" type="Button" parent="VBoxContainer/MenuButtons"]
+[node name="RetryButton" type="Button" parent="VBoxContainer/MenuButtons"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 6
 theme_override_fonts/font = ExtResource("1_3g1e1")
@@ -71,6 +73,3 @@ text = "Retry"
 icon = ExtResource("2_rk5rx")
 flat = true
 icon_alignment = 1
-script = ExtResource("3_em025")
-
-[connection signal="pressed" from="VBoxContainer/MenuButtons/Retry" to="VBoxContainer/MenuButtons/Retry" method="_on_pressed"]

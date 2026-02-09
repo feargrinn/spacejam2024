@@ -41,8 +41,9 @@ func _on_next_level_pressed():
 
 func victory_screen():
 	if true: #custom_levels_visible or (current_level != level_picker.max_level()):
-		var victory_scene = load("res://menu/in_game/victory_screen/victory_screen.tscn")
-		add_child(victory_scene.instantiate())
+		var victory_scene: VictoryScreen = preload("uid://c5jhprfubvllq").instantiate()
+		add_child(victory_scene)
+		victory_scene.next_level_requested.connect(_on_next_level_pressed)
 	else:
 		var credits = load("res://menu/in_game/end_screen/end_screen.tscn")
 		add_child(credits.instantiate())
@@ -61,8 +62,9 @@ func _on_retry_pressed():
 	queue_free()
 
 func loser_screen(losing_outputs: Dictionary):
-	var loser_scene = load("res://menu/in_game/loser_screen/loser_screen.tscn")
-	add_child(loser_scene.instantiate())
+	var loser_scene: LoserScreen = preload("uid://drw6h3oglmj2e").instantiate()
+	add_child(loser_scene)
+	loser_scene.retry_requested.connect(_on_retry_pressed)
 	
 	var create_color_rect = func(colour):
 		var rect = ColorRect.new()
