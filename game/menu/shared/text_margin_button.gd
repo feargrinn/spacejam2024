@@ -21,6 +21,10 @@ extends Button
 		_calculate_min_size()
 
 
+func _ready() -> void:
+	_calculate_min_size()
+
+
 func _set(property: StringName, value: Variant) -> bool:
 	if property == "text":
 		text = value

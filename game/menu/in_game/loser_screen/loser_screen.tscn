@@ -1,77 +1,93 @@
-[gd_scene load_steps=4 format=3 uid="uid://drw6h3oglmj2e"]
+[gd_scene load_steps=6 format=3 uid="uid://drw6h3oglmj2e"]
 
 [ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://menu/shared/graphics/fonts/menu_font.ttf" id="1_3g1e1"]
 [ext_resource type="Script" uid="uid://0u0nr4tqb0ew" path="res://menu/in_game/loser_screen/loser_screen.gd" id="1_bhseh"]
 [ext_resource type="Texture2D" uid="uid://c86rrp0hau4hr" path="res://menu/shared/graphics/buttons/menu_button_empty.png" id="2_rk5rx"]
+[ext_resource type="Script" uid="uid://baneg6lw1ce8w" path="res://menu/shared/text_margin_button.gd" id="3_bhseh"]
 
-[node name="LoserScreen" type="ColorRect"]
-offset_left = 105.0
-offset_top = 103.0
-offset_right = 517.0
-offset_bottom = 401.0
-color = Color(0.321569, 0.47451, 0.435294, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6hm77"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.32156864, 0.4745098, 0.43529412, 1)
+
+[node name="LoserScreen" type="PanelContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -296.5
+offset_top = -149.0
+offset_right = 296.5
+offset_bottom = 149.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6hm77")
 script = ExtResource("1_bhseh")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="LolLoser" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Lol, loser"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="TargetLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Target color"
+horizontal_alignment = 1
+
+[node name="ActualLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Your color"
+horizontal_alignment = 1
+
+[node name="ColorDifference" type="GridContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/h_separation = 0
+columns = 2
+
+[node name="RetryButton" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+z_index = 1
+custom_minimum_size = Vector2(140, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_fonts/font = ExtResource("1_3g1e1")
+theme_override_font_sizes/font_size = 60
+text = "Retry"
+flat = true
+icon_alignment = 1
+script = ExtResource("3_bhseh")
+left_margin = 10
+top_margin = 10
+right_margin = 10
+bottom_margin = 10
+metadata/_custom_type_script = "uid://baneg6lw1ce8w"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="VBoxContainer/RetryButton"]
+z_index = -1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="LolLoser" type="Label" parent="VBoxContainer/MarginContainer"]
-layout_mode = 2
-text = "Lol, loser"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ColorDifference" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 0
-
-[node name="TargetList" type="VBoxContainer" parent="VBoxContainer/ColorDifference"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/separation = 0
-
-[node name="Label" type="Label" parent="VBoxContainer/ColorDifference/TargetList"]
-layout_mode = 2
-text = "Target color"
-horizontal_alignment = 1
-
-[node name="GottenList" type="VBoxContainer" parent="VBoxContainer/ColorDifference"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/separation = 0
-
-[node name="Label" type="Label" parent="VBoxContainer/ColorDifference/GottenList"]
-layout_mode = 2
-text = "Your color"
-horizontal_alignment = 1
-
-[node name="MenuButtons" type="VBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
-size_flags_stretch_ratio = 4.15
-
-[node name="RetryButton" type="Button" parent="VBoxContainer/MenuButtons"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_vertical = 6
-theme_override_fonts/font = ExtResource("1_3g1e1")
-theme_override_font_sizes/font_size = 60
-text = "Retry"
-icon = ExtResource("2_rk5rx")
-flat = true
-icon_alignment = 1
+texture = ExtResource("2_rk5rx")
+region_rect = Rect2(0, 0, 237, 87)
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6

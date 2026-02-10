@@ -44,32 +44,19 @@ func victory_screen():
 
 
 func _on_retry_pressed():
-	var game = load("res://game/level/game.tscn")
-	name = "old_game"
-	var level_instance = game.instantiate()
-	level_instance.current_level = current_level
 	var new_map = LevelTileMap.new(current_map.level_data)
-	level_instance.add_child(new_map)
-	new_map.owner = level_instance
-	level_instance.current_map = new_map
-	level_instance.current_map.show()
-	get_tree().root.add_child(level_instance, true)
-	queue_free()
+	for child in $"2D".get_children():
+		# Some places look for node named "map", adding second map before freeing
+		# this one makes it "map2", hence name change
+		# but the places that look for "map" probably shouldn't do it anyway... #TODO
+		child.name += "_old"
+		child.queue_free()
+	$"2D".add_child(new_map, true)
+	current_map = new_map
 
 
 func loser_screen(losing_outputs: Dictionary):
-	var loser_scene: LoserScreen = preload("uid://drw6h3oglmj2e").instantiate()
+	var loser_scene := LoserScreen.custom_new(losing_outputs)
 	$Controls.add_child(loser_scene)
 	loser_scene.retry_requested.connect(_on_retry_pressed)
-	
-	var create_color_rect = func(colour):
-		var rect = ColorRect.new()
-		rect.size_flags_horizontal = Control.SIZE_FILL
-		rect.size_flags_vertical = Control.SIZE_EXPAND_FILL
-		rect.color = colour.color()
-		return rect
-	var target_list = loser_scene.target_list
-	var gotten_list = loser_scene.gotten_list
-	for output in losing_outputs:
-		target_list.add_child(create_color_rect.call(losing_outputs[output]["target"]))
-		gotten_list.add_child(create_color_rect.call(losing_outputs[output]["actual"]))
+	loser_scene.retry_requested.connect(loser_scene.queue_free)
