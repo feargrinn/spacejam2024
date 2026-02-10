@@ -1,5 +1,5 @@
-extends Node
-
+class_name MainMenu
+extends Control
 
 
 func _on_quit_pressed():

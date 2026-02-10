@@ -1,0 +1,72 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6ldch5v2bfc3"]
+
+[ext_resource type="Script" uid="uid://bqrmw7uma4tou" path="res://menu/main_menu/main_menu.gd" id="1_winya"]
+[ext_resource type="Texture2D" uid="uid://b6y06h2qilehi" path="res://menu/shared/graphics/title_banner.png" id="2_prid6"]
+[ext_resource type="PackedScene" uid="uid://phgii3mkuvdn" path="res://menu/shared/nine_patch_rect_button.tscn" id="4_7r8i1"]
+[ext_resource type="Texture2D" uid="uid://oogt24347qv7" path="res://menu/shared/graphics/bg_640x480.png" id="5_fk4bx"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_winya")
+
+[node name="Background" type="TextureRect" parent="."]
+z_index = -1000
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 480.0
+texture = ExtResource("5_fk4bx")
+
+[node name="MenuLogoRatio" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -240.0
+offset_right = 320.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Logo" type="TextureRect" parent="MenuLogoRatio"]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_prid6")
+stretch_mode = 5
+
+[node name="MenuButtons" type="VBoxContainer" parent="MenuLogoRatio"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 4.15
+
+[node name="Play" parent="MenuLogoRatio/MenuButtons" instance=ExtResource("4_7r8i1")]
+layout_mode = 2
+
+[node name="Settings" parent="MenuLogoRatio/MenuButtons" instance=ExtResource("4_7r8i1")]
+custom_minimum_size = Vector2(196, 60)
+layout_mode = 2
+text = "Settings"
+
+[node name="Create" parent="MenuLogoRatio/MenuButtons" instance=ExtResource("4_7r8i1")]
+custom_minimum_size = Vector2(164, 60)
+layout_mode = 2
+text = "Create"
+
+[node name="Quit" parent="MenuLogoRatio/MenuButtons" instance=ExtResource("4_7r8i1")]
+layout_mode = 2
+text = "Quit"
+
+[connection signal="pressed" from="MenuLogoRatio/MenuButtons/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MenuLogoRatio/MenuButtons/Create" to="." method="_on_create_pressed"]
+[connection signal="pressed" from="MenuLogoRatio/MenuButtons/Quit" to="." method="_on_quit_pressed"]

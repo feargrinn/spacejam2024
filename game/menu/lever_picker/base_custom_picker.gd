@@ -61,7 +61,7 @@ func _on_level_pressed(levels: Array[Level], level: int):
 	var level_instance = game.instantiate()
 	level_instance.current_level = level
 	var new_map = LevelTileMap.new(levels[level-1])
-	level_instance.add_child(new_map)
+	level_instance.get_node("2D").add_child(new_map)
 	#new_map.owner = level_instance
 	level_instance.current_map = new_map
 	level_instance.current_map.show()

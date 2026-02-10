@@ -46,12 +46,12 @@ func _create_clickable_tile():
 
 func _on_rotate_left_pressed():
 	texture.rotation -= PI/2
-	get_node("/root/Game/Sounds").play("turning")
+	Sounds.play("turning")
 
 
 func _on_rotate_right_pressed():
 	texture.rotation += PI/2
-	get_node("/root/Game/Sounds").play("turning")
+	Sounds.play("turning")
 
 
 func _on_click(_viewport: Node, event: InputEvent, _shape_idx: int, tile_type: Vector2i) -> void:
@@ -59,4 +59,4 @@ func _on_click(_viewport: Node, event: InputEvent, _shape_idx: int, tile_type: V
 		_on_rotate_right_pressed()
 	elif event is InputEventMouseButton and event.is_released() and not event.is_echo() and event.button_index == MOUSE_BUTTON_LEFT:
 		var tile_rotation = int(texture.rotation_degrees/360*4)
-		get_node("/root/Game/map").tile = TileId.new(tile_type, tile_rotation)
+		get_node("/root/Game/2D/map").tile = TileId.new(tile_type, tile_rotation)

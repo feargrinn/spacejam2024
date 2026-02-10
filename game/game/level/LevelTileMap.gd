@@ -21,7 +21,7 @@ var tile_hover_layer
 var level_data
 var color_translation = {}
 
-var animations
+var game: Game
 
 static func dimension_from_background(background: Dictionary) -> Vector2i:
 	var max_width = null
@@ -56,9 +56,6 @@ func _init(level: Level):
 	name = "map"
 	level_data = level
 	level_name = level.name
-	
-	animations = load("res://game/level/animations.tscn").instantiate()
-	add_child(animations)
 	
 	var dimensions = dimension_from_background(level.background)
 	scale = scale_from_dimensions(dimensions)
@@ -107,6 +104,7 @@ func create_layers():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	game = get_node("/root/Game")
 	is_running = true
 	for i in 3:
 		placing_sounds.append(AudioStreamPlayer.new())
@@ -144,7 +142,7 @@ func _process(_delta):
 	if tile != null:
 		tile_hover_layer.set_cell(_mouse_position_to_coordinates(), 0, tile.id, tile.alternative)
 		if Input.is_action_just_released("RMB"):
-			get_node("/root/Game/Sounds").play("turning")
+			Sounds.play("turning")
 			tile.rotate()
 		
 		if Input.is_action_just_pressed("LMB"):
@@ -155,14 +153,44 @@ func _process(_delta):
 			tile = null
 
 
-var losing_outputs: Dictionary
+var losing_outputs: Dictionary[Vector2i, Dictionary]
+
+
+func animate_outputs(outputs: Array[Vector2i], animation_name: String) -> void:
+	Sounds.play(animation_name)
+	
+	var animated_tiles: Array[AnimatedTile] = []
+	for output in outputs:
+		var a_tile := AnimatedTile.custom_new(tile_layer, animation_name, output)
+		animated_tiles.append(a_tile)
+	
+	match(animation_name):
+		"winning":
+			animated_tiles[0].animation_finished.connect(game.victory_screen)
+		"losing":
+			animated_tiles[0].animation_finished.connect(game.loser_screen.bind(losing_outputs))
+
+
+func is_output_filled(tile_coords: Vector2i) -> bool:
+	var atlas_coords := tile_colour_layer.get_cell_atlas_coords(tile_coords)
+	return atlas_coords == coordinates(TileType.Type.OUTPUT_FILLED)
+
+
+func all_outputs_filled(outputs: Array[Vector2i]) -> bool:
+	for output in outputs:
+		if !is_output_filled(output):
+			return false
+	return true
+
 
 func check_for_game_status():
 	if not losing_outputs.is_empty():
-		animations.animate_loss(losing_outputs, tile_layer)
+		animate_outputs(losing_outputs.keys(), "losing")
 		return
-	if tile_layer.all_outputs().any(func(tile_position): return !(tile_colour_layer.get_cell_atlas_coords(tile_position) == coordinates(TileType.Type.OUTPUT_FILLED))):
+	
+	if !all_outputs_filled(tile_layer.all_outputs()):
 		return
 	
 	is_running = false
-	animations.animate_win(tile_layer.all_outputs(), tile_layer)
+	
+	animate_outputs(tile_layer.all_outputs(), "winning")
