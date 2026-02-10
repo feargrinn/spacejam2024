@@ -1,9 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://drw6h3oglmj2e"]
+[gd_scene load_steps=4 format=3 uid="uid://drw6h3oglmj2e"]
 
-[ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://menu/shared/graphics/fonts/menu_font.ttf" id="1_3g1e1"]
 [ext_resource type="Script" uid="uid://0u0nr4tqb0ew" path="res://menu/in_game/loser_screen/loser_screen.gd" id="1_bhseh"]
-[ext_resource type="Texture2D" uid="uid://c86rrp0hau4hr" path="res://menu/shared/graphics/buttons/menu_button_empty.png" id="2_rk5rx"]
-[ext_resource type="Script" uid="uid://baneg6lw1ce8w" path="res://menu/shared/text_margin_button.gd" id="3_bhseh"]
+[ext_resource type="PackedScene" uid="uid://phgii3mkuvdn" path="res://menu/shared/nine_patch_rect_button.tscn" id="2_mngvi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6hm77"]
 content_margin_left = 20.0
@@ -58,36 +56,8 @@ size_flags_vertical = 3
 theme_override_constants/h_separation = 0
 columns = 2
 
-[node name="RetryButton" type="Button" parent="VBoxContainer"]
+[node name="RetryButton" parent="VBoxContainer" instance=ExtResource("2_mngvi")]
 unique_name_in_owner = true
-z_index = 1
 custom_minimum_size = Vector2(140, 60)
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 8
-theme_override_fonts/font = ExtResource("1_3g1e1")
-theme_override_font_sizes/font_size = 60
 text = "Retry"
-flat = true
-icon_alignment = 1
-script = ExtResource("3_bhseh")
-left_margin = 10
-top_margin = 10
-right_margin = 10
-bottom_margin = 10
-metadata/_custom_type_script = "uid://baneg6lw1ce8w"
-
-[node name="NinePatchRect" type="NinePatchRect" parent="VBoxContainer/RetryButton"]
-z_index = -1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_rk5rx")
-region_rect = Rect2(0, 0, 237, 87)
-patch_margin_left = 6
-patch_margin_top = 6
-patch_margin_right = 6
-patch_margin_bottom = 6

@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://b6ldch5v2bfc3"]
+[gd_scene load_steps=5 format=3 uid="uid://b6ldch5v2bfc3"]
 
 [ext_resource type="Script" uid="uid://bqrmw7uma4tou" path="res://menu/main_menu/main_menu.gd" id="1_winya"]
 [ext_resource type="Texture2D" uid="uid://b6y06h2qilehi" path="res://menu/shared/graphics/title_banner.png" id="2_prid6"]
-[ext_resource type="Script" uid="uid://baneg6lw1ce8w" path="res://menu/shared/text_margin_button.gd" id="3_x87vx"]
-[ext_resource type="Texture2D" uid="uid://c86rrp0hau4hr" path="res://menu/shared/graphics/buttons/menu_button_empty.png" id="4_dn5jd"]
+[ext_resource type="PackedScene" uid="uid://phgii3mkuvdn" path="res://menu/shared/nine_patch_rect_button.tscn" id="4_7r8i1"]
 [ext_resource type="Texture2D" uid="uid://oogt24347qv7" path="res://menu/shared/graphics/bg_640x480.png" id="5_fk4bx"]
 
 [node name="MainMenu" type="Control"]
@@ -51,124 +50,22 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 4.15
 
-[node name="Play" type="Button" parent="MenuLogoRatio/MenuButtons"]
-custom_minimum_size = Vector2(53, 43)
+[node name="Play" parent="MenuLogoRatio/MenuButtons" instance=ExtResource("4_7r8i1")]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 3
-text = "Play"
-flat = true
-script = ExtResource("3_x87vx")
-left_margin = 10
-top_margin = 10
-right_margin = 10
-bottom_margin = 10
-metadata/_custom_type_script = "uid://baneg6lw1ce8w"
 
-[node name="NinePatchRect" type="NinePatchRect" parent="MenuLogoRatio/MenuButtons/Play"]
-z_index = -1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("4_dn5jd")
-region_rect = Rect2(0, 0, 237, 87)
-patch_margin_left = 6
-patch_margin_top = 6
-patch_margin_right = 6
-patch_margin_bottom = 6
-
-[node name="Settings" type="Button" parent="MenuLogoRatio/MenuButtons"]
-custom_minimum_size = Vector2(82, 43)
+[node name="Settings" parent="MenuLogoRatio/MenuButtons" instance=ExtResource("4_7r8i1")]
+custom_minimum_size = Vector2(196, 60)
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
 text = "Settings"
-flat = true
-icon_alignment = 1
-script = ExtResource("3_x87vx")
-left_margin = 10
-top_margin = 10
-right_margin = 10
-bottom_margin = 10
-metadata/_custom_type_script = "uid://baneg6lw1ce8w"
 
-[node name="NinePatchRect" type="NinePatchRect" parent="MenuLogoRatio/MenuButtons/Settings"]
-z_index = -1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("4_dn5jd")
-region_rect = Rect2(0, 0, 237, 87)
-patch_margin_left = 6
-patch_margin_top = 6
-patch_margin_right = 6
-patch_margin_bottom = 6
-
-[node name="Create" type="Button" parent="MenuLogoRatio/MenuButtons"]
-custom_minimum_size = Vector2(72, 43)
+[node name="Create" parent="MenuLogoRatio/MenuButtons" instance=ExtResource("4_7r8i1")]
+custom_minimum_size = Vector2(164, 60)
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
 text = "Create"
-flat = true
-icon_alignment = 1
-script = ExtResource("3_x87vx")
-left_margin = 10
-top_margin = 10
-right_margin = 10
-bottom_margin = 10
-metadata/_custom_type_script = "uid://baneg6lw1ce8w"
 
-[node name="NinePatchRect" type="NinePatchRect" parent="MenuLogoRatio/MenuButtons/Create"]
-z_index = -1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("4_dn5jd")
-region_rect = Rect2(0, 0, 237, 87)
-patch_margin_left = 6
-patch_margin_top = 6
-patch_margin_right = 6
-patch_margin_bottom = 6
-
-[node name="Quit" type="Button" parent="MenuLogoRatio/MenuButtons"]
-custom_minimum_size = Vector2(54, 43)
+[node name="Quit" parent="MenuLogoRatio/MenuButtons" instance=ExtResource("4_7r8i1")]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
 text = "Quit"
-flat = true
-icon_alignment = 1
-script = ExtResource("3_x87vx")
-left_margin = 10
-top_margin = 10
-right_margin = 10
-bottom_margin = 10
-metadata/_custom_type_script = "uid://baneg6lw1ce8w"
-
-[node name="NinePatchRect" type="NinePatchRect" parent="MenuLogoRatio/MenuButtons/Quit"]
-z_index = -1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("4_dn5jd")
-region_rect = Rect2(0, 0, 237, 87)
-patch_margin_left = 6
-patch_margin_top = 6
-patch_margin_right = 6
-patch_margin_bottom = 6
 
 [connection signal="pressed" from="MenuLogoRatio/MenuButtons/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="MenuLogoRatio/MenuButtons/Create" to="." method="_on_create_pressed"]
