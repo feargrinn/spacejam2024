@@ -153,30 +153,44 @@ func _process(_delta):
 			tile = null
 
 
-var losing_outputs: Dictionary
+var losing_outputs: Dictionary[Vector2i, Dictionary]
+
+
+func animate_outputs(outputs: Array[Vector2i], animation_name: String) -> void:
+	Sounds.play(animation_name)
+	
+	var animated_tiles: Array[AnimatedTile] = []
+	for output in outputs:
+		var a_tile := AnimatedTile.custom_new(tile_layer, animation_name, output)
+		animated_tiles.append(a_tile)
+	
+	match(animation_name):
+		"winning":
+			animated_tiles[0].animation_finished.connect(game.victory_screen)
+		"losing":
+			animated_tiles[0].animation_finished.connect(game.loser_screen.bind(losing_outputs))
+
+
+func is_output_filled(tile_coords: Vector2i) -> bool:
+	var atlas_coords := tile_colour_layer.get_cell_atlas_coords(tile_coords)
+	return atlas_coords == coordinates(TileType.Type.OUTPUT_FILLED)
+
+
+func all_outputs_filled(outputs: Array[Vector2i]) -> bool:
+	for output in outputs:
+		if !is_output_filled(output):
+			return false
+	return true
+
 
 func check_for_game_status():
 	if not losing_outputs.is_empty():
-		Sounds.play("losing")
-		@warning_ignore("confusable_local_declaration")
-		var animated_tiles: Array[AnimatedTile] = []
-		for output in losing_outputs:
-			var a_tile := AnimatedTile.custom_new(tile_layer, "losing", output)
-			animated_tiles.append(a_tile)
-		animated_tiles[0].animation_finished.connect(game.loser_screen.bind(losing_outputs))
+		animate_outputs(losing_outputs.keys(), "losing")
 		return
 	
-	
-	if tile_layer.all_outputs().any(
-		func(tile_position): 
-			return !(tile_colour_layer.get_cell_atlas_coords(tile_position) == coordinates(TileType.Type.OUTPUT_FILLED))):
+	if !all_outputs_filled(tile_layer.all_outputs()):
 		return
 	
 	is_running = false
 	
-	Sounds.play("winning")
-	var animated_tiles: Array[AnimatedTile] = []
-	for output in tile_layer.all_outputs():
-		var a_tile := AnimatedTile.custom_new(tile_layer, "winning", output)
-		animated_tiles.append(a_tile)
-	animated_tiles[0].animation_finished.connect(game.victory_screen)
+	animate_outputs(tile_layer.all_outputs(), "winning")
