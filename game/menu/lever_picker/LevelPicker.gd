@@ -16,10 +16,11 @@ func _init(a_levels: Array[Level], level_loading_function: Callable):
 
 
 func create_level_button(level: int, level_loading_function: Callable):
-	var level_button = LevelButton.new("%d" % level, level_loading_function.bind(self.levels, level))
+	var level_button = LevelButton.new("%d" % level)
 	level_button.hide()
 	level_buttons.append(level_button)
 	add_child(level_button)
+	level_button.pressed.connect(level_loading_function.bind(self.levels, level))
 
 
 func unlock_level(level: int):
