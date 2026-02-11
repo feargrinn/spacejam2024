@@ -1,6 +1,5 @@
-extends Node2D
-
 class_name LevelTileMap
+extends Node2D
 
 var all_outputs: Array[Vector2i] = []
 
