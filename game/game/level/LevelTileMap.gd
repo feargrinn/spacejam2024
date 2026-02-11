@@ -29,7 +29,6 @@ var game: Game
 static func custom_new(level: Level) -> LevelTileMap:
 	var tilemap: LevelTileMap = LEVEL_TILE_MAP.instantiate()
 	tilemap.level_data = level
-	tilemap.name = "map" #...TODO
 	tilemap.level_name = level.name
 	return tilemap
 

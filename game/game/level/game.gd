@@ -1,13 +1,18 @@
 class_name Game
 extends Node
 
-var current_map
+var current_map: LevelTileMap
 var current_level
 
 
 func _ready():
 	for tile_type in TileType.pipe_types:
-		%TilePicker.add_child(_create_button(tile_type))
+		var tile_button := _create_button(tile_type)
+		%TilePicker.add_child(tile_button)
+		tile_button.tile_picked_up.connect(
+			func(tile: TileId):
+				current_map.tile = tile
+				)
 
 
 ##Goes back to lever picker
@@ -17,7 +22,7 @@ func _on_exit_level_pressed():
 
 
 ## Creates clickable tile buttons
-func _create_button(tile_type: TileType.Type):
+func _create_button(tile_type: TileType.Type) -> PickableTile:
 	var container = PickableTile.new(TileType.coordinates(tile_type), TileType.texture(tile_type))
 	return container
 
@@ -46,10 +51,6 @@ func victory_screen():
 func _on_retry_pressed():
 	var new_map = LevelTileMap.custom_new(current_map.level_data)
 	for child in $"2D".get_children():
-		# Some places look for node named "map", adding second map before freeing
-		# this one makes it "map2", hence name change
-		# but the places that look for "map" probably shouldn't do it anyway... #TODO
-		child.name += "_old"
 		child.queue_free()
 	$"2D".add_child(new_map, true)
 	current_map = new_map

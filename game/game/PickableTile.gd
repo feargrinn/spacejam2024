@@ -1,6 +1,8 @@
 extends HBoxContainer
 class_name PickableTile
 
+signal tile_picked_up(tile: TileId)
+
 var tile_texture : String
 var tile_coordinates : Vector2i
 var rotate_left : Button
@@ -59,4 +61,4 @@ func _on_click(_viewport: Node, event: InputEvent, _shape_idx: int, tile_type: V
 		_on_rotate_right_pressed()
 	elif event is InputEventMouseButton and event.is_released() and not event.is_echo() and event.button_index == MOUSE_BUTTON_LEFT:
 		var tile_rotation = int(texture.rotation_degrees/360*4)
-		get_node("/root/Game/2D/map").tile = TileId.new(tile_type, tile_rotation)
+		tile_picked_up.emit(TileId.new(tile_type, tile_rotation))
