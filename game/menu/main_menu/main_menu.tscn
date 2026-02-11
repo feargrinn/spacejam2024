@@ -30,10 +30,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -320.0
-offset_top = -240.0
-offset_right = 320.0
-offset_bottom = 240.0
+offset_left = -106.5
+offset_top = -205.0
+offset_right = 106.5
+offset_bottom = 205.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -47,7 +47,7 @@ stretch_mode = 5
 
 [node name="MenuButtons" type="VBoxContainer" parent="MenuLogoRatio"]
 layout_mode = 2
-size_flags_vertical = 3
+size_flags_vertical = 0
 size_flags_stretch_ratio = 4.15
 
 [node name="Play" parent="MenuLogoRatio/MenuButtons" instance=ExtResource("4_7r8i1")]
