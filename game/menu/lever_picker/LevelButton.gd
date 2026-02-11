@@ -1,6 +1,6 @@
+class_name LevelButton
 extends Button
 
-class_name LevelButton
 
 func _init(level_name: String, loading_function):
 	set_text(level_name)

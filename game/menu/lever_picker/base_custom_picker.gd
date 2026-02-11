@@ -68,7 +68,6 @@ func _on_base_pressed():
 
 ## Creates a new map
 func _on_level_pressed(levels: Array[Level], level: int):
-	print("level_pressed")
 	var game = load("res://game/level/game.tscn")
 	var level_instance = game.instantiate()
 	level_instance.current_level = level
