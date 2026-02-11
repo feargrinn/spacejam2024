@@ -71,7 +71,7 @@ func _on_level_pressed(levels: Array[Level], level: int):
 	var game = load("res://game/level/game.tscn")
 	var level_instance = game.instantiate()
 	level_instance.current_level = level
-	var new_map = LevelTileMap.new(levels[level-1])
+	var new_map = LevelTileMap.custom_new(levels[level-1])
 	level_instance.get_node("2D").add_child(new_map)
 	#new_map.owner = level_instance
 	level_instance.current_map = new_map

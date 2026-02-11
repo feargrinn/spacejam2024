@@ -1,6 +1,5 @@
-extends TileMapLayer
-
 class_name BackgroundLayer
+extends TileMapLayer
 
 const ALL_DIRECTIONS = [
 	Vector2i(-1,-1),
@@ -14,6 +13,8 @@ const ALL_DIRECTIONS = [
 ]
 
 const BACKGROUND_SPRITE_ID: Vector2i = Vector2i(0,0)
+var background: Dictionary[Vector2i, bool] = {} : set = _set_background
+
 
 # gets global positions of cells surrounding cell at position pos
 static func get_all_surrounding_cells(pos):
@@ -22,18 +23,10 @@ static func get_all_surrounding_cells(pos):
 		surrounding.append(pos+offset)
 	return surrounding
 
-var has_background: Dictionary
-
-func _init(background: Dictionary):
-	name = "BackgroundLayer"
-	self.tile_set = Globals.TILE_SET
-	self.has_background = {}
-	for background_cell in background.keys():
-		set_background(background_cell)
 
 # whether the given coordinates have a background
 func is_background(pos: Vector2i) -> bool:
-	return self.has_background.has(pos)
+	return background.has(pos)
 
 func is_ok_for_input_or_output(pos: Vector2i):
 	if self.has_background.has(pos):
@@ -47,13 +40,14 @@ func is_ok_for_input_or_output(pos: Vector2i):
 		return proper_alternatives
 	
 
-func set_background(pos: Vector2i):
-	if is_background(pos):
-		# nothing to do
-		return
-	self.has_background[pos] = true
-	set_cell(pos, 0, BACKGROUND_SPRITE_ID)
-	_update_border_around(pos)
+func _set_background(value: Dictionary[Vector2i, bool]):
+	for pos in value:
+		if is_background(pos):
+			# nothing to do
+			return
+		background[pos] = true
+		set_cell(pos, 0, BACKGROUND_SPRITE_ID)
+		_update_border_around(pos)
 
 func delete_background(pos: Vector2i):
 	if !is_background(pos):

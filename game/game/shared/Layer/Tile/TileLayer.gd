@@ -1,6 +1,6 @@
+class_name TileLayer
 extends TileMapLayer
 
-class_name TileLayer
 
 var inputs: Array[Vector2i]
 var outputs: Array[Vector2i]
@@ -11,10 +11,7 @@ const OUTPUT = Vector2i(1,1)
 
 var tiles: Array[TileInteractor]
 
-func _init():
-	self.tile_set = Globals.TILE_SET
-	self.outputs = []
-	self.name = "TileLayer"
+func _ready() -> void:
 	TileInteractor.tile_layer = self
 
 

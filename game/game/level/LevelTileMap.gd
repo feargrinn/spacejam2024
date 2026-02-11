@@ -1,6 +1,8 @@
 class_name LevelTileMap
 extends Node2D
 
+const LEVEL_TILE_MAP = preload("uid://dys1pp7uead78")
+
 var all_outputs: Array[Vector2i] = []
 
 var current_tile = null;
@@ -10,58 +12,55 @@ var tile = null
 var is_running: bool
 var level_name: String
 
+# TODO: move them to a reasonable place...
 var placing_sounds = []
 
-var background_layer: BackgroundLayer
-var tile_colour_layer: ColourLayer
-var tile_layer: TileLayer
-var tile_hover_layer
+@export var background_layer: BackgroundLayer
+@export var tile_colour_layer: ColourLayer
+@export var tile_layer: TileLayer
+@export var tile_hover_layer: TileMapLayer
 
-var level_data
+var level_data: Level
 var color_translation = {}
 
 var game: Game
 
-static func dimension_from_background(background: Dictionary) -> Vector2i:
-	var max_width = null
-	var min_width = null
-	var max_height = null
-	var min_height = null
-	for background_tile in background.keys():
-		if max_width == null:
-			max_width = background_tile.x
-			min_width = background_tile.x
-			max_height = background_tile.y
-			min_height = background_tile.y
-		else:
-			max_width = max(max_width, background_tile.x)
-			min_width = min(min_width, background_tile.x)
-			max_height = max(max_height, background_tile.y)
-			min_height = min(min_height, background_tile.y)
-	# also add the borders on both sides
-	var total_width = max_width - min_width + 1 + 2
-	var total_height = max_height - min_height + 1 + 2
-	return Vector2i(total_width, total_height)
+
+static func custom_new(level: Level) -> LevelTileMap:
+	var tilemap: LevelTileMap = LEVEL_TILE_MAP.instantiate()
+	tilemap.level_data = level
+	tilemap.name = "map" #...TODO
+	tilemap.level_name = level.name
+	return tilemap
 
 
-static func scale_from_dimensions(dimensions: Vector2i) -> Vector2:
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	background_layer.background = level_data.background
+	
+	
+	game = get_node("/root/Game")
+	is_running = true
+	
+	# TODO: move them to a reasonable place...
+	for i in 3:
+		placing_sounds.append(AudioStreamPlayer.new())
+	placing_sounds[0].stream = preload("res://game/shared/sfx/sfx_pop_down_tile_1.wav")
+	placing_sounds[1].stream = preload("res://game/shared/sfx/sfx_pop_down_tile_2.wav")
+	placing_sounds[2].stream = preload("res://game/shared/sfx/sfx_pop_down_tile_3.wav")
+	for sound in placing_sounds:
+		add_child(sound)
+	####
+	
+	set_starting_map()
+
+
+func scale_from_dimensions(dimensions: Vector2i) -> Vector2:
 	if max(dimensions.x, dimensions.y) <= 10:
 		return Vector2(2, 2)
 	else:
 		return Vector2(1, 1)
 
-func _init(level: Level):
-	# This name is used by the tile picker.
-	name = "map"
-	level_data = level
-	level_name = level.name
-	
-	var dimensions = dimension_from_background(level.background)
-	scale = scale_from_dimensions(dimensions)
-	position = Globals.WINDOW_SIZE / 2 - Vector2(
-		dimensions.x * scale.x * Globals.TILE_SIZE / 2,
-		dimensions.y * scale.y * Globals.TILE_SIZE / 2
-	)
 
 func place_input(input: PreInput):
 	tile_layer.place_tile(Vector2i(input.x, input.y), TileId.new(coordinates(TileType.Type.INPUT), input.rot))
@@ -80,39 +79,9 @@ func place_tile(pretile: PreTile):
 	tile_colour_layer.update_at(Vector2i(pretile.x, pretile.y))
 
 func create_layers():
-	var create_layer = func():
-		var layer = TileMapLayer.new()
-		layer.tile_set = Globals.TILE_SET
-		add_child(layer)
-		return layer
-	background_layer = BackgroundLayer.new(level_data.background)
-	add_child(background_layer)
-	tile_colour_layer = ColourLayer.new()
-	add_child(tile_colour_layer)
-	tile_layer = TileLayer.new()
-	ColourLayer.tile_layer = tile_layer
-	add_child(tile_layer)
-	tile_hover_layer = create_layer.call()
-	tile_hover_layer.modulate.a /= 2
 	TileInteractor.hover_layer = tile_hover_layer
-	move_child(background_layer, 0)
-	move_child(tile_colour_layer, 1)
-	move_child(tile_layer, 2)
-	move_child(tile_hover_layer, 3)
 	
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	game = get_node("/root/Game")
-	is_running = true
-	for i in 3:
-		placing_sounds.append(AudioStreamPlayer.new())
-	placing_sounds[0].stream = preload("res://game/shared/sfx/sfx_pop_down_tile_1.wav")
-	placing_sounds[1].stream = preload("res://game/shared/sfx/sfx_pop_down_tile_2.wav")
-	placing_sounds[2].stream = preload("res://game/shared/sfx/sfx_pop_down_tile_3.wav")
-	for sound in placing_sounds:
-		add_child(sound)
-	set_starting_map()
 
 func set_starting_map():
 	create_layers()
@@ -122,6 +91,13 @@ func set_starting_map():
 		place_output(output)
 	for other_tile in level_data.tiles:
 		place_tile(other_tile)
+	
+	var dimensions := background_layer.get_used_rect().size
+	scale = scale_from_dimensions(dimensions)
+	position = Globals.WINDOW_SIZE / 2 - Vector2(
+		dimensions.x * scale.x * Globals.TILE_SIZE / 2,
+		dimensions.y * scale.y * Globals.TILE_SIZE / 2
+	)
 
 
 func set_tile_at(tile_position):

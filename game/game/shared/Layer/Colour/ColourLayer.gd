@@ -1,16 +1,10 @@
-extends TileMapLayer
-
 class_name ColourLayer
+extends TileMapLayer
 
 var colour_coords = TileType.coordinates(TileType.Type.COLOR)
 
-static var tile_layer : TileLayer
+@export var tile_layer : TileLayer
 var colours = {}
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	name = "ColourLayer"
-	tile_set = Globals.TILE_SET
 
 
 func set_tile_colour(tile_position, colour, input_or_output = null):

@@ -20,7 +20,7 @@ var inputs: Array[PreInput]
 var outputs: Array[PreOutput]
 var tiles: Array[PreTile]
 
-func _init(a_name: String, new_background: Dictionary, a_inputs: Array[PreInput], a_outputs: Array[PreOutput], a_tiles: Array[PreTile]):
+func _init(a_name: String, new_background: Dictionary[Vector2i, bool], a_inputs: Array[PreInput], a_outputs: Array[PreOutput], a_tiles: Array[PreTile]):
 	self.name = a_name
 	self.background = new_background
 	self.inputs = a_inputs
@@ -69,7 +69,7 @@ static func from_json_v1(loaded_data):
 	var l_name = loaded_data[TITLE_NAME]
 	if not loaded_data.has(BACKGROUND_NAME):
 		return Error.missing_field(BACKGROUND_NAME)
-	var loaded_background = {}
+	var loaded_background: Dictionary[Vector2i, bool] = {}
 	for background_tile_string in loaded_data[BACKGROUND_NAME]:
 		loaded_background[str_to_var(background_tile_string)] = true
 	if not loaded_data.has(INPUTS_NAME):

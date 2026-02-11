@@ -44,7 +44,7 @@ func victory_screen():
 
 
 func _on_retry_pressed():
-	var new_map = LevelTileMap.new(current_map.level_data)
+	var new_map = LevelTileMap.custom_new(current_map.level_data)
 	for child in $"2D".get_children():
 		# Some places look for node named "map", adding second map before freeing
 		# this one makes it "map2", hence name change
