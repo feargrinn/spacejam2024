@@ -1,42 +1,37 @@
-[gd_scene load_steps=4 format=3 uid="uid://c5jhprfubvllq"]
+[gd_scene load_steps=5 format=3 uid="uid://c5jhprfubvllq"]
 
+[ext_resource type="StyleBox" uid="uid://i47pwd6ai1af" path="res://menu/shared/graphics/panel_dark.tres" id="1_8n4c8"]
 [ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://menu/shared/graphics/fonts/menu_font.ttf" id="1_fxi58"]
 [ext_resource type="Script" uid="uid://b07eoi04kauw2" path="res://menu/in_game/victory_screen/victory_screen.gd" id="1_j6cd5"]
 [ext_resource type="Texture2D" uid="uid://c86rrp0hau4hr" path="res://menu/shared/graphics/buttons/menu_button_empty.png" id="2_xge52"]
 
-[node name="VictoryScreen" type="ColorRect"]
-offset_left = 105.0
-offset_top = 103.0
-offset_right = 517.0
-offset_bottom = 401.0
-color = Color(0.321569, 0.47451, 0.435294, 1)
+[node name="VictoryScreen" type="PanelContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -206.0
+offset_top = -149.0
+offset_right = 206.0
+offset_bottom = 149.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("1_8n4c8")
 script = ExtResource("1_j6cd5")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 0
-offset_left = 75.0
-offset_top = 78.0
-offset_right = 342.0
-offset_bottom = 108.0
-size_flags_vertical = 3
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
-[node name="LevelComplete" type="Label" parent="MarginContainer"]
+[node name="LevelComplete" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 text = "Level complete!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MenuButtons" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 86.0
-offset_top = 129.0
-offset_right = 331.0
-offset_bottom = 224.0
-size_flags_horizontal = 4
-size_flags_vertical = 6
-size_flags_stretch_ratio = 4.15
-
-[node name="NextLevel" type="Button" parent="MenuButtons"]
+[node name="NextLevel" type="Button" parent="VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 6

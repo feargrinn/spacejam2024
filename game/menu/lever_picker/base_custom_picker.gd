@@ -1,12 +1,23 @@
-extends MarginContainer
+class_name BaseCustomPicker
+extends PanelContainer
 
 var level_picker: LevelPicker
 var custom_level_picker: LevelPicker
 var save_data: PlayerData
 var custom_levels_visible: bool
 
+
+@onready var base: Button = %Base
+@onready var custom: Button = %Custom
+@onready var exit_level_picker: Button = %ExitLevelPicker
+
+
 # Loads levels player has accessible, custom levels
 func _ready() -> void:
+	exit_level_picker.pressed.connect(_on_exit_level_picker_pressed)
+	base.pressed.connect(_on_base_pressed)
+	custom.pressed.connect(_on_custom_pressed)
+	
 	var loaded_levels = Level.load_default()
 	if loaded_levels is Error:
 		print("Failed to load levels: ", loaded_levels.as_string(), ".")
@@ -57,6 +68,7 @@ func _on_base_pressed():
 
 ## Creates a new map
 func _on_level_pressed(levels: Array[Level], level: int):
+	print("level_pressed")
 	var game = load("res://game/level/game.tscn")
 	var level_instance = game.instantiate()
 	level_instance.current_level = level
@@ -66,8 +78,8 @@ func _on_level_pressed(levels: Array[Level], level: int):
 	level_instance.current_map = new_map
 	level_instance.current_map.show()
 	get_tree().root.add_child(level_instance)
-	get_parent().queue_free()
+	queue_free()
 
 func _on_exit_level_picker_pressed():
-	get_tree().change_scene_to_file("res://menu/main_menu/menu.tscn")
+	get_tree().change_scene_to_file("res://menu/main_menu/main_menu.tscn")
 	queue_free()

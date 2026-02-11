@@ -1,5 +1,5 @@
 class_name VictoryScreen
-extends ColorRect
+extends PanelContainer
 
 signal next_level_requested
 

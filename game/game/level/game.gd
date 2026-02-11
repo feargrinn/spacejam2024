@@ -26,11 +26,11 @@ func _on_next_level_pressed():
 	if false: #custom_levels_visible:
 		_on_exit_level_pressed()
 	else:
-		var lever_picker = load("res://menu/lever_picker/base_custom_picker.tscn").instantiate()
-		add_sibling(lever_picker)
-		reparent(lever_picker)
-		lever_picker.get_child(0).level_picker.unlock_level(current_level + 1)
-		lever_picker.get_child(0).level_picker.click_level_button(current_level + 1)
+		var base_custom_picker = load("res://menu/lever_picker/base_custom_picker.tscn").instantiate()
+		add_sibling(base_custom_picker)
+		reparent(base_custom_picker)
+		base_custom_picker.level_picker.unlock_level(current_level + 1)
+		base_custom_picker.level_picker.click_level_button(current_level + 1)
 
 
 func victory_screen():

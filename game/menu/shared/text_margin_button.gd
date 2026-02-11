@@ -34,9 +34,8 @@ func _set(property: StringName, value: Variant) -> bool:
 
 
 func _calculate_min_size() -> void:
-	var font := get_theme_default_font()
-	const DEFAULT_FONT_SIZE := 16
-	var font_scale := 1. * get_theme_default_font_size() / DEFAULT_FONT_SIZE
-	var text_size := font.get_string_size(text) * font_scale
+	var font := get_theme_font("font", "Button")
+	var font_size := get_theme_font_size("font_size", "Button")
+	var text_size := font.get_string_size(text, HORIZONTAL_ALIGNMENT_CENTER, -1, font_size)
 	custom_minimum_size.x = left_margin + text_size.x + right_margin
 	custom_minimum_size.y = top_margin + text_size.y + bottom_margin

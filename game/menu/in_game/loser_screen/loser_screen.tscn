@@ -1,14 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://drw6h3oglmj2e"]
 
 [ext_resource type="Script" uid="uid://0u0nr4tqb0ew" path="res://menu/in_game/loser_screen/loser_screen.gd" id="1_bhseh"]
+[ext_resource type="StyleBox" uid="uid://i47pwd6ai1af" path="res://menu/shared/graphics/panel_dark.tres" id="1_c8us3"]
 [ext_resource type="PackedScene" uid="uid://phgii3mkuvdn" path="res://menu/shared/nine_patch_rect_button.tscn" id="2_mngvi"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6hm77"]
-content_margin_left = 20.0
-content_margin_top = 20.0
-content_margin_right = 20.0
-content_margin_bottom = 20.0
-bg_color = Color(0.32156864, 0.4745098, 0.43529412, 1)
 
 [node name="LoserScreen" type="PanelContainer"]
 anchors_preset = 8
@@ -22,7 +16,7 @@ offset_right = 296.5
 offset_bottom = 149.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_6hm77")
+theme_override_styles/panel = ExtResource("1_c8us3")
 script = ExtResource("1_bhseh")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -60,4 +54,5 @@ columns = 2
 unique_name_in_owner = true
 custom_minimum_size = Vector2(140, 60)
 layout_mode = 2
+size_flags_vertical = 10
 text = "Retry"
