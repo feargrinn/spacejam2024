@@ -18,7 +18,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.5176471, 0.6627451, 0.54901963, 1)
 
-[node name="2D" type="CanvasLayer" parent="."]
+[node name="GridMapLayer" type="CanvasLayer" parent="."]
 
 [node name="Controls" type="CanvasLayer" parent="."]
 

@@ -1,6 +1,9 @@
 class_name BaseCustomPicker
 extends PanelContainer
 
+const GAME = preload("uid://fhmwenm3h7c7")
+const MAIN_MENU = preload("uid://b6ldch5v2bfc3")
+
 var level_picker: LevelPicker
 var custom_level_picker: LevelPicker
 var save_data: PlayerData
@@ -25,7 +28,7 @@ func _ready() -> void:
 	level_picker = LevelPicker.new(loaded_levels, self._on_level_pressed)
 	$VBoxContainer.add_child(level_picker)
 	level_picker.show()
-	$VBoxContainer/HBoxContainer/Base.set_disabled(true)
+	base.set_disabled(true)
 	var loaded_data = PlayerData.load_default()
 	if loaded_data is Error:
 		print("Failed to load game state: ", loaded_data.as_string(), ".")
@@ -47,38 +50,42 @@ func _ready() -> void:
 			$VBoxContainer.add_child(custom_level_picker)
 			$VBoxContainer/HBoxContainer/Custom.set_disabled(false)
 
+
 ## Shows button for unlocked level and saves in player data that lvl is unlocked
 func unlock_level(level: int):
 	level_picker.unlock_level(level)
 	save_data.unlock_level(level)
 
+
 func _on_custom_pressed():
-	$VBoxContainer/HBoxContainer/Custom.set_disabled(true)
-	$VBoxContainer/HBoxContainer/Base.set_disabled(false)
+	custom.set_disabled(true)
+	base.set_disabled(false)
 	level_picker.hide()
 	custom_level_picker.show()
 	custom_levels_visible = true
 
+
 func _on_base_pressed():
-	$VBoxContainer/HBoxContainer/Base.set_disabled(true)
-	$VBoxContainer/HBoxContainer/Custom.set_disabled(false)
+	base.set_disabled(true)
+	custom.set_disabled(false)
 	custom_level_picker.hide()
 	level_picker.show()
 	custom_levels_visible = false
 
+
 ## Creates a new map
 func _on_level_pressed(levels: Array[Level], level: int):
-	var game = load("res://game/level/game.tscn")
-	var level_instance = game.instantiate()
+	var level_instance: Game = GAME.instantiate()
 	level_instance.current_level = level
 	var new_map = LevelTileMap.custom_new(levels[level-1])
-	level_instance.get_node("2D").add_child(new_map)
-	#new_map.owner = level_instance
 	level_instance.current_map = new_map
 	level_instance.current_map.show()
 	get_tree().root.add_child(level_instance)
+	level_instance.grid_map_layer.add_child(new_map)
+	#new_map.owner = level_instance
 	queue_free()
 
+
 func _on_exit_level_picker_pressed():
-	get_tree().change_scene_to_file("res://menu/main_menu/main_menu.tscn")
+	get_tree().change_scene_to_packed(MAIN_MENU)
 	queue_free()

@@ -4,11 +4,19 @@ extends Node
 var current_map: LevelTileMap
 var current_level
 
+const END_SCREEN = preload("uid://bx33hrjamvvs3")
+const VICTORY_SCREEN = preload("uid://c5jhprfubvllq")
+const BASE_CUSTOM_PICKER = preload("uid://brv51q227veyq")
+
+@onready var grid_map_layer: CanvasLayer = $GridMapLayer
+@onready var controls: CanvasLayer = $Controls
+@onready var tile_picker: VBoxContainer = %TilePicker
+
 
 func _ready():
 	for tile_type in TileType.pipe_types:
 		var tile_button := _create_button(tile_type)
-		%TilePicker.add_child(tile_button)
+		tile_picker.add_child(tile_button)
 		tile_button.tile_picked_up.connect(
 			func(tile: TileId):
 				current_map.tile = tile
@@ -17,7 +25,7 @@ func _ready():
 
 ##Goes back to lever picker
 func _on_exit_level_pressed():
-	get_tree().change_scene_to_file("res://menu/lever_picker/base_custom_picker.tscn")
+	get_tree().change_scene_to_packed(BASE_CUSTOM_PICKER)
 	queue_free()
 
 
@@ -31,7 +39,7 @@ func _on_next_level_pressed():
 	if false: #custom_levels_visible:
 		_on_exit_level_pressed()
 	else:
-		var base_custom_picker = load("res://menu/lever_picker/base_custom_picker.tscn").instantiate()
+		var base_custom_picker: BaseCustomPicker = BASE_CUSTOM_PICKER.instantiate()
 		add_sibling(base_custom_picker)
 		reparent(base_custom_picker)
 		base_custom_picker.level_picker.unlock_level(current_level + 1)
@@ -40,24 +48,23 @@ func _on_next_level_pressed():
 
 func victory_screen():
 	if true: #custom_levels_visible or (current_level != level_picker.max_level()):
-		var victory_scene: VictoryScreen = preload("uid://c5jhprfubvllq").instantiate()
-		$Controls.add_child(victory_scene)
+		var victory_scene: VictoryScreen = VICTORY_SCREEN.instantiate()
+		controls.add_child(victory_scene)
 		victory_scene.next_level_requested.connect(_on_next_level_pressed)
 	else:
-		var credits = load("res://menu/in_game/end_screen/end_screen.tscn")
-		$Controls.add_child(credits.instantiate())
+		controls.add_child(END_SCREEN.instantiate())
 
 
 func _on_retry_pressed():
 	var new_map = LevelTileMap.custom_new(current_map.level_data)
-	for child in $"2D".get_children():
+	for child in grid_map_layer.get_children():
 		child.queue_free()
-	$"2D".add_child(new_map, true)
+	grid_map_layer.add_child(new_map, true)
 	current_map = new_map
 
 
 func loser_screen(losing_outputs: Dictionary):
 	var loser_scene := LoserScreen.custom_new(losing_outputs)
-	$Controls.add_child(loser_scene)
+	controls.add_child(loser_scene)
 	loser_scene.retry_requested.connect(_on_retry_pressed)
 	loser_scene.retry_requested.connect(loser_scene.queue_free)
