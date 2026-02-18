@@ -1,11 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://fhmwenm3h7c7"]
+[gd_scene load_steps=5 format=3 uid="uid://fhmwenm3h7c7"]
 
 [ext_resource type="Script" uid="uid://dn584k3p7vand" path="res://game/level/game.gd" id="1_f0dd8"]
 [ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://menu/shared/graphics/fonts/menu_font.ttf" id="2_rssi8"]
+[ext_resource type="PackedScene" uid="uid://dys1pp7uead78" path="res://game/level/level_tile_map.tscn" id="2_yrn2k"]
 [ext_resource type="Texture2D" uid="uid://c3msrgw8yn1n4" path="res://menu/shared/graphics/buttons/menu_button_lvl_empty.png" id="3_eonvc"]
 
-[node name="Game" type="Node"]
+[node name="Game" type="Node" node_paths=PackedStringArray("level_tile_map")]
 script = ExtResource("1_f0dd8")
+level_tile_map = NodePath("GridMapLayer/LevelTileMap")
 
 [node name="Background" type="CanvasLayer" parent="."]
 
@@ -19,6 +21,8 @@ grow_vertical = 2
 color = Color(0.5176471, 0.6627451, 0.54901963, 1)
 
 [node name="GridMapLayer" type="CanvasLayer" parent="."]
+
+[node name="LevelTileMap" parent="GridMapLayer" instance=ExtResource("2_yrn2k")]
 
 [node name="Controls" type="CanvasLayer" parent="."]
 

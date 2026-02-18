@@ -1,7 +1,6 @@
 class_name Game
 extends Node
 
-var current_map: LevelTileMap
 var loaded_base_levels: Array[Level]
 var current_level: int #ugh
 
@@ -13,16 +12,14 @@ const GAME = preload("uid://fhmwenm3h7c7")
 @onready var grid_map_layer: CanvasLayer = $GridMapLayer
 @onready var controls: CanvasLayer = $Controls
 @onready var tile_picker: VBoxContainer = %TilePicker
+@export var level_tile_map: LevelTileMap
 
 
 static func custom_new(base_levels: Array[Level], level_id: int) -> Game:
 	var game: Game = GAME.instantiate()
 	game.loaded_base_levels = base_levels
 	game.current_level = level_id
-	
-	var new_map = LevelTileMap.custom_new(base_levels[level_id])
-	game.current_map = new_map
-	game.grid_map_layer.add_child(new_map)
+	game.level_tile_map.level_data = base_levels[level_id]
 	return game
 
 
@@ -32,7 +29,7 @@ func _ready():
 		tile_picker.add_child(tile_button)
 		tile_button.tile_picked_up.connect(
 			func(tile: TileId):
-				current_map.tile = tile
+				level_tile_map.tile = tile
 				)
 
 
@@ -51,20 +48,12 @@ func _on_next_level_pressed():
 	if false: #custom_levels_visible:
 		_on_exit_level_pressed()
 	else:
-		var loaded_levels = Level.load_default()
-		if loaded_levels is Error:
-			print("Failed to load levels: ", loaded_levels.as_string(), ".")
-		print("Loaded ", loaded_levels.size(), " levels.")
-		if current_level + 1 >= loaded_levels.size():
-			print_debug("Level out of bounds")
-			return
-		
 		current_level += 1
-		refresh_map(loaded_levels[current_level])
+		level_tile_map.level_data = loaded_base_levels[current_level]
 
 
 func _on_retry_pressed():
-	refresh_map(current_map.level_data)
+	level_tile_map.draw_starting_map()
 
 
 func victory_screen():
@@ -75,16 +64,6 @@ func victory_screen():
 		victory_scene.next_level_requested.connect(victory_scene.queue_free, CONNECT_ONE_SHOT)
 	else:
 		controls.add_child(END_SCREEN.instantiate())
-
-
-func refresh_map(level_data: Level) -> void:
-	for child in grid_map_layer.get_children():
-		grid_map_layer.remove_child(child)
-		child.queue_free()
-	
-	var new_map = LevelTileMap.custom_new(level_data)
-	grid_map_layer.add_child(new_map, true)
-	current_map = new_map
 
 
 func loser_screen(losing_outputs: Dictionary):

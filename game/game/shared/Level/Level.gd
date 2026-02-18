@@ -1,4 +1,5 @@
 class_name Level
+extends Resource
 
 const OFFICIAL_LEVEL_DIR: String = "res://data/levels/"
 const USER_LEVEL_DIR: String = "user://levels"
@@ -15,7 +16,7 @@ const HEIGHT_NAME: String = "height"
 const WIDTH_NAME: String = "width"
 
 var name: String
-var background: Dictionary
+var background: Dictionary[Vector2i, bool]
 var inputs: Array[PreInput]
 var outputs: Array[PreOutput]
 var tiles: Array[PreTile]

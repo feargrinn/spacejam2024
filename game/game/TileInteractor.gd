@@ -1,6 +1,5 @@
-extends Area2D
-
 class_name TileInteractor
+extends Area2D
 
 var is_replaceable: bool
 

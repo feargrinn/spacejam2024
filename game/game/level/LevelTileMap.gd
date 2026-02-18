@@ -13,12 +13,12 @@ var level_name: String
 # The stream player still shouldn't be here I think, but it's better
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
-@export var background_layer: BackgroundLayer
-@export var tile_colour_layer: ColourLayer
-@export var tile_layer: TileLayer
-@export var tile_hover_layer: TileMapLayer
+@onready var background_layer: BackgroundLayer = %BackgroundLayer
+@onready var tile_colour_layer: ColourLayer = %ColourLayer
+@onready var tile_layer: TileLayer = %TileLayer
+@onready var tile_hover_layer: TileMapLayer = %TileHoverLayer
 
-var level_data: Level
+@export var level_data: Level: set = _set_level_data
 var color_translation = {}
 
 var game: Game
@@ -26,21 +26,20 @@ var game: Game
 var losing_outputs: Dictionary[Vector2i, Dictionary]
 
 
-static func custom_new(level: Level) -> LevelTileMap:
-	var tilemap: LevelTileMap = LEVEL_TILE_MAP.instantiate()
-	tilemap.level_data = level
-	tilemap.level_name = level.name
-	return tilemap
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	background_layer.background = level_data.background
-	
 	game = get_node("/root/Game")
 	is_running = true
-	
-	set_starting_map()
+	TileInteractor.hover_layer = tile_hover_layer
+	TileInteractor.tile_layer = tile_layer
+
+
+func _set_level_data(value: Level) -> void:
+	level_data = value
+	if is_node_ready():
+		draw_starting_map()
+	else:
+		ready.connect(draw_starting_map)
 
 
 func scale_from_dimensions(dimensions: Vector2i) -> Vector2:
@@ -67,8 +66,17 @@ func place_tile(pretile: PreTile):
 	tile_colour_layer.update_at(Vector2i(pretile.x, pretile.y))
 
 
-func set_starting_map():
-	TileInteractor.hover_layer = tile_hover_layer
+func clear_map() -> void:
+	for layer: TileMapLayer in [background_layer, tile_colour_layer, 
+			tile_layer, tile_hover_layer]:
+		layer.clear()
+
+
+func draw_starting_map():
+	clear_map()
+	if !level_data:
+		return
+	background_layer.background = level_data.background
 	for input in level_data.inputs:
 		place_input(input)
 	for output in level_data.outputs:
