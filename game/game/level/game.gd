@@ -40,7 +40,9 @@ func _on_exit_level_pressed():
 
 ## Creates clickable tile buttons
 func _create_button(tile_type: TileType.Type) -> PickableTile:
-	var container = PickableTile.new(TileType.coordinates(tile_type), TileType.texture(tile_type))
+	var tile_coords := TileType.coordinates(tile_type)
+	var texture: Texture = load(TileType.texture(tile_type))
+	var container = PickableTile.custom_new(tile_coords, texture)
 	return container
 
 
