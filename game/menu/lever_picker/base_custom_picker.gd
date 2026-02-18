@@ -70,11 +70,11 @@ func _on_level_picked(levels: Array[Level], level: int):
 	level_instance.current_map = new_map
 	level_instance.current_map.show()
 	get_tree().root.add_child(level_instance)
+	get_tree().current_scene = level_instance
 	level_instance.grid_map_layer.add_child(new_map)
-	#new_map.owner = level_instance
+	new_map.owner = level_instance
 	queue_free()
 
 
 func _on_exit_level_picker_pressed():
 	get_tree().change_scene_to_packed(MAIN_MENU)
-	queue_free()

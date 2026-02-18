@@ -26,7 +26,6 @@ func _ready():
 ##Goes back to lever picker
 func _on_exit_level_pressed():
 	get_tree().change_scene_to_file(BASE_CUSTOM_PICKER_UID)
-	queue_free()
 
 
 ## Creates clickable tile buttons
