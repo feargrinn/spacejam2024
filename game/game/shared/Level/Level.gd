@@ -27,6 +27,11 @@ func _init(a_name: String, new_background: Dictionary[Vector2i, bool], a_inputs:
 	self.outputs = a_outputs
 	self.tiles = a_tiles
 
+
+func _to_string() -> String:
+	return name
+
+
 static func load_default():
 	return load_from_dir(OFFICIAL_LEVEL_DIR)
 
