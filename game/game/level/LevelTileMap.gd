@@ -6,14 +6,12 @@ const LEVEL_TILE_MAP = preload("uid://dys1pp7uead78")
 var all_outputs: Array[Vector2i] = []
 
 var current_tile = null;
-var left_mouse_was_pressed = false;
-var right_mouse_was_pressed = false;
 var tile = null
 var is_running: bool
 var level_name: String
 
-# TODO: move them to a reasonable place...
-var placing_sounds = []
+# The stream player still shouldn't be here I think, but it's better
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
 @export var background_layer: BackgroundLayer
 @export var tile_colour_layer: ColourLayer
@@ -24,6 +22,8 @@ var level_data: Level
 var color_translation = {}
 
 var game: Game
+
+var losing_outputs: Dictionary[Vector2i, Dictionary]
 
 
 static func custom_new(level: Level) -> LevelTileMap:
@@ -37,19 +37,8 @@ static func custom_new(level: Level) -> LevelTileMap:
 func _ready():
 	background_layer.background = level_data.background
 	
-	
 	game = get_node("/root/Game")
 	is_running = true
-	
-	# TODO: move them to a reasonable place...
-	for i in 3:
-		placing_sounds.append(AudioStreamPlayer.new())
-	placing_sounds[0].stream = preload("res://game/shared/sfx/sfx_pop_down_tile_1.wav")
-	placing_sounds[1].stream = preload("res://game/shared/sfx/sfx_pop_down_tile_2.wav")
-	placing_sounds[2].stream = preload("res://game/shared/sfx/sfx_pop_down_tile_3.wav")
-	for sound in placing_sounds:
-		add_child(sound)
-	####
 	
 	set_starting_map()
 
@@ -77,13 +66,9 @@ func place_tile(pretile: PreTile):
 	tile_layer.place_tile(Vector2i(pretile.x, pretile.y), TileId.new(pretile.type, pretile.rot))
 	tile_colour_layer.update_at(Vector2i(pretile.x, pretile.y))
 
-func create_layers():
-	TileInteractor.hover_layer = tile_hover_layer
-	
-
 
 func set_starting_map():
-	create_layers()
+	TileInteractor.hover_layer = tile_hover_layer
 	for input in level_data.inputs:
 		place_input(input)
 	for output in level_data.outputs:
@@ -122,12 +107,11 @@ func _process(_delta):
 		if Input.is_action_just_pressed("LMB"):
 			var tile_position = _mouse_position_to_coordinates()
 			if background_layer.is_background(tile_position):
-				placing_sounds[RandomNumberGenerator.new().randi_range(0, 2)].play()
+				audio_stream_player.play()
 				set_tile_at(tile_position)
 			tile = null
 
 
-var losing_outputs: Dictionary[Vector2i, Dictionary]
 
 
 func animate_outputs(outputs: Array[Vector2i], animation_name: String) -> void:
