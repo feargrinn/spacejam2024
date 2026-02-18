@@ -66,13 +66,12 @@ func _flip_base_custom():
 func _on_level_picked(levels: Array[Level], level: int):
 	var level_instance: Game = GAME.instantiate()
 	level_instance.current_level = level
-	var new_map = LevelTileMap.custom_new(levels[level-1])
+	var new_map = LevelTileMap.custom_new(levels[level])
 	level_instance.current_map = new_map
 	level_instance.current_map.show()
 	get_tree().root.add_child(level_instance)
 	get_tree().current_scene = level_instance
 	level_instance.grid_map_layer.add_child(new_map)
-	new_map.owner = level_instance
 	queue_free()
 
 

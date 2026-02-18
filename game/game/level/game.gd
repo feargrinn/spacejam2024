@@ -2,15 +2,28 @@ class_name Game
 extends Node
 
 var current_map: LevelTileMap
+var loaded_base_levels: Array[Level]
 var current_level: int #ugh
 
 const END_SCREEN = preload("uid://bx33hrjamvvs3")
 const VICTORY_SCREEN = preload("uid://c5jhprfubvllq")
 const BASE_CUSTOM_PICKER_UID: String = "uid://brv51q227veyq"
+const GAME = preload("uid://fhmwenm3h7c7")
 
 @onready var grid_map_layer: CanvasLayer = $GridMapLayer
 @onready var controls: CanvasLayer = $Controls
 @onready var tile_picker: VBoxContainer = %TilePicker
+
+
+static func custom_new(base_levels: Array[Level], level_id: int) -> Game:
+	var game: Game = GAME.instantiate()
+	game.loaded_base_levels = base_levels
+	game.current_level = level_id
+	
+	var new_map = LevelTileMap.custom_new(base_levels[level_id])
+	game.current_map = new_map
+	game.grid_map_layer.add_child(new_map)
+	return game
 
 
 func _ready():

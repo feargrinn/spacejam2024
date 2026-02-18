@@ -9,13 +9,16 @@ var level_buttons: Array[LevelButton]
 
 func _set_levels(value: Array[Level]) -> void:
 	levels = value
-	get_children().all(queue_free)
+	for child in get_children():
+		remove_child(child)
+		child.queue_free()
+	
 	for level_id in levels.size():
-		create_level_button(level_id + 1)
+		create_level_button(level_id)
 
 
 func create_level_button(level: int):
-	var level_button = LevelButton.new("%d" % level)
+	var level_button = LevelButton.new("%d" % (level + 1))
 	level_button.hide()
 	level_buttons.append(level_button)
 	add_child(level_button)
