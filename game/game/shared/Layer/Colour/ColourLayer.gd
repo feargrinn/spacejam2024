@@ -7,6 +7,10 @@ var colour_coords = TileType.coordinates(TileType.Type.COLOR)
 var colours = {}
 
 
+func clear_data() -> void:
+	colours = {}
+
+
 func set_tile_colour(tile_position, colour, input_or_output = null):
 	if input_or_output:
 		var alt_id

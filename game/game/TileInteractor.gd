@@ -8,6 +8,7 @@ var tile_position: Vector2i
 static var tile_layer
 static var hover_layer
 
+
 func _init(a_tile_position):
 	tile_position = a_tile_position
 

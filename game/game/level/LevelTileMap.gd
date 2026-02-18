@@ -3,8 +3,6 @@ extends Node2D
 
 const LEVEL_TILE_MAP = preload("uid://dys1pp7uead78")
 
-var all_outputs: Array[Vector2i] = []
-
 var current_tile = null;
 var tile = null
 var is_running: bool
@@ -58,6 +56,7 @@ func place_output(output: PreOutput):
 	tile_layer.place_tile(Vector2i(output.x, output.y), TileId.new(coordinates(TileType.Type.OUTPUT), output.rot))
 	tile_colour_layer.set_tile_colour(Vector2i(output.x, output.y), output.colour, output)
 
+
 func coordinates(tile_type : TileType.Type):
 	return TileType.coordinates(tile_type)
 
@@ -70,6 +69,9 @@ func clear_map() -> void:
 	for layer: TileMapLayer in [background_layer, tile_colour_layer, 
 			tile_layer, tile_hover_layer]:
 		layer.clear()
+	
+	tile_colour_layer.clear_data()
+	tile_layer.clear_data()
 
 
 func draw_starting_map():
@@ -90,23 +92,27 @@ func draw_starting_map():
 		dimensions.x * scale.x * Globals.TILE_SIZE / 2,
 		dimensions.y * scale.y * Globals.TILE_SIZE / 2
 	)
+	
+	is_running = true
 
 
 func set_tile_at(tile_position):
 	tile_layer.place_tile(tile_position, tile)
 	tile_colour_layer.update_at(tile_position)
 	check_for_game_status()
-	
+
+
 func _mouse_position_to_coordinates():
 	return background_layer.local_to_map(get_local_mouse_position())
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	if !is_running:
 		return
-
-	if(tile != null):tile_hover_layer.clear()
+	
 	if tile != null:
+		tile_hover_layer.clear()
 		tile_hover_layer.set_cell(_mouse_position_to_coordinates(), 0, tile.id, tile.alternative)
 		if Input.is_action_just_released("RMB"):
 			Sounds.play("turning")
