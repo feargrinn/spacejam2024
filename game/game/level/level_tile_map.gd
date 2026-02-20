@@ -3,6 +3,13 @@ extends Node2D
 
 const LEVEL_TILE_MAP = preload("uid://dys1pp7uead78")
 
+enum Layer{
+	BACKGROUND,
+	COLOUR,
+	TILE,
+	HOVER
+}
+
 @export var level_data: Level: set = _set_level_data
 var color_translation = {}
 
@@ -17,32 +24,24 @@ var level_name: String
 
 
 @onready var background_layer: BackgroundLayer = %BackgroundLayer:
-	set(value):
-		if background_layer:
-			background_layer.free()
-		background_layer = value
-		background_layer.tile_set = Globals.TILE_SET
-		add_child(background_layer)
-		move_child(background_layer, 0)
+	get: return _get_layer(Layer.BACKGROUND)
+	set(value): _set_layer(value, Layer.BACKGROUND)
 @onready var tile_colour_layer: ColourLayer = %ColourLayer:
-	set(value):
-		if tile_colour_layer:
-			tile_colour_layer.free()
-		tile_colour_layer = value
-		tile_colour_layer.tile_set = Globals.TILE_SET
-		tile_colour_layer.tile_layer = tile_layer
-		add_child(tile_colour_layer)
-		move_child(tile_colour_layer, 1)
+	get: return _get_layer(Layer.COLOUR)
+	set(value): _set_layer(value, Layer.COLOUR)
 @onready var tile_layer: TileLayer = %TileLayer:
-	set(value):
-		if tile_layer:
-			tile_layer.free()
-		tile_layer = value
-		tile_layer.tile_set = Globals.TILE_SET
-		tile_colour_layer.tile_layer = tile_layer
-		add_child(tile_layer)
-		move_child(tile_layer, 2)
-@onready var tile_hover_layer: TileMapLayer = %TileHoverLayer
+	get: return _get_layer(Layer.TILE)
+	set(value): _set_layer(value, Layer.TILE)
+@onready var tile_hover_layer: TileMapLayer = %TileHoverLayer:
+	get: return _get_layer(Layer.HOVER)
+	set(value): _set_layer(value, Layer.HOVER)
+
+var layers: Dictionary[Layer, TileMapLayer] = {
+	Layer.BACKGROUND : background_layer,
+	Layer.COLOUR : tile_colour_layer,
+	Layer.TILE : tile_layer,
+	Layer.HOVER : tile_hover_layer
+}
 
 # The stream player still shouldn't be here I think, but it's better
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
@@ -54,6 +53,25 @@ func _ready():
 	is_running = true
 	TileInteractor.hover_layer = tile_hover_layer
 	TileInteractor.tile_layer = tile_layer
+
+
+func _set_layer(value: TileMapLayer, index: Layer) -> void:
+	if layers[index]:
+		var old_layer: TileMapLayer = layers[index]
+		layers[index] = null
+		remove_child(old_layer)
+		old_layer.queue_free()
+	layers[index] = value
+	layers[index].tile_set = Globals.TILE_SET
+	add_child(layers[index], true)
+	move_child(layers[index], index)
+	return
+
+
+func _get_layer(index: Layer) -> TileMapLayer:
+	if !layers.has(index):
+		return null
+	return layers[index]
 
 
 func _set_level_data(value: Level) -> void:
@@ -93,6 +111,8 @@ func clear_map() -> void:
 	background_layer = BackgroundLayer.new()
 	tile_colour_layer = ColourLayer.new()
 	tile_layer = TileLayer.new()
+	tile_colour_layer.tile_layer = tile_layer
+	tile_hover_layer = TileMapLayer.new()
 
 
 func draw_starting_map():
