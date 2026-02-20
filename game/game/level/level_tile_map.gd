@@ -3,25 +3,49 @@ extends Node2D
 
 const LEVEL_TILE_MAP = preload("uid://dys1pp7uead78")
 
-var current_tile = null;
-var tile = null
-var is_running: bool
-var level_name: String
-
-# The stream player still shouldn't be here I think, but it's better
-@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
-
-@onready var background_layer: BackgroundLayer = %BackgroundLayer
-@onready var tile_colour_layer: ColourLayer = %ColourLayer
-@onready var tile_layer: TileLayer = %TileLayer
-@onready var tile_hover_layer: TileMapLayer = %TileHoverLayer
-
 @export var level_data: Level: set = _set_level_data
 var color_translation = {}
 
 var game: Game
 
 var losing_outputs: Dictionary[Vector2i, Dictionary]
+
+var current_tile = null;
+var tile = null
+var is_running: bool
+var level_name: String
+
+
+@onready var background_layer: BackgroundLayer = %BackgroundLayer:
+	set(value):
+		if background_layer:
+			background_layer.free()
+		background_layer = value
+		background_layer.tile_set = Globals.TILE_SET
+		add_child(background_layer)
+		move_child(background_layer, 0)
+@onready var tile_colour_layer: ColourLayer = %ColourLayer:
+	set(value):
+		if tile_colour_layer:
+			tile_colour_layer.free()
+		tile_colour_layer = value
+		tile_colour_layer.tile_set = Globals.TILE_SET
+		tile_colour_layer.tile_layer = tile_layer
+		add_child(tile_colour_layer)
+		move_child(tile_colour_layer, 1)
+@onready var tile_layer: TileLayer = %TileLayer:
+	set(value):
+		if tile_layer:
+			tile_layer.free()
+		tile_layer = value
+		tile_layer.tile_set = Globals.TILE_SET
+		tile_colour_layer.tile_layer = tile_layer
+		add_child(tile_layer)
+		move_child(tile_layer, 2)
+@onready var tile_hover_layer: TileMapLayer = %TileHoverLayer
+
+# The stream player still shouldn't be here I think, but it's better
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
 
 # Called when the node enters the scene tree for the first time.
@@ -66,12 +90,9 @@ func place_tile(pretile: PreTile):
 
 
 func clear_map() -> void:
-	for layer: TileMapLayer in [background_layer, tile_colour_layer, 
-			tile_layer, tile_hover_layer]:
-		layer.clear()
-	
-	tile_colour_layer.clear_data()
-	tile_layer.clear_data()
+	background_layer = BackgroundLayer.new()
+	tile_colour_layer = ColourLayer.new()
+	tile_layer = TileLayer.new()
 
 
 func draw_starting_map():

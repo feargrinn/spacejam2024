@@ -11,16 +11,9 @@ const OUTPUT = Vector2i(1,1)
 
 var tiles: Array[TileInteractor]
 
+
 func _ready() -> void:
 	TileInteractor.tile_layer = self
-
-
-func clear_data() -> void:
-	for tile in tiles:
-		tile.queue_free()
-	tiles = []
-	inputs = []
-	outputs = []
 
 
 func empty_at(pos: Vector2i) -> bool:
