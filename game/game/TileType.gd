@@ -35,13 +35,13 @@ static func is_pipe_tile(tile_type):
 		return pipe_types.has(tile_type)
 
 
-static func id_from_coordinates(a_coordinates : Vector2i):
+static func id_from_coordinates(a_coordinates : Vector2i) -> Type:
 	for element in Type:
 		if coordinates(Type[element]) == a_coordinates:
 			return Type[element]
 	return Type.ERASER
 
-static func coordinates(tile_type : Type):
+static func coordinates(tile_type : Type) -> Vector2i:
 	match tile_type:
 		Type.EMPTY:
 			return Vector2i(-1,-1)
@@ -71,6 +71,8 @@ static func coordinates(tile_type : Type):
 			return Vector2i(5,1)
 		Type.ERASER:
 			return Vector2i(1,4)
+		_:
+			return Vector2i(-1, -1)
 
 static func texture(tile_type : Type):
 	match tile_type:

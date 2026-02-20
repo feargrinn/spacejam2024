@@ -3,55 +3,83 @@ extends Node2D
 
 const LEVEL_TILE_MAP = preload("uid://dys1pp7uead78")
 
-var all_outputs: Array[Vector2i] = []
+enum Layer{
+	BACKGROUND,
+	COLOUR,
+	TILE,
+	HOVER
+}
 
-var current_tile = null;
-var left_mouse_was_pressed = false;
-var right_mouse_was_pressed = false;
-var tile = null
-var is_running: bool
-var level_name: String
-
-# TODO: move them to a reasonable place...
-var placing_sounds = []
-
-@export var background_layer: BackgroundLayer
-@export var tile_colour_layer: ColourLayer
-@export var tile_layer: TileLayer
-@export var tile_hover_layer: TileMapLayer
-
-var level_data: Level
+@export var level_data: Level: set = _set_level_data
 var color_translation = {}
 
 var game: Game
 
+var losing_outputs: Dictionary[Vector2i, Dictionary]
 
-static func custom_new(level: Level) -> LevelTileMap:
-	var tilemap: LevelTileMap = LEVEL_TILE_MAP.instantiate()
-	tilemap.level_data = level
-	tilemap.level_name = level.name
-	return tilemap
+var current_tile = null;
+var tile = null
+var is_running: bool
+var level_name: String
+
+
+@onready var background_layer: BackgroundLayer = %BackgroundLayer:
+	get: return _get_layer(Layer.BACKGROUND)
+	set(value): _set_layer(value, Layer.BACKGROUND)
+@onready var tile_colour_layer: ColourLayer = %ColourLayer:
+	get: return _get_layer(Layer.COLOUR)
+	set(value): _set_layer(value, Layer.COLOUR)
+@onready var tile_layer: TileLayer = %TileLayer:
+	get: return _get_layer(Layer.TILE)
+	set(value): _set_layer(value, Layer.TILE)
+@onready var tile_hover_layer: TileMapLayer = %TileHoverLayer:
+	get: return _get_layer(Layer.HOVER)
+	set(value): _set_layer(value, Layer.HOVER)
+
+var layers: Dictionary[Layer, TileMapLayer] = {
+	Layer.BACKGROUND : background_layer,
+	Layer.COLOUR : tile_colour_layer,
+	Layer.TILE : tile_layer,
+	Layer.HOVER : tile_hover_layer
+}
+
+# The stream player still shouldn't be here I think, but it's better
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	background_layer.background = level_data.background
-	
-	
 	game = get_node("/root/Game")
 	is_running = true
-	
-	# TODO: move them to a reasonable place...
-	for i in 3:
-		placing_sounds.append(AudioStreamPlayer.new())
-	placing_sounds[0].stream = preload("res://game/shared/sfx/sfx_pop_down_tile_1.wav")
-	placing_sounds[1].stream = preload("res://game/shared/sfx/sfx_pop_down_tile_2.wav")
-	placing_sounds[2].stream = preload("res://game/shared/sfx/sfx_pop_down_tile_3.wav")
-	for sound in placing_sounds:
-		add_child(sound)
-	####
-	
-	set_starting_map()
+	TileInteractor.hover_layer = tile_hover_layer
+	TileInteractor.tile_layer = tile_layer
+
+
+func _set_layer(value: TileMapLayer, index: Layer) -> void:
+	if layers[index]:
+		var old_layer: TileMapLayer = layers[index]
+		layers[index] = null
+		remove_child(old_layer)
+		old_layer.queue_free()
+	layers[index] = value
+	layers[index].tile_set = Globals.TILE_SET
+	add_child(layers[index], true)
+	move_child(layers[index], index)
+	return
+
+
+func _get_layer(index: Layer) -> TileMapLayer:
+	if !layers.has(index):
+		return null
+	return layers[index]
+
+
+func _set_level_data(value: Level) -> void:
+	level_data = value
+	if is_node_ready():
+		draw_starting_map()
+	else:
+		ready.connect(draw_starting_map)
 
 
 func scale_from_dimensions(dimensions: Vector2i) -> Vector2:
@@ -70,6 +98,7 @@ func place_output(output: PreOutput):
 	tile_layer.place_tile(Vector2i(output.x, output.y), TileId.new(coordinates(TileType.Type.OUTPUT), output.rot))
 	tile_colour_layer.set_tile_colour(Vector2i(output.x, output.y), output.colour, output)
 
+
 func coordinates(tile_type : TileType.Type):
 	return TileType.coordinates(tile_type)
 
@@ -77,13 +106,20 @@ func place_tile(pretile: PreTile):
 	tile_layer.place_tile(Vector2i(pretile.x, pretile.y), TileId.new(pretile.type, pretile.rot))
 	tile_colour_layer.update_at(Vector2i(pretile.x, pretile.y))
 
-func create_layers():
-	TileInteractor.hover_layer = tile_hover_layer
-	
+
+func clear_map() -> void:
+	background_layer = BackgroundLayer.new()
+	tile_colour_layer = ColourLayer.new()
+	tile_layer = TileLayer.new()
+	tile_colour_layer.tile_layer = tile_layer
+	tile_hover_layer = TileMapLayer.new()
 
 
-func set_starting_map():
-	create_layers()
+func draw_starting_map():
+	clear_map()
+	if !level_data:
+		return
+	background_layer.background = level_data.background
 	for input in level_data.inputs:
 		place_input(input)
 	for output in level_data.outputs:
@@ -97,23 +133,27 @@ func set_starting_map():
 		dimensions.x * scale.x * Globals.TILE_SIZE / 2,
 		dimensions.y * scale.y * Globals.TILE_SIZE / 2
 	)
+	
+	is_running = true
 
 
 func set_tile_at(tile_position):
 	tile_layer.place_tile(tile_position, tile)
 	tile_colour_layer.update_at(tile_position)
 	check_for_game_status()
-	
+
+
 func _mouse_position_to_coordinates():
 	return background_layer.local_to_map(get_local_mouse_position())
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	if !is_running:
 		return
-
-	if(tile != null):tile_hover_layer.clear()
+	
 	if tile != null:
+		tile_hover_layer.clear()
 		tile_hover_layer.set_cell(_mouse_position_to_coordinates(), 0, tile.id, tile.alternative)
 		if Input.is_action_just_released("RMB"):
 			Sounds.play("turning")
@@ -122,12 +162,11 @@ func _process(_delta):
 		if Input.is_action_just_pressed("LMB"):
 			var tile_position = _mouse_position_to_coordinates()
 			if background_layer.is_background(tile_position):
-				placing_sounds[RandomNumberGenerator.new().randi_range(0, 2)].play()
+				audio_stream_player.play()
 				set_tile_at(tile_position)
 			tile = null
 
 
-var losing_outputs: Dictionary[Vector2i, Dictionary]
 
 
 func animate_outputs(outputs: Array[Vector2i], animation_name: String) -> void:

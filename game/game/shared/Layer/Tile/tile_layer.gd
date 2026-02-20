@@ -11,6 +11,7 @@ const OUTPUT = Vector2i(1,1)
 
 var tiles: Array[TileInteractor]
 
+
 func _ready() -> void:
 	TileInteractor.tile_layer = self
 

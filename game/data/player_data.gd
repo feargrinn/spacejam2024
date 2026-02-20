@@ -5,17 +5,10 @@ const reached_level_name: String = "level"
 
 var reached_level: int
 
-func _init():
-	reached_level = 1
-
-func save_game():
-	var save_file = FileAccess.open(save_filename, FileAccess.WRITE)
-	save_file.store_line(JSON.stringify({
-		reached_level_name: reached_level
-	}))
 
 static func load_default():
 	return load_from_file(save_filename)
+
 
 static func load_from_file(filename: String):
 	if not FileAccess.file_exists(filename):
@@ -28,6 +21,7 @@ static func load_from_file(filename: String):
 	else:
 		return result
 
+
 static func load_from_json(raw_json):
 	var json = JSON.new()
 	if not json.parse(raw_json) == OK:
@@ -39,10 +33,23 @@ static func load_from_json(raw_json):
 	result.reached_level = loaded_data[reached_level_name]
 	return result
 
+
+func _init():
+	reached_level = 1
+
+
+func save_game():
+	var save_file = FileAccess.open(save_filename, FileAccess.WRITE)
+	save_file.store_line(JSON.stringify({
+		reached_level_name: reached_level
+	}))
+
+
 func unlock_level(level: int):
 	if level > reached_level:
 		reached_level = level
 		save_game()
+
 
 func get_reached_level():
 	return reached_level

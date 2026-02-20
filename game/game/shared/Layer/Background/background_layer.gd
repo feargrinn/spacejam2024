@@ -28,6 +28,7 @@ static func get_all_surrounding_cells(pos):
 func is_background(pos: Vector2i) -> bool:
 	return background.has(pos)
 
+
 func is_ok_for_input_or_output(pos: Vector2i):
 	if self.has_background.has(pos):
 		return false
@@ -38,16 +39,14 @@ func is_ok_for_input_or_output(pos: Vector2i):
 				proper_alternatives.append(int(round(((Vector2(Vector2.UP).angle_to(neighbour-pos) + PI)/PI)*2))%4)
 		proper_alternatives.sort()
 		return proper_alternatives
-	
+
 
 func _set_background(value: Dictionary[Vector2i, bool]):
-	for pos in value:
-		if is_background(pos):
-			# nothing to do
-			return
-		background[pos] = true
+	background = value
+	for pos in background:
 		set_cell(pos, 0, BACKGROUND_SPRITE_ID)
 		_update_border_around(pos)
+
 
 func delete_background(pos: Vector2i):
 	if !is_background(pos):
@@ -57,9 +56,11 @@ func delete_background(pos: Vector2i):
 	erase_cell(pos)
 	_update_border_around(pos)
 
+
 # return the dict, for saving purposes
 func background_dict() -> Dictionary:
 	return self.has_background
+
 
 # returns the directions in which the specified cell neighbours a background cell
 func _background_cell_directions(pos: Vector2i) -> Array[Vector2i]:
@@ -68,6 +69,7 @@ func _background_cell_directions(pos: Vector2i) -> Array[Vector2i]:
 		if self.is_background(pos + direction):
 			border_neighbours.append(direction)
 	return border_neighbours
+
 
 # places a border sprite or removes any sprite if a border shouldn't be there
 func _update_border_at(pos: Vector2i):
@@ -80,6 +82,7 @@ func _update_border_at(pos: Vector2i):
 		erase_cell(pos)
 	else:
 		set_cell(pos, 0, border_sprite.get_sprite_pointer(), border_sprite.get_alternative())
+
 
 # updates the borders around this
 func _update_border_around(tile_pos: Vector2i):
