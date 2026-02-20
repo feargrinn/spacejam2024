@@ -113,6 +113,8 @@ func clear_map() -> void:
 	tile_layer = TileLayer.new()
 	tile_colour_layer.tile_layer = tile_layer
 	tile_hover_layer = TileMapLayer.new()
+	tile_hover_layer.modulate.a = 0.5
+	TileInteractor.hover_layer = tile_hover_layer
 
 
 func draw_starting_map():
