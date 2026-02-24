@@ -56,12 +56,6 @@ func _set_layer(value: TileMapLayer, index: Layer) -> void:
 	return
 
 
-func _get_layer(index: Layer) -> TileMapLayer:
-	if !layers.has(index):
-		return null
-	return layers[index]
-
-
 func set_level(level: Level) -> void:
 	level_data = level
 	if is_node_ready():
