@@ -1,13 +1,11 @@
+class_name TileInteractor
 extends Area2D
 
-class_name TileInteractor
+static var hover_layer
 
 var is_replaceable: bool
-
 var tile_position: Vector2i
 
-static var tile_layer
-static var hover_layer
 
 func _init(a_tile_position):
 	tile_position = a_tile_position
@@ -20,7 +18,7 @@ func _ready():
 	shape.shape.size = Vector2(Globals.TILE_SIZE, Globals.TILE_SIZE)
 	shape.debug_color = Color.RED
 	add_child(shape)
-	position = tile_layer.map_to_local(tile_position)
+	position = hover_layer.map_to_local(tile_position)
 	connect("mouse_entered", _on_mouse_entered)
 	connect("mouse_exited", _on_mouse_exited)
 

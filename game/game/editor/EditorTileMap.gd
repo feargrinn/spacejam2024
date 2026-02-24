@@ -9,7 +9,7 @@ var tile_colour_layer: ColourLayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	self.background_layer = BackgroundLayer.new({
+	background_layer.set_background({
 		Vector2i(1,1): true,
 		Vector2i(1,2): true,
 		Vector2i(1,3): true,
@@ -25,7 +25,6 @@ func _ready():
 	self.tile_colour_layer = ColourLayer.new()
 	self.add_child(self.tile_colour_layer)
 	TileInteractor.hover_layer = $tile_hover
-	TileInteractor.tile_layer = self.tile_layer
 	self.move_child(self.background_layer, 0)
 	self.move_child(self.tile_colour_layer, 1)
 	self.move_child(self.tile_layer, 2)

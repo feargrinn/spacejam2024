@@ -1,15 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://fhmwenm3h7c7"]
+[gd_scene format=3 uid="uid://fhmwenm3h7c7"]
 
 [ext_resource type="Script" uid="uid://dn584k3p7vand" path="res://game/level/game.gd" id="1_f0dd8"]
 [ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://menu/shared/graphics/fonts/menu_font.ttf" id="2_rssi8"]
+[ext_resource type="PackedScene" uid="uid://dys1pp7uead78" path="res://game/level/level_tile_map.tscn" id="2_yrn2k"]
 [ext_resource type="Texture2D" uid="uid://c3msrgw8yn1n4" path="res://menu/shared/graphics/buttons/menu_button_lvl_empty.png" id="3_eonvc"]
 
-[node name="Game" type="Node"]
+[node name="Game" type="Node" unique_id=1199358187]
 script = ExtResource("1_f0dd8")
 
-[node name="Background" type="CanvasLayer" parent="."]
+[node name="Background" type="CanvasLayer" parent="." unique_id=1594726576]
 
-[node name="ColorRect" type="ColorRect" parent="Background"]
+[node name="ColorRect" type="ColorRect" parent="Background" unique_id=1292264662]
 z_index = -100
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,18 +19,21 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.5176471, 0.6627451, 0.54901963, 1)
 
-[node name="2D" type="CanvasLayer" parent="."]
+[node name="GridMapLayer" type="CanvasLayer" parent="." unique_id=1225644071]
 
-[node name="Controls" type="CanvasLayer" parent="."]
+[node name="LevelTileMap" parent="GridMapLayer" unique_id=723179342 instance=ExtResource("2_yrn2k")]
+unique_name_in_owner = true
 
-[node name="MarginContainer" type="MarginContainer" parent="Controls"]
+[node name="Controls" type="CanvasLayer" parent="." unique_id=1262987600]
+
+[node name="MarginContainer" type="MarginContainer" parent="Controls" unique_id=523257771]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ExitLevel" type="Button" parent="Controls/MarginContainer"]
+[node name="ExitLevel" type="Button" parent="Controls/MarginContainer" unique_id=1701676812]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -40,7 +44,7 @@ icon = ExtResource("3_eonvc")
 flat = true
 icon_alignment = 1
 
-[node name="TilePicker" type="VBoxContainer" parent="Controls/MarginContainer"]
+[node name="TilePicker" type="VBoxContainer" parent="Controls/MarginContainer" unique_id=1750720877]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(160, 400)
 layout_mode = 2
