@@ -114,7 +114,7 @@ func draw_starting_map():
 	if !level_data:
 		return
 	var background_layer: BackgroundLayer = layers[Layer.BACKGROUND]
-	background_layer.background = level_data.background
+	background_layer.set_background(level_data.background)
 	for input in level_data.inputs:
 		place_input(input)
 	for output in level_data.outputs:

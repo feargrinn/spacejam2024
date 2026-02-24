@@ -13,7 +13,7 @@ const ALL_DIRECTIONS = [
 ]
 
 const BACKGROUND_SPRITE_ID: Vector2i = Vector2i(0,0)
-var background: Dictionary[Vector2i, bool] = {} : set = _set_background
+var background: Dictionary[Vector2i, bool]
 
 
 # gets global positions of cells surrounding cell at position pos
@@ -41,8 +41,8 @@ func is_ok_for_input_or_output(pos: Vector2i):
 		return proper_alternatives
 
 
-func _set_background(value: Dictionary[Vector2i, bool]):
-	background = value
+func set_background(background_dictionary: Dictionary[Vector2i, bool]):
+	background = background_dictionary
 	for pos in background:
 		set_cell(pos, 0, BACKGROUND_SPRITE_ID)
 		_update_border_around(pos)

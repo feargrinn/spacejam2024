@@ -9,7 +9,7 @@ var tile_colour_layer: ColourLayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	self.background_layer.background = {
+	background_layer.set_background({
 		Vector2i(1,1): true,
 		Vector2i(1,2): true,
 		Vector2i(1,3): true,
@@ -18,7 +18,7 @@ func _ready():
 		Vector2i(2,2): true,
 		Vector2i(2,3): true,
 		Vector2i(2,4): true,
-	}
+	})
 	self.add_child(self.background_layer)
 	self.tile_layer = TileLayer.new()
 	self.add_child(self.tile_layer)
