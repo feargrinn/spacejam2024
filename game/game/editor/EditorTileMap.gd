@@ -25,7 +25,6 @@ func _ready():
 	self.tile_colour_layer = ColourLayer.new()
 	self.add_child(self.tile_colour_layer)
 	TileInteractor.hover_layer = $tile_hover
-	TileInteractor.tile_layer = self.tile_layer
 	self.move_child(self.background_layer, 0)
 	self.move_child(self.tile_colour_layer, 1)
 	self.move_child(self.tile_layer, 2)

@@ -40,7 +40,6 @@ var level_name: String
 func _ready():
 	is_running = true
 	TileInteractor.hover_layer = layers[Layer.HOVER]
-	TileInteractor.tile_layer = layers[Layer.TILE]
 
 
 func _set_layer(value: TileMapLayer, index: Layer) -> void:
@@ -99,7 +98,6 @@ func clear_map() -> void:
 	_set_layer(BackgroundLayer.new(), Layer.BACKGROUND)
 	_set_layer(ColourLayer.new(), Layer.COLOUR)
 	_set_layer(TileLayer.new(), Layer.TILE)
-	TileInteractor.tile_layer = layers[Layer.TILE]
 	(layers[Layer.COLOUR] as ColourLayer).tile_layer = layers[Layer.TILE]
 
 
