@@ -23,24 +23,11 @@ var is_running: bool
 var level_name: String
 
 
-@onready var background_layer: BackgroundLayer = %BackgroundLayer:
-	get: return _get_layer(Layer.BACKGROUND)
-	set(value): _set_layer(value, Layer.BACKGROUND)
-@onready var tile_colour_layer: ColourLayer = %ColourLayer:
-	get: return _get_layer(Layer.COLOUR)
-	set(value): _set_layer(value, Layer.COLOUR)
-@onready var tile_layer: TileLayer = %TileLayer:
-	get: return _get_layer(Layer.TILE)
-	set(value): _set_layer(value, Layer.TILE)
-@onready var tile_hover_layer: TileMapLayer = %TileHoverLayer:
-	get: return _get_layer(Layer.HOVER)
-	set(value): _set_layer(value, Layer.HOVER)
-
-var layers: Dictionary[Layer, TileMapLayer] = {
-	Layer.BACKGROUND : background_layer,
-	Layer.COLOUR : tile_colour_layer,
-	Layer.TILE : tile_layer,
-	Layer.HOVER : tile_hover_layer
+@onready var layers: Dictionary[Layer, TileMapLayer] = {
+	Layer.BACKGROUND : %BackgroundLayer,
+	Layer.COLOUR : %ColourLayer,
+	Layer.TILE : %TileLayer,
+	Layer.HOVER : %TileHoverLayer
 }
 
 # The stream player still shouldn't be here I think, but it's better
@@ -51,8 +38,8 @@ var layers: Dictionary[Layer, TileMapLayer] = {
 func _ready():
 	game = get_node("/root/Game")
 	is_running = true
-	TileInteractor.hover_layer = tile_hover_layer
-	TileInteractor.tile_layer = tile_layer
+	TileInteractor.hover_layer = layers[Layer.HOVER]
+	TileInteractor.tile_layer = layers[Layer.TILE]
 
 
 func _set_layer(value: TileMapLayer, index: Layer) -> void:
@@ -90,37 +77,42 @@ func scale_from_dimensions(dimensions: Vector2i) -> Vector2:
 
 
 func place_input(input: PreInput):
+	var tile_layer: TileLayer = layers[Layer.TILE]
 	tile_layer.place_tile(Vector2i(input.x, input.y), TileId.new(coordinates(TileType.Type.INPUT), input.rot))
-	tile_colour_layer.set_tile_colour(Vector2i(input.x, input.y), input.colour, input)
+	var colour_layer: ColourLayer = layers[Layer.COLOUR]
+	colour_layer.set_tile_colour(Vector2i(input.x, input.y), input.colour, input)
 
 
 func place_output(output: PreOutput):
+	var tile_layer: TileLayer = layers[Layer.TILE]
 	tile_layer.place_tile(Vector2i(output.x, output.y), TileId.new(coordinates(TileType.Type.OUTPUT), output.rot))
-	tile_colour_layer.set_tile_colour(Vector2i(output.x, output.y), output.colour, output)
+	var colour_layer: ColourLayer = layers[Layer.COLOUR]
+	colour_layer.set_tile_colour(Vector2i(output.x, output.y), output.colour, output)
 
 
 func coordinates(tile_type : TileType.Type):
 	return TileType.coordinates(tile_type)
 
 func place_tile(pretile: PreTile):
+	var tile_layer: TileLayer = layers[Layer.TILE]
 	tile_layer.place_tile(Vector2i(pretile.x, pretile.y), TileId.new(pretile.type, pretile.rot))
-	tile_colour_layer.update_at(Vector2i(pretile.x, pretile.y))
+	var colour_layer: ColourLayer = layers[Layer.COLOUR]
+	colour_layer.update_at(Vector2i(pretile.x, pretile.y))
 
 
 func clear_map() -> void:
-	background_layer = BackgroundLayer.new()
-	tile_colour_layer = ColourLayer.new()
-	tile_layer = TileLayer.new()
-	tile_colour_layer.tile_layer = tile_layer
-	tile_hover_layer = TileMapLayer.new()
-	tile_hover_layer.modulate.a = 0.5
-	TileInteractor.hover_layer = tile_hover_layer
+	_set_layer(BackgroundLayer.new(), Layer.BACKGROUND)
+	_set_layer(ColourLayer.new(), Layer.COLOUR)
+	_set_layer(TileLayer.new(), Layer.TILE)
+	TileInteractor.tile_layer = layers[Layer.TILE]
+	(layers[Layer.COLOUR] as ColourLayer).tile_layer = layers[Layer.TILE]
 
 
 func draw_starting_map():
 	clear_map()
 	if !level_data:
 		return
+	var background_layer: BackgroundLayer = layers[Layer.BACKGROUND]
 	background_layer.background = level_data.background
 	for input in level_data.inputs:
 		place_input(input)
@@ -140,13 +132,15 @@ func draw_starting_map():
 
 
 func set_tile_at(tile_position):
+	var tile_layer: TileLayer = layers[Layer.TILE]
 	tile_layer.place_tile(tile_position, tile)
-	tile_colour_layer.update_at(tile_position)
+	var colour_layer: ColourLayer = layers[Layer.COLOUR]
+	colour_layer.update_at(tile_position)
 	check_for_game_status()
 
 
 func _mouse_position_to_coordinates():
-	return background_layer.local_to_map(get_local_mouse_position())
+	return layers[Layer.BACKGROUND].local_to_map(get_local_mouse_position())
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -155,20 +149,20 @@ func _process(_delta):
 		return
 	
 	if tile != null:
-		tile_hover_layer.clear()
-		tile_hover_layer.set_cell(_mouse_position_to_coordinates(), 0, tile.id, tile.alternative)
+		var hover_layer := layers[Layer.HOVER]
+		hover_layer.clear()
+		hover_layer.set_cell(_mouse_position_to_coordinates(), 0, tile.id, tile.alternative)
 		if Input.is_action_just_released("RMB"):
 			Sounds.play("turning")
 			tile.rotate()
 		
 		if Input.is_action_just_pressed("LMB"):
 			var tile_position = _mouse_position_to_coordinates()
+			var background_layer: BackgroundLayer = layers[Layer.BACKGROUND]
 			if background_layer.is_background(tile_position):
 				audio_stream_player.play()
 				set_tile_at(tile_position)
 			tile = null
-
-
 
 
 func animate_outputs(outputs: Array[Vector2i], animation_name: String) -> void:
@@ -176,7 +170,7 @@ func animate_outputs(outputs: Array[Vector2i], animation_name: String) -> void:
 	
 	var animated_tiles: Array[AnimatedTile] = []
 	for output in outputs:
-		var a_tile := AnimatedTile.custom_new(tile_layer, animation_name, output)
+		var a_tile := AnimatedTile.custom_new(layers[Layer.TILE], animation_name, output)
 		animated_tiles.append(a_tile)
 	
 	match(animation_name):
@@ -187,7 +181,7 @@ func animate_outputs(outputs: Array[Vector2i], animation_name: String) -> void:
 
 
 func is_output_filled(tile_coords: Vector2i) -> bool:
-	var atlas_coords := tile_colour_layer.get_cell_atlas_coords(tile_coords)
+	var atlas_coords := layers[Layer.COLOUR].get_cell_atlas_coords(tile_coords)
 	return atlas_coords == coordinates(TileType.Type.OUTPUT_FILLED)
 
 
@@ -203,6 +197,7 @@ func check_for_game_status():
 		animate_outputs(losing_outputs.keys(), "losing")
 		return
 	
+	var tile_layer: TileLayer = layers[Layer.TILE]
 	if !all_outputs_filled(tile_layer.all_outputs()):
 		return
 	

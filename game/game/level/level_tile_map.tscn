@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dys1pp7uead78"]
+[gd_scene format=3 uid="uid://dys1pp7uead78"]
 
 [ext_resource type="Script" uid="uid://bj3av05buyeo6" path="res://game/level/level_tile_map.gd" id="1_us3jo"]
 [ext_resource type="TileSet" uid="uid://b64fhmdc5bn5" path="res://game/shared/graphics/tile_map.tres" id="2_6qfqa"]
@@ -16,32 +16,32 @@ stream_0/stream = ExtResource("6_tulvh")
 stream_1/stream = ExtResource("7_17xxu")
 stream_2/stream = ExtResource("8_ixkmw")
 
-[node name="LevelTileMap" type="Node2D"]
+[node name="LevelTileMap" type="Node2D" unique_id=1202856473]
 script = ExtResource("1_us3jo")
 
-[node name="BackgroundLayer" type="TileMapLayer" parent="."]
+[node name="BackgroundLayer" type="TileMapLayer" parent="." unique_id=1048351927]
 unique_name_in_owner = true
 tile_set = ExtResource("2_6qfqa")
 script = ExtResource("3_g7cq2")
 metadata/_custom_type_script = "uid://dywqgs0s3x4xl"
 
-[node name="ColourLayer" type="TileMapLayer" parent="." node_paths=PackedStringArray("tile_layer")]
+[node name="ColourLayer" type="TileMapLayer" parent="." unique_id=2116341240 node_paths=PackedStringArray("tile_layer")]
 unique_name_in_owner = true
 tile_set = ExtResource("2_6qfqa")
 script = ExtResource("4_tulvh")
 tile_layer = NodePath("../TileLayer")
 metadata/_custom_type_script = "uid://dsgq3dx1v2nie"
 
-[node name="TileLayer" type="TileMapLayer" parent="."]
+[node name="TileLayer" type="TileMapLayer" parent="." unique_id=337421594]
 unique_name_in_owner = true
 tile_set = ExtResource("2_6qfqa")
 script = ExtResource("5_17xxu")
 metadata/_custom_type_script = "uid://b6t4748x4o15m"
 
-[node name="TileHoverLayer" type="TileMapLayer" parent="."]
+[node name="TileHoverLayer" type="TileMapLayer" parent="." unique_id=1054333904]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.49803922)
 tile_set = ExtResource("2_6qfqa")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=854768955]
 stream = SubResource("AudioStreamRandomizer_crlv1")
