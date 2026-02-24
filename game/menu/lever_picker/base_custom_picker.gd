@@ -64,7 +64,7 @@ func _flip_base_custom():
 
 ## Creates a new map
 func _on_level_picked(levels: Array[Level], level: int):
-	var game: Game = Game.custom_new(levels, level)
+	var game: Game = Game.create_scene(levels, level)
 	add_sibling(game)
 	get_tree().current_scene = game
 	queue_free()

@@ -1,6 +1,9 @@
 class_name LevelTileMap
 extends Node2D
 
+signal animation_losing_finished(losing_outputs: Dictionary[Vector2i, Dictionary])
+signal animation_winning_finished
+
 const LEVEL_TILE_MAP = preload("uid://dys1pp7uead78")
 
 enum Layer{
@@ -10,10 +13,9 @@ enum Layer{
 	HOVER
 }
 
-@export var level_data: Level: set = _set_level_data
+var level_data: Level
 var color_translation = {}
 
-var game: Game
 
 var losing_outputs: Dictionary[Vector2i, Dictionary]
 
@@ -36,7 +38,6 @@ var level_name: String
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	game = get_node("/root/Game")
 	is_running = true
 	TileInteractor.hover_layer = layers[Layer.HOVER]
 	TileInteractor.tile_layer = layers[Layer.TILE]
@@ -61,8 +62,8 @@ func _get_layer(index: Layer) -> TileMapLayer:
 	return layers[index]
 
 
-func _set_level_data(value: Level) -> void:
-	level_data = value
+func set_level(level: Level) -> void:
+	level_data = level
 	if is_node_ready():
 		draw_starting_map()
 	else:
@@ -175,9 +176,10 @@ func animate_outputs(outputs: Array[Vector2i], animation_name: String) -> void:
 	
 	match(animation_name):
 		"winning":
-			animated_tiles[0].animation_finished.connect(game.victory_screen)
+			animated_tiles[0].animation_finished.connect(animation_winning_finished.emit)
 		"losing":
-			animated_tiles[0].animation_finished.connect(game.loser_screen.bind(losing_outputs))
+			animated_tiles[0].animation_finished.connect(
+				animation_losing_finished.emit.bind(losing_outputs))
 
 
 func is_output_filled(tile_coords: Vector2i) -> bool:

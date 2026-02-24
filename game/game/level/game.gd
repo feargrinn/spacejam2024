@@ -9,17 +9,16 @@ const VICTORY_SCREEN = preload("uid://c5jhprfubvllq")
 const BASE_CUSTOM_PICKER_UID: String = "uid://brv51q227veyq"
 const GAME = preload("uid://fhmwenm3h7c7")
 
-@onready var grid_map_layer: CanvasLayer = $GridMapLayer
+
 @onready var controls: CanvasLayer = $Controls
 @onready var tile_picker: VBoxContainer = %TilePicker
-@export var level_tile_map: LevelTileMap
+@onready var level_tile_map: LevelTileMap = %LevelTileMap
 
 
-static func custom_new(base_levels: Array[Level], level_id: int) -> Game:
+static func create_scene(base_levels: Array[Level], level_id: int) -> Game:
 	var game: Game = GAME.instantiate()
 	game.loaded_base_levels = base_levels
 	game.current_level = level_id
-	game.level_tile_map.level_data = base_levels[level_id]
 	return game
 
 
@@ -31,6 +30,10 @@ func _ready():
 			func(tile: TileId):
 				level_tile_map.tile = tile
 				)
+	
+	level_tile_map.set_level(loaded_base_levels[current_level])
+	level_tile_map.animation_losing_finished.connect(loser_screen)
+	level_tile_map.animation_winning_finished.connect(victory_screen)
 
 
 ##Goes back to lever picker
@@ -51,7 +54,7 @@ func _on_next_level_pressed():
 		_on_exit_level_pressed()
 	else:
 		current_level += 1
-		level_tile_map.level_data = loaded_base_levels[current_level]
+		level_tile_map.set_level(loaded_base_levels[current_level])
 
 
 func _on_retry_pressed():
