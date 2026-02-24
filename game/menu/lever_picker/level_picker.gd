@@ -3,11 +3,11 @@ extends GridContainer
 
 signal level_picked(levels: Array[Level], level_id: int)
 
-var levels: Array[Level]: set = _set_levels
+var levels: Array[Level]
 var level_buttons: Array[LevelButton]
 
 
-func _set_levels(value: Array[Level]) -> void:
+func set_levels(value: Array[Level]) -> void:
 	levels = value
 	for child in get_children():
 		remove_child(child)

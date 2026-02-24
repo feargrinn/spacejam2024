@@ -27,7 +27,7 @@ func _ready() -> void:
 	if loaded_levels is Error:
 		print("Failed to load levels: ", loaded_levels.as_string(), ".")
 	print("Loaded ", loaded_levels.size(), " levels.")
-	base_level_picker.levels = loaded_levels
+	base_level_picker.set_levels(loaded_levels)
 	
 	var loaded_data = PlayerData.load_default()
 	if loaded_data is Error:
@@ -44,7 +44,7 @@ func _ready() -> void:
 	else:
 		print("Loaded ", loaded_user_levels.size(), " custom levels.")
 		if len(loaded_user_levels) > 0:
-			custom_level_picker.levels = loaded_user_levels
+			custom_level_picker.set_levels(loaded_user_levels)
 			custom_level_picker.unlock_all()
 
 
