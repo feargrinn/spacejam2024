@@ -1,6 +1,7 @@
 class_name LevelTileMap
 extends Node2D
 
+signal level_won
 signal animation_losing_finished(losing_outputs: Dictionary[Vector2i, Dictionary])
 signal animation_winning_finished
 
@@ -197,4 +198,5 @@ func check_for_game_status():
 	
 	is_running = false
 	
+	level_won.emit()
 	animate_outputs(tile_layer.all_outputs(), "winning")

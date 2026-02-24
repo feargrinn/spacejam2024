@@ -34,6 +34,7 @@ func _ready():
 	level_tile_map.set_level(loaded_base_levels[current_level])
 	level_tile_map.animation_losing_finished.connect(loser_screen)
 	level_tile_map.animation_winning_finished.connect(victory_screen)
+	level_tile_map.level_won.connect(_on_level_won)
 
 
 ##Goes back to lever picker
@@ -55,6 +56,15 @@ func _on_next_level_pressed():
 	else:
 		current_level += 1
 		level_tile_map.set_level(loaded_base_levels[current_level])
+
+
+func _on_level_won() -> void:
+	var loaded_data = PlayerData.load_default()
+	if loaded_data is Error:
+		# The extra +1 is because we store levels in save file from level 1 :l
+		PlayerData.new().unlock_level(current_level + 1 + 1) # X_X
+		return
+	(loaded_data as PlayerData).unlock_level(current_level + 1 + 1) # X_X
 
 
 func _on_retry_pressed():

@@ -43,6 +43,7 @@ func save_game():
 	save_file.store_line(JSON.stringify({
 		reached_level_name: reached_level
 	}))
+	save_file.close()
 
 
 func unlock_level(level: int):
