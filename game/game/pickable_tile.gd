@@ -12,7 +12,7 @@ var texture: Texture
 @onready var tile: TextureRect = $TileButton/Tile
 
 
-static func custom_new(tile_coordinates: Vector2i, tile_texture: CompressedTexture2D) -> PickableTile:
+static func create_scene(tile_coordinates: Vector2i, tile_texture: CompressedTexture2D) -> PickableTile:
 	var new_pickable: PickableTile = PICKABLE_TILE.instantiate()
 	new_pickable.coordinates = tile_coordinates
 	new_pickable.texture = tile_texture
