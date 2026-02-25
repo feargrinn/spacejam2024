@@ -64,6 +64,10 @@ func set_level(level: Level) -> void:
 		ready.connect(draw_starting_map)
 
 
+func set_held_tile(tile_id: TileId) -> void:
+	tile = tile_id
+
+
 func scale_from_dimensions(dimensions: Vector2i) -> Vector2:
 	if max(dimensions.x, dimensions.y) <= 10:
 		return Vector2(2, 2)
