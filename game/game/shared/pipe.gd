@@ -4,16 +4,15 @@ extends Resource
 var pipe_data: PipeData
 var alternative_id: int
 var colour: Colour
+var target_colour: Colour
 
 
 static func from_predata(pre: RefCounted) -> Pipe:
 	var pipe := Pipe.new()
 	if pre is PreInput:
 		pipe.pipe_data = PipeData.input
-		pipe.colour = pre.colour
 	elif pre is PreOutput:
 		pipe.pipe_data = PipeData.output
-		pipe.colour = pre.colour
 	elif pre is PreTile:
 		pipe.pipe_data = PipeData.get_by_coords(pre.type)
 	
@@ -59,5 +58,5 @@ func my_duplicate() -> Pipe:
 	return pipe
 
 
-#func is_filled() -> bool:
-	#return colour != null
+func is_filled() -> bool:
+	return colour != null

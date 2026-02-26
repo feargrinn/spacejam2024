@@ -43,5 +43,5 @@ unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.49803922)
 tile_set = ExtResource("2_6qfqa")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=854768955]
+[node name="RotateStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=854768955]
 stream = SubResource("AudioStreamRandomizer_crlv1")

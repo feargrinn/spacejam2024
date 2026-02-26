@@ -13,6 +13,12 @@ func empty_at(pos: Vector2i) -> bool:
 	return self.get_cell_atlas_coords(pos) == EMPTY
 
 
+func get_pipe(pos: Vector2i) -> Pipe:
+	if pipes.has(pos):
+		return pipes[pos]
+	return null
+
+
 func _get_connections(pos: Vector2i) -> Array[Vector2i]:
 	if empty_at(pos):
 		return []
@@ -29,7 +35,7 @@ func _get_source_pipe(pos: Vector2i) -> SourcePipe:
 	return SourcePipe.new(pos, _get_flow_coefficient(pos))
 
 
-func _connects(pos: Vector2i, direction: Vector2i):
+func _connects(pos: Vector2i, direction: Vector2i) -> bool:
 	var other_connections = _get_connections(pos+direction)
 	return other_connections.has(direction * -1)
 
