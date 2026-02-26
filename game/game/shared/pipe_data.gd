@@ -5,6 +5,9 @@ extends Resource
 @export var texture: Texture
 @export var tileset_coordinates: Vector2i
 @export var connections: Dictionary[Vector2i, bool]
+@export var delayed_flow := false
+@export var paint_source := true
+@export var flow_coefficient := 1
 
 @export_category("Colour")
 @export var empty_coords := Vector2i(-1, -1)
@@ -36,7 +39,12 @@ func _init() -> void:
 
 
 func _to_string() -> String:
-	return str(tileset_coordinates) + " : " + str(get_connections())
+	var result := ""
+	result += "coords: " + str(tileset_coordinates)
+	result += " source: " + str(paint_source)
+	result += " delayed: " + str(delayed_flow)
+	result += " coefficient: " + str(flow_coefficient)
+	return result
 
 
 func get_connections() -> Array[Vector2i]:

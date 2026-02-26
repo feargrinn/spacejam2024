@@ -29,6 +29,16 @@ func rotate() -> void:
 	alternative_id = (alternative_id + 1) % pipe_data.get_alternative_count()
 
 
+func get_connections() -> Array[Vector2i]:
+	var base_connections := pipe_data.get_connections()
+	var rotated_connections: Array[Vector2i]
+	for connection in base_connections:
+		var f_v := Vector2(connection)
+		f_v = f_v.rotated(PI/2 * alternative_id)
+		rotated_connections.append(Vector2i(f_v.round()))
+	return rotated_connections
+
+
 func get_coordinates() -> Vector2i:
 	return pipe_data.tileset_coordinates
 

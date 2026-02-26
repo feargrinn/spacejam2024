@@ -18,6 +18,8 @@ Vector2i(1, -1): false,
 Vector2i(1, 0): false,
 Vector2i(1, 1): false
 })
+paint_source = false
+flow_coefficient = 0
 empty_coords = Vector2i(3, 1)
 filled_coord = Vector2i(4, 1)
 metadata/_custom_type_script = "uid://cp6nptt2cucm3"

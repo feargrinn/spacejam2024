@@ -100,6 +100,7 @@ func place_tile(pretile: PreTile):
 
 
 func clear_map() -> void:
+	losing_outputs = {}
 	_set_layer(BackgroundLayer.new(), Layer.BACKGROUND)
 	_set_layer(ColourLayer.new(), Layer.COLOUR)
 	_set_layer(TileLayer.new(), Layer.TILE)
