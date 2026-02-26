@@ -9,7 +9,7 @@ var colours = {}
 
 func set_tile_colour(tile_position, colour, input_or_output = null):
 	if input_or_output:
-		var alt_id
+		var alt_id: int
 		if input_or_output is PreInput:
 			alt_id = Colour.create_input_or_output_colour(TileType.Type.INPUT_COLOR, input_or_output.rot, colour.color())
 			set_cell(tile_position, 0, TileType.coordinates(TileType.Type.INPUT_COLOR), alt_id)

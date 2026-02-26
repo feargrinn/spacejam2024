@@ -1,20 +1,19 @@
 class_name TilePicker
 extends VBoxContainer
 
-
-signal tile_picked_up(tile: TileId)
+signal tile_picked_up(pipe: Pipe)
 
 
 func _ready() -> void:
-	for pipe: PipeData in PipeData.pipes.values():
+	for pipe_data: PipeData in PipeData.pipes:
+		var pipe := Pipe.new()
+		pipe.pipe_data = pipe_data
 		var tile_button := _create_button(pipe)
 		add_child(tile_button)
 		tile_button.tile_picked_up.connect(tile_picked_up.emit)
 
 
 ## Creates clickable tile buttons
-func _create_button(pipe: PipeData) -> PickableTile:
-	var tile_coords := pipe.tileset_coordinates
-	var texture := pipe.texture
-	var container = PickableTile.create_scene(tile_coords, texture)
+func _create_button(pipe: Pipe) -> PickableTile:
+	var container = PickableTile.create_scene(pipe)
 	return container

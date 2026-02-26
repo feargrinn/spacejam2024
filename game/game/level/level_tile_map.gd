@@ -21,7 +21,7 @@ var color_translation = {}
 var losing_outputs: Dictionary[Vector2i, Dictionary]
 
 var current_tile = null;
-var tile = null
+var held_pipe: Pipe = null
 var is_running: bool
 var level_name: String
 
@@ -64,8 +64,8 @@ func set_level(level: Level) -> void:
 		ready.connect(draw_starting_map)
 
 
-func set_held_tile(tile_id: TileId) -> void:
-	tile = tile_id
+func set_held_tile(pipe: Pipe) -> void:
+	held_pipe = pipe
 
 
 func scale_from_dimensions(dimensions: Vector2i) -> Vector2:
@@ -77,24 +77,24 @@ func scale_from_dimensions(dimensions: Vector2i) -> Vector2:
 
 func place_input(input: PreInput):
 	var tile_layer: TileLayer = layers[Layer.TILE]
-	tile_layer.place_tile(Vector2i(input.x, input.y), TileId.new(coordinates(TileType.Type.INPUT), input.rot))
+	var pipe := Pipe.from_predata(input)
+	tile_layer.place_tile(Vector2i(input.x, input.y), pipe)
 	var colour_layer: ColourLayer = layers[Layer.COLOUR]
 	colour_layer.set_tile_colour(Vector2i(input.x, input.y), input.colour, input)
 
 
 func place_output(output: PreOutput):
 	var tile_layer: TileLayer = layers[Layer.TILE]
-	tile_layer.place_tile(Vector2i(output.x, output.y), TileId.new(coordinates(TileType.Type.OUTPUT), output.rot))
+	var pipe := Pipe.from_predata(output)
+	tile_layer.place_tile(Vector2i(output.x, output.y), pipe)
 	var colour_layer: ColourLayer = layers[Layer.COLOUR]
 	colour_layer.set_tile_colour(Vector2i(output.x, output.y), output.colour, output)
 
 
-func coordinates(tile_type : TileType.Type):
-	return TileType.coordinates(tile_type)
-
 func place_tile(pretile: PreTile):
 	var tile_layer: TileLayer = layers[Layer.TILE]
-	tile_layer.place_tile(Vector2i(pretile.x, pretile.y), TileId.new(pretile.type, pretile.rot))
+	var pipe := Pipe.from_predata(pretile)
+	tile_layer.place_tile(Vector2i(pretile.x, pretile.y), pipe)
 	var colour_layer: ColourLayer = layers[Layer.COLOUR]
 	colour_layer.update_at(Vector2i(pretile.x, pretile.y))
 
@@ -131,13 +131,13 @@ func draw_starting_map():
 
 func set_tile_at(tile_position):
 	var tile_layer: TileLayer = layers[Layer.TILE]
-	tile_layer.place_tile(tile_position, tile)
+	tile_layer.place_tile(tile_position, held_pipe)
 	var colour_layer: ColourLayer = layers[Layer.COLOUR]
 	colour_layer.update_at(tile_position)
 	check_for_game_status()
 
 
-func _mouse_position_to_coordinates():
+func _mouse_position_to_coordinates() -> Vector2i:
 	return layers[Layer.BACKGROUND].local_to_map(get_local_mouse_position())
 
 
@@ -146,13 +146,14 @@ func _process(_delta):
 	if !is_running:
 		return
 	
-	if tile != null:
+	if held_pipe != null:
 		var hover_layer := layers[Layer.HOVER]
 		hover_layer.clear()
-		hover_layer.set_cell(_mouse_position_to_coordinates(), 0, tile.id, tile.alternative)
+		var target_cell := _mouse_position_to_coordinates()
+		hover_layer.set_cell(target_cell, 0, held_pipe.get_coordinates(), held_pipe.alternative_id)
 		if Input.is_action_just_released("RMB"):
 			Sounds.play("turning")
-			tile.rotate()
+			held_pipe.rotate()
 		
 		if Input.is_action_just_pressed("LMB"):
 			var tile_position = _mouse_position_to_coordinates()
@@ -160,7 +161,7 @@ func _process(_delta):
 			if background_layer.is_background(tile_position):
 				audio_stream_player.play()
 				set_tile_at(tile_position)
-			tile = null
+			held_pipe = null
 
 
 func animate_outputs(outputs: Array[Vector2i], animation_name: String) -> void:
@@ -179,9 +180,10 @@ func animate_outputs(outputs: Array[Vector2i], animation_name: String) -> void:
 				animation_losing_finished.emit.bind(losing_outputs))
 
 
+# TODO replace with using Pipe
 func is_output_filled(tile_coords: Vector2i) -> bool:
 	var atlas_coords := layers[Layer.COLOUR].get_cell_atlas_coords(tile_coords)
-	return atlas_coords == coordinates(TileType.Type.OUTPUT_FILLED)
+	return atlas_coords == PipeData.output.filled_coord
 
 
 func all_outputs_filled(outputs: Array[Vector2i]) -> bool:

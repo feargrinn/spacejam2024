@@ -56,14 +56,14 @@ func valid_paint_source(pos: Vector2i) -> bool:
 	return _get_data(pos).get_custom_data("paint_source")
 
 
-func place_tile(pos: Vector2i, tile: TileId):
-	self.set_cell(pos, 0, tile.id, tile.alternative)
-	var l_tile = TileInteractor.new(pos)
-	tiles.append(l_tile)
-	add_child(l_tile)
-	if tile.id == INPUT:
+func place_tile(pos: Vector2i, pipe: Pipe):
+	self.set_cell(pos, 0, pipe.get_coordinates(), pipe.alternative_id)
+	var tile_interactor := TileInteractor.new(pos)
+	tiles.append(tile_interactor)
+	add_child(tile_interactor)
+	if pipe.is_input():
 		inputs.append(pos)
-	if tile.id == OUTPUT:
+	if pipe.is_output():
 		outputs.append(pos)
 
 
