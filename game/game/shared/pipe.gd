@@ -41,5 +41,13 @@ func is_output() -> bool:
 	return pipe_data == PipeData.output
 
 
+## I have no clue why the normal duplicate() doesn't work???????? ;-;
+func my_duplicate() -> Pipe:
+	var pipe := Pipe.new()
+	pipe.pipe_data = pipe_data
+	pipe.alternative_id = alternative_id
+	return pipe
+
+
 #func is_filled() -> bool:
 	#return colour != null

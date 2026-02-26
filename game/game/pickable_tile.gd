@@ -31,4 +31,4 @@ func _on_rotate_pressed(angle_radians: float):
 
 
 func _on_tile_button_pressed() -> void:
-	tile_picked_up.emit(pipe)
+	tile_picked_up.emit(pipe.my_duplicate())
