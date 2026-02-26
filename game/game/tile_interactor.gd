@@ -1,6 +1,8 @@
 class_name TileInteractor
 extends Area2D
 
+const HOVER_ATLAS_COORDS := Vector2i(1, 4)
+
 static var hover_layer
 
 var is_replaceable: bool
@@ -25,7 +27,7 @@ func _ready():
 
 func _on_mouse_entered():
 	#start playing tile music
-	hover_layer.set_cell(tile_position, 0, TileType.coordinates(TileType.Type.ERASER))
+	hover_layer.set_cell(tile_position, 0, HOVER_ATLAS_COORDS)
 
 func _on_mouse_exited():
 	#stop playing tile music
