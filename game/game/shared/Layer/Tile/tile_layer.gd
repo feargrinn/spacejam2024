@@ -1,21 +1,9 @@
 class_name TileLayer
 extends TileMapLayer
 
-#signal pipe_filled(pipe: Pipe)
 
 var outputs: Dictionary[Vector2i, Pipe]
 var pipes: Dictionary[Vector2i, Pipe]
-
-
-func empty_at(pos: Vector2i) -> bool:
-	const EMPTY = Vector2i(-1,-1)
-	return self.get_cell_atlas_coords(pos) == EMPTY
-
-
-func get_pipe(pos: Vector2i) -> Pipe:
-	if pipes.has(pos):
-		return pipes[pos]
-	return null
 
 
 func _get_connections(pos: Vector2i) -> Array[Vector2i]:
@@ -37,8 +25,15 @@ func connected_pipes(pos: Vector2i) -> Array[Pipe]:
 	return result
 
 
-func valid_paint_source(pos: Vector2i) -> bool:
-	return pipes[pos].pipe_data.paint_source
+func empty_at(pos: Vector2i) -> bool:
+	const EMPTY = Vector2i(-1,-1)
+	return get_cell_atlas_coords(pos) == EMPTY
+
+
+func get_pipe(pos: Vector2i) -> Pipe:
+	if pipes.has(pos):
+		return pipes[pos]
+	return null
 
 
 func place_tile(pos: Vector2i, pipe: Pipe):
@@ -49,17 +44,5 @@ func place_tile(pos: Vector2i, pipe: Pipe):
 		outputs[pos] = pipe
 
 
-func continue_flow(pos: Vector2i) -> bool:
-	return !pipes[pos].pipe_data.delayed_flow
-
-
-func is_output(pos: Vector2i) -> bool:
-	return outputs.has(pos)
-
-
 func get_outputs() -> Array[Pipe]:
 	return outputs.values()
-
-
-func remove_tile(pos: Vector2i):
-	self.erase_cell(pos)
