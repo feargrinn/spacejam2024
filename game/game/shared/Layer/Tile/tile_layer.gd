@@ -57,8 +57,8 @@ func is_output(pos: Vector2i) -> bool:
 	return outputs.has(pos)
 
 
-func all_outputs() -> Array[Vector2i]:
-	return outputs.keys()
+func get_outputs() -> Array[Pipe]:
+	return outputs.values()
 
 
 func remove_tile(pos: Vector2i):

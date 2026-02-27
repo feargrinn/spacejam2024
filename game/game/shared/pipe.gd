@@ -29,6 +29,10 @@ func rotate() -> void:
 	alternative_id = (alternative_id + 1) % pipe_data.get_alternative_count()
 
 
+func get_paint() -> Paint:
+	return Paint.new(colour, pipe_data.flow_coefficient)
+
+
 func get_connections() -> Array[Vector2i]:
 	var base_connections := pipe_data.get_connections()
 	var rotated_connections: Array[Vector2i]

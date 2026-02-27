@@ -2,7 +2,7 @@ class_name LevelTileMap
 extends Node2D
 
 signal level_won
-signal animation_losing_finished(losing_outputs: Dictionary[Vector2i, Dictionary])
+signal animation_losing_finished(losing_outputs: Array[Pipe])
 signal animation_winning_finished
 
 const LEVEL_TILE_MAP = preload("uid://dys1pp7uead78")
@@ -72,8 +72,8 @@ func _set_layer(value: TileMapLayer, index: Layer) -> void:
 	return
 
 
-func _on_level_lost(losing_outputs: Dictionary[Vector2i, Dictionary]) -> void:
-	var animation := animate_outputs(losing_outputs.keys(), "losing")
+func _on_level_lost(losing_outputs: Array[Pipe]) -> void:
+	var animation := animate_outputs(losing_outputs, "losing")
 	animation.animation_finished.connect(
 		animation_losing_finished.emit.bind(losing_outputs)
 	)
@@ -83,7 +83,7 @@ func _on_level_lost(losing_outputs: Dictionary[Vector2i, Dictionary]) -> void:
 func _on_level_won() -> void:
 	level_won.emit()
 	var tile_layer: TileLayer = layers[Layer.TILE]
-	var animation := animate_outputs(tile_layer.all_outputs(), "winning")
+	var animation := animate_outputs(tile_layer.get_outputs(), "winning")
 	animation.animation_finished.connect(animation_winning_finished.emit)
 
 
@@ -135,7 +135,7 @@ func place_tile(pretile: PreTile):
 	var pipe := Pipe.from_predata(pretile)
 	tile_layer.place_tile(Vector2i(pretile.x, pretile.y), pipe)
 	var colour_layer: ColourLayer = layers[Layer.COLOUR]
-	colour_layer.update_at(Vector2i(pretile.x, pretile.y))
+	colour_layer.update_pipe(pipe)
 	var hover_layer: HoverLayer = layers[Layer.HOVER]
 	hover_layer.set_interactor(Vector2i(pretile.x, pretile.y))
 
@@ -175,15 +175,18 @@ func set_tile_at(tile_position):
 	var tile_layer: TileLayer = layers[Layer.TILE]
 	tile_layer.place_tile(tile_position, held_pipe)
 	var colour_layer: ColourLayer = layers[Layer.COLOUR]
-	colour_layer.update_at(tile_position)
+	colour_layer.update_pipe(held_pipe)
 
 
-func animate_outputs(outputs: Array[Vector2i], animation_name: String) -> AnimatedTile:
+func animate_outputs(outputs: Array[Pipe], animation_name: String) -> AnimatedTile:
 	Sounds.play(animation_name)
 	
 	var animated_tiles: Array[AnimatedTile] = []
 	for output in outputs:
-		var a_tile := AnimatedTile.custom_new(layers[Layer.TILE], animation_name, output)
-		animated_tiles.append(a_tile)
+		var animated_tile := AnimatedTile.new(animation_name)
+		add_child(animated_tile)
+		animated_tile.position = layers[Layer.BACKGROUND].map_to_local(output.position)
+		animated_tile.rotation = output.alternative_id * PI/2
+		animated_tiles.append(animated_tile)
 	
 	return animated_tiles[0]
