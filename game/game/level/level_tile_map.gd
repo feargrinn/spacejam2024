@@ -18,7 +18,6 @@ var level_data: Level
 var color_translation = {}
 
 
-var current_tile = null;
 var held_pipe: Pipe = null
 var is_running: bool
 var level_name: String

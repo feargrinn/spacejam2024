@@ -1,7 +1,8 @@
 class_name TileLayer
 extends TileMapLayer
 
-var inputs: Dictionary[Vector2i, Pipe]
+signal pipe_filled(pipe: Pipe)
+
 var outputs: Dictionary[Vector2i, Pipe]
 var pipes: Dictionary[Vector2i, Pipe]
 
@@ -25,26 +26,16 @@ func _get_connections(pos: Vector2i) -> Array[Vector2i]:
 	return pipes[pos].get_connections()
 
 
-func _get_flow_coefficient(pos: Vector2i) -> int:
-	if empty_at(pos):
-		return 0
-	return pipes[pos].pipe_data.flow_coefficient
-
-
-func _get_source_pipe(pos: Vector2i) -> SourcePipe:
-	return SourcePipe.new(pos, _get_flow_coefficient(pos))
-
-
 func _connects(pos: Vector2i, direction: Vector2i) -> bool:
 	var other_connections = _get_connections(pos+direction)
 	return other_connections.has(direction * -1)
 
 
-func connected_pipes(pos: Vector2i) -> Array[SourcePipe]:
-	var result: Array[SourcePipe] = []
+func connected_pipes(pos: Vector2i) -> Array[Pipe]:
+	var result: Array[Pipe] = []
 	for connection in _get_connections(pos):
 		if _connects(pos, connection):
-			result.append(_get_source_pipe(pos+connection))
+			result.append(get_pipe(pos+connection))
 	return result
 
 
@@ -57,19 +48,14 @@ func place_tile(pos: Vector2i, pipe: Pipe):
 	var tile_interactor := TileInteractor.new(pos)
 	tiles[pos] = tile_interactor
 	pipes[pos] = pipe
+	pipe.position = pos
 	add_child(tile_interactor)
-	if pipe.is_input():
-		inputs[pos] = pipe
 	if pipe.is_output():
 		outputs[pos] = pipe
 
 
 func continue_flow(pos: Vector2i) -> bool:
 	return !pipes[pos].pipe_data.delayed_flow
-
-
-func is_input(pos: Vector2i) -> bool:
-	return inputs.has(pos)
 
 
 func is_output(pos: Vector2i) -> bool:

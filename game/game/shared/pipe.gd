@@ -5,6 +5,7 @@ var pipe_data: PipeData
 var alternative_id: int
 var colour: Colour
 var target_colour: Colour
+var position: Vector2i
 
 
 static func from_predata(pre: RefCounted) -> Pipe:

@@ -27,11 +27,11 @@ func set_tile_colour(tile_position: Vector2i, colour: Colour) -> void:
 	colours[tile_position] = colour
 
 
-func is_painted(tile_position):
+func is_painted(tile_position) -> bool:
 	return colours.has(tile_position)
 
 
-func get_tile_colour(tile_position):
+func get_tile_colour(tile_position) -> Colour:
 	return colours[tile_position]
 
 
@@ -41,9 +41,9 @@ func update_timestep(to_update: Array[Vector2i]) -> Array[Vector2i]:
 		var connected_pipes := tile_layer.connected_pipes(location)
 		var empty_neighbours: Array[Vector2i] = []
 		var full_neighbours: Array[Paint] = []
-		for pipe: SourcePipe in connected_pipes:
-			if is_painted(pipe.position) && tile_layer.valid_paint_source(pipe.position):
-				full_neighbours.append(Paint.new(get_tile_colour(pipe.position),pipe.flow_coefficient))
+		for pipe: Pipe in connected_pipes:
+			if pipe.is_filled() && pipe.pipe_data.paint_source:
+				full_neighbours.append(Paint.new(pipe.colour, pipe.pipe_data.flow_coefficient))
 			else:
 				empty_neighbours.append(pipe.position)
 		if full_neighbours.any(func(paint): return paint.amount > 0):
