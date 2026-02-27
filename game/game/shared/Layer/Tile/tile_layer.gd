@@ -1,12 +1,10 @@
 class_name TileLayer
 extends TileMapLayer
 
-signal pipe_filled(pipe: Pipe)
+#signal pipe_filled(pipe: Pipe)
 
 var outputs: Dictionary[Vector2i, Pipe]
 var pipes: Dictionary[Vector2i, Pipe]
-
-var tiles: Dictionary[Vector2i, TileInteractor]
 
 
 func empty_at(pos: Vector2i) -> bool:
@@ -45,11 +43,8 @@ func valid_paint_source(pos: Vector2i) -> bool:
 
 func place_tile(pos: Vector2i, pipe: Pipe):
 	self.set_cell(pos, 0, pipe.get_coordinates(), pipe.alternative_id)
-	var tile_interactor := TileInteractor.new(pos)
-	tiles[pos] = tile_interactor
 	pipes[pos] = pipe
 	pipe.position = pos
-	add_child(tile_interactor)
 	if pipe.is_output():
 		outputs[pos] = pipe
 

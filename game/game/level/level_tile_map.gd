@@ -19,7 +19,6 @@ var color_translation = {}
 
 
 var held_pipe: Pipe = null
-var is_running: bool
 var level_name: String
 
 
@@ -36,17 +35,12 @@ var level_name: String
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	is_running = true
-	TileInteractor.hover_layer = layers[Layer.HOVER]
 	(layers[Layer.COLOUR] as ColourLayer).lost.connect(_on_level_lost)
 	(layers[Layer.COLOUR] as ColourLayer).won.connect(_on_level_won)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
-	if !is_running:
-		return
-	
 	if held_pipe != null:
 		var hover_layer := layers[Layer.HOVER]
 		hover_layer.clear()
@@ -57,12 +51,12 @@ func _process(_delta):
 			held_pipe.rotate()
 		
 		if Input.is_action_just_pressed("LMB"):
-			var tile_position = _mouse_position_to_coordinates()
 			var background_layer: BackgroundLayer = layers[Layer.BACKGROUND]
-			if background_layer.is_background(tile_position):
+			if background_layer.is_background(target_cell):
 				audio_stream_player.play()
-				set_tile_at(tile_position)
+				set_tile_at(target_cell)
 			held_pipe = null
+			hover_layer.clear()
 
 
 func _set_layer(value: TileMapLayer, index: Layer) -> void:
@@ -83,15 +77,12 @@ func _on_level_lost(losing_outputs: Dictionary[Vector2i, Dictionary]) -> void:
 	animation.animation_finished.connect(
 		animation_losing_finished.emit.bind(losing_outputs)
 	)
-	is_running = false
 	layers[Layer.HOVER].clear()
 
 
 func _on_level_won() -> void:
-	is_running = false
-	
 	level_won.emit()
-	var tile_layer := layers[Layer.TILE]
+	var tile_layer: TileLayer = layers[Layer.TILE]
 	var animation := animate_outputs(tile_layer.all_outputs(), "winning")
 	animation.animation_finished.connect(animation_winning_finished.emit)
 
@@ -125,6 +116,8 @@ func place_input(input: PreInput):
 	tile_layer.place_tile(Vector2i(input.x, input.y), pipe)
 	var colour_layer: ColourLayer = layers[Layer.COLOUR]
 	colour_layer.set_tile_colour(Vector2i(input.x, input.y), input.colour)
+	var hover_layer: HoverLayer = layers[Layer.HOVER]
+	hover_layer.set_interactor(Vector2i(input.x, input.y))
 
 
 func place_output(output: PreOutput):
@@ -133,6 +126,8 @@ func place_output(output: PreOutput):
 	tile_layer.place_tile(Vector2i(output.x, output.y), pipe)
 	var colour_layer: ColourLayer = layers[Layer.COLOUR]
 	colour_layer.set_tile_colour(Vector2i(output.x, output.y), output.colour)
+	var hover_layer: HoverLayer = layers[Layer.HOVER]
+	hover_layer.set_interactor(Vector2i(output.x, output.y))
 
 
 func place_tile(pretile: PreTile):
@@ -141,6 +136,8 @@ func place_tile(pretile: PreTile):
 	tile_layer.place_tile(Vector2i(pretile.x, pretile.y), pipe)
 	var colour_layer: ColourLayer = layers[Layer.COLOUR]
 	colour_layer.update_at(Vector2i(pretile.x, pretile.y))
+	var hover_layer: HoverLayer = layers[Layer.HOVER]
+	hover_layer.set_interactor(Vector2i(pretile.x, pretile.y))
 
 
 func clear_map() -> void:
@@ -150,6 +147,7 @@ func clear_map() -> void:
 	(layers[Layer.COLOUR] as ColourLayer).won.connect(_on_level_won)
 	_set_layer(TileLayer.new(), Layer.TILE)
 	(layers[Layer.COLOUR] as ColourLayer).tile_layer = layers[Layer.TILE]
+	_set_layer(HoverLayer.new(), Layer.HOVER)
 
 
 func draw_starting_map():
@@ -171,8 +169,6 @@ func draw_starting_map():
 		dimensions.x * scale.x * Globals.TILE_SIZE / 2,
 		dimensions.y * scale.y * Globals.TILE_SIZE / 2
 	)
-	
-	is_running = true
 
 
 func set_tile_at(tile_position):
