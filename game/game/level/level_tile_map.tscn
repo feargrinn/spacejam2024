@@ -26,11 +26,10 @@ tile_set = ExtResource("2_6qfqa")
 script = ExtResource("3_g7cq2")
 metadata/_custom_type_script = "uid://dywqgs0s3x4xl"
 
-[node name="ColourLayer" type="TileMapLayer" parent="." unique_id=2116341240 node_paths=PackedStringArray("tile_layer")]
+[node name="ColourLayer" type="TileMapLayer" parent="." unique_id=2116341240]
 unique_name_in_owner = true
 tile_set = ExtResource("2_6qfqa")
 script = ExtResource("4_tulvh")
-tile_layer = NodePath("../TileLayer")
 metadata/_custom_type_script = "uid://dsgq3dx1v2nie"
 
 [node name="TileLayer" type="TileMapLayer" parent="." unique_id=337421594]

@@ -30,7 +30,7 @@ static func from_description(description):
 	return Colour.new(l_r, l_y, l_b)
 
 
-static func create_tile_colour(tileset_coords: Vector2i, tileset_alt_id: int, new_color: Color):
+static func create_tile_colour(tileset_coords: Vector2i, tileset_alt_id: int, new_color: Color) -> int:
 	var atlas_source: TileSetAtlasSource = Globals.TILE_SET.get_source(0)
 	var coloured_alternative_id: int = atlas_source.create_alternative_tile(tileset_coords)
 	

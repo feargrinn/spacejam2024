@@ -20,6 +20,7 @@ var color_translation = {}
 
 var held_pipe: Pipe = null
 var level_name: String
+var colour_updater: ColourUpdater
 
 
 @onready var layers: Dictionary[Layer, TileMapLayer] = {
@@ -35,8 +36,11 @@ var level_name: String
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	(layers[Layer.COLOUR] as ColourLayer).lost.connect(_on_level_lost)
-	(layers[Layer.COLOUR] as ColourLayer).won.connect(_on_level_won)
+	colour_updater = ColourUpdater.new()
+	colour_updater.outputs_correctly_filled.connect(_on_level_won)
+	colour_updater.outputs_incorrectly_filled.connect(_on_level_lost)
+	colour_updater.pipe_colour_set.connect(
+		(layers[Layer.COLOUR] as ColourLayer).set_tile_colour)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -80,10 +84,9 @@ func _on_level_lost(losing_outputs: Array[Pipe]) -> void:
 	layers[Layer.HOVER].clear()
 
 
-func _on_level_won() -> void:
+func _on_level_won(outputs: Array[Pipe]) -> void:
 	level_won.emit()
-	var tile_layer: TileLayer = layers[Layer.TILE]
-	var animation := animate_outputs(tile_layer.get_outputs(), "winning")
+	var animation := animate_outputs(outputs, "winning")
 	animation.animation_finished.connect(animation_winning_finished.emit)
 
 
@@ -113,9 +116,11 @@ func set_held_tile(pipe: Pipe) -> void:
 func place_input(input: PreInput):
 	var tile_layer: TileLayer = layers[Layer.TILE]
 	var pipe := Pipe.from_predata(input)
-	tile_layer.place_tile(Vector2i(input.x, input.y), pipe)
+	tile_layer.place_pipe(Vector2i(input.x, input.y), pipe)
 	var colour_layer: ColourLayer = layers[Layer.COLOUR]
-	colour_layer.set_tile_colour(Vector2i(input.x, input.y), input.colour)
+	pipe.colour = input.colour
+	colour_updater.register_pipe(pipe)
+	colour_layer.set_tile_colour(pipe)
 	var hover_layer: HoverLayer = layers[Layer.HOVER]
 	hover_layer.set_interactor(Vector2i(input.x, input.y))
 
@@ -123,9 +128,11 @@ func place_input(input: PreInput):
 func place_output(output: PreOutput):
 	var tile_layer: TileLayer = layers[Layer.TILE]
 	var pipe := Pipe.from_predata(output)
-	tile_layer.place_tile(Vector2i(output.x, output.y), pipe)
+	tile_layer.place_pipe(Vector2i(output.x, output.y), pipe)
 	var colour_layer: ColourLayer = layers[Layer.COLOUR]
-	colour_layer.set_tile_colour(Vector2i(output.x, output.y), output.colour)
+	pipe.target_colour = output.colour
+	colour_updater.register_pipe(pipe)
+	colour_layer.set_target_colour(pipe)
 	var hover_layer: HoverLayer = layers[Layer.HOVER]
 	hover_layer.set_interactor(Vector2i(output.x, output.y))
 
@@ -133,21 +140,22 @@ func place_output(output: PreOutput):
 func place_tile(pretile: PreTile):
 	var tile_layer: TileLayer = layers[Layer.TILE]
 	var pipe := Pipe.from_predata(pretile)
-	tile_layer.place_tile(Vector2i(pretile.x, pretile.y), pipe)
-	var colour_layer: ColourLayer = layers[Layer.COLOUR]
-	colour_layer.update_pipe(pipe)
+	tile_layer.place_pipe(Vector2i(pretile.x, pretile.y), pipe)
+	colour_updater.register_pipe(pipe)
 	var hover_layer: HoverLayer = layers[Layer.HOVER]
 	hover_layer.set_interactor(Vector2i(pretile.x, pretile.y))
 
 
 func clear_map() -> void:
 	_set_layer(BackgroundLayer.new(), Layer.BACKGROUND)
-	_set_layer(ColourLayer.new(), Layer.COLOUR)
-	(layers[Layer.COLOUR] as ColourLayer).lost.connect(_on_level_lost)
-	(layers[Layer.COLOUR] as ColourLayer).won.connect(_on_level_won)
+	var colour_layer := ColourLayer.new()
+	_set_layer(colour_layer, Layer.COLOUR)
 	_set_layer(TileLayer.new(), Layer.TILE)
-	(layers[Layer.COLOUR] as ColourLayer).tile_layer = layers[Layer.TILE]
 	_set_layer(HoverLayer.new(), Layer.HOVER)
+	colour_updater = ColourUpdater.new()
+	colour_updater.outputs_correctly_filled.connect(_on_level_won)
+	colour_updater.outputs_incorrectly_filled.connect(_on_level_lost)
+	colour_updater.pipe_colour_set.connect(colour_layer.set_tile_colour)
 
 
 func draw_starting_map():
@@ -173,9 +181,8 @@ func draw_starting_map():
 
 func set_tile_at(tile_position):
 	var tile_layer: TileLayer = layers[Layer.TILE]
-	tile_layer.place_tile(tile_position, held_pipe)
-	var colour_layer: ColourLayer = layers[Layer.COLOUR]
-	colour_layer.update_pipe(held_pipe)
+	tile_layer.place_pipe(tile_position, held_pipe)
+	colour_updater.register_pipe(held_pipe)
 
 
 func animate_outputs(outputs: Array[Pipe], animation_name: String) -> AnimatedTile:

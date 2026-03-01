@@ -55,6 +55,40 @@ func is_output() -> bool:
 	return pipe_data == PipeData.output
 
 
+func is_paint_source() -> bool:
+	return pipe_data.paint_source
+
+
+func is_filled_acceptably() -> bool:
+	if !is_filled():
+		return false
+	if !target_colour:
+		return true
+	return target_colour.is_similar(colour)
+
+
+func should_continue_flow() -> bool:
+	return !pipe_data.delayed_flow
+
+
+func get_empty_colour_coords() -> Vector2i:
+	return pipe_data.empty_coords
+
+
+func get_filled_colour_coords() -> Vector2i:
+	return pipe_data.filled_coord
+
+
+## NOT coloUr
+func get_color() -> Color:
+	return colour.color()
+
+
+## NOT coloUr
+func get_target_color() -> Color:
+	return target_colour.color()
+
+
 ## I have no clue why the normal duplicate() doesn't work???????? ;-;
 func my_duplicate() -> Pipe:
 	var pipe := Pipe.new()
