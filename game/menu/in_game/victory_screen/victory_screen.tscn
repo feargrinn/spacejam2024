@@ -1,11 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://c5jhprfubvllq"]
+[gd_scene format=3 uid="uid://c5jhprfubvllq"]
 
 [ext_resource type="StyleBox" uid="uid://i47pwd6ai1af" path="res://menu/shared/graphics/panel_dark.tres" id="1_8n4c8"]
-[ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://menu/shared/graphics/fonts/menu_font.ttf" id="1_fxi58"]
 [ext_resource type="Script" uid="uid://b07eoi04kauw2" path="res://menu/in_game/victory_screen/victory_screen.gd" id="1_j6cd5"]
-[ext_resource type="Texture2D" uid="uid://c86rrp0hau4hr" path="res://menu/shared/graphics/buttons/menu_button_empty.png" id="2_xge52"]
 
-[node name="VictoryScreen" type="PanelContainer"]
+[node name="VictoryScreen" type="PanelContainer" unique_id=938131968]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -20,24 +18,22 @@ grow_vertical = 2
 theme_override_styles/panel = ExtResource("1_8n4c8")
 script = ExtResource("1_j6cd5")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1193395122]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="LevelComplete" type="Label" parent="VBoxContainer"]
+[node name="LevelComplete" type="Label" parent="VBoxContainer" unique_id=1263289336]
 layout_mode = 2
 text = "Level complete!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NextLevel" type="Button" parent="VBoxContainer"]
+[node name="NextLevel" type="Button" parent="VBoxContainer" unique_id=46644286]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(237, 87)
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 6
-theme_override_fonts/font = ExtResource("1_fxi58")
-theme_override_font_sizes/font_size = 60
 text = "Next level"
-icon = ExtResource("2_xge52")
-flat = true
 icon_alignment = 1

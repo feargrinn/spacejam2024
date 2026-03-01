@@ -1,0 +1,101 @@
+class_name Pipe
+extends Resource
+
+var pipe_data: PipeData
+var alternative_id: int
+var colour: Colour
+var target_colour: Colour
+var position: Vector2i
+
+
+static func from_predata(pre: RefCounted) -> Pipe:
+	var pipe := Pipe.new()
+	if pre is PreInput:
+		pipe.pipe_data = PipeData.input
+	elif pre is PreOutput:
+		pipe.pipe_data = PipeData.output
+	elif pre is PreTile:
+		pipe.pipe_data = PipeData.get_by_coords(pre.type)
+	
+	pipe.alternative_id = pre.rot
+	return pipe
+
+
+func _to_string() -> String:
+	return str(pipe_data) + " alt: " + str(alternative_id)
+
+
+func rotate() -> void:
+	alternative_id = (alternative_id + 1) % pipe_data.get_alternative_count()
+
+
+func get_paint() -> Paint:
+	return Paint.new(colour, pipe_data.flow_coefficient)
+
+
+func get_connections() -> Array[Vector2i]:
+	var base_connections := pipe_data.get_connections()
+	var rotated_connections: Array[Vector2i]
+	for connection in base_connections:
+		var f_v := Vector2(connection)
+		f_v = f_v.rotated(PI/2 * alternative_id)
+		rotated_connections.append(Vector2i(f_v.round()))
+	return rotated_connections
+
+
+func get_coordinates() -> Vector2i:
+	return pipe_data.tileset_coordinates
+
+
+func is_input() -> bool:
+	return pipe_data == PipeData.input
+
+
+func is_output() -> bool:
+	return pipe_data == PipeData.output
+
+
+func is_paint_source() -> bool:
+	return pipe_data.paint_source
+
+
+func is_filled_acceptably() -> bool:
+	if !is_filled():
+		return false
+	if !target_colour:
+		return true
+	return target_colour.is_similar(colour)
+
+
+func should_continue_flow() -> bool:
+	return !pipe_data.delayed_flow
+
+
+func get_empty_colour_coords() -> Vector2i:
+	return pipe_data.empty_coords
+
+
+func get_filled_colour_coords() -> Vector2i:
+	return pipe_data.filled_coord
+
+
+## NOT coloUr
+func get_color() -> Color:
+	return colour.color()
+
+
+## NOT coloUr
+func get_target_color() -> Color:
+	return target_colour.color()
+
+
+## I have no clue why the normal duplicate() doesn't work???????? ;-;
+func my_duplicate() -> Pipe:
+	var pipe := Pipe.new()
+	pipe.pipe_data = pipe_data
+	pipe.alternative_id = alternative_id
+	return pipe
+
+
+func is_filled() -> bool:
+	return colour != null

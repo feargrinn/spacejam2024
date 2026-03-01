@@ -10,14 +10,12 @@ var r: float
 var y: float
 var b: float
 
-static var colour_coords = TileType.coordinates(TileType.Type.COLOR)
-var colour_id
 
 func _init(a_r: float, a_y: float, a_b: float):
 	self.r = a_r
 	self.y = a_y
 	self.b = a_b
-	colour_id = create_tile_colour(self)
+
 
 static func from_description(description):
 	if not description.has(r_name):
@@ -31,24 +29,27 @@ static func from_description(description):
 	var l_b = description[b_name]
 	return Colour.new(l_r, l_y, l_b)
 
-static func create_input_or_output_colour(tile_type, tile_rotation, new_colour):
-	var coordinates_in_source = TileType.coordinates(tile_type)
-	var atlas_source = Globals.TILE_SET.get_source(0)
-	var coloured_alternative_id = atlas_source.create_alternative_tile(coordinates_in_source)
-	var tile_data = atlas_source.get_tile_data(coordinates_in_source, tile_rotation)
-	var new_tile_data = atlas_source.get_tile_data(coordinates_in_source, coloured_alternative_id)
+
+static func create_tile_colour(tileset_coords: Vector2i, tileset_alt_id: int, new_color: Color) -> int:
+	var atlas_source: TileSetAtlasSource = Globals.TILE_SET.get_source(0)
+	var coloured_alternative_id: int = atlas_source.create_alternative_tile(tileset_coords)
+	
+	var tile_data: TileData
+	
+	# This actually checks whether this is an input or output tile
+	# All our non-input non-output pipes use white square in colour layer
+	# and there's no point rotating that
+	if atlas_source.has_alternative_tile(tileset_coords, tileset_alt_id):
+		tile_data = atlas_source.get_tile_data(tileset_coords, tileset_alt_id)
+	else:
+		tile_data = atlas_source.get_tile_data(tileset_coords, 0)
+	var new_tile_data: TileData = atlas_source.get_tile_data(tileset_coords, coloured_alternative_id)
 	new_tile_data.flip_h = tile_data.flip_h
 	new_tile_data.flip_v = tile_data.flip_v
 	new_tile_data.transpose = tile_data.transpose
-	new_tile_data.modulate = new_colour
+	new_tile_data.modulate = new_color
 	return coloured_alternative_id
 
-static func create_tile_colour(new_colour):
-	var atlas_source = Globals.TILE_SET.get_source(0)
-	var coloured_alternative_id = atlas_source.create_alternative_tile(colour_coords)
-	var new_tile_data = atlas_source.get_tile_data(colour_coords, coloured_alternative_id)
-	new_tile_data.modulate = new_colour.color()
-	return coloured_alternative_id
 
 func to_description():
 	return {
@@ -56,6 +57,7 @@ func to_description():
 		y_name: self.y,
 		b_name: self.b
 	}
+
 
 # RYB to RGB conversion
 func color():
@@ -67,11 +69,14 @@ func color():
 	var l_b = (revr * revy * revb) + (revr * revy * self.b) + (0.5 * (self.r * revy * self.b))
 	return Color(l_r, l_g, l_b)
 
+
 func whiteness() -> float:
 	return (1 - self.r)*(1 - self.y)*(1 - self.b)
 
+
 func is_equal(other: Colour) -> bool:
 	return r == other.r and y == other.y and b == other.b
+
 
 func is_similar(target_colour: Colour) -> bool:
 	var error_margin = 0.2

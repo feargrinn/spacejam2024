@@ -1,10 +1,10 @@
 class_name MainMenu
 extends PanelContainer
 
-@onready var play: TextMarginButton = %Play
-@onready var settings: TextMarginButton = %Settings
-@onready var create: TextMarginButton = %Create
-@onready var quit: TextMarginButton = %Quit
+@onready var play: Button = %Play
+@onready var settings: Button = %Settings
+@onready var create: Button = %Create
+@onready var quit: Button = %Quit
 
 
 func _ready() -> void:

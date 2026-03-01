@@ -1,10 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://b6ldch5v2bfc3"]
+[gd_scene format=3 uid="uid://b6ldch5v2bfc3"]
 
 [ext_resource type="Script" uid="uid://bqrmw7uma4tou" path="res://menu/main_menu/main_menu.gd" id="1_winya"]
 [ext_resource type="Texture2D" uid="uid://b6y06h2qilehi" path="res://menu/shared/graphics/title_banner.png" id="2_prid6"]
-[ext_resource type="PackedScene" uid="uid://phgii3mkuvdn" path="res://menu/shared/nine_patch_rect_button.tscn" id="4_7r8i1"]
 
-[node name="MainMenu" type="PanelContainer"]
+[node name="MainMenu" type="PanelContainer" unique_id=1071065235]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -12,10 +11,10 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_winya")
 
-[node name="MenuLogoRatio" type="VBoxContainer" parent="."]
+[node name="MenuLogoRatio" type="VBoxContainer" parent="." unique_id=1122459308]
 layout_mode = 2
 
-[node name="Logo" type="TextureRect" parent="MenuLogoRatio"]
+[node name="Logo" type="TextureRect" parent="MenuLogoRatio" unique_id=809892886]
 z_index = 1
 layout_mode = 2
 size_flags_horizontal = 4
@@ -23,28 +22,38 @@ size_flags_vertical = 4
 texture = ExtResource("2_prid6")
 stretch_mode = 5
 
-[node name="MenuButtons" type="VBoxContainer" parent="MenuLogoRatio"]
+[node name="MenuButtons" type="VBoxContainer" parent="MenuLogoRatio" unique_id=2063628958]
 layout_mode = 2
-size_flags_vertical = 0
+size_flags_vertical = 6
 size_flags_stretch_ratio = 4.15
 
-[node name="Play" parent="MenuLogoRatio/MenuButtons" instance=ExtResource("4_7r8i1")]
+[node name="Play" type="Button" parent="MenuLogoRatio/MenuButtons" unique_id=179486589]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Play"
 
-[node name="Settings" parent="MenuLogoRatio/MenuButtons" instance=ExtResource("4_7r8i1")]
+[node name="Settings" type="Button" parent="MenuLogoRatio/MenuButtons" unique_id=120530672]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(196, 60)
 layout_mode = 2
-text = "Settings"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Settings
+"
 
-[node name="Create" parent="MenuLogoRatio/MenuButtons" instance=ExtResource("4_7r8i1")]
+[node name="Create" type="Button" parent="MenuLogoRatio/MenuButtons" unique_id=1621507327]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(164, 60)
 layout_mode = 2
-text = "Create"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Create
+"
 
-[node name="Quit" parent="MenuLogoRatio/MenuButtons" instance=ExtResource("4_7r8i1")]
+[node name="Quit" type="Button" parent="MenuLogoRatio/MenuButtons" unique_id=1883640854]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Quit"
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Quit
+"

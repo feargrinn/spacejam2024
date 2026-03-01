@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="PipeData" format=3 uid="uid://yg87nfb0grif"]
+
+[ext_resource type="Script" uid="uid://cp6nptt2cucm3" path="res://game/shared/pipe_data.gd" id="1_6f6jt"]
+[ext_resource type="Texture2D" uid="uid://iaumk5tbsbn1" path="res://game/shared/graphics/images/I/tile_24x24_I_opaque.png" id="2_kxawu"]
+
+[resource]
+script = ExtResource("1_6f6jt")
+texture = ExtResource("2_kxawu")
+tileset_coordinates = Vector2i(1, 0)
+connections = Dictionary[Vector2i, bool]({
+Vector2i(-1, -1): false,
+Vector2i(-1, 0): false,
+Vector2i(-1, 1): false,
+Vector2i(0, -1): true,
+Vector2i(0, 0): false,
+Vector2i(0, 1): true,
+Vector2i(1, -1): false,
+Vector2i(1, 0): false,
+Vector2i(1, 1): false
+})
+metadata/_custom_type_script = "uid://cp6nptt2cucm3"

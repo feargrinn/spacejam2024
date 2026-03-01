@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dn584k3p7vand" path="res://game/level/game.gd" id="1_f0dd8"]
 [ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://menu/shared/graphics/fonts/menu_font.ttf" id="2_rssi8"]
 [ext_resource type="PackedScene" uid="uid://dys1pp7uead78" path="res://game/level/level_tile_map.tscn" id="2_yrn2k"]
-[ext_resource type="Texture2D" uid="uid://c3msrgw8yn1n4" path="res://menu/shared/graphics/buttons/menu_button_lvl_empty.png" id="3_eonvc"]
+[ext_resource type="Script" uid="uid://c5cdqnjgijvjn" path="res://game/level/tile_picker.gd" id="5_vse0r"]
 
 [node name="Game" type="Node" unique_id=1199358187]
 script = ExtResource("1_f0dd8")
@@ -32,16 +32,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
 
 [node name="ExitLevel" type="Button" parent="Controls/MarginContainer" unique_id=1701676812]
+custom_minimum_size = Vector2(87, 87)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_override_fonts/font = ExtResource("2_rssi8")
 theme_override_font_sizes/font_size = 64
 text = "Iks"
-icon = ExtResource("3_eonvc")
-flat = true
 icon_alignment = 1
 
 [node name="TilePicker" type="VBoxContainer" parent="Controls/MarginContainer" unique_id=1750720877]
@@ -51,5 +52,6 @@ layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 4
 theme_override_constants/separation = 30
+script = ExtResource("5_vse0r")
 
 [connection signal="pressed" from="Controls/MarginContainer/ExitLevel" to="." method="_on_exit_level_pressed"]

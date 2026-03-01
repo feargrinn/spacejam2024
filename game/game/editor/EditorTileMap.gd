@@ -44,7 +44,7 @@ func _process(_delta):
 			while !background_layer.is_ok_for_input_or_output(tile_pos).has((held_tile.alternative + output_offset)%4):
 				held_tile.rotate()
 			$"tile_hover".set_cell(tile_pos, 0, held_tile.id, held_tile.alternative)
-		elif background_layer.is_background(tile_pos) and TileType.is_pipe_tile(held_tile.id):
+		elif background_layer.is_background(tile_pos) and PipeData.is_pipe(held_tile.id):
 			$"tile_hover".set_cell(tile_pos, 0, held_tile.id, held_tile.alternative)
 		elif not background_layer.is_background(tile_pos) and held_tile.id == TileType.coordinates(TileType.Type.BACKGROUND):
 			$"tile_hover".set_cell(tile_pos, 0, held_tile.id, held_tile.alternative)

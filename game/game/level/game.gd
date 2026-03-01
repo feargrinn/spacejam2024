@@ -11,8 +11,8 @@ const GAME = preload("uid://fhmwenm3h7c7")
 
 
 @onready var controls: CanvasLayer = $Controls
-@onready var tile_picker: VBoxContainer = %TilePicker
 @onready var level_tile_map: LevelTileMap = %LevelTileMap
+@onready var tile_picker: TilePicker = %TilePicker
 
 
 static func create_scene(base_levels: Array[Level], level_id: int) -> Game:
@@ -23,14 +23,7 @@ static func create_scene(base_levels: Array[Level], level_id: int) -> Game:
 
 
 func _ready():
-	for tile_type in TileType.pipe_types:
-		var tile_button := _create_button(tile_type)
-		tile_picker.add_child(tile_button)
-		tile_button.tile_picked_up.connect(
-			func(tile: TileId):
-				level_tile_map.tile = tile
-				)
-	
+	tile_picker.tile_picked_up.connect(level_tile_map.set_held_pipe)
 	level_tile_map.set_level(loaded_base_levels[current_level])
 	level_tile_map.animation_losing_finished.connect(loser_screen)
 	level_tile_map.animation_winning_finished.connect(victory_screen)
@@ -40,14 +33,6 @@ func _ready():
 ##Goes back to lever picker
 func _on_exit_level_pressed():
 	get_tree().change_scene_to_file(BASE_CUSTOM_PICKER_UID)
-
-
-## Creates clickable tile buttons
-func _create_button(tile_type: TileType.Type) -> PickableTile:
-	var tile_coords := TileType.coordinates(tile_type)
-	var texture: Texture = load(TileType.texture(tile_type))
-	var container = PickableTile.create_scene(tile_coords, texture)
-	return container
 
 
 func _on_next_level_pressed():
@@ -81,8 +66,8 @@ func victory_screen():
 		controls.add_child(END_SCREEN.instantiate())
 
 
-func loser_screen(losing_outputs: Dictionary):
-	var loser_scene := LoserScreen.custom_new(losing_outputs)
+func loser_screen(losing_outputs: Array[Pipe]):
+	var loser_scene := LoserScreen.create_scene(losing_outputs)
 	controls.add_child(loser_scene)
 	loser_scene.retry_requested.connect(_on_retry_pressed, CONNECT_ONE_SHOT)
 	loser_scene.retry_requested.connect(loser_scene.queue_free, CONNECT_ONE_SHOT)
