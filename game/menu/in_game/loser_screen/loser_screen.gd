@@ -12,7 +12,7 @@ const LOSER_SCREEN = preload("uid://drw6h3oglmj2e")
 var losing_outputs: Array[Pipe]
 
 
-static func custom_new(incorrect_outputs: Array[Pipe]) -> LoserScreen:
+static func create_scene(incorrect_outputs: Array[Pipe]) -> LoserScreen:
 	var loser_screen: LoserScreen = LOSER_SCREEN.instantiate()
 	loser_screen.losing_outputs = incorrect_outputs
 	return loser_screen

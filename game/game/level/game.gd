@@ -67,7 +67,7 @@ func victory_screen():
 
 
 func loser_screen(losing_outputs: Array[Pipe]):
-	var loser_scene := LoserScreen.custom_new(losing_outputs)
+	var loser_scene := LoserScreen.create_scene(losing_outputs)
 	controls.add_child(loser_scene)
 	loser_scene.retry_requested.connect(_on_retry_pressed, CONNECT_ONE_SHOT)
 	loser_scene.retry_requested.connect(loser_scene.queue_free, CONNECT_ONE_SHOT)
