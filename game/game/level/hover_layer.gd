@@ -21,6 +21,7 @@ func _process(_delta: float) -> void:
 
 func _on_mouse_entered(pos: Vector2i) -> void:
 	if !held_pipe:
+		# For now, we're just drawing an eraser
 		set_cell(pos, 0, PIPE_HOVER_ATLAS_COORDS)
 
 
