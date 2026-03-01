@@ -79,10 +79,6 @@ func _scale_from_dimensions(dimensions: Vector2i) -> Vector2:
 		return Vector2(1, 1)
 
 
-func _mouse_position_to_coordinates() -> Vector2i:
-	return layers[Layer.BACKGROUND].local_to_map(get_local_mouse_position())
-
-
 func set_level(level: Level) -> void:
 	level_data = level
 	if is_node_ready():
