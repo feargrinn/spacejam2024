@@ -1,6 +1,8 @@
 class_name HoverLayer
 extends TileMapLayer
 
+const TILE_HOVER_ATLAS_COORDS := Vector2i(1, 4)
+
 var tile_interactors: Dictionary[Vector2i, TileInteractor]
 
 
@@ -18,8 +20,7 @@ func set_interactor(pos: Vector2i) -> void:
 
 
 func _on_mouse_entered(pos: Vector2i) -> void:
-	const ERASER_COORDS := Vector2i(1, 4)
-	set_cell(pos, 0, ERASER_COORDS)
+	set_cell(pos, 0, TILE_HOVER_ATLAS_COORDS)
 
 
 func _on_mouse_exited(pos: Vector2i) -> void:

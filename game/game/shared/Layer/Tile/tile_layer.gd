@@ -26,8 +26,7 @@ func connected_pipes(pos: Vector2i) -> Array[Pipe]:
 
 
 func empty_at(pos: Vector2i) -> bool:
-	const EMPTY = Vector2i(-1,-1)
-	return get_cell_atlas_coords(pos) == EMPTY
+	return !pipes.has(pos)
 
 
 func get_pipe(pos: Vector2i) -> Pipe:
