@@ -34,15 +34,6 @@ var colour_updater: ColourUpdater
 @onready var audio_stream_player: AudioStreamPlayer = $PipePlaceStreamPlayer
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	colour_updater = ColourUpdater.new()
-	colour_updater.outputs_correctly_filled.connect(_on_level_won)
-	colour_updater.outputs_incorrectly_filled.connect(_on_level_lost)
-	colour_updater.pipe_colour_set.connect(
-		(layers[Layer.COLOUR] as ColourLayer).set_tile_colour)
-
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float):
 	if held_pipe:

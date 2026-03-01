@@ -20,7 +20,6 @@ grow_vertical = 2
 color = Color(0.5176471, 0.6627451, 0.54901963, 1)
 
 [node name="GridMapLayer" type="CanvasLayer" parent="." unique_id=1225644071]
-layer = 2
 
 [node name="LevelTileMap" parent="GridMapLayer" unique_id=723179342 instance=ExtResource("2_yrn2k")]
 unique_name_in_owner = true
