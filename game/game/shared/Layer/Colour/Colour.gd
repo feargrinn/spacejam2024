@@ -36,8 +36,7 @@ static func create_tile_colour(tileset_coords: Vector2i, tileset_alt_id: int, ne
 	
 	var tile_data: TileData
 	
-	# If the atlas source doesn't have alternative tile for this rotation
-	# it means it's a default rotation for this tile
+	# This actually checks whether this is an input or output tile
 	# All our non-input non-output pipes use white square in colour layer
 	# and there's no point rotating that
 	if atlas_source.has_alternative_tile(tileset_coords, tileset_alt_id):
