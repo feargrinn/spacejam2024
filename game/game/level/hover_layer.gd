@@ -30,12 +30,15 @@ func _on_mouse_exited(pos: Vector2i) -> void:
 
 func set_held_pipe(pipe: Pipe) -> void:
 	held_pipe = pipe
-	if !held_pipe:
-		clear()
-		var mouse_position := get_local_mouse_position()
-		var mouse_coords := local_to_map(mouse_position)
-		if tile_interactors.has(mouse_coords):
-			_on_mouse_entered(mouse_coords)
+
+
+func reset_held_pipe() -> void:
+	held_pipe = null
+	clear()
+	var mouse_position := get_local_mouse_position()
+	var mouse_coords := local_to_map(mouse_position)
+	if tile_interactors.has(mouse_coords):
+		_on_mouse_entered(mouse_coords)
 
 
 func set_interactor(pos: Vector2i) -> void:

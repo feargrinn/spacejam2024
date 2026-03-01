@@ -106,6 +106,12 @@ func set_held_pipe(pipe: Pipe) -> void:
 	hover_layer.set_held_pipe(pipe)
 
 
+func reset_held_pipe() -> void:
+	held_pipe = null
+	var hover_layer := layers[Layer.HOVER] as HoverLayer
+	hover_layer.reset_held_pipe()
+
+
 func place_input(input: PreInput):
 	var tile_layer: TileLayer = layers[Layer.TILE]
 	var pipe := Pipe.from_predata(input)
@@ -178,14 +184,14 @@ func _place_held_pipe() -> void:
 	var mouse_coords := background_layer.local_to_map(mouse_position)
 	
 	if !background_layer.is_background(mouse_coords):
-		set_held_pipe(null)
+		reset_held_pipe()
 		return
 	
 	var tile_layer: TileLayer = layers[Layer.TILE]
 	tile_layer.place_pipe(mouse_coords, held_pipe)
 	audio_stream_player.play()
 	colour_updater.register_pipe(held_pipe)
-	set_held_pipe(null)
+	reset_held_pipe()
 
 
 func animate_outputs(outputs: Array[Pipe], animation_name: String) -> AnimatedTile:
