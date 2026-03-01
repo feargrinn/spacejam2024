@@ -21,9 +21,9 @@ func _ready() -> void:
 		tile.texture = pipe.pipe_data.texture
 
 
-func _on_rotate_pressed(angle_radians: float):
-	tile.rotation += angle_radians
-	if angle_radians > 0:
+func _on_rotate_pressed(clockwise: bool):
+	tile.rotation += (1 if clockwise else -1) * PI/2
+	if clockwise:
 		pipe.rotate()
 	else:
 		for i in 3: pipe.rotate()

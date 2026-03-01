@@ -25,13 +25,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(24, 24)
+pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("2_lmy6g")
 
 [node name="RotateRight" type="Button" parent="." unique_id=601266984]
 layout_mode = 2
 text = ">"
 
-[connection signal="pressed" from="RotateLeft" to="." method="_on_rotate_pressed" binds= [-1.571]]
+[connection signal="pressed" from="RotateLeft" to="." method="_on_rotate_pressed" binds= [false]]
 [connection signal="pressed" from="TileButton" to="." method="_on_tile_button_pressed"]
-[connection signal="pressed" from="RotateRight" to="." method="_on_rotate_pressed" binds= [1.571]]
+[connection signal="pressed" from="RotateRight" to="." method="_on_rotate_pressed" binds= [true]]
