@@ -23,7 +23,7 @@ static func create_scene(base_levels: Array[Level], level_id: int) -> Game:
 
 
 func _ready():
-	tile_picker.tile_picked_up.connect(level_tile_map.set_held_tile)
+	tile_picker.tile_picked_up.connect(level_tile_map.set_held_pipe)
 	level_tile_map.set_level(loaded_base_levels[current_level])
 	level_tile_map.animation_losing_finished.connect(loser_screen)
 	level_tile_map.animation_winning_finished.connect(victory_screen)

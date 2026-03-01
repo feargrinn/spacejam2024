@@ -44,5 +44,5 @@ modulate = Color(1, 1, 1, 0.49803922)
 tile_set = ExtResource("2_6qfqa")
 script = ExtResource("6_17xxu")
 
-[node name="RotateStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=854768955]
+[node name="PipePlaceStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=854768955]
 stream = SubResource("AudioStreamRandomizer_crlv1")

@@ -31,7 +31,7 @@ var colour_updater: ColourUpdater
 }
 
 # The stream player still shouldn't be here I think, but it's better
-@onready var audio_stream_player: AudioStreamPlayer = $RotateStreamPlayer
+@onready var audio_stream_player: AudioStreamPlayer = $PipePlaceStreamPlayer
 
 
 # Called when the node enters the scene tree for the first time.
@@ -44,23 +44,14 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta):
-	if held_pipe != null:
-		var hover_layer := layers[Layer.HOVER]
-		hover_layer.clear()
-		var target_cell := _mouse_position_to_coordinates()
-		hover_layer.set_cell(target_cell, 0, held_pipe.get_coordinates(), held_pipe.alternative_id)
+func _process(_delta: float):
+	if held_pipe:
 		if Input.is_action_just_released("RMB"):
 			Sounds.play("turning")
 			held_pipe.rotate()
 		
 		if Input.is_action_just_pressed("LMB"):
-			var background_layer: BackgroundLayer = layers[Layer.BACKGROUND]
-			if background_layer.is_background(target_cell):
-				audio_stream_player.play()
-				set_tile_at(target_cell)
-			held_pipe = null
-			hover_layer.clear()
+			_place_held_pipe()
 
 
 func _set_layer(value: TileMapLayer, index: Layer) -> void:
@@ -109,8 +100,10 @@ func set_level(level: Level) -> void:
 		ready.connect(draw_starting_map)
 
 
-func set_held_tile(pipe: Pipe) -> void:
+func set_held_pipe(pipe: Pipe) -> void:
 	held_pipe = pipe
+	var hover_layer := layers[Layer.HOVER] as HoverLayer
+	hover_layer.set_held_pipe(pipe)
 
 
 func place_input(input: PreInput):
@@ -179,10 +172,20 @@ func draw_starting_map():
 	)
 
 
-func set_tile_at(tile_position):
+func _place_held_pipe() -> void:
+	var mouse_position := get_local_mouse_position()
+	var background_layer: BackgroundLayer = layers[Layer.BACKGROUND]
+	var mouse_coords := background_layer.local_to_map(mouse_position)
+	
+	if !background_layer.is_background(mouse_coords):
+		set_held_pipe(null)
+		return
+	
 	var tile_layer: TileLayer = layers[Layer.TILE]
-	tile_layer.place_pipe(tile_position, held_pipe)
+	tile_layer.place_pipe(mouse_coords, held_pipe)
+	audio_stream_player.play()
 	colour_updater.register_pipe(held_pipe)
+	set_held_pipe(null)
 
 
 func animate_outputs(outputs: Array[Pipe], animation_name: String) -> AnimatedTile:
