@@ -1,4 +1,4 @@
-@tool
+#@tool
 class_name PipeData
 extends Resource
 
@@ -32,10 +32,14 @@ static func get_by_coords(coords: Vector2i) -> PipeData:
 	return null
 
 
-func _init() -> void:
-	for i in 3:
-		for j in 3:
-			connections[Vector2i(i - 1, j - 1)] = !(abs(i - 1) == abs(j - 1))
+# Used only to improve quality of life when creating new PipeData resources
+# Creates connections dictionary of correct size and keys,
+# sets only orthogonal neighbours to true as connections.
+# For it to work - uncomment code below as well as @tool at the top of this file
+#func _init() -> void:
+	#for i in 3:
+		#for j in 3:
+			#connections[Vector2i(i - 1, j - 1)] = !(abs(i - 1) == abs(j - 1))
 
 
 func _to_string() -> String:
@@ -47,6 +51,8 @@ func _to_string() -> String:
 	return result
 
 
+# connections is  Dict[Vector2i, bool], for quality of life purposes
+# so this is used to return an array of existing connections
 func get_connections() -> Array[Vector2i]:
 	var existing := connections.keys().filter(func(key): return connections[key])
 	return existing
