@@ -191,6 +191,7 @@ func _place_held_pipe() -> void:
 	tile_layer.place_pipe(mouse_coords, held_pipe)
 	audio_stream_player.play()
 	colour_updater.register_pipe(held_pipe)
+	colour_updater.check_status()
 	reset_held_pipe()
 
 

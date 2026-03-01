@@ -60,12 +60,11 @@ func update_pipe(pipe : Pipe) -> void:
 	var to_update: Array[Pipe] = [pipe]
 	while !to_update.is_empty():
 		to_update = _update_timestep(to_update)
-	
+
+
+func check_status() -> void:
 	if losing_outputs:
 		outputs_incorrectly_filled.emit(losing_outputs)
-		return
-	
-	if !outputs:
 		return
 	
 	if outputs.all(func(output: Pipe): return output.is_filled()):
