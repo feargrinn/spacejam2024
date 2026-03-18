@@ -1,5 +1,5 @@
 class_name TilePicker
-extends VBoxContainer
+extends BoxContainer
 
 signal tile_picked_up(pipe: Pipe)
 
