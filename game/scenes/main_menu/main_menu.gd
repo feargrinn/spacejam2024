@@ -14,8 +14,8 @@ func _ready() -> void:
 
 
 func _on_play_pressed():
-	get_tree().change_scene_to_file("res://menu/lever_picker/base_custom_picker.tscn")
+	get_tree().change_scene_to_file("res://scenes/lever_picker/base_custom_picker.tscn")
 
 
 func _on_create_pressed():
-	get_tree().change_scene_to_file("res://game/editor/editor.tscn")
+	get_tree().change_scene_to_file("res://scenes/editor/editor.tscn")
