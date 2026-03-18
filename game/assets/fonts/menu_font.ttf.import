@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://vpxsj0e6x6lk"
-path="res://.godot/imported/menu_font.ttf-dff8f5a5882d268a69140acbe9158a08.fontdata"
+path="res://.godot/imported/menu_font.ttf-da2bfa66b5cf85083d6ffb9f290458b4.fontdata"
 
 [deps]
 
-source_file="res://menu/shared/graphics/fonts/menu_font.ttf"
-dest_files=["res://.godot/imported/menu_font.ttf-dff8f5a5882d268a69140acbe9158a08.fontdata"]
+source_file="res://assets/fonts/menu_font.ttf"
+dest_files=["res://.godot/imported/menu_font.ttf-da2bfa66b5cf85083d6ffb9f290458b4.fontdata"]
 
 [params]
 
@@ -21,6 +21,7 @@ msdf_pixel_range=8
 msdf_size=48
 allow_system_fallback=true
 force_autohinter=false
+modulate_color_glyphs=false
 hinting=1
 subpixel_positioning=1
 keep_rounding_remainders=true

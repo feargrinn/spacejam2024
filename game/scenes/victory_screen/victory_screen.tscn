@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c5jhprfubvllq"]
 
-[ext_resource type="StyleBox" uid="uid://i47pwd6ai1af" path="res://menu/shared/graphics/panel_dark.tres" id="1_8n4c8"]
-[ext_resource type="Script" uid="uid://b07eoi04kauw2" path="res://menu/in_game/victory_screen/victory_screen.gd" id="1_j6cd5"]
+[ext_resource type="StyleBox" uid="uid://i47pwd6ai1af" path="res://assets/theme/panel_dark.tres" id="1_8n4c8"]
+[ext_resource type="Script" uid="uid://b07eoi04kauw2" path="res://scenes/victory_screen/victory_screen.gd" id="1_j6cd5"]
 
 [node name="VictoryScreen" type="PanelContainer" unique_id=938131968]
 anchors_preset = 8

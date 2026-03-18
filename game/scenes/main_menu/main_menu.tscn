@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b6ldch5v2bfc3"]
 
-[ext_resource type="Script" uid="uid://bqrmw7uma4tou" path="res://menu/main_menu/main_menu.gd" id="1_winya"]
-[ext_resource type="Texture2D" uid="uid://b6y06h2qilehi" path="res://menu/shared/graphics/title_banner.png" id="2_prid6"]
+[ext_resource type="Script" uid="uid://bqrmw7uma4tou" path="res://scenes/main_menu/main_menu.gd" id="1_winya"]
+[ext_resource type="Texture2D" uid="uid://b6y06h2qilehi" path="res://assets/sprites/title_banner.png" id="2_prid6"]
 
 [node name="MainMenu" type="PanelContainer" unique_id=1071065235]
 anchors_preset = 15

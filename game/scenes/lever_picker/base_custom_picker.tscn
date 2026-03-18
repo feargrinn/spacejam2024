@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://brv51q227veyq"]
 
-[ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://menu/shared/graphics/fonts/menu_font.ttf" id="1_g6n1v"]
-[ext_resource type="Script" uid="uid://btfagoq0mmmj0" path="res://menu/lever_picker/base_custom_picker.gd" id="2_s5o6l"]
-[ext_resource type="Script" uid="uid://bc1nt26r7lckj" path="res://menu/lever_picker/level_picker.gd" id="5_tpobg"]
+[ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://assets/fonts/menu_font.ttf" id="1_g6n1v"]
+[ext_resource type="Script" uid="uid://btfagoq0mmmj0" path="res://scenes/lever_picker/base_custom_picker.gd" id="2_s5o6l"]
+[ext_resource type="Script" uid="uid://bc1nt26r7lckj" path="res://scenes/lever_picker/level_picker.gd" id="5_tpobg"]
 
 [node name="BaseCustomPicker" type="PanelContainer" unique_id=1426531720]
 anchors_preset = 15

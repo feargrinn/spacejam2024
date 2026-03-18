@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://drw6h3oglmj2e"]
 
-[ext_resource type="Script" uid="uid://0u0nr4tqb0ew" path="res://menu/in_game/loser_screen/loser_screen.gd" id="1_bhseh"]
-[ext_resource type="StyleBox" uid="uid://i47pwd6ai1af" path="res://menu/shared/graphics/panel_dark.tres" id="1_c8us3"]
+[ext_resource type="Script" uid="uid://0u0nr4tqb0ew" path="res://scenes/loser_screen/loser_screen.gd" id="1_bhseh"]
+[ext_resource type="StyleBox" uid="uid://i47pwd6ai1af" path="res://assets/theme/panel_dark.tres" id="1_c8us3"]
 
 [node name="LoserScreen" type="PanelContainer" unique_id=319561359]
 anchors_preset = 8

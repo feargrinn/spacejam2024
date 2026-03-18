@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://fhmwenm3h7c7"]
 
 [ext_resource type="Script" uid="uid://dn584k3p7vand" path="res://scenes/game/game.gd" id="1_f0dd8"]
-[ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://menu/shared/graphics/fonts/menu_font.ttf" id="2_rssi8"]
+[ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://assets/fonts/menu_font.ttf" id="2_rssi8"]
 [ext_resource type="PackedScene" uid="uid://dys1pp7uead78" path="res://scenes/level_tile_map/level_tile_map.tscn" id="2_yrn2k"]
 [ext_resource type="Script" uid="uid://c5cdqnjgijvjn" path="res://custom_nodes/tile_picker.gd" id="5_vse0r"]
 
