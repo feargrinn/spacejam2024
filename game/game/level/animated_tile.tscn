@@ -1,9 +1,0 @@
-[gd_scene format=3 uid="uid://7jeubcg4hei2"]
-
-[ext_resource type="SpriteFrames" uid="uid://cllajbysnipu1" path="res://game/level/win_loss_sprite_frames.tres" id="1_y21dy"]
-[ext_resource type="Script" uid="uid://bt2qxc1khecvj" path="res://game/level/animated_tile.gd" id="3_2b3qn"]
-
-[node name="AnimatedTile" type="AnimatedSprite2D" unique_id=2079030511]
-sprite_frames = ExtResource("1_y21dy")
-animation = &"losing"
-script = ExtResource("3_2b3qn")
