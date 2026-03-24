@@ -15,13 +15,17 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Iks"
-run/main_scene="res://menu/main_menu/main_menu.tscn"
+run/main_scene="res://scenes/main_menu/main_menu.tscn"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-config/icon="res://game/shared/graphics/images/game_icon/sprite_24x24_game_icon_scaled_10x.png"
+config/icon="res://assets/sprites/game_icon/sprite_24x24_game_icon_scaled_10x.png"
+
+[audio]
+
+buses/default_bus_layout="res://assets/default_bus_layout.tres"
 
 [autoload]
 
-Sounds="*res://game/shared/sfx/sounds.tscn"
+Sounds="*res://scenes/sounds/sounds.tscn"
 
 [display]
 

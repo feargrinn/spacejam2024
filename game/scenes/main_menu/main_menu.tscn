@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://b6ldch5v2bfc3"]
+
+[ext_resource type="Script" uid="uid://bqrmw7uma4tou" path="res://scenes/main_menu/main_menu.gd" id="1_winya"]
+[ext_resource type="Texture2D" uid="uid://b6y06h2qilehi" path="res://assets/sprites/title_banner.png" id="2_prid6"]
+
+[node name="MainMenu" type="PanelContainer" unique_id=1071065235]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_winya")
+
+[node name="MenuLogoRatio" type="VBoxContainer" parent="." unique_id=1122459308]
+layout_mode = 2
+
+[node name="Logo" type="TextureRect" parent="MenuLogoRatio" unique_id=809892886]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_prid6")
+stretch_mode = 5
+
+[node name="MenuButtons" type="VBoxContainer" parent="MenuLogoRatio" unique_id=2063628958]
+layout_mode = 2
+size_flags_vertical = 6
+size_flags_stretch_ratio = 4.15
+
+[node name="Play" type="Button" parent="MenuLogoRatio/MenuButtons" unique_id=179486589]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Play"
+
+[node name="Settings" type="Button" parent="MenuLogoRatio/MenuButtons" unique_id=120530672]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Settings
+"
+
+[node name="Create" type="Button" parent="MenuLogoRatio/MenuButtons" unique_id=1621507327]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Create
+"
+
+[node name="Quit" type="Button" parent="MenuLogoRatio/MenuButtons" unique_id=1883640854]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Quit
+"
