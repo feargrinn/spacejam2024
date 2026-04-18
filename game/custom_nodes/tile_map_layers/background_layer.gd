@@ -77,11 +77,8 @@ func _update_border_at(pos: Vector2i):
 	if self.is_background(pos):
 		return
 	var background_cells = _background_cell_directions(pos)
-	var border_sprite = BorderSprite.with_background_neighbours(background_cells)
-	if border_sprite is Error:
-		erase_cell(pos)
-	else:
-		set_cell(pos, 0, border_sprite.get_sprite_pointer(), border_sprite.get_alternative())
+	var border_sprite := BorderSprite.with_background_neighbours(background_cells)
+	set_cell(pos, 0, border_sprite.id, border_sprite.alternative)
 
 
 # updates the borders around this

@@ -1,47 +1,67 @@
 class_name BorderSprite
+extends RefCounted
 
-const BORDER_SPRITE_NUM = 13
+const BORDER_ROW := 2
+const BORDER_DATA_FILEPATHS := [
+	"res://data/borders/0001.tres",
+	"res://data/borders/00000100.tres",
+	"res://data/borders/00000101.tres",
+	"res://data/borders/0101.tres",
+	"res://data/borders/1001.tres",
+	"res://data/borders/1110.tres",
+	"res://data/borders/1111.tres",
+	"res://data/borders/00010010.tres",
+	"res://data/borders/01000100.tres",
+	"res://data/borders/01000101.tres",
+	"res://data/borders/01010010.tres",
+	"res://data/borders/01010101.tres",
+	"res://data/borders/10010010.tres",
+]
 
-var id;
-var alternative;
+static var tile_set: TileSet = preload("uid://b64fhmdc5bn5")
 
-func _init(a_id, a_alternative):
-	self.id = a_id
-	self.alternative = a_alternative
+static var sprites: Array[BorderSprite]
 
-func get_sprite_pointer():
-	# apparently this is the format for the sprite pointer
-	return Vector2i(self.id, 2)
+var id: Vector2i;
+var alternative: int;
+var data: BorderData
 
-func get_alternative():
-	return self.alternative
 
-static func alternatives_for(a_id):
-		return range(Globals.TILE_SET.get_source(0).get_alternative_tiles_count(Vector2i(a_id,2)))
+static func _static_init() -> void:
+	var atlas_source: TileSetAtlasSource = tile_set.get_source(0)
+	for fp in BORDER_DATA_FILEPATHS:
+		var border_data: BorderData = load(fp)
+		for rotation in range(1, border_data.alternatives + 1):
+			var atlas_coords := Vector2i(border_data.tileset_id, BORDER_ROW)
+			var next_free_id := atlas_source.get_next_alternative_tile_id(atlas_coords)
+			var hvt := HVTData.from_rotation_mirror(rotation, rotation > 3)
+			atlas_source.create_alternative_tile(atlas_coords)
+			var tile_data := atlas_source.get_tile_data(atlas_coords, next_free_id)
+			tile_data.flip_h = hvt.flip_h
+			tile_data.flip_v = hvt.flip_v
+			tile_data.transpose = hvt.transpose
+			sprites.append(
+				BorderSprite.new(atlas_coords, next_free_id, border_data))
 
-func is_valid():
-	return Globals.TILE_SET.get_source(0).has_alternative_tile(self.get_sprite_pointer(), self.alternative)
 
-# gets a description of directions in which the given sprite expects background tiles
-func background_neighbours():
-	if !self.is_valid():
-		return Error.new("we should only ask about background neighbours of valid sprites")
-	var tile_data = Globals.TILE_SET.get_source(0).get_tile_data(self.get_sprite_pointer(), self.alternative)
-	return tile_data.get_custom_data("required_neighbours")
+# finds an appropriate border sprite given directions from tile to background tiles
+static func with_background_neighbours(neighbours: Array[Vector2i]) -> BorderSprite:
+	for sprite in sprites:
+		if sprite._fits_neighbours(neighbours):
+			return sprite
+	return BorderSprite.new(-Vector2i.ONE, 0, null)
+
+
+func _init(a_id: Vector2i, a_alternative: int, border_data: BorderData) -> void:
+	id = a_id
+	alternative = a_alternative
+	data = border_data
+
 
 # check whether this sprite works for the provided neighbours
-func fits_neighbours(neighbours):
-	var neighbour_requirements = self.background_neighbours()
+func _fits_neighbours(neighbours: Array[Vector2i]) -> bool:
+	var neighbour_requirements := data.get_neighbour_requirements(alternative)
 	for direction in neighbour_requirements:
 		if neighbour_requirements[direction] != neighbours.has(direction):
 			return false
 	return true
-
-# finds an appropriate border sprite given directions from tile to background tiles
-static func with_background_neighbours(neighbours):
-	for l_id in range(BORDER_SPRITE_NUM):
-		for l_alternative in alternatives_for(l_id):
-			var candidate_sprite = BorderSprite.new(l_id, l_alternative)
-			if candidate_sprite.fits_neighbours(neighbours):
-				return candidate_sprite
-	return Error.new("no border sprite needed")

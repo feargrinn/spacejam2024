@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="BorderData" format=3 uid="uid://d3ob57j5dtil1"]
+
+[ext_resource type="Script" uid="uid://cpplr7yjcfp42" path="res://data/borders/border_data.gd" id="1_34x54"]
+
+[resource]
+script = ExtResource("1_34x54")
+tileset_id = 8
+borders = Array[int]([1, 5, 7])
+metadata/_custom_type_script = "uid://cpplr7yjcfp42"
