@@ -39,6 +39,10 @@ const DIRECTION_VECTORS: Dictionary[Direction, Vector2i] = {
 @export var requires_mirror := false
 
 
+func _to_string() -> String:
+	return str(borders) + " alt: %s mirror: %s" % [alternatives, requires_mirror]
+
+
 func _is_orthogonal(direction: Direction) -> bool:
 	return DIRECTION_VECTORS[direction].length_squared() == 1
 

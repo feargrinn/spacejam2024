@@ -22,9 +22,11 @@ static var tile_set: TileSet = preload("uid://b64fhmdc5bn5")
 
 static var sprites: Array[BorderSprite]
 
-var id: Vector2i;
-var alternative: int;
+var id: Vector2i
+var alternative: int
+
 var data: BorderData
+var rotation: int
 
 
 static func _static_init() -> void:
@@ -33,33 +35,31 @@ static func _static_init() -> void:
 		var border_data: BorderData = load(fp)
 		var atlas_coords := Vector2i(border_data.tileset_id, BORDER_ROW)
 		sprites.append(BorderSprite.new(atlas_coords, 0, border_data))
-		for rotation in range(1, border_data.alternatives + 1):
+		for rot in range(1, border_data.alternatives + 1):
 			var next_free_id := atlas_source.get_next_alternative_tile_id(atlas_coords)
-			var hvt := HVTData.from_rotation_mirror(rotation, rotation > 3)
+			var hvt := HVTData.from_rotation_mirror(rot, rot > 3)
 			atlas_source.create_alternative_tile(atlas_coords)
 			var tile_data := atlas_source.get_tile_data(atlas_coords, next_free_id)
 			tile_data.flip_h = hvt.flip_h
 			tile_data.flip_v = hvt.flip_v
 			tile_data.transpose = hvt.transpose
 			sprites.append(
-				BorderSprite.new(atlas_coords, next_free_id, border_data))
+				BorderSprite.new(atlas_coords, next_free_id, border_data, rot))
 
 
 # finds an appropriate border sprite given directions from tile to background tiles
 static func with_background_neighbours(neighbours: Array[Vector2i]) -> BorderSprite:
-	print(neighbours)
 	for sprite in sprites:
 		if sprite._fits_neighbours(neighbours):
-			print("fit! ", sprite)
 			return sprite
-	print("empty!")
 	return BorderSprite.new(-Vector2i.ONE, 0, null)
 
 
-func _init(a_id: Vector2i, a_alternative: int, border_data: BorderData) -> void:
+func _init(a_id: Vector2i, a_alternative: int, border_data: BorderData, rot: int = 0) -> void:
 	id = a_id
 	alternative = a_alternative
 	data = border_data
+	rotation = rot
 
 
 func _to_string() -> String:
@@ -68,7 +68,7 @@ func _to_string() -> String:
 
 # check whether this sprite works for the provided neighbours
 func _fits_neighbours(neighbours: Array[Vector2i]) -> bool:
-	var neighbour_requirements := data.get_neighbour_requirements(alternative)
+	var neighbour_requirements := data.get_neighbour_requirements(rotation)
 	for direction in neighbour_requirements:
 		if neighbour_requirements[direction] != neighbours.has(direction):
 			return false
