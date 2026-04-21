@@ -1,6 +1,8 @@
 @tool
 class_name BorderData
 extends Resource
+## This class is responsible for keeping data that's shared by all alternative
+## border tiles on a specific position in tileset.
 
 enum Direction{
 	RIGHT,
@@ -13,7 +15,6 @@ enum Direction{
 	RIGHT_UP
 }
 
-
 const DIRECTION_VECTORS: Dictionary[Direction, Vector2i] = {
 	Direction.RIGHT : Vector2i.RIGHT,
 	Direction.RIGHT_DOWN : Vector2i(1, 1),
@@ -25,7 +26,12 @@ const DIRECTION_VECTORS: Dictionary[Direction, Vector2i] = {
 	Direction.RIGHT_UP : Vector2i(1, -1)
 }
 
-@export_range(0, 32) var tileset_id: int
+static var BORDER_ROW := 2
+
+@export_range(0, 32) var tileset_id: int:
+	set(value):
+		tileset_id = value
+		tileset_coords = Vector2i(tileset_id, BORDER_ROW)
 # Making sure there are no duplicates
 @export var borders: Array[Direction]:
 	set(new_borders):
@@ -38,9 +44,25 @@ const DIRECTION_VECTORS: Dictionary[Direction, Vector2i] = {
 @export_range(0, 3) var alternatives := 3
 @export var requires_mirror := false
 
+var tileset_coords: Vector2i
+
+
+static func empty() -> BorderData:
+	var b_d := BorderData.new()
+	b_d.alternatives = 0
+	b_d.tileset_coords = -Vector2i.ONE
+	return b_d
+
+
+func _init() -> void:
+	tileset_coords = Vector2i(tileset_id, BORDER_ROW)
+
 
 func _to_string() -> String:
-	return str(borders) + " alt: %s mirror: %s" % [alternatives, requires_mirror]
+	var border_names: Array[String]
+	for border in borders:
+		border_names.append(Direction.keys()[border])
+	return str(border_names) + " alt: %s mirror: %s" % [alternatives, requires_mirror]
 
 
 func _is_orthogonal(direction: Direction) -> bool:

@@ -78,7 +78,7 @@ func _update_border_at(pos: Vector2i):
 		return
 	var background_cells = _background_cell_directions(pos)
 	var border_sprite := BorderSprite.with_background_neighbours(background_cells)
-	set_cell(pos, 0, border_sprite.id, border_sprite.alternative)
+	set_cell(pos, 0, border_sprite.get_tileset_coords(), border_sprite.alternative)
 
 
 # updates the borders around this
