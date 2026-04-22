@@ -43,15 +43,16 @@ static func _create_alternatives(
 	
 	var alternatives: Array[BorderSprite]
 	
-	for rot in range(1, border_data.alternatives + 1):
-		var alt_tile := _create_alternative_tile(
-			atlas_source, border_data,
-			rot, false)
-		
-		alternatives.append(alt_tile)
+	for rot in HVTData.Rotation.values():
+		if rot != HVTData.Rotation.BASE:
+			var alt_tile := _create_alternative_tile(
+				atlas_source, border_data,
+				rot, false)
+			
+			alternatives.append(alt_tile)
 		
 		if border_data.requires_mirror:
-			alt_tile = _create_alternative_tile(
+			var alt_tile := _create_alternative_tile(
 					atlas_source, border_data,
 					rot, false)
 			
@@ -63,7 +64,7 @@ static func _create_alternatives(
 static func _create_alternative_tile(
 		atlas_source: TileSetAtlasSource,
 		border_data: BorderData,
-		alt_rotation: int,
+		alt_rotation: HVTData.Rotation,
 		mirror: bool) -> BorderSprite:
 	
 	var atlas_coords := border_data.tileset_coords
