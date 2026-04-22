@@ -70,11 +70,7 @@ func _is_orthogonal(direction: Direction) -> bool:
 
 
 func _get_orthogonal() -> Array[Direction]:
-	var orthogonal: Array[Direction] = []
-	for key in DIRECTION_VECTORS:
-		if _is_orthogonal(key):
-			orthogonal.append(key)
-	return orthogonal
+	return _filter_orthogonal(DIRECTION_VECTORS.keys())
 
 
 func _get_diagonal() -> Array[Direction]:
