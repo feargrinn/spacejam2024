@@ -15,11 +15,39 @@ const TILES_NAME: String = "tiles"
 const HEIGHT_NAME: String = "height"
 const WIDTH_NAME: String = "width"
 
+static var default_levels: Array[Level]
+static var user_levels: Array[Level]
+
 var name: String
 var background: Dictionary[Vector2i, bool]
 var inputs: Array[PreInput]
 var outputs: Array[PreOutput]
 var tiles: Array[PreTile]
+
+
+static func _static_init() -> void:
+	var loaded_levels = Level.load_default()
+	if loaded_levels is Error:
+		print("Failed to load levels: ", loaded_levels.as_string(), ".")
+	else:
+		print("Loaded ", loaded_levels.size(), " levels.")
+		default_levels = loaded_levels
+	
+	var loaded_user_levels = Level.load_user()
+	if loaded_user_levels is Error:
+		print("Failed to load user levels: ", loaded_user_levels.as_string(), ".")
+	else:
+		user_levels = loaded_user_levels
+		print("Loaded ", loaded_user_levels.size(), " custom levels.")
+
+
+static func get_default_levels() -> Array[Level]:
+	return default_levels
+
+
+static func get_user_levels() -> Array[Level]:
+	return user_levels
+
 
 func _init(a_name: String, new_background: Dictionary[Vector2i, bool], a_inputs: Array[PreInput], a_outputs: Array[PreOutput], a_tiles: Array[PreTile]):
 	self.name = a_name
