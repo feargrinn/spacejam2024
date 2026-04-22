@@ -2,6 +2,10 @@ class_name ColourLayer
 extends TileMapLayer
 
 
+func _init() -> void:
+	name = "ColourLayer"
+
+
 func set_tile_colour(pipe: Pipe) -> void:
 	var tile_coords := pipe.get_filled_colour_coords()
 	var alt_id := Colour.create_tile_colour(
