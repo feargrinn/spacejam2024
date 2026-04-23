@@ -28,8 +28,17 @@ func _process(_delta: float):
 			_place_held_pipe()
 
 
-@abstract
-func _place_held_pipe() -> void
+func _place_held_pipe() -> void:
+	var mouse_position := get_local_mouse_position()
+	var mouse_coords := background_layer.local_to_map(mouse_position)
+	
+	if !background_layer.is_background(mouse_coords):
+		reset_held_pipe()
+		return
+	
+	tile_layer.place_pipe(mouse_coords, held_pipe)
+	colour_updater.register_pipe(held_pipe)
+	reset_held_pipe()
 
 
 func _clear_map() -> void:
@@ -51,6 +60,10 @@ func _set_up_layers() -> void:
 		add_child(layer, true)
 		if Engine.is_editor_hint():
 			layer.owner = EditorInterface.get_edited_scene_root()
+
+
+func get_coordinates() -> Vector2i:
+	return background_layer.local_to_map(get_local_mouse_position())
 
 
 func set_level(level: Level) -> void:

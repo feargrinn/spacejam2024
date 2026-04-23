@@ -32,18 +32,9 @@ func _scale_from_dimensions(dimensions: Vector2i) -> Vector2:
 
 
 func _place_held_pipe() -> void:
-	var mouse_position := get_local_mouse_position()
-	var mouse_coords := background_layer.local_to_map(mouse_position)
-	
-	if !background_layer.is_background(mouse_coords):
-		reset_held_pipe()
-		return
-	
-	tile_layer.place_pipe(mouse_coords, held_pipe)
+	super._place_held_pipe()
 	audio_stream_player.play()
-	colour_updater.register_pipe(held_pipe)
 	colour_updater.check_status()
-	reset_held_pipe()
 
 
 func animate_outputs(outputs: Array[Pipe], animation_name: String) -> AnimatedTile:
