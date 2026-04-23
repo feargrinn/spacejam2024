@@ -1,8 +1,7 @@
 class_name BaseCustomPicker
 extends PanelContainer
 
-const GAME = preload("uid://fhmwenm3h7c7")
-const MAIN_MENU = preload("uid://b6ldch5v2bfc3")
+const MAIN_MENU = preload("res://scenes/main_menu/main_menu.tscn")
 
 @onready var base: Button = %Base
 @onready var custom: Button = %Custom
@@ -11,7 +10,6 @@ const MAIN_MENU = preload("uid://b6ldch5v2bfc3")
 @onready var custom_level_picker: LevelPicker = %CustomLevelPicker
 
 
-# Loads levels player has accessible, custom levels
 func _ready() -> void:
 	exit_level_picker.pressed.connect(_on_exit_level_picker_pressed)
 	base.pressed.connect(_flip_base_custom)
@@ -28,12 +26,6 @@ func _ready() -> void:
 	if user_levels:
 		custom_level_picker.set_levels(user_levels)
 		custom_level_picker.unlock_all()
-
-
-## Shows button for unlocked level and saves in player data that lvl is unlocked
-func unlock_level(level: int):
-	base_level_picker.unlock_level(level)
-	PlayerData.get_instance().unlock_level(level)
 
 
 # There is actually a node we should use... Maybe? TabContainer
