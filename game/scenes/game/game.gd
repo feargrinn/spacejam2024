@@ -44,12 +44,8 @@ func _on_next_level_pressed():
 
 
 func _on_level_won() -> void:
-	var loaded_data = PlayerData.load_default()
-	if loaded_data is Error:
-		# The extra +1 is because we store levels in save file from level 1 :l
-		PlayerData.new().unlock_level(current_level + 1 + 1) # X_X
-		return
-	(loaded_data as PlayerData).unlock_level(current_level + 1 + 1) # X_X
+	# The extra +1 is because we store levels in save file from level 1 :l
+	PlayerData.get_instance().unlock_level(current_level + 1 + 1)
 
 
 func _on_retry_pressed():

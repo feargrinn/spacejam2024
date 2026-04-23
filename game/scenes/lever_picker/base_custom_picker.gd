@@ -1,12 +1,7 @@
 class_name BaseCustomPicker
 extends PanelContainer
 
-const GAME = preload("uid://fhmwenm3h7c7")
-const MAIN_MENU = preload("uid://b6ldch5v2bfc3")
-
-
-var save_data: PlayerData
-
+const MAIN_MENU = preload("res://scenes/main_menu/main_menu.tscn")
 
 @onready var base: Button = %Base
 @onready var custom: Button = %Custom
@@ -15,7 +10,6 @@ var save_data: PlayerData
 @onready var custom_level_picker: LevelPicker = %CustomLevelPicker
 
 
-# Loads levels player has accessible, custom levels
 func _ready() -> void:
 	exit_level_picker.pressed.connect(_on_exit_level_picker_pressed)
 	base.pressed.connect(_flip_base_custom)
@@ -23,35 +17,15 @@ func _ready() -> void:
 	base_level_picker.level_picked.connect(_on_level_picked)
 	custom_level_picker.level_picked.connect(_on_level_picked)
 	
-	var loaded_levels = Level.load_default()
-	if loaded_levels is Error:
-		print("Failed to load levels: ", loaded_levels.as_string(), ".")
-	print("Loaded ", loaded_levels.size(), " levels.")
-	base_level_picker.set_levels(loaded_levels)
+	base_level_picker.set_levels(Level.get_default_levels())
 	
-	var loaded_data = PlayerData.load_default()
-	if loaded_data is Error:
-		print("Failed to load game state: ", loaded_data.as_string(), ".")
-		save_data = PlayerData.new()
-	else:
-		save_data = loaded_data
-	for level in range(save_data.get_reached_level()):
+	for level in range(PlayerData.get_instance().get_reached_level()):
 		base_level_picker.unlock_level(level+1)
 	
-	var loaded_user_levels = Level.load_user()
-	if loaded_user_levels is Error:
-		print("Failed to load user levels: ", loaded_user_levels.as_string(), ".")
-	else:
-		print("Loaded ", loaded_user_levels.size(), " custom levels.")
-		if len(loaded_user_levels) > 0:
-			custom_level_picker.set_levels(loaded_user_levels)
-			custom_level_picker.unlock_all()
-
-
-## Shows button for unlocked level and saves in player data that lvl is unlocked
-func unlock_level(level: int):
-	base_level_picker.unlock_level(level)
-	save_data.unlock_level(level)
+	var user_levels := Level.get_user_levels()
+	if user_levels:
+		custom_level_picker.set_levels(user_levels)
+		custom_level_picker.unlock_all()
 
 
 # There is actually a node we should use... Maybe? TabContainer
