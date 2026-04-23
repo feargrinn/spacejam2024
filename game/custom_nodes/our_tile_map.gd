@@ -48,9 +48,9 @@ func _set_up_layers() -> void:
 	
 	for layer: TileMapLayer in [background_layer, colour_layer, tile_layer, hover_layer]:
 		layer.tile_set = Globals.TILE_SET
-		add_child(layer)
-	
-	background_layer.modulate.a = 0.5
+		add_child(layer, true)
+		if Engine.is_editor_hint():
+			layer.owner = EditorInterface.get_edited_scene_root()
 
 
 func set_level(level: Level) -> void:
