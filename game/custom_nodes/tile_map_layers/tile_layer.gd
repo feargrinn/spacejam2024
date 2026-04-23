@@ -4,6 +4,10 @@ extends TileMapLayer
 var pipes: Dictionary[Vector2i, Pipe]
 
 
+func _init() -> void:
+	name = "TileLayer"
+
+
 func place_pipe(pos: Vector2i, pipe: Pipe, can_on_top := false) -> bool:
 	if !can_on_top and pipes.has(pos):
 		return false

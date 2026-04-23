@@ -24,6 +24,10 @@ static func get_all_surrounding_cells(pos):
 	return surrounding
 
 
+func _init() -> void:
+	name = "BackgroundLayer"
+
+
 # whether the given coordinates have a background
 func is_background(pos: Vector2i) -> bool:
 	return background.has(pos)

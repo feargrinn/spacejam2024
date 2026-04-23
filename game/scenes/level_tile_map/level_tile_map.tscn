@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://dys1pp7uead78"]
 
 [ext_resource type="Script" uid="uid://bj3av05buyeo6" path="res://scenes/level_tile_map/level_tile_map.gd" id="1_us3jo"]
-[ext_resource type="TileSet" uid="uid://b64fhmdc5bn5" path="res://data/tile_map.tres" id="2_6qfqa"]
 [ext_resource type="Script" uid="uid://dywqgs0s3x4xl" path="res://custom_nodes/tile_map_layers/background_layer.gd" id="3_g7cq2"]
 [ext_resource type="Script" uid="uid://dsgq3dx1v2nie" path="res://custom_nodes/tile_map_layers/colour_layer.gd" id="4_tulvh"]
 [ext_resource type="Script" uid="uid://b6t4748x4o15m" path="res://custom_nodes/tile_map_layers/tile_layer.gd" id="5_17xxu"]
@@ -17,32 +16,25 @@ stream_0/stream = ExtResource("6_tulvh")
 stream_1/stream = ExtResource("7_17xxu")
 stream_2/stream = ExtResource("8_ixkmw")
 
-[node name="LevelTileMap" type="Node2D" unique_id=1202856473]
+[node name="LevelTileMap" type="Node2D" unique_id=1202856473 node_paths=PackedStringArray("background_layer", "colour_layer", "tile_layer", "hover_layer")]
 script = ExtResource("1_us3jo")
-
-[node name="BackgroundLayer" type="TileMapLayer" parent="." unique_id=1048351927]
-unique_name_in_owner = true
-tile_set = ExtResource("2_6qfqa")
-script = ExtResource("3_g7cq2")
-metadata/_custom_type_script = "uid://dywqgs0s3x4xl"
-
-[node name="ColourLayer" type="TileMapLayer" parent="." unique_id=2116341240]
-unique_name_in_owner = true
-tile_set = ExtResource("2_6qfqa")
-script = ExtResource("4_tulvh")
-metadata/_custom_type_script = "uid://dsgq3dx1v2nie"
-
-[node name="TileLayer" type="TileMapLayer" parent="." unique_id=337421594]
-unique_name_in_owner = true
-tile_set = ExtResource("2_6qfqa")
-script = ExtResource("5_17xxu")
-metadata/_custom_type_script = "uid://b6t4748x4o15m"
-
-[node name="TileHoverLayer" type="TileMapLayer" parent="." unique_id=1054333904]
-unique_name_in_owner = true
-modulate = Color(1, 1, 1, 0.49803922)
-tile_set = ExtResource("2_6qfqa")
-script = ExtResource("6_17xxu")
+background_layer = NodePath("BackgroundLayer")
+colour_layer = NodePath("ColourLayer")
+tile_layer = NodePath("TileLayer")
+hover_layer = NodePath("HoverLayer")
 
 [node name="PipePlaceStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=854768955]
 stream = SubResource("AudioStreamRandomizer_crlv1")
+
+[node name="BackgroundLayer" type="TileMapLayer" parent="." unique_id=1332979309]
+script = ExtResource("3_g7cq2")
+
+[node name="ColourLayer" type="TileMapLayer" parent="." unique_id=505471599]
+script = ExtResource("4_tulvh")
+
+[node name="TileLayer" type="TileMapLayer" parent="." unique_id=1784338928]
+script = ExtResource("5_17xxu")
+
+[node name="HoverLayer" type="TileMapLayer" parent="." unique_id=247638349]
+modulate = Color(1, 1, 1, 0.5)
+script = ExtResource("6_17xxu")

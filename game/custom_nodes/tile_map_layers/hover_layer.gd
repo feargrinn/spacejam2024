@@ -7,6 +7,10 @@ var tile_interactors: Dictionary[Vector2i, TileInteractor]
 var held_pipe: Pipe
 
 
+func _init() -> void:
+	name = "HoverLayer"
+
+
 func _ready() -> void:
 	modulate.a = 0.5
 

@@ -1,9 +1,13 @@
 [gd_scene format=3 uid="uid://fhmwenm3h7c7"]
 
 [ext_resource type="Script" uid="uid://dn584k3p7vand" path="res://scenes/game/game.gd" id="1_f0dd8"]
+[ext_resource type="PackedScene" uid="uid://dys1pp7uead78" path="res://scenes/level_tile_map/level_tile_map.tscn" id="2_87uf6"]
 [ext_resource type="FontFile" uid="uid://vpxsj0e6x6lk" path="res://assets/fonts/menu_font.ttf" id="2_rssi8"]
-[ext_resource type="PackedScene" uid="uid://dys1pp7uead78" path="res://scenes/level_tile_map/level_tile_map.tscn" id="2_yrn2k"]
+[ext_resource type="Script" uid="uid://dywqgs0s3x4xl" path="res://custom_nodes/tile_map_layers/background_layer.gd" id="3_87uf6"]
+[ext_resource type="Script" uid="uid://dsgq3dx1v2nie" path="res://custom_nodes/tile_map_layers/colour_layer.gd" id="4_2a8rs"]
+[ext_resource type="Script" uid="uid://b6t4748x4o15m" path="res://custom_nodes/tile_map_layers/tile_layer.gd" id="5_4j704"]
 [ext_resource type="Script" uid="uid://c5cdqnjgijvjn" path="res://custom_nodes/tile_picker.gd" id="5_vse0r"]
+[ext_resource type="Script" uid="uid://ckpbu0afpfglp" path="res://custom_nodes/tile_map_layers/hover_layer.gd" id="6_kp23o"]
 
 [node name="Game" type="Node" unique_id=1199358187]
 script = ExtResource("1_f0dd8")
@@ -21,8 +25,26 @@ color = Color(0.5176471, 0.6627451, 0.54901963, 1)
 
 [node name="GridMapLayer" type="CanvasLayer" parent="." unique_id=1225644071]
 
-[node name="LevelTileMap" parent="GridMapLayer" unique_id=723179342 instance=ExtResource("2_yrn2k")]
+[node name="LevelTileMap" parent="GridMapLayer" unique_id=1202856473 node_paths=PackedStringArray("background_layer", "colour_layer", "tile_layer", "hover_layer") instance=ExtResource("2_87uf6")]
 unique_name_in_owner = true
+background_layer = NodePath("BackgroundLayer")
+colour_layer = NodePath("ColourLayer")
+tile_layer = NodePath("TileLayer")
+hover_layer = NodePath("HoverLayer")
+
+[node name="BackgroundLayer" type="TileMapLayer" parent="GridMapLayer/LevelTileMap" unique_id=1193655173]
+modulate = Color(1, 1, 1, 0.5)
+script = ExtResource("3_87uf6")
+
+[node name="ColourLayer" type="TileMapLayer" parent="GridMapLayer/LevelTileMap" unique_id=1826509879]
+script = ExtResource("4_2a8rs")
+
+[node name="TileLayer" type="TileMapLayer" parent="GridMapLayer/LevelTileMap" unique_id=721818758]
+script = ExtResource("5_4j704")
+
+[node name="HoverLayer" type="TileMapLayer" parent="GridMapLayer/LevelTileMap" unique_id=723639465]
+modulate = Color(1, 1, 1, 0.5)
+script = ExtResource("6_kp23o")
 
 [node name="Controls" type="CanvasLayer" parent="." unique_id=1262987600]
 

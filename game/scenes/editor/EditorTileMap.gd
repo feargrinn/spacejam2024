@@ -7,32 +7,6 @@ var background_layer: BackgroundLayer
 var tile_layer: TileLayer
 var tile_colour_layer: ColourLayer
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	background_layer.set_background({
-		Vector2i(1,1): true,
-		Vector2i(1,2): true,
-		Vector2i(1,3): true,
-		Vector2i(1,4): true,
-		Vector2i(2,1): true,
-		Vector2i(2,2): true,
-		Vector2i(2,3): true,
-		Vector2i(2,4): true,
-	})
-	self.add_child(self.background_layer)
-	self.tile_layer = TileLayer.new()
-	self.add_child(self.tile_layer)
-	self.tile_colour_layer = ColourLayer.new()
-	self.add_child(self.tile_colour_layer)
-	TileInteractor.hover_layer = $tile_hover
-	self.move_child(self.background_layer, 0)
-	self.move_child(self.tile_colour_layer, 1)
-	self.move_child(self.tile_layer, 2)
-
-func get_coordinates():
-	var mouse_pos_global = get_viewport().get_mouse_position()
-	var mouse_pos_local = background_layer.to_local(mouse_pos_global)
-	return background_layer.local_to_map(mouse_pos_local)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
