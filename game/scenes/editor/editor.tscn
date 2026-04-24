@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" uid="uid://cf2rwlxtm0h03" path="res://scenes/editor/editor.gd" id="1_8a3en"]
 [ext_resource type="Script" uid="uid://c5cdqnjgijvjn" path="res://custom_nodes/tile_picker.gd" id="2_ro56m"]
-[ext_resource type="Script" uid="uid://duopdl7msb4jx" path="res://custom_nodes/creator_tile_map.gd" id="4_jwsr6"]
-[ext_resource type="Script" uid="uid://dywqgs0s3x4xl" path="res://custom_nodes/tile_map_layers/background_layer.gd" id="5_rolao"]
-[ext_resource type="Script" uid="uid://dsgq3dx1v2nie" path="res://custom_nodes/tile_map_layers/colour_layer.gd" id="6_p4u40"]
+[ext_resource type="Script" uid="uid://duopdl7msb4jx" path="res://custom_nodes/creator_tile_map.gd" id="4_rolao"]
+[ext_resource type="Script" uid="uid://dywqgs0s3x4xl" path="res://custom_nodes/tile_map_layers/background_layer.gd" id="5_p4u40"]
+[ext_resource type="Script" uid="uid://dsgq3dx1v2nie" path="res://custom_nodes/tile_map_layers/colour_layer.gd" id="6_syr16"]
 [ext_resource type="Script" uid="uid://dh0ocmm0336t4" path="res://components/line_edit_with_memory.gd" id="7_fijmg"]
-[ext_resource type="Script" uid="uid://b6t4748x4o15m" path="res://custom_nodes/tile_map_layers/tile_layer.gd" id="7_syr16"]
-[ext_resource type="Script" uid="uid://ckpbu0afpfglp" path="res://custom_nodes/tile_map_layers/hover_layer.gd" id="8_qnluh"]
+[ext_resource type="Script" uid="uid://b6t4748x4o15m" path="res://custom_nodes/tile_map_layers/tile_layer.gd" id="7_qnluh"]
+[ext_resource type="Script" uid="uid://ckpbu0afpfglp" path="res://custom_nodes/tile_map_layers/hover_layer.gd" id="8_i3ywb"]
 [ext_resource type="PackedScene" uid="uid://b8000wuccu80j" path="res://scenes/colour_picker/colour_picker.tscn" id="10_fijmg"]
 
 [node name="Editor" type="MarginContainer" unique_id=223492854]
@@ -55,27 +55,28 @@ flat = true
 script = ExtResource("7_fijmg")
 metadata/_custom_type_script = "uid://dh0ocmm0336t4"
 
-[node name="CreatorTileMap" type="Node2D" parent="VBoxContainer" unique_id=2144002725 node_paths=PackedStringArray("background_layer", "colour_layer", "tile_layer", "hover_layer")]
-script = ExtResource("4_jwsr6")
+[node name="CreatorTileMap" type="Node2D" parent="VBoxContainer" unique_id=581069913 node_paths=PackedStringArray("background_layer", "colour_layer", "tile_layer", "hover_layer")]
+position = Vector2(320, 240)
+script = ExtResource("4_rolao")
 background_layer = NodePath("BackgroundLayer")
 colour_layer = NodePath("ColourLayer")
 tile_layer = NodePath("TileLayer")
 hover_layer = NodePath("HoverLayer")
 metadata/_custom_type_script = "uid://duopdl7msb4jx"
 
-[node name="BackgroundLayer" type="TileMapLayer" parent="VBoxContainer/CreatorTileMap" unique_id=2014409167]
+[node name="BackgroundLayer" type="TileMapLayer" parent="VBoxContainer/CreatorTileMap" unique_id=1916189397]
 tile_map_data = PackedByteArray("AAABAAEAAAAAAAAAAAABAAIAAAAAAAAAAAABAAMAAAAAAAAAAAABAAQAAAAAAAAAAAACAAEAAAAAAAAAAAACAAIAAAAAAAAAAAACAAMAAAAAAAAAAAACAAQAAAAAAAAAAAA=")
-script = ExtResource("5_rolao")
+script = ExtResource("5_p4u40")
 
-[node name="ColourLayer" type="TileMapLayer" parent="VBoxContainer/CreatorTileMap" unique_id=1868771910]
-script = ExtResource("6_p4u40")
+[node name="ColourLayer" type="TileMapLayer" parent="VBoxContainer/CreatorTileMap" unique_id=807193487]
+script = ExtResource("6_syr16")
 
-[node name="TileLayer" type="TileMapLayer" parent="VBoxContainer/CreatorTileMap" unique_id=320549454]
-script = ExtResource("7_syr16")
+[node name="TileLayer" type="TileMapLayer" parent="VBoxContainer/CreatorTileMap" unique_id=1600141277]
+script = ExtResource("7_qnluh")
 
-[node name="HoverLayer" type="TileMapLayer" parent="VBoxContainer/CreatorTileMap" unique_id=1643003196]
+[node name="HoverLayer" type="TileMapLayer" parent="VBoxContainer/CreatorTileMap" unique_id=1179890236]
 modulate = Color(1, 1, 1, 0.5)
-script = ExtResource("8_qnluh")
+script = ExtResource("8_i3ywb")
 
 [node name="Popup" type="Popup" parent="." unique_id=1713352456]
 oversampling_override = 1.0

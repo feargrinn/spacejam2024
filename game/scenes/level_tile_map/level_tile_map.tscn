@@ -1,10 +1,6 @@
 [gd_scene format=3 uid="uid://dys1pp7uead78"]
 
 [ext_resource type="Script" uid="uid://bj3av05buyeo6" path="res://scenes/level_tile_map/level_tile_map.gd" id="1_us3jo"]
-[ext_resource type="Script" uid="uid://dywqgs0s3x4xl" path="res://custom_nodes/tile_map_layers/background_layer.gd" id="3_g7cq2"]
-[ext_resource type="Script" uid="uid://dsgq3dx1v2nie" path="res://custom_nodes/tile_map_layers/colour_layer.gd" id="4_tulvh"]
-[ext_resource type="Script" uid="uid://b6t4748x4o15m" path="res://custom_nodes/tile_map_layers/tile_layer.gd" id="5_17xxu"]
-[ext_resource type="Script" uid="uid://ckpbu0afpfglp" path="res://custom_nodes/tile_map_layers/hover_layer.gd" id="6_17xxu"]
 [ext_resource type="AudioStream" uid="uid://dp6q56ru2dpwt" path="res://assets/sfx/sfx_pop_down_tile_1.wav" id="6_tulvh"]
 [ext_resource type="AudioStream" uid="uid://cwjemyyjcvmae" path="res://assets/sfx/sfx_pop_down_tile_2.wav" id="7_17xxu"]
 [ext_resource type="AudioStream" uid="uid://bov5rt5shb548" path="res://assets/sfx/sfx_pop_down_tile_3.wav" id="8_ixkmw"]
@@ -18,23 +14,10 @@ stream_2/stream = ExtResource("8_ixkmw")
 
 [node name="LevelTileMap" type="Node2D" unique_id=1202856473 node_paths=PackedStringArray("background_layer", "colour_layer", "tile_layer", "hover_layer")]
 script = ExtResource("1_us3jo")
-background_layer = NodePath("BackgroundLayer")
-colour_layer = NodePath("ColourLayer")
-tile_layer = NodePath("TileLayer")
-hover_layer = NodePath("HoverLayer")
+background_layer = NodePath("")
+colour_layer = NodePath("")
+tile_layer = NodePath("")
+hover_layer = NodePath("")
 
 [node name="PipePlaceStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=854768955]
 stream = SubResource("AudioStreamRandomizer_crlv1")
-
-[node name="BackgroundLayer" type="TileMapLayer" parent="." unique_id=1332979309]
-script = ExtResource("3_g7cq2")
-
-[node name="ColourLayer" type="TileMapLayer" parent="." unique_id=505471599]
-script = ExtResource("4_tulvh")
-
-[node name="TileLayer" type="TileMapLayer" parent="." unique_id=1784338928]
-script = ExtResource("5_17xxu")
-
-[node name="HoverLayer" type="TileMapLayer" parent="." unique_id=247638349]
-modulate = Color(1, 1, 1, 0.5)
-script = ExtResource("6_17xxu")

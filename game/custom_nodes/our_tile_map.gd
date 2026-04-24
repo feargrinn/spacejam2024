@@ -15,7 +15,8 @@ var colour_updater: ColourUpdater
 
 
 func _ready() -> void:
-	reset()
+	if owner != self:
+		reset()
 
 
 func _process(_delta: float):
